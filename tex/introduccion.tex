@@ -1,0 +1,134 @@
+\chapter{Introducción} % (fold)
+\label{cha:introduccion}
+
+\section{Motivacion} % (fold)
+\label{sec:motivacion}
+
+\begin{itemize}
+	\item Económico:
+	    \begin{itemize}
+	        \item Materiales a nuestro alcance.
+	        \item Posibilidad de realizar un producto viable.
+	    \end{itemize}
+	\item Académico:
+	    \begin{itemize}
+	        \item Oportunidad de mejorar y facilitar las mediciones de sensores analógicos y recolectar datos de señales digitales para los alumnos que realicen proyectos en el LAC (Laboratorio de Arquitectura de Computadoras)
+	    \end{itemize}
+	\item Investigación:
+	    \begin{itemize}
+	        \item Investigar como acelerar los procesos de desarrollo de software y hardware.
+	        \item Poner en uso una metodología ágil en el software.
+	        \item Poner en uso una metodología ágil en el hardware.
+	    \end{itemize}
+	\item Extensión:
+	    \begin{itemize}
+	        \item Laboratorios de Universidades de la RUNIC.
+	        \item Empresas del medio.
+	    \end{itemize}
+	\item Tecnológico:
+	    \begin{itemize}
+	        \item Uti
+	    \end{itemize}
+\end{itemize}
+
+% section motivacion (end)
+
+\section{Objetivos} % (fold)
+\label{sec:objetivos}
+
+
+
+
+
+
+% section objetivos (end)
+
+\section{Herramientas de modelado} % (fold)
+\label{sec:herramientas_de_modelado}
+
+Para facilitar la documentación, decidimos utilizar SysUML para documentar nuestro sistema. Para esto, utilizamos la herramienta Enterprise Architect, que nos permite partir de un modelo base y reutilizar los componentes en todos los diagramas, generando vínculos que facilitan el entendimiento general del sistema.
+
+% section herramientas_de_modelado (end)
+
+\section{Requerimientos} % (fold)
+\label{sec:requerimientos}
+
+\subsection{Requerimientos funcionales} % (fold)
+\label{sub:requerimientos_funcionales}
+
+\begin{itemize}
+	\item Se debería poder recibir datos de sensores analógicos en modo singular o equilibrado
+	\item Se debería poder contar eventos de señales digitales cuadradas
+	\item Se debería poder configurar una ganancia especifica y un tiempo entre mediciones especifico para cada entrada
+	\item Los parámetros que corresponden a la ganancia, el modo de conversión, el tiempo entre conversiones, y la cantidad de canales habilitados para la conversión y el conteo de eventos, deberían ser configurables a través de una interfaz de linea de comando
+	\item Se debería usar un protocolo serial para la interfaz de linea de comando entre el sistema y el usuario
+	\item El usuario debería poder configurar el sistema conectándolo a un ordenador u otro sistema que soporte comunicación serial.
+	\item Se debería poder enviar datos de mediciones y posibles meta-datos a través de un canal de comunicación mediante un protocolo serial.
+\end{itemize}
+
+% subsection requerimientos_funcionales (end)
+
+\subsection{Requerimientos no funcionales} % (fold)
+\label{sub:requerimientos_no_funcionales}
+
+\begin{itemize}
+	\item Debería consumir lo menos posible
+\end{itemize}
+
+% subsection requerimientos_no_funcionales (end)
+
+% section requerimientos (end)
+
+\section{Características generales} % (fold)
+\label{sec:caracteristicas_generales}
+
+En una primera aproximación del sistema a construir, se puede establecer que se trata de un sistema capaz de recibir señales de distintos sensores digitales y analógicos. En caso que sean analógicos, convertir las señales a digital usando un conversor A-D de alta ganancia, que permita tanto entradas singulares como equilibradas. Luego de ser convertidas, estas señales deben ser enviadas mediante un protocolo serial a otro sistema que realice las acciones que deba realizar en función de los datos enviados.
+
+Se puede establecer que en nuestro contexto interactúan 3 actores: Un usuario, uno o mas sensores, y un controlador que por el momento no hacemos mención de sus características, por lo que lo llamamos simplemente ``controlador''.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.80\textwidth, height = 9cm]{contexto1}
+  \caption{Contexto del sistema}\label{fig:contexto1}
+\end{figure}
+
+% section caracteristicas_generales (end)
+
+\section{Metodo de desarrollo} % (fold)
+\label{sec:metodo_de_desarrollo}
+
+El método de desarrollo utilizado es el desarrollo iterativo con entrega incremental. Este modelo se ilustra en la figura \ref{fig:MetodoDeDesarrollo}. En esta metodología de desarrollo el trabajo se divide en iteraciones en las cuales el producto va evolucionando. 
+Un aspecto fundamental para guiar el desarrollo incremental es la priorización de los requerimientos/objetivos en función del valor que aportan al cliente. De esta manera se van añadiendo nuevos requerimientos o mejorando los que ya se completaron. Al finalizar cada iteración se obtiene un prototipo funcional.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.80\textwidth, height = 9cm]{MetodoDeDesarrollo}
+  \caption{Desarrollo incremental}\label{fig:MetodoDeDesarrollo}
+\end{figure}
+
+% section metodo_de_desarrollo (end)
+
+\section{Casos de uso} % (fold)
+\label{sec:casos_de_uso}
+
+Dado el contexto, el sistema se puede describir de una manera general mediante un diagrama de caso de uso. El diagrama puede verse en la figura \ref{fig:casouso1}. En esta figura, se pueden ver los requerimientos plasmados en los casos de uso.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.80\textwidth, height = 11cm]{casouso1}
+  \caption{Diagrama de caso de uso del sistema de adquisición}\label{fig:casouso1}
+\end{figure}
+
+El caso de uso ``configurar'' esta generalizado. Las acciones que incluye este caso son:
+\begin{itemize}
+	\item Configurar la interfaz serial
+	\item Configurar canal en modo singular
+	\item Configurar canal en modo equilibrado
+	\item Configurar contador de eventos
+	\item Configurar ganancia del del conversor
+	\item Configurar intervalo de medicion para conversion analogica
+\end{itemize}
+
+% section casos_de_uso (end)
+
+% chapter introduccion (end)
