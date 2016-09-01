@@ -1,0 +1,102 @@
+\documentclass[a4paper]{report}
+\usepackage[spanish]{babel}
+\selectlanguage{spanish}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{blindtext}
+%para incluir graficos
+\usepackage{graphicx}
+
+%para poder poner paginas en modo apaisado
+\usepackage{lscape}
+
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Año 2016}
+\lhead{Proyecto Integrador}
+\rfoot{Pagina \thepage}
+\lfoot{Mantovani - Sambataro}
+
+% Esto es para que el [h] me ponga las imagenes dentro de las secciones
+\usepackage[section]{placeins}
+
+\graphicspath{ {imagenes/} }
+
+
+
+% \title{\underline{Proyecto Integrador} \\
+% \huge \textbf{ \\ Plataforma concentradora de sensores y eventos digitales} \\ }
+% \author{Autores: Ignacio Sambataro, Luciano Mantovani\\ \\
+%   \large Tutor: PhD. Ing. Orlando Micolini \\
+%   \large Supervisor: Ing. Maximiliano Eschoyez
+%  % \small Facultad de Ciencias Exactas, Fisicas y Naturales\\
+%  % \small Laboratorio de Arquitectura de Computadoras\\
+%  % \small Universidad Nacional de Cordoba\\
+%   \date{}
+% }
+
+\title{\vspace{-4cm} \textbf{Proyecto Integrador \\ \line(1,0){350}}\\
+  \vspace{0.5cm}\centering{\includegraphics[scale=0.53]{Escudo.jpg}}\\}
+\author{\vspace{-0.25cm} Autores \vspace{0.25cm}\\ Luciano Mantovani - Ignacio Sambataro \bigskip \bigskip \bigskip \\
+  Tema \vspace{0.25cm} \\ \textbf{ Sistema de adquisición y distribución de datos analógicos y digitales}\\ %\textbf{ Soft-Core y Soporte Linux/eCos} \\ \textbf{}
+  \bigskip \bigskip \bigskip \bigskip\\
+  \begin{normalsize}Director:\end{normalsize}\\
+  \begin{normalsize}PhD. Orlando Micolini \end{normalsize} \\
+ % \begin{normalsize}Director del Laboratorio de Arquitectura de Computadoras, FCEFyN, UNC\bigskip \bigskip \end{normalsize} \\
+  \begin{normalsize}Codirector:\end{normalsize} \\
+  \begin{normalsize}Ing. Maximiliano Eschoyez \end{normalsize}\\ 
+ % \begin{normalsize}Integrante del Centro Universitario de Automatización y Robótica, UTN-FRC\bigskip \bigskip \end{normalsize}\\
+  }
+\date{}
+
+\begin{document}
+\maketitle
+
+\clearpage
+
+\abstract{
+En este proyecto integrador se diseño y se implemento un sistema concentrador de señales de fuentes analógicas y digitales, que reúne datos y los canaliza a través de un protocolo serial hacia otro sistema que realiza distintas acciones en función de los valores de estos datos.
+
+El concentrador es configurable vía una interfaz de linea de comando, que permite establecer, entre otras cosas, el tipo de señal de entrada que se va a recibir, el tipo de amplificación necesaria, y los intervalos de tiempo requeridos entre medición y medición, para cada entrada.
+
+Su implementación de hardware fue hecha en base a una placa de desarrollo Silicon Labs que contiene un microcontrolador C8051F350. El software para este microcontrolador fue hecho en lenguaje C.
+
+En una segunda etapa de este proyecto, se desarrollaron 2 implementaciones para poner en prueba el concentrador. En primera instancia, se realizo una adaptación de un sensor de campo electromagnético con su circuito electrónico. Luego, se utilizo una placa de desarrollo Raspberry Pi para implementar un sistema que interactúe con el concentrador, estableciendo una interfaz gráfica de usuario vía web, y guardando los datos que se envían y reciben en una base de datos. El software de esto ultimo fue desarrollado en Python. 
+}
+
+\clearpage
+
+\input{introduccion.tex}
+
+
+\chapter{Marco teórico} % (fold)
+\label{cha:marco_teorico}
+
+
+% chapter marco_teorico (end)
+
+\input{investigacion.tex}
+
+\chapter{Iteración 1} % (fold)
+\label{cha:iteracion_1}
+
+% chapter iteracion_1 (end)
+
+\chapter{Iteración 2} % (fold)
+\label{cha:iteracion_2}
+
+% chapter iteracion_2 (end)
+
+\chapter{Sistema final} % (fold)
+\label{cha:sistema_final}
+
+% chapter sistema_final (end)
+
+
+
+\end{document}
