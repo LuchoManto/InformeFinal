@@ -6,12 +6,32 @@
 \usepackage{amsthm}
 \usepackage{amsmath}
 \usepackage{float}
+\usepackage{fixltx2e}
 \usepackage{blindtext}
 %para incluir graficos
 \usepackage{graphicx}
+\usepackage[font=small,labelfont=bf,justification=justified,format=plain]{caption} % 'format=plain' avoids hanging indentation
+
+%formatos
+\usepackage[T1]{fontenc}
+\usepackage{titlesec, blindtext, color}
+\definecolor{gray75}{gray}{0.75}
+\newcommand{\hsp}{\hspace{20pt}}
+%chapter:
+\titleformat{\chapter}[hang]{\Huge\bfseries}{\thechapter\hsp\textcolor{gray75}{|}\hsp}{0pt}{\Huge\bfseries}
 
 %para poder poner paginas en modo apaisado
 \usepackage{lscape}
+
+%para usar hipertexto en las referencias
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
 
 \usepackage{fancyhdr}
 
@@ -20,42 +40,51 @@
 \rhead{Año 2016}
 \lhead{Proyecto Integrador}
 \rfoot{Pagina \thepage}
-\lfoot{Mantovani - Sambataro}
+\lfoot{FCEFyN, UNC}
 
 % Esto es para que el [h] me ponga las imagenes dentro de las secciones
 \usepackage[section]{placeins}
 
 \graphicspath{ {imagenes/} }
 
-
-
-% \title{\underline{Proyecto Integrador} \\
-% \huge \textbf{ \\ Plataforma concentradora de sensores y eventos digitales} \\ }
-% \author{Autores: Ignacio Sambataro, Luciano Mantovani\\ \\
-%   \large Tutor: PhD. Ing. Orlando Micolini \\
-%   \large Supervisor: Ing. Maximiliano Eschoyez
-%  % \small Facultad de Ciencias Exactas, Fisicas y Naturales\\
-%  % \small Laboratorio de Arquitectura de Computadoras\\
-%  % \small Universidad Nacional de Cordoba\\
-%   \date{}
-% }
-
-\title{\vspace{-4cm} \textbf{Proyecto Integrador \\ \line(1,0){350}}\\
-  \vspace{0.5cm}\centering{\includegraphics[scale=0.53]{Escudo.jpg}}\\}
-\author{\vspace{-0.25cm} Autores \vspace{0.25cm}\\ Luciano Mantovani - Ignacio Sambataro \bigskip \bigskip \bigskip \\
-  Tema \vspace{0.25cm} \\ \textbf{ Sistema de adquisición y distribución de datos analógicos y digitales}\\ %\textbf{ Soft-Core y Soporte Linux/eCos} \\ \textbf{}
-  \bigskip \bigskip \bigskip \bigskip\\
-  \begin{normalsize}Director:\end{normalsize}\\
-  \begin{normalsize}PhD. Orlando Micolini \end{normalsize} \\
- % \begin{normalsize}Director del Laboratorio de Arquitectura de Computadoras, FCEFyN, UNC\bigskip \bigskip \end{normalsize} \\
-  \begin{normalsize}Codirector:\end{normalsize} \\
-  \begin{normalsize}Ing. Maximiliano Eschoyez \end{normalsize}\\ 
- % \begin{normalsize}Integrante del Centro Universitario de Automatización y Robótica, UTN-FRC\bigskip \bigskip \end{normalsize}\\
-  }
 \date{}
 
 \begin{document}
-\maketitle
+
+\begin{titlepage}
+	\centering
+    \textbf{\huge{Proyecto Integrador} \\ \line(1,0){350}} \\
+	\vspace{0.5cm}\includegraphics[scale=0.53]{Escudo.jpg}\\
+    \vspace{0.15cm}
+    {\large\itshape Facultad de Ciencias Exactas, Físicas y Naturales\par}
+    \vspace{0.15cm}
+    {\large\itshape Laboratorio de Arquitectura de Computadoras\par}
+	\vspace{1cm}
+	{\scshape\Huge Sistema de adquisición y distribución de datos de señales analógicas y eventos digitales\par}
+    \vspace{1cm}
+    {\Large Luciano Mantovani - Ignacio Sambataro\par}
+    \vspace{1.5cm}
+    {\large Carrera\par}
+	\vspace{0.10cm}
+	{\large Ingeniería en Computación\par}
+	\vspace{1cm}
+    {\large Director\par}
+	\vspace{0.10cm}
+	{\large\itshape Dr. Ing. Orlando Micolini\par}
+    {Director del Laboratorio de Arquitectura de Computadoras, FCEFyN, UNC\par}
+	\vspace{1cm}
+    {\large Co-director\par}
+	\vspace{0.10cm}
+	{\large\itshape Ing. Maximiliano Eschoyez\par}
+    {Director de la carrera de Ingeniería en Computación, FCEFyN, UNC\par}
+
+	\vfill
+
+% Bottom of the page
+	{\large Año 2016 \par}
+\end{titlepage}
+
+
 
 \clearpage
 
@@ -71,32 +100,28 @@ En una segunda etapa de este proyecto, se desarrollaron 2 implementaciones para 
 
 \clearpage
 
-\input{introduccion.tex}
+\tableofcontents
+\listoffigures
+\listoftables
 
+\input{tex/introduccion.tex}
 
-\chapter{Marco teórico} % (fold)
-\label{cha:marco_teorico}
+\input{tex/marcoteorico.tex}
 
+\input{tex/iteracion_1.tex}
 
-% chapter marco_teorico (end)
+\input{tex/iteracion_2.tex}
 
-\input{investigacion.tex}
+\input{tex/iteracion_3.tex}
 
-\chapter{Iteración 1} % (fold)
-\label{cha:iteracion_1}
+\input{tex/iteracion_4.tex}
 
-% chapter iteracion_1 (end)
+\input{tex/iteracion_5.tex}
 
-\chapter{Iteración 2} % (fold)
-\label{cha:iteracion_2}
+\input{tex/sistema_final.tex}
 
-% chapter iteracion_2 (end)
+\input{tex/conclusiones.tex}
 
-\chapter{Sistema final} % (fold)
-\label{cha:sistema_final}
-
-% chapter sistema_final (end)
-
-
-
+\bibliography{bibliografia.bib}
+\bibliographystyle{plain}
 \end{document}

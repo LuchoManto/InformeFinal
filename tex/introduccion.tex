@@ -1,34 +1,39 @@
 \chapter{Introducción} % (fold)
 \label{cha:introduccion}
 
-\section{Motivacion} % (fold)
+\section{Motivación} % (fold)
 \label{sec:motivacion}
 
+Este proyecto surgió de la problemática de algunos trabajos realizados dentro del Laboratorio de Arquitectura de Computadoras que compartían el mismo inconveniente. La necesidad de un sistema que genéricamente obtenga las señales de los sensores y la pueda transmitir al sistema principal, ya convertidas. Además de un contador de eventos que no requiera del uso de interrupciones por software.
+
+Motivaciones: 
+
 \begin{itemize}
-	\item Económico:
+	\item Económicas:
 	    \begin{itemize}
 	        \item Materiales a nuestro alcance.
 	        \item Posibilidad de realizar un producto viable.
 	    \end{itemize}
-	\item Académico:
+	\item Académicas:
 	    \begin{itemize}
-	        \item Oportunidad de mejorar y facilitar las mediciones de sensores analógicos y recolectar datos de señales digitales para los alumnos que realicen proyectos en el LAC (Laboratorio de Arquitectura de Computadoras)
+	        \item Oportunidad de mejorar y facilitar las mediciones de sensores analógicos y recolectar datos de señales digitales para los alumnos que realicen proyectos en el LAC (Laboratorio de Arquitectura de Computadoras). Logrando asi un concentrador generico adaptable y multiplataforma
 	    \end{itemize}
-	\item Investigación:
+	\item De Investigación:
 	    \begin{itemize}
 	        \item Investigar como acelerar los procesos de desarrollo de software y hardware.
 	        \item Poner en uso una metodología ágil en el software.
 	        \item Poner en uso una metodología ágil en el hardware.
 	    \end{itemize}
-	\item Extensión:
+	\item De Extensión:
 	    \begin{itemize}
 	        \item Laboratorios de Universidades de la RUNIC.
 	        \item Empresas del medio.
 	    \end{itemize}
-	\item Tecnológico:
+	\item Tecnológicas:
 	    \begin{itemize}
 	        \item Utilizar tecnología madura.
-	        \item Utilizar tecnología bien documentada y dejar bien documentado nuestro sistema.
+	        \item Utilizar tecnología bien documentada.
+	        \item Utilizas SysUML para documentar nuestro sistema
 	        \item Utilizar tecnología muy difundida.
 	    \end{itemize}
 \end{itemize}
@@ -38,15 +43,10 @@
 \section{Objetivos} % (fold)
 \label{sec:objetivos}
 
-\subsection{Objetivos Principales} % (fold)
-\label{sec: objetivos_funcionales}
+\subsection{Objetivo principal} % (fold)
+\label{sec:objetivo_principal}
 
-\begin{itemize}
-    \item Diseñar y construir una placa para el sensado de señales analógicas y digitales.
-    \item La placa debe leer entre 8 y 16 señales analógicas.
-    \item La placa debe contar eventos digitales con 2 o 3 contadores distintos.
-    \item La placa debe transmitir los datos digitales a través de un protocolo serial, a alguna otra placa de desarrollo o procesador.
-\end{itemize}
+Diseño y construcción de una placa de instrumentación de señales digitales y analógicas autónoma con un sistema de comunicación.
 
 % section objetivos_principales (end)
 
@@ -54,40 +54,27 @@
 \label{sec: objetivos_secundarios}
 
 \begin{itemize}
-    \item El sistema debe poder ser configurado con parámetros de ganancia (amplificación de señal analógica de entrada), decidir que pin se utilizara como entrada y respecto a que (masa o si mismo), se realizara la medición.
-    \item Lograr que el sistema tenga el menor consumo posible.
-    \item Lograr que el sistema tenga la mejor inmunidad al ruido posible.
+	\item La placa debe leer entre 8 y 16 señales analógicas.
+    \item La placa debe contar eventos digitales con 2 o 3 contadores distintos.
+    \item La placa debe transmitir los datos digitales a través de un protocolo serial, a alguna otra placa de desarrollo o procesador.
+    \item El sistema debe tener un control de ganancias programable.
+    \item Lograr que el sistema tenga menor a 1,2 Vatios.
+    \item Lograr que el sistema tenga la mejor inmunidad al ruido.
     \item El sistema debe ser lo mas pequeño posible.
-    \item Se debe poder aplicar al sistema un sensor de campo electrostático, provisto por el FAMAF.
+    \item Se debe tener una sensibilidad apta para poder medir un sensor de campo electrostático.
+    \item Se debe controlar el arranque y velocidad de un motor brushless con un PWM (pulse-width modulation).
     \item El sensor de campo electrostático debe tener una placa por separado para el manejo de la potencia.
-    \item Se debe controlar la velocidad del motor del sensor desde el software incluido en el microcontrolador.
     \item Se debe desarrollar un servidor web en alguna placa de desarrollo para poder controlar todas las acciones del sensor remotamente.
     \item El servidor web debe poder guardar datos de las lecturas que se realizan del sensor en una base de datos (preferentemente MySQL).
     \item Escribir la documentación sobre las instrucciones de uso para manejar el software embebido en la placa.
     \item Realizar una prueba de campo.
 \end{itemize}
-
 % section objetivos_secundarios (end)
-\subsection{Objetivos para un prototipo futuro} % (fold)
-\label{sub:objetivos_para_un_prototipo_futuro}
-
-\subsection{Objetivos para un Futuro Prototipo} % (fold)
-\label{sec: objetivos_futuros}
-
-\begin{itemize}
-    \item Poder mejor la placa utilizando un microcontrolador mas potente.
-    \item Mejorar la reacción del sistema ante fallos de potencia.
-    \item Mejorar el prototipo del sensor de campo electrostático para reducir el consumo y el ruido.
-    \item Mejorar el servidor web para sensores en general.
-    \item Mejorar el servidor web para incluir gráficos.
-\end{itemize}
-% subsection objetivos_para_un_prototipo_futuro (end)
-
 
 \section{Herramientas de modelado} % (fold)
 \label{sec:herramientas_de_modelado}
 
-Para facilitar la documentación, decidimos utilizar SysUML para documentar nuestro sistema. Para esto, utilizamos la herramienta Enterprise Architect, que nos permite partir de un modelo base y reutilizar los componentes en todos los diagramas, generando vínculos que facilitan el entendimiento general del sistema.
+Para facilitar la documentación, decidimos utilizar SysUML para documentar nuestro sistema. Para esto, utilizamos la herramienta Enterprise Architect, que nos permite partir de un modelo base y reutilizar los componentes en todos los diagramas, generando vínculos que facilitan el entendimiento general del sistema. 
 
 % section herramientas_de_modelado (end)
 
@@ -96,6 +83,8 @@ Para facilitar la documentación, decidimos utilizar SysUML para documentar nues
 
 \subsection{Requerimientos funcionales} % (fold)
 \label{sub:requerimientos_funcionales}
+
+Partiendo de los objetivos planteados, podemos formalizar una lista de requerimientos para nuestro sistema.
 
 \begin{itemize}
 	\item Se debería poder recibir datos de sensores analógicos en modo singular o equilibrado
@@ -107,13 +96,21 @@ Para facilitar la documentación, decidimos utilizar SysUML para documentar nues
 	\item Se debería poder enviar datos de mediciones y posibles meta-datos a través de un canal de comunicación mediante un protocolo serial.
 \end{itemize}
 
+Como anexo al sistema, se propuso construir ciertas implementaciones para el sensor de campo electrostático y el servidor web. Adicionalmente a los requerimientos planteados anteriormente, entonces, se agregan los siguientes:
+
+\begin{itemize}
+    \item La configuracion de los parametros para las mediciones deberian poder ser establecidas via una interfaz web grafica.
+    \item Todas las interacciones del sistema deberian guardarse en una base de datos junto con un timestamp.
+    \item Se deberia poder establecer un sistema de reglas que provoque que el sistema reaccione ante ciertos niveles de los datos entrantes desde el sistema de adquisicion.
+\end{itemize}
+
 % subsection requerimientos_funcionales (end)
 
 \subsection{Requerimientos no funcionales} % (fold)
 \label{sub:requerimientos_no_funcionales}
 
 \begin{itemize}
-	\item Debería consumir lo menos posible
+	\item El sistema debe documentarse con SysUML a través del programa Enterprise Architec.
 \end{itemize}
 
 % subsection requerimientos_no_funcionales (end)
@@ -123,9 +120,9 @@ Para facilitar la documentación, decidimos utilizar SysUML para documentar nues
 \section{Características generales} % (fold)
 \label{sec:caracteristicas_generales}
 
-En una primera aproximación del sistema a construir, se puede establecer que se trata de un sistema capaz de recibir señales de distintos sensores digitales y analógicos. En caso que sean analógicos, convertir las señales a digital usando un conversor A-D de alta ganancia, que permita tanto entradas singulares como equilibradas. Luego de ser convertidas, estas señales deben ser enviadas mediante un protocolo serial a otro sistema que realice las acciones que deba realizar en función de los datos enviados.
+En una primera aproximación del sistema a construir, se puede establecer que se trata de un sistema capaz de recibir señales de distintos sensores digitales y analógicos. En caso que sean analógicos, convertir las señales a digital usando un conversor A-D de alta ganancia, que permita tanto entradas singulares como equilibradas. Luego de ser convertidas, estas señales deben ser enviadas mediante un protocolo de comunicacion a otro sistema que realice las acciones que deba realizar en función de los datos enviados.
 
-Se puede establecer que en nuestro contexto interactúan 3 actores: Un usuario, uno o mas sensores, y un controlador que por el momento no hacemos mención de sus características, por lo que lo llamamos simplemente ``controlador''.
+En nuestro contexto interactúan 3 actores: Un usuario, uno o mas sensores, y un controlador que por el momento no hacemos mención de sus características, por lo que lo llamamos simplemente ``controlador''.
 
 \begin{figure}[h]
   \centering
@@ -135,11 +132,11 @@ Se puede establecer que en nuestro contexto interactúan 3 actores: Un usuario, 
 
 % section caracteristicas_generales (end)
 
-\section{Metodo de desarrollo} % (fold)
+\section{Método de desarrollo} % (fold)
 \label{sec:metodo_de_desarrollo}
 
 El método de desarrollo utilizado es el desarrollo iterativo con entrega incremental. Este modelo se ilustra en la figura \ref{fig:MetodoDeDesarrollo}. En esta metodología de desarrollo el trabajo se divide en iteraciones en las cuales el producto va evolucionando. 
-Un aspecto fundamental para guiar el desarrollo incremental es la priorización de los requerimientos/objetivos en función del valor que aportan al cliente. De esta manera se van añadiendo nuevos requerimientos o mejorando los que ya se completaron. Al finalizar cada iteración se obtiene un prototipo funcional.
+Un aspecto fundamental para guiar el desarrollo incremental es priorizar los requerimientos y los objetivos en función del valor que aportan al cliente. De esta manera se van añadiendo nuevos requerimientos o mejorando los que ya se completaron. Al finalizar cada iteración se obtiene un prototipo funcional.
 
 \begin{figure}[h]
   \centering

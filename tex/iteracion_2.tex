@@ -1,0 +1,54 @@
+\chapter{Iteracion 2: Primer prototipo de software} % (fold)
+\label{cha:iteracion_2}
+
+\section{Introduccion} % (fold)
+\label{sec:introduccion}
+
+% fue cuando empezamos a tirar fruta. habiendo elegido el microcontrolador empezamos a probar todas las funcionalidades: El adc, los contadores de eventos, el modulo serial. Despues arrancamos a diseñar el primer prototipo. Consideramos que segun los requerimientos tenia que se un sistema que ofrezca algun tipo de interfaz para que un usuario interactue con el, para que pueda configurarle los parametros segun lo que se quiere lograr.
+
+En esta iteracion se realizo el primer prototipo de programa a embeber en el microcontrolador para cumplir con los requerimientos planteados. Los primeros pasos incluyeron programas de prueba para verificar el funcionamiento de los distintos modulos del microcontrolador a utilizar: El conversor analogico-digital, la ganancia programable, los contadores y el modulo serial. 
+
+% section introduccion (end)
+
+\section{Requerimientos de la iteración} % (fold)
+\label{sec:requerimientos_de_la_iteracion}
+
+De los requerimientos principales, surgen los siguientes requerimientos para el programa a embeber en el microcontrolador:
+
+\begin{itemize}
+\item El programa deberia utilizar el conversor del microcontrolador para transformar señales analogicas de fuentes externas a datos digitales
+\item El programa deberia utilizar los contadores del microcontrolador para contar eventos de fuentes externas
+\item El programa deberia utilizar el modulo serial UART y SMBus del microcontrolador para enviar los datos a otra placa o microprocesador
+\item Para cada canal del conversor:
+\begin{itemize}
+\item El usuario deberia poder habilitar o inhabilitar el canal para la medicion
+\item El usuario deberia poder configurar el modo de medicion (canal unico o diferencial). En caso de ser canal unico deberia especificarse un solo canal, y dos canales para modo diferencial.
+\item El usuario deberia poder configurar un tiempo entre cada medicion
+\end{itemize}
+\item Para cada contador:
+\begin{itemize}
+\item El usuario deberia poder habilitar o inhabilitar el conteo de eventos.
+\end{itemize}
+\item El usuario deberia poder elegir el protocolo serial para comunicarse con la placa o microprocesador externo que recibira los datos (UART o SMBus).
+
+\end{itemize}
+
+
+% section requerimientos_de_la_iteracion (end)
+
+\section{Desarrollo} % (fold)
+\label{sec:desarrollo}
+
+% section desarrollo (end)
+
+\section{Pruebas} % (fold)
+\label{sec:pruebas}
+
+% section pruebas (end)
+
+\section{Resultados} % (fold)
+\label{sec:resultados}
+
+% section resultados (end)
+
+% chapter iteracion_3 (end)
