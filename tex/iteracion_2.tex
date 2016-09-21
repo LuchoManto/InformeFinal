@@ -39,6 +39,52 @@ De los requerimientos principales, surgen los siguientes requerimientos para el 
 \section{Desarrollo} % (fold)
 \label{sec:desarrollo}
 
+En esta seccion elaboramos el proceso de desarrollo que se llevo a cabo para construir el software a embeber en el microcontrolador C8051F252\cite{c8051f352}. Es necesario que se tenga en cuenta que fueron necesarias dos iteraciones para llegar al prototipo final. En esta seccion cubrimos solo la primera. La segunda iteracion de software, que fue en la que se llego al programa final de la placa de adquisicion, se encuentra en el capitulo \ref{cha:iteracion_4}
+
+\section{Diseño y modelos estaticos} % (fold)
+\label{sec:diseno_y_modelos_estaticos}
+
+Para poder describir el programa de manera grafica, utilizamos modelos del patron de diseño SysML 1.1. Aunque no usamos este patron de diseño para el programa, lo utilizamos en este informe para describirlo de una manera formal.
+
+\subsection{Casos de uso} % (fold)
+\label{sub:casos_de_uso}
+
+Como primera instancia, realizamos un diagrama de caso de uso para tener una idea de lo que se quiere lograr con el programa. Es necesario tener en cuenta que por las caracteristicas del microcontrolador, existen ciertas limitaciones que limitan el software. Estas limitaciones estan listadas en la seccion \ref{sub:seleccion}.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.80\textwidth, height = 11cm]{casouso1}
+  \caption{Diagrama de caso de uso del sistema de medicion e instrumentacion}\label{fig:casouso1}
+\end{figure}
+
+El caso de uso ``configurar'' esta generalizado. Las acciones que incluye este caso son:
+\begin{itemize}
+	\item Configurar la interfaz serial
+	\item Configurar canal en modo singular
+	\item Configurar canal en modo equilibrado
+	\item Configurar contador de eventos
+	\item Configurar ganancia del del conversor
+	\item Configurar intervalo de medicion para conversion analogica
+\end{itemize}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.80\textwidth, height = 11cm]{casousoAdministrador}
+  \caption{Diagrama de caso de uso del sistema administrador}\label{fig:casousoAdministrador}
+\end{figure}
+
+En la figura \ref{fig:casouso1}, se puede ver el diagrama de caso de uso para el software a realizar. En cada caso de uso, pueden comenzar a visualizarse las distintas acciones que el programa debe realizar. Al no contar con la posibilidad de organizar el programa en clases, se separo en distintos modulos que agrupan funciones de caracteristicas similares. Estos modulos estan ilustrados como bloques en la figura \ref{fig:bloquesprimeraiteracionsoftware}. Cada bloque correponde a un modulo distinto dentro del programa. En cada bloque se pueden ver los nombres de cada funcion y el tipo de retorno. Con esto ultimo, damos una idea de las acciones realizadas por las funciones de cada modulo. Una descripcion mas detallada esta en la documentacion del programa, realizada en Doxygen. 
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.80\textwidth, height = 11cm]{bloquesprimeraiteracionsoftware}
+  \caption{Diagrama de bloques de la primera iteracion de software}\label{fig:bloquesprimeraiteracionsoftware}
+\end{figure}
+
+% subsection casos_de_uso (end)
+
+
+% section diseño_y_modelos_estaticos (end)
 % section desarrollo (end)
 
 \section{Pruebas} % (fold)
