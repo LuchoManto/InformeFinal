@@ -115,7 +115,14 @@ En el momento, había en el laboratorio una placa de desarrollo de Silicon Labs 
 
 Además de la ventaja de tenerlo en el mismo laboratorio, la placa de Silicon Labs tiene la particularidad de tener una buena ganancia máxima (128x) a la entrada del ADC, lo cual lo distingue del resto de los microcontroladores analizados. Además de esto, cumple con el resto de los requisitos propuestos por nuestro tutor, por lo que consistía en una buena elección.
 
-Habiendo hecho este análisis, se decidió optar por utilizar el microcontrolador C8051F352 de Silicon Labs.
+Habiendo hecho este análisis, se decidió optar por utilizar el microcontrolador C8051F352 de Silicon Labs. \\
+
+La eleccion de este microcontrolador establecio algunas limitaciones para el software a diseñar. Estas fueron:
+
+\begin{itemize}
+  \item \textbf{Memoria:} El microcontrolador tiene arquitectura Von-Neumann, lo que quiere decir que los datos y el programa residen en la misma memoria fisica. Esta memoria tiene un tamaño de 8Kb, por lo que, en conjunto, el programa y los datos no pueden superar los 8Kb de tamaño.
+  \item \textbf{Lenguaje de programacion:} El programa debe ser desarrollado en lenguaje C.
+\end{itemize}
 
 
 % subsection selección (end)
