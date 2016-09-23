@@ -81,15 +81,110 @@ En la figura \ref{fig:casouso1}, se puede ver el diagrama de caso de uso para el
   \caption{Diagrama de bloques de la primera iteracion de software}\label{fig:bloquesprimeraiteracionsoftware}
 \end{figure}
 
-El objetivo de los diagramas ilustrados es una descripcion grafica del sistema. Es necesario destacar que, desde el principio, la evolucion del programa ocasiono que los diseños de los modulos fueran cambiando. Los cambios fueron debidos a multiples razones: particularidades del funcionamiento del microcontrolador que no se tuvieron en cuenta, limitaciones del entorno, etcetera. En el presente informe, intentamos destacar aquellos cambios en el programa que surgieron de problemas imprevistos, y que tuvieron incidencia importante en el sistema.
+El objetivo de los diagramas ilustrados es una descripcion grafica del sistema. Es necesario destacar que, desde el principio, la evolucion del programa ocasiono que los diseños de los modulos fueran cambiando. Los cambios fueron debidos a multiples razones: particularidades del funcionamiento del microcontrolador que no se tuvieron en cuenta, limitaciones del entorno, etcetera. En el presente informe, intentamos describir de manera general el funcionamiento del programa, y destacar aquellos cambios que surgieron de problemas imprevistos, y que tuvieron incidencia importante en el sistema.
+
+\begin{itemize}
+  \item El \textbf{Main o Bloque Principal} principalmente obtiene los datos de los sensores, los procesa, y los envia al modulo principal. Ademas de esto, configura el funcionamiento del ADC segun los parametros dados por el usuario. El usuario puede elegir la cantidad de pines que va a utilizar como entrada segun la cantidad de sensores que quiera medir, puede elegir un nivel de ganancia de amplificacion de la señal antes de la conversion, y puede tambien elegir el modo de obtencion de los datos (diferencial o single-ended).
+  \item El \textbf{Contador} se encarga de obtener los valores en los contadores de eventos.
+  \item El \textbf{Interfaz de Usuario} en este modulo se levanta la interfaz con la que interactua el usuario para establecer los parametros configurables del sistema.
+  \item El \textbf{Configurador} interactua directamente con el hardware del microcontrolador. Realiza todas las configuraciones necesarias para poder hacer funcionar cada modulo. Inicializa todos los registros pertinentes, el clock del sistema y setea los puertos de entrada y salida.
+  \item El \textbf{Serial} envia los datos por interfaz serial. Puede ser UART o $I^{2}$C.
+\end{itemize}
 
 % subsection modelos_estaticos (end)
 
+Los fabricantes del microcontrolador proporcionan una libreria en C para trabajar con los registros del procesador. Todos los bloques excepto el de la interfaz grafica, manipulan registros para realizar las distintas acciones que le corresponden segun la funcion que se ejecuta.  
+
+
+\subsection{Modelos dinamicos} % (fold)
+\label{sub:modelos_dinamicos}
+
+Mediante el uso de diagramas de secuencia, explicamos en esta seccion las interacciones entre el usuario y el sistema que cubren los requerimientos principales. Las funciones incolucradas en cada interaccion son las mismas declaradas en el diagrama de bloques del sistema. La mayoria de los flujos que se describen en estos modelos fueron desarrollados iterativamente, es decir, son producto de un desarrollo incremental, hasta llegar a la iteracion actual. La iteracion \ref{cha:iteracion_4} modela las interacciones del programa en su estado final. \\
+
+El objetivo de esta iteracion fue diseñar el programa con un paradigma de configuracion y loop infinito. Es decir, en una etapa inicial, el usuario configura todos los parametros necesarios del sistema, y una vez que se le da arranque, el sistema convierte en modo automatico en un loop infinito, hasta que el usuario le da parada. La figura \ref{secuenciaconfiguracionbasica} muestra una secuencia para realizar una configuracion de un canal del conversor en modo de canal unico. En la figura \ref{fig:secuenciaconversioncontinua}, ilustra como el sistema se coloca en modo de conversion continua, idealmente luego de una configuracion previa. 
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.80\textwidth, height = 11cm]{secuenciaconfiguracionbasica}
+  \caption{Diagrama de secuencia para una configuracion del conversor. Establece el canal 3 en modo canal unico}\label{fig:secuenciaconfiguracionbasica}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.80\textwidth, height = 11cm]{secuenciaconversioncontinua}
+  \caption{Diagrama de secuencia para la activacion de conversiones en modo continuo luego de una configuracion previa.}\label{fig:secuenciaconversioncontinua}
+\end{figure}
+
+
+\subsection{Logica de las funciones del conversor} % (fold)
+\label{sub:logica_de_las_funciones_del_conversor}
+
+Los registros del microcontrolador permiten manipular el conversor de la siguiente manera (para propositos de la logica de conversion):
+
+\begin{itemize}
+  \item Se puede establecer de 1 hasta 8 pines en modo canal unico
+  \item Se puede establecer de 1 hasta 4 pares de pines en modo diferencial
+  \item Se puede establecer un nivel de ganancia de x2 a x128 para todos los canales
+\end{itemize}
+
+La logica de las funciones dentro del bloque de software perteneciente al conversor permiten establecer la configuracion del conversor para las mediciones que se quieran hacer. Las funciones que interactuan con el conversor analogico digital o con la logica de conversion de manera directa, son las siguientes (figura \ref{fig:bloquesprimeraiteracionsoftware}):
+
+\begin{itemize}
+  \item \textit{convertir}: Interactua con el hardware del microcontrolador para obtener la ultima conversion realizada. Es ejecutada unicamente por la rutina de interrupcion del ADC (iniciada en cada "End of Conversion")
+  \item \textit{cargar_buffer_single}: carga el buffer de conversion en una posicion que depende de un parametro de entrada, con el numero "1", indicando que el canal que se corresponde con esa posicion en el buffer se debe leer en modo canal unico
+  \item \textit{cargar_buffer_dif}: carga el buffer de conversion en una posicion que depende de un parametro de entrada, con el numero "2", indicando que el canal que se corresponde con esa posicion en el buffer, y el canal siguiente a ese, deben ser leidos en modo diferencial.
+  \item \texit{cambiar_pin}: Establece el canal por donde se medira la proxima conversion.
+\end{itemize}
+
+\subsubsection{Buffer de conversion y logica de cambio de canal en conversion continua} % (fold)
+\label{ssub:buffer_de_conversion_y_logica_de_cambio_de_canal_en_conversion_continua}
+
+Las funciones \textit{cargar_buffer_single} y \textit{cargar_buffer_dif}, establecen el modo en el que se leera un canal. Dentro del programa, se crea un buffer de 8 posiciones, cada una representando un canal distinto del ADC. Los valores posibles para estas posiciones son 0, 1 y 2; estos valores representan, respectivamente, que el canal esta o deshabilitado, en modo canal unico o en modo diferencial. Estas funciones, al ser ejecutadas, cargan algun numero en el buffer según que funcion es la que se ejecuto. El buffer se inicializa por defecto en 0, por lo que inicialmente ningun canal esta habilitado para convertir. \\
+
+Cuando se inicia la conversion continua, despues de cada conversion se llama la funcion \textit{cambiar_pin}. Esta funcion utiliza este buffer para saber cual es el proximo canal a medir. Simplemente maneja un indice que se incrementa hasta 7 y vuelve a 0, recorriendo el buffer cada vez. Segun el numero que tenga la posicion en la que se encuentra, se sabe si debe medirse un canal en modo unico, o el canal y el siguiente en modo diferencial. \\
+
+%Este algoritmo fue el primer prototipo de logica de asignacion y cambio de canal para la lectura de mediciones del conversor. A simple vista es posible ver que los potenciales problemas son muchos. Para empezar, si se asigna el pin 5 en modo canal unico y el modo 4 en modo diferencial, el programa intentara medir en dos modos distintos el mismo canal, dando seguramente resultados inconsistentes. 
+
+% subsubsection buffer_de_conversion_y_logica_de_cambio_de_canal_en_conversion_continua (end)
+
+% subsection logica_de_las_funciones_del_conversor (end)
+
+\subsection{Logica de las funciones de la interfaz} % (fold)
+\label{sub:logica_de_las_funciones_de_la_interfaz}
+
+Aca es necesario partir el tema en 2.. porque al principio empezamos haciendo todo mal. quisimos hacder una especioe de menu interactivo que le diera la posivilidad al usuario de poder elegir entre distintas opciones de este menu, desplegadas en forma de arbol, para que pudiera elegir la configuracion que quisiera. O sea, arrancaba al principio con un menu general donde ibas navegando hasta poner la configuracion que querias. Asi empezamos, y seguimos con esa logica hasta que se hizo insufrible el programa. Cada vez que queriamos agregar una nueva opcion eran muchas lineas de codigo para cambiar. ahi es cuando investigando me llego el concepto de lo que se llama MMLo "man machine language". Es una logica muy simple. es como un paradigma de interfaz hombre maquina, donde el usuario lo que hace es enviar unos comandos estandarizados y una serie de argumentos, armados en base a una expersion regular. Cisco y Unix Bash usan este paradigma para interactuar con los usuarios. la idea es tan simple como poderosa, lo unico que habia que hacer era decidir como iba a ser el formato de entrada. El analisis posterior es una secuencia que parsea la entrada en busca del comando y los parametros. con el comando, se sabe que funcion ejecutar, y los argumentos son pasados como parametros para esta funcion. Este paradigma es mas complicado de sacar andando, pero es mucho mas escalable que el del menu. a la hora de agregar funcionalidades nuevas se hacia en mucho menos tiempo. Ademas, hace que el programa sea mucho mas facil de testear con unit testing.
+
+% subsection logica_de_las_funciones_de_la_interfaz (end)
+
+
+% subsection modelos_dinamicos (end)
 
 % section desarrollo (end)
 
 \section{Pruebas} % (fold)
 \label{sec:pruebas}
+
+
+\subsection{Escenarios} % (fold)
+\label{sub:escenarios}
+
+\subsubsection{Comportamiento esperado del conversor en modo canal unico} % (fold)
+\label{ssub:comportamiento_esperado_del_conversor_en_modo_canal_unico}
+
+probamos que convierta usando un generador de tension. el objetivo era configurar el programa de una manera basica y que responda correctamente. le pusimos un canal en modo unico y un generador de tension variable. Los valores medidos se enviaban por interfaz serial a una pc, y utilizando un lector de puerto serial se leian los datos recibidos, el sistema funcionaba como se esperaba si la lectura coincidia con el valor en el generador. En esta prueba se cubria el funcionamiento de la logica del conversor y del modulo serial
+
+% subsubsection comportamiento_esperado_del_conversor_en_modo_canal_unico (end)
+
+
+\subsubsection{Comportamiento esperado del conversor en modo diferencial} % (fold)
+\label{ssub:comportamiento_esperado_del_conversor_en_modo_diferencial}
+
+probamos que convierta usando un generador de tension. el objetivo era configurar el programa de una manera basica y que responda correctamente. le pusimos un canal en modo diferencial y un generador de tension variable. Los valores medidos se enviaban por interfaz serial a una pc, y utilizando un lector de puerto serial se leian los datos recibidos, el sistema funcionaba como se esperaba si la lectura coincidia con el valor en el generador. En esta prueba se cubria el funcionamiento de la logica del conversor y del modulo serial
+
+% subsubsection comportamiento_esperado_del_conversor_en_modo_diferencial (end)
+
+
+% subsection escenarios (end)
 
 % section pruebas (end)
 
