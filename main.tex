@@ -8,6 +8,7 @@
 \usepackage{float}
 \usepackage{fixltx2e}
 \usepackage{blindtext}
+\usepackage[table,xcdraw]{xcolor}
 %para incluir graficos
 \usepackage{graphicx}
 \usepackage[font=small,labelfont=bf,justification=justified,format=plain]{caption} % 'format=plain' avoids hanging indentation
@@ -19,7 +20,7 @@
 \newcommand{\hsp}{\hspace{20pt}}
 %chapter:
 \titleformat{\chapter}[hang]{\Huge\bfseries}{\thechapter\hsp\textcolor{gray75}{|}\hsp}{0pt}{\Huge\bfseries}
-
+\newcommand{\tabitem}{~~\llap{\textbullet}~~}
 %para poder poner paginas en modo apaisado
 \usepackage{lscape}
 
