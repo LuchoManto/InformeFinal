@@ -23,7 +23,7 @@ De los requerimientos principales, surgen los siguientes requerimientos para el 
 \begin{itemize}
 \item El usuario deberia poder habilitar o inhabilitar el canal para la medicion
 \item El usuario deberia poder configurar el modo de medicion (canal unico o diferencial). En caso de ser canal unico deberia especificarse un solo canal, y dos canales para modo diferencial.
-\item El usuario deberia poder configurar un tiempo entre cada medicion
+\item El usuario deberia poder configurar un tiempo de intervalo entre cada medicion
 \end{itemize}
 \item Para cada contador:
 \begin{itemize}
@@ -39,7 +39,7 @@ De los requerimientos principales, surgen los siguientes requerimientos para el 
 \section{Desarrollo} % (fold)
 \label{sec:desarrollo}
 
-En esta seccion elaboramos el proceso de desarrollo que se llevo a cabo para construir el software a embeber en el microcontrolador C8051F252\cite{c8051f352}. Es necesario que se tenga en cuenta que fueron necesarias dos iteraciones para llegar al prototipo final. En esta seccion cubrimos solo la primera. La segunda iteracion de software, que fue en la que se llego al programa final de la placa de adquisicion, se encuentra en el capitulo \ref{cha:iteracion_4}
+En esta seccion elaboramos el proceso de desarrollo que se llevo a cabo para construir el software a embeber en el microcontrolador C8051F252\cite{c8051f352}. Es necesario que se tenga en cuenta que fueron necesarias dos iteraciones para llegar al prototipo final. En esta seccion cubrimos solo la primera. La segunda iteracion de software, que fue en la que se llego al programa final de la placa de adquisicion, se encuentra en el capitulo \ref{cha:iteracion_5}
 
 \section{Diseño y modelos estaticos} % (fold)
 \label{sec:diseno_y_modelos_estaticos}
@@ -59,12 +59,12 @@ Como primera instancia, realizamos un diagrama de caso de uso para tener una ide
 
 El caso de uso ``configurar'' esta generalizado. Las acciones que incluye este caso son:
 \begin{itemize}
-	\item Configurar la interfaz serial
-	\item Configurar canal en modo singular
-	\item Configurar canal en modo equilibrado
-	\item Configurar contador de eventos
-	\item Configurar ganancia del del conversor
-	\item Configurar intervalo de medicion para conversion analogica
+  \item Configurar la interfaz serial
+  \item Configurar canal en modo singular
+  \item Configurar canal en modo equilibrado
+  \item Configurar contador de eventos
+  \item Configurar ganancia del del conversor
+  \item Configurar intervalo de medicion para conversion analogica
 \end{itemize}
 
 \begin{figure}[h]
@@ -99,7 +99,7 @@ Los fabricantes del microcontrolador proporcionan una libreria en C para trabaja
 \subsection{Modelos dinamicos} % (fold)
 \label{sub:modelos_dinamicos}
 
-Mediante el uso de diagramas de secuencia, explicamos en esta seccion las interacciones entre el usuario y el sistema que cubren los requerimientos principales. Las funciones incolucradas en cada interaccion son las mismas declaradas en el diagrama de bloques del sistema. La mayoria de los flujos que se describen en estos modelos fueron desarrollados iterativamente, es decir, son producto de un desarrollo incremental, hasta llegar a la iteracion actual. La iteracion \ref{cha:iteracion_4} modela las interacciones del programa en su estado final. \\
+Mediante el uso de diagramas de secuencia, explicamos en esta seccion las interacciones entre el usuario y el sistema que cubren los requerimientos principales. Las funciones incolucradas en cada interaccion son las mismas declaradas en el diagrama de bloques del sistema. La mayoria de los flujos que se describen en estos modelos fueron desarrollados iterativamente, es decir, son producto de un desarrollo incremental, hasta llegar a la iteracion actual. La iteracion \ref{cha:iteracion_5} modela las interacciones del programa en su estado final. \\
 
 El objetivo de esta iteracion fue diseñar el programa con un paradigma de configuracion y loop infinito. Es decir, en una etapa inicial, el usuario configura todos los parametros necesarios del sistema, y una vez que se le da arranque, el sistema convierte en modo automatico en un loop infinito, hasta que el usuario le da parada. La figura \ref{secuenciaconfiguracionbasica} muestra una secuencia para realizar una configuracion de un canal del conversor en modo de canal unico. En la figura \ref{fig:secuenciaconversioncontinua}, ilustra como el sistema se coloca en modo de conversion continua, idealmente luego de una configuracion previa. 
 
@@ -131,33 +131,41 @@ La logica de las funciones dentro del bloque de software perteneciente al conver
 
 \begin{itemize}
   \item \textit{convertir}: Interactua con el hardware del microcontrolador para obtener la ultima conversion realizada. Es ejecutada unicamente por la rutina de interrupcion del ADC (iniciada en cada "End of Conversion")
-  \item \textit{cargar_buffer_single}: carga el buffer de conversion en una posicion que depende de un parametro de entrada, con el numero "1", indicando que el canal que se corresponde con esa posicion en el buffer se debe leer en modo canal unico
-  \item \textit{cargar_buffer_dif}: carga el buffer de conversion en una posicion que depende de un parametro de entrada, con el numero "2", indicando que el canal que se corresponde con esa posicion en el buffer, y el canal siguiente a ese, deben ser leidos en modo diferencial.
-  \item \texit{cambiar_pin}: Establece el canal por donde se medira la proxima conversion.
+  \item \textit{cargar\_buffer\_single}: carga el buffer de conversion en una posicion que depende de un parametro de entrada, con el numero "1", indicando que el canal que se corresponde con esa posicion en el buffer se debe leer en modo canal unico
+  \item \textit{cargar\_buffer\_dif}: carga el buffer de conversion en una posicion que depende de un parametro de entrada, con el numero "2", indicando que el canal que se corresponde con esa posicion en el buffer, y el canal siguiente a ese, deben ser leidos en modo diferencial.
+  \item \textit{cambiar\_pin}: Establece el canal por donde se medira la proxima conversion.
 \end{itemize}
+% subsection modelos_dinamicos (end)
 
-\subsubsection{Buffer de conversion y logica de cambio de canal en conversion continua} % (fold)
-\label{ssub:buffer_de_conversion_y_logica_de_cambio_de_canal_en_conversion_continua}
+\subsection{Buffer de conversion y logica de cambio de canal en conversion continua} % (fold)
+\label{sub:buffer_de_conversion_y_logica_de_cambio_de_canal_en_conversion_continua}
 
-Las funciones \textit{cargar_buffer_single} y \textit{cargar_buffer_dif}, establecen el modo en el que se leera un canal. Dentro del programa, se crea un buffer de 8 posiciones, cada una representando un canal distinto del ADC. Los valores posibles para estas posiciones son 0, 1 y 2; estos valores representan, respectivamente, que el canal esta o deshabilitado, en modo canal unico o en modo diferencial. Estas funciones, al ser ejecutadas, cargan algun numero en el buffer según que funcion es la que se ejecuto. El buffer se inicializa por defecto en 0, por lo que inicialmente ningun canal esta habilitado para convertir. \\
+Las funciones \textit{cargar\_buffer\_single} y \textit{cargar\_buffer\_dif}, establecen el modo en el que se leera un canal. Dentro del programa, se crea un buffer de 8 posiciones, cada una representando un canal distinto del ADC. Los valores posibles para estas posiciones son 0, 1 y 2; estos valores representan, respectivamente, que el canal esta o deshabilitado, en modo canal unico o en modo diferencial. Estas funciones, al ser ejecutadas, cargan algun numero en el buffer según que funcion es la que se ejecuto. El buffer se inicializa por defecto en 0, por lo que inicialmente ningun canal esta habilitado para convertir. \\
 
-Cuando se inicia la conversion continua, despues de cada conversion se llama la funcion \textit{cambiar_pin}. Esta funcion utiliza este buffer para saber cual es el proximo canal a medir. Simplemente maneja un indice que se incrementa hasta 7 y vuelve a 0, recorriendo el buffer cada vez. Segun el numero que tenga la posicion en la que se encuentra, se sabe si debe medirse un canal en modo unico, o el canal y el siguiente en modo diferencial. \\
+Cuando se inicia la conversion continua, despues de cada conversion se llama la funcion \textit{cambiar\_pin}. Esta funcion utiliza este buffer para saber cual es el proximo canal a medir. Simplemente maneja un indice que se incrementa hasta 7 y vuelve a 0, recorriendo el buffer cada vez. Segun el numero que tenga la posicion en la que se encuentra, se sabe si debe medirse un canal en modo unico, o el canal y el siguiente en modo diferencial. \\
 
 %Este algoritmo fue el primer prototipo de logica de asignacion y cambio de canal para la lectura de mediciones del conversor. A simple vista es posible ver que los potenciales problemas son muchos. Para empezar, si se asigna el pin 5 en modo canal unico y el modo 4 en modo diferencial, el programa intentara medir en dos modos distintos el mismo canal, dando seguramente resultados inconsistentes. 
 
-% subsubsection buffer_de_conversion_y_logica_de_cambio_de_canal_en_conversion_continua (end)
+% subsection buffer_de_conversion_y_logica_de_cambio_de_canal_en_conversion_continua (end)
 
 % subsection logica_de_las_funciones_del_conversor (end)
 
 \subsection{Logica de las funciones de la interfaz} % (fold)
 \label{sub:logica_de_las_funciones_de_la_interfaz}
 
-Aca es necesario partir el tema en 2.. porque al principio empezamos haciendo todo mal. quisimos hacder una especioe de menu interactivo que le diera la posivilidad al usuario de poder elegir entre distintas opciones de este menu, desplegadas en forma de arbol, para que pudiera elegir la configuracion que quisiera. O sea, arrancaba al principio con un menu general donde ibas navegando hasta poner la configuracion que querias. Asi empezamos, y seguimos con esa logica hasta que se hizo insufrible el programa. Cada vez que queriamos agregar una nueva opcion eran muchas lineas de codigo para cambiar. ahi es cuando investigando me llego el concepto de lo que se llama MMLo "man machine language". Es una logica muy simple. es como un paradigma de interfaz hombre maquina, donde el usuario lo que hace es enviar unos comandos estandarizados y una serie de argumentos, armados en base a una expersion regular. Cisco y Unix Bash usan este paradigma para interactuar con los usuarios. la idea es tan simple como poderosa, lo unico que habia que hacer era decidir como iba a ser el formato de entrada. El analisis posterior es una secuencia que parsea la entrada en busca del comando y los parametros. con el comando, se sabe que funcion ejecutar, y los argumentos son pasados como parametros para esta funcion. Este paradigma es mas complicado de sacar andando, pero es mucho mas escalable que el del menu. a la hora de agregar funcionalidades nuevas se hacia en mucho menos tiempo. Ademas, hace que el programa sea mucho mas facil de testear con unit testing.
+% Aca es necesario partir el tema en 2.. porque al principio empezamos haciendo todo mal. quisimos hacder una especioe de menu interactivo que le diera la posivilidad al usuario de poder elegir entre distintas opciones de este menu, desplegadas en forma de arbol, para que pudiera elegir la configuracion que quisiera. O sea, arrancaba al principio con un menu general donde ibas navegando hasta poner la configuracion que querias. Asi empezamos, y seguimos con esa logica hasta que se hizo insufrible el programa. Cada vez que queriamos agregar una nueva opcion eran muchas lineas de codigo para cambiar. ahi es cuando investigando me llego el concepto de lo que se llama MMLo "man machine language". Es una logica muy simple. es como un paradigma de interfaz hombre maquina, donde el usuario lo que hace es enviar unos comandos estandarizados y una serie de argumentos, armados en base a una expersion regular. Cisco y Unix Bash usan este paradigma para interactuar con los usuarios. la idea es tan simple como poderosa, lo unico que habia que hacer era decidir como iba a ser el formato de entrada. El analisis posterior es una secuencia que parsea la entrada en busca del comando y los parametros. con el comando, se sabe que funcion ejecutar, y los argumentos son pasados como parametros para esta funcion. Este paradigma es mas complicado de sacar andando, pero es mucho mas escalable que el del menu. a la hora de agregar funcionalidades nuevas se hacia en mucho menos tiempo. Ademas, hace que el programa sea mucho mas facil de testear con unit testing.
+
+La interfaz de usuario tuvo dos implementaciones, siendo la segunda un reemplazo de la primera.
+
+La primera interfaz fue de tipo ``Menu Based Interface'' o interfaz basada en menu, donde las acciones a realizar son ofrecidas por la interfaz y seleccionadas por un usuario. Cada accion esta clasificada segun el grupo de acciones al que pertenezca. Por ejemplo: para configurar el pin 4 del ADC en modo canal unico, es necesario navegar por las opciones del menu de la forma ``configuracion->configurar pin ADC->pin 4->modo canal unico''. Siguiendo este patron de diseño, en cada adicion de una nueva accion, habia que buscar el grupo al que pertenecia y programar la logica necesaria para ejecutar la accion en base a la navegacion del usuario dentro del menu. Esta forma de desarrollo probo ser muy poco escalable, y tuvimos que cambiarla por la dificultad que traia a la hora de agregar nuevas acciones. \\
+
+La segunda interfaz diseñada fue de tipo ``Command line interface''. En este tipo de interfaz, el usuario ingresa un comando y uno o varios argumentos en un formato que respeta una expresion regular. Bajo este concepto, se necesita un parser o analizador de comandos que extraiga de la entrada el comando y los argumentos, y realice acciones segun ellos. En nuestro caso, cada comando representa una funcion distinta de nuestro programa, y los argumentos pasan a ser parametros de la funcion. \\
+
+Luego de implementar un analizador de comandos, agregar funcionalidades al programa fue mas simple y rapido con una interfaz basada en linea de comando que con una basada en menu. Por lo que el primer diseño fue descartado y el segundo se mantuvo.
 
 % subsection logica_de_las_funciones_de_la_interfaz (end)
 
 
-% subsection modelos_dinamicos (end)
 
 % section desarrollo (end)
 
@@ -165,32 +173,123 @@ Aca es necesario partir el tema en 2.. porque al principio empezamos haciendo to
 \label{sec:pruebas}
 
 
-\subsection{Escenarios} % (fold)
-\label{sub:escenarios}
+\subsection{Tests unitarios} % (fold)
+\label{sub:tests_unitarios}
 
-\subsubsection{Comportamiento esperado del conversor en modo canal unico} % (fold)
-\label{ssub:comportamiento_esperado_del_conversor_en_modo_canal_unico}
+Cada una de las funciones, tanto si interactuan con el hardware del micro como si no, estan testeadas utilizando unit-testing en C, con ayuda del framework ``minunit''\cite{minunit}. Los unit-tests se ejecutaban de la misma manera que se ejecutaba el programa principal, y corria todos los tests, dando como resultado la cantidad de tests que pasaron y los que fallaron.
 
-probamos que convierta usando un generador de tension. el objetivo era configurar el programa de una manera basica y que responda correctamente. le pusimos un canal en modo unico y un generador de tension variable. Los valores medidos se enviaban por interfaz serial a una pc, y utilizando un lector de puerto serial se leian los datos recibidos, el sistema funcionaba como se esperaba si la lectura coincidia con el valor en el generador. En esta prueba se cubria el funcionamiento de la logica del conversor y del modulo serial
+% subsection tests_unitarios (end)
 
-% subsubsection comportamiento_esperado_del_conversor_en_modo_canal_unico (end)
+\subsection{Tests de sistema} % (fold)
+\label{sub:tests_de_sistema}
 
+las pruebas de sistema se realizaron utilizando la placa de desarrollo mencionada en la seccion PONER ACA LA SECCION DONDE HABLAMOS DE LA SILICON LABS. Al no tener todavia una implementacion hecha del sistema, se utilizo esta placa para testear el codigo embebido en el microcontrolador, que en definitiva seria el mismo que iria en la placa a construir
 
-\subsubsection{Comportamiento esperado del conversor en modo diferencial} % (fold)
-\label{ssub:comportamiento_esperado_del_conversor_en_modo_diferencial}
+\begin{table}[h]
+\centering
+\caption{Test de sistema 1}
+\label{tab:testsistema1}
+\begin{tabular}{
+>{\columncolor[HTML]{D3FBFA}}c 
+>{\columncolor[HTML]{D3FBFA}}l }
+\multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}}                                                                                                                                                                                                                                                   \\
+Prueba \#        & 1                                                                                                                                                                                                                                                                                                                   \\
+Nombre           & Comportamiento esperado del conversor en modo canal unico                                                                                                                                                                                                                                                           \\
+Descripcion      & Se conecta un generador de tension en uno de los canales del conversor y se mide en ese canal en modo canal unico, y de esta forma comprobar no tan solo que se este midiendo, sino ademas que estas mediciones esten calibradas para este modo.                                                                                   \\
+Pre-condiciones  & \tabitem Sistema configurado con un pin en modo canal unico \\
+                    \tabitem Generador de tension conectado al pin configurado \\
+                    \tabitem Computadora conectada al sistema mediante cable serial RS-232 \\
+                    \tabitem Lector de canal serial abierto en la computadora \\
+                    \tabitem Sistema midiendo en modo de conversiones continuas\\
 
-probamos que convierta usando un generador de tension. el objetivo era configurar el programa de una manera basica y que responda correctamente. le pusimos un canal en modo diferencial y un generador de tension variable. Los valores medidos se enviaban por interfaz serial a una pc, y utilizando un lector de puerto serial se leian los datos recibidos, el sistema funcionaba como se esperaba si la lectura coincidia con el valor en el generador. En esta prueba se cubria el funcionamiento de la logica del conversor y del modulo serial
+Post-condiciones & Los datos de las conversiones que aparezcan en el programa lector de interfaz serial en la computadora deberian corresponderse con los valores de tension provenientes del generador                     
+\\
+Resultados       & Las mediciones dieron resultados coherentes, con algunas variaciones esperadas debido al ruido presente en el ambiente.                                                                                                   
+\end{tabular}
+\end{table}
 
-% subsubsection comportamiento_esperado_del_conversor_en_modo_diferencial (end)
+\begin{table}[h]
+\centering
+\caption{Test de sistema 2}
+\label{tab:testsistema2}
+\begin{tabular}{
+>{\columncolor[HTML]{D3FBFA}}c 
+>{\columncolor[HTML]{D3FBFA}}l }
+\multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}}                                                                                                                                                                                                                                                   \\
+Prueba \#        & 2                                                                                                                                                                                                                                                                                                                   \\
+Nombre           & Comportamiento esperado del conversor en modo diferencial                                                                                                                                                                                                                                                          \\
+Descripcion      & Se conecta un generador de tension en uno de los canales del conversor y se mide en ese canal en modo diferencial, y de esta forma comprobar no tan solo que se este midiendo, sino ademas que estas mediciones esten calibradas para este modo. Ademas, se comprueba el funcionamiento de las mediciones en modo diferencial, intentando medir tensiones negativas.                                                                                  \\
+Pre-condiciones  & \tabitem Sistema configurado con un pin en modo diferencial \\
+                    \tabitem Generador de tension conectado al par de pines configurados en modo diferencial. Con el borne positivo en uno y masa en el otro\\
+                    \tabitem Computadora conectada al sistema mediante cable serial RS-232 \\
+                    \tabitem Lector de canal serial abierto en la computadora \\
+                    \tabitem Sistema midiendo en modo de conversiones continuas\\
 
+Post-condiciones & Los datos de las conversiones que aparezcan en el lector de interfaz serial en la computadora deberian corresponderse con los valores de tension provenientes del generador  
+\\ 
+Resultados       & Las mediciones no dieron resultados coherentes. Aunque los cambios en el generador se reproducian en la medicion, los datos no eran los mismos. Esto se debe a que cuando se mide en modo diferencial, el cero pasa a ser la tension de referencia dividida en dos, para representar los valores negativos. La logica del programa no tenia en cuenta esto, y media las tensiones de forma desfasada.                                                                                                                                                     
+\end{tabular}
+\end{table}
 
-% subsection escenarios (end)
+\begin{table}[h]
+\centering
+\caption{Test de sistema 3}
+\label{tab:testsistema3}
+\begin{tabular}{
+>{\columncolor[HTML]{D3FBFA}}c 
+>{\columncolor[HTML]{D3FBFA}}l }
+\multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}}                                                                                                                                                                                                                                                   \\
+Prueba \#        & 3                                                                                                                                                                                                                                                                                                                   \\
+Nombre           & Comportamiento esperado del contador de eventos                                                                                                                                                                                                                                                          \\
+Descripcion      & Se conecta un generador de onda cuadrada en una entrada GPIO que pueda servir como entrada a algun contador de eventos. Si el contador esta activo, se deberia poder ver que el numero de cuentas incrementa al ritmo de la frecuencia configurada en el generador                                                                                  \\
+Pre-condiciones  & \tabitem Sistema configurado con un contador de eventos activo \\
+                    \tabitem Generador de frecuencia conectado al pin configurado como contador. \\
+                    \tabitem Computadora conectada al sistema mediante cable serial RS-232 \\
+                    \tabitem Lector de canal serial abierto en la computadora \\
+
+Post-condiciones & El contador deberia contar con una frecuencia igual a la del generador de onda cuadrada
+\\ 
+Resultados       & La cuenta era consistente con la frecuencia del generador.                                                                                                                                                     
+\end{tabular}
+\end{table}
+% subsection tests_de_sistema (end)
 
 % section pruebas (end)
+\section{Conclusiones de la iteracion 2} % (fold)
+\label{sec:conclusiones_de_la_iteracion_2}
 
-\section{Resultados} % (fold)
-\label{sec:resultados}
 
-% section resultados (end)
+\subsection{Estado de los requerimientos} % (fold)
+\label{sub:estado_de_los_requerimientos}
 
-% chapter iteracion_3 (end)
+
+De la seccion \ref{sec:requerimientos_de_la_iteracion}, volvemos a redactar los requerimientos, pero teniendo en cuenta el estado del programa al final de esta iteracion.
+
+\begin{itemize}
+\item El programa utiliza el conversor del microcontrolador para transformar señales analogicas de fuentes externas a datos digitales
+\item El programa utiliza los contadores del microcontrolador para contar eventos de fuentes externas
+\item El programa utiliza el modulo serial UART del microcontrolador para enviar los datos a otra placa o microprocesador
+\item No es posible utilizar el modulo SMBus del microcontrolador.
+\item Para cada canal del conversor:
+\begin{itemize}
+\item El usuario puede habilitar o inhabilitar el canal para la medicion
+\item El usuario puede configurar el modo de medicion (canal unico o diferencial). En caso de ser canal unico especificarse un solo canal, y dos canales para modo diferencial.
+\item No es posible configurar un tiempo de intervalo entre cada medicion
+\end{itemize}
+\item Para cada contador:
+\begin{itemize}
+\item El usuario puede habilitar o inhabilitar el conteo de eventos.
+\end{itemize}
+\item No es posible elegir el protocolo serial para comunicarse con la placa o microprocesador externo que recibira los datos, obligadamente debe usarse UART.
+
+\end{itemize}
+% subsection estado_de_los_requerimientos (end)
+
+\subsection{Objetivos para la proxima iteracion} % (fold)
+\label{sub:objetivos_para_la_proxima_iteracion}
+
+Teniendo un prototipo de software, lo ideal fue comenzar a pensar en un diseño de hardware en donde hacerlo correr. Por lo que el objetivo de la iteracion 3 fue realizar un diseño de harware para la placa de instrumentacion e implementarlo en un PCB; y una vez construido, realizar pruebas que aseguren el funcionamiento del mismo.
+
+% subsection objetivos_para_la_proxima_iteracion (end)
+% section conclusiones_de_la_iteracion_2 (end)
+% chapter iteracion_2 (end)

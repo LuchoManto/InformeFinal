@@ -1,0 +1,7 @@
+cosas que hacen falta:
+
+
+-adaptar el formato de envio de mediciones para que sea PIN,MODO,VALOR,TIMESTAMP
+-terminar la base de datos en el servidor
+-sacar fotos de la primera interfaz pedorra que hicimos
+-sacar fotos de la interfaz pulenta
