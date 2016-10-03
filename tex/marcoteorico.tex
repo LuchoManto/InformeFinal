@@ -126,6 +126,10 @@ El filtro de decimacion selecciona algunos datos de la señal de salida del filt
 \section{Amplificadores de Instrumentación} %fold
 \label{sec:amplificadores_de_instrumentacion}
 
+%Bib: INSTRUMENTACIÓN ELECTRÓNICA DE COMUNICACIONES. José María Drake Moyano. UNIVERSIDAD DE CANTABRIA 2005.
+%Bib: Apuntes de Clases, Electrónica 2. Universidad Nacional de Rosario Facultad de Ciencias Exactas, Ingeniería y Agrimensura Escuela de Ingeniería Electrónica.
+%Bib: A Designer’s Guide to Instrumentation Amplifiers. 2da Edition, Charles Kitchin and Lew Count.
+
 Los amplificadores de instrumentación surgen ante la necesidad de medir tensiones de muy bajo nivel, eliminando señales de interferencias e indeseadas (ruido) en modo común.
 Se denomina amplificador de instrumentación a todo dispositivo creado a partir de amplificadores operacionales. Su diseño incluye:
 
@@ -293,6 +297,10 @@ La entrada puede provenir de un sistema multicanal multiplexado puesto que el am
 \section{Sistema de control para motor sin escobillas} % (fold)
 \label{sec:sistema_de_control_para_motor_sin_escobillas}
 
+%Bib : Control motor brushless sensorless. Trabajo de Fin de Grado. Gonzalo Solchaga y Jesus Maria Corres Sanz. Junio 2015.
+%Bib : Desarrollo de un controlador para motores DC brushless basado en CompactRIO y LabVIEW de National Instruments para el estudio de nuevos algoritmos de control.Proyecto fin de carrera. Juan Miguel Garcia Haro. 2011
+%Bib: http://www.digikey.com/en/articles/techzone/2013/mar/an-introduction-to-brushless-dc-motor-control
+
 \subsection{Motor DC sin escobillas (Motores Brushless)}
 \label{subsec: motor_sin_escobillas}
 
@@ -333,6 +341,10 @@ Para manejar los motores se precisa el conocimiento de la posición del rotor en
   \item Con sensores: Disponen de sensores de efecto hall o de encoders que indican la posición del rotor. Es habitual que tengan 3 sensores separados 120\textsuperscript{o}, uno para cada bobinado del motor.
   \item Sin sensores: No tienen sensores; la posición se determina mediante la medición del efecto de la fuerza contraelectromotriz sobre las bobinas
 \end{itemize}
+
+
+
+
 
 %subsection clasificacion_motores (end)
 
@@ -399,14 +411,52 @@ espacio de referencia está normalmente alineado con en el rotor de forma que pe
 
 %subsection metodos_control_motores (end)
 
+
+\pagebreak
+
+\subsubsection{Banco de Ensayos para Motores}
+\label{subsubsection: banco_ensayos}
+
+%Bib: Proyecto de Fin de Carrera."Sistemas de adquisición de datos y control en tiempo real para bancos de ensayos de motores". Rodriguez Luis Gustavo y Maffei Ignacio.
+
+El siguiente extracto está basado en la tesis de Rodriguez Luis Gustavo y Maffei Ignacio, "Sistemas de adquisición de datos y control en tiempo real para bancos de ensayos de motores", realizada en el Laboratorio de Arquitectura de Computadoras (LAC), Facultad de Ciencias Exactas Físicas y Naturales, UNC.
+
+Para realizar ensayos a un motor es necesario instalarlo en un banco de pruebas o de ensayos. Este consta básicamente de los siguientes elementos:
+
+\begin{itemize}
+\item Cimentación: absorbe las vibraciones que se producen debido a la existencia en el motor de fuerzas de inercia no equilibradas y de los correspondientes momentos resultantes.
+\item Bancada: soporta el motor ensayado.
+\item Soporte: permite montar y fijar el motor en la bancada, así como regular la altura y alinear el motor con el freno.
+\item Freno dinamométrico: absorbe la potencia desarrollada por el motor, ofreciendo una resistencia al giro de éste, y debe estar provisto de dispositivo para medir el par motor.
+\item Eje de Transmisión: Permite la unión mecánica del freno con el motor, con una cierta elasticidad y capacidad de absorber desalineaciones.
+\item Amortiguador torsional: su función es de amortiguar el movimiento alternativo del motor y las vibraciones del motor para que no influyan en el dinamómetro.
+\item Sistema de combustible: se debe suministrar el combustible al motor mediante cañerías directo desde un tanque de combustible o a través de los instrumentos de medición de consumo.
+\item Sistema de refrigeración del motor: si los motores son refrigerados por agua, normalmente se utiliza la bomba de agua del propio motor. Esta impulsa el agua a través del motor hacia un intercambiador de calor (agua/agua o agua/aire), en general con regulación termostática por medio de válvulas.
+Si los motores son refrigerados por aire se suele utilizar un ventilador dirigido hacia las aletas del motor.
+\item Sistema de refrigeración de aceite: en ocasiones también se refrigera el aceite del motor, ya que al no existir una corriente de aire al cárter, éste tiende a sobrecalentarse. El sistema consta de un intercambiador aceite/agua y en ocasiones una bomba auxiliar.
+\item Sistema de refrigeración del dinamómetro: los frenos dinamométricos por corrientes de Foucault y los hidráulicos transforman toda la energía mecánica que reciben del motor en calor. Este calor es eliminado por el sistema de refrigeración del freno, que suele ser mediante el abastecimiento continuo de agua a través de un circuito cerrado.
+\item Red de agua: es un circuito cerrado cuya función es disminuir la temperatura del agua proveniente del dinamómetro y del intercambiador de calor del agua y aceite del motor.
+\item Sistema de ventilación de la sala: se debe evitar el sobrecalentamiento de la sala por la radiación de calor del motor. Se efectúa mediante ventiladores axiales o centrífugos de impulsión y extracción.
+\item Sistema de evacuación de los gases de escape del motor: los gases de escape deben ser enviados a la atmósfera, tras pasar por una cámara de expansión.
+\item Sistema de arranque: este sistema permite poner en marcha el motor a ensayar sin necesidad de contar con el motor de arranque original del motor.
+\item Elementos de medición: los elementos principales de medición son:
+
+\begin{itemize}
+\item Taquímetro: mide la velocidad angular del motor (rpm).
+\item Celda de carga: mide el torque ejercido por el motor.
+\item Sensor temperatura de motor y del dinamómetro.
+\item Sensor presión de aceite del motor y del dinamómetro.
+\item Sensor de temperatura, presión, y humedad ambiente.
+\item Caudalímetro de aire y combustible.
+\item Sensores de otras temperaturas y presiones.
+\item etc.
+\end{itemize}
+
+\end{itemize}
+
+%subsection banco_ensayos (end)
+
 % section sistema_de_control_para_motor_sin_escobillas (end)
-
-
-\section{Diseño y construcción de circuitos impresos} % (fold)
-\label{sec:diseno_y_construccion_de_circuitos_impresos}
-
-% section diseño_y_construccion_de_circuitos_impresos (end)
-
 
 \section{Sistemas de comunicación serie con inmunidad al ruido} % (fold)
 \label{sec:sistemas_de_comunicacion_serie_con_inmunidad_al_ruido}
@@ -557,67 +607,6 @@ Varios procesos o hilos pueden acceder a la misma base de datos sin problemas. V
 % subsection sqlite (end)
 
 % section sistemas_de_base_de_datos_para_sistemas_embebidos (end)
-
-\section{Silicon Labs \emph{C8051F352}} % (fold)
-\label{sec:silicon_labs_c8051f352}
-
-En esta sección se explicaran brevemente las funcionalidades que se utilizaron del microcontrolador elegido. Para información mas detallada referirse al datasheet del mismo. \cite{bib:datasheet}
-
-\subsection{Conversor Analógico-Digital} % (fold)
-\label{sub:conversor_analogico_digital}
-
-El C8051F350 incluye un ADC Sigma-Delta completamente diferencial de 16 bits con capacidad de calibración interna, con capacidad de 8 mediciones simultaneas en modo canal único, y 4 mediciones simultaneas en modo diferencial. Tiene dos filtros separados de decimación programables con un throughput de hasta 1KHz. Tiene un voltaje de referencia interno de 2.5 V, y admite la administración de voltajes de referencia externos. Cada canal puede ser amplificado 1, 2, 4, 8, 16, 32, 64, o 128 veces.
-
-\subsubsection{Modos de medición} % (fold)
-\label{ssub:modos_de_medicion}
-
-\begin{itemize}
-  \item \textbf{Canal único}: La entrada es independiente y medida con respecto a tierra.
-  \item \textbf{Diferencial}: Dos entradas medidas con respecto una de la otra.
-\end{itemize}
-% subsubsection modos_de_medición (end)
-
-\subsubsection{Modos de conversión} % (fold)
-\label{ssub:modos_de_conversion}
-
-\begin{itemize}
-  \item \textbf{Simple}: Indica al ADC que genere información suficiente para producir un resultado luego de un ciclo de conversión. El filtro puede ser \emph{fast-filter} o \emph{SINC3}. En el primero, el resultado esta disponible luego de un solo ciclo de conversión del ADC. En el segundo, espera 3 ciclos antes de que este disponible el resultado.
-  \item \textbf{Continua}: El ADC comienza una nueva conversión inmediatamente después de terminar la anterior. Los filtros funcionan de manera análoga al modo simple.
-\end{itemize}
-% subsubsection modos_de_conversión (end)
-% subsubsection conversor_analógico_digital (end)
-
-\subsection{Contadores} % (fold)
-\label{sub:contadores}
-
-El C8051F350 cuenta con 4 contadores: Timer0, Timer1, Timer2 y Timer3. Timer0 y Timer1 cuentan con 3 modos de operación:
-\begin{itemize}
-  \item Contador de 13 bits
-  \item Contador de 16 bits
-  \item Contador de 8 bits con valor de retorno
-\end{itemize}
-Timer0 cuenta con un modo mas que es el de separarse en dos contadores independientes de 8 bits.
-Timer2 y Timer3 tienen 2 modos:
- \begin{itemize}
-   \item Contador de 16 bits con valor de retorno
-   \item Dos contadores independientes de 8 bits con valor de retorno
- \end{itemize}
-
-Todos los timers pueden ser clockeados por fuente interna o externa. En el caso de los timers 2 y 3 la fuente externa se divide por 8.
-% subsection contadores (end)
-
-\subsection{Interfaz Serial} % (fold)
-\label{sub:interfaz_serial}
-
-El C8051F352 cuenta con dos protocolos de transferencia serial de datos: SMBus y UART. \textbf{SMBus} es una interfaz de dos cables bi-direccional. Es compatible con $I^{2}$C, es por esto que se considera que este microcontrolador cuenta con $I^{2}$C, por el hecho de tener SMBus. \textbf{UART} es una interfaz serial asíncrona full-duplex.
-% subsection interfaz_serial (end)
-
-\subsection{Flash} % (fold)
-\label{sub:flash}
-
-Incluye una memoria Flash de 8 Kilobytes re programable dentro del chip para almacenamiento de datos no volátil. Es programable mediante interfaz C2 o por software
-% subsection flash (end)
-% section silicon_labs_c8051f352 (end)
 
 
 

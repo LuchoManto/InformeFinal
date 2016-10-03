@@ -39,7 +39,7 @@ Diseñar y construir un prototipo de placa con las siguientes características:
 \subsection{Elección de Herramientas para Diseño} %(fold)
 \label{sec:herramientas_para_diseno}
 
-Gracias a que en el LAC en dicho momento estaba realizando trabajos Santiago Rodriguez (Ingeniero en Computación, egresado de la UNC), pudimos consultar con él sobre el diseño y desarrollo de placas PCB. 
+Gracias a que en el LAC en dicho momento estaba realizando trabajos Santiago Rodríguez (Ingeniero en Computación, egresado de la UNC), pudimos consultar con él sobre el diseño y desarrollo de placas PCB. 
 
 Santiago nos recomendó utilizar varias herramientas para el diseño:
 \begin{itemize}
@@ -63,7 +63,7 @@ Podemos ver en la figura \ref{fig:BloquesHardw1} el diagrama de bloque que hicim
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.80\textwidth, height = 11cm]{BloquesHardw1}
+  \includegraphics[width=0.50\textwidth, height = 7cm]{BloquesHardw1}
   \caption{Diagrama de Bloque de la Placa.}\label{fig:BloquesHardw1}
 \end{figure}
 
@@ -88,7 +88,7 @@ Como podemos ver en la figura \ref{fig:Entrada_y_filtro} tenemos un pin (AI0) de
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.80\textwidth, height = 11cm]{Entrada_y_filtro}
+  \includegraphics[width=0.70\textwidth, height = 4cm]{Entrada_y_filtro}
   \caption{Esquemático del circuito de entrada analógica, más filtro RC pasa-bajo.}\label{fig:Entrada_y_filtro}
 \end{figure}
 
@@ -112,18 +112,83 @@ La tensión para alimentar el integrado es de 3.3V que se sacan del sub-circuito
 
 %subsubsection salida_serial (end)
 
+\subsubsection{Circuito de Potencia}
+\label{circuito_potencia}
+
+Del análisis del microcontrolador y de otros componentes que necesitamos utilizar en la placa(como MAX232, leds, etc), decidimos realizar separar el circuito de potencia para dividir la tensión en dos de distintos valores: 3,3V y 5V.
+Como podemos ver en la figura \ref{} el sistema de alimentación lo implementamos a través de un Jack de Power (Jack2P) para conectar una fuente de tensión de 5V, y a través del programador/debugger de Silicon Labs 5V(Debugger1). A continuación colocamos un jumper de 3 pines para poder seleccionar el método de alimentación (Jumper1).
+
+\begin{figure}
+
+\end{figure}
+
+Para poder alimentar al microcontrolador necesitábamos 3.3V así que utilizamos un regulador de tensión (LM2937). El C8051f352 tiene dos entradas de alimentación, una analógica y una digital, ambas con un rango entre 2.9V a 3.6V, ademas la corriente puede variar entre 5.7mA (en estado inactivo) hasta 11.3mA (en estado activo). Es por ello que se colocan las resistencias, y ademas se colocan capacitores en paralelo para disminuir el ruido de entrada.
+
+%subsubsection circuito_potencia (end)
+
+\subsubsection{Diagrama Esquematico Final}
+\label{esquematico_final_1}
+
+En la figura \ref{fig:EsquematicoCompleto1} se puede ver el diagrama de la placa completo. 
+Podemos distinguir un apartado donde hay dos ferrite brides para dividir la masa analógica de la masa digital y así evitar ruidos para la conversión del ADC, debido a posibles frecuencias altas.
+
+\begin{figure}
+\centering
+  \includegraphics[width=1.10\textwidth, height = 12cm]{EsquematicoCompleto1}
+  \caption{Esquemático del Circuito Completo de la placa.}\label{fig:EsquematicoCompleto1}
+\end{figure}
+
+%subsubsection esquematico_final_1 (end)
+
 %subsection diseno_esquematico (end)
+
+\subsection{Diseño de Plaqueta de Circuito Impreso (PCB)}
+\label{pcb1}
+
+En electrónica, plaqueta de circuito impreso (printed circuit board, PCB), es la superficie constituida por caminos o pistas de material conductor laminadas sobre una base no conductora. El circuito que se imprime en un plaqueta se utiliza para interconectar distintos dispositivos electrónicos.
+
+En el Laboratorio de Arquitectura de Computadoras hay instalada una fresadora para la impresión de placas PCB, el modelo es LPKF E33, por lo que el software que utilizamos fue "Circuit Pro" que es propietario de LPKF, así nos aseguramos la compatibilidad de archivos y drivers.
+
+En la figura \ref{fig:} podemos ver como quedo el diseño del circuito PCB:
+
+\begin{figure}
+
+\end{figure}
+
+
+%subsection pcb1 (end)
 
 % section desarrollo (end)
 
 \section{Pruebas} % (fold)
 \label{sec:pruebas}
 
+%Prueba 1: Con el diseño PCB hecho, chequear los errores ERC(perfom design rules check)de KiCad para fijarse si todos los componentes estén interconectados como tiene que estar.
+%Resultado1: Se eliminaron todos los errores ERC 
+%Prueba 2: Con la placa ya impresa, testeo de todas las pistas ruteadas, con un multimetro seteado para medir continuidad, así chequeamos si existen cortocircuitos por fallos de la fresadora.
+%Resultado 2: No se encontraron cortos por fallo de la fresadora.
+%Prueba 3: Con la placa ya impresa,y los componentes soldados, testeo de todas las pistas ruteadas, con un multimetro seteado para medir continuidad, así chequeamos cortocircuitos por fallos de soldaduras.
+%Resultado 3: Se encontraron cortocircuitos causado por malas soldaduras, que gracias a la malla desoldadora los pudimos solucionar, se realizo la prueba 3 de nuevo y no se encontraron mas cortocircuitos. 
+%Prueba 4: Con la placa ya impresa,y los componentes soldados, conectamos el debugger de SiliconLabs y conectamos a PC, para chequear si la IDE se puede comunicar con el microcontrolador.
+%Resultado 4: Cuando conectamos la placa a la PC, la IDE de SiliconLabs pudo reconocer el microcontrolador.
+%Prueba 5: Con la placa ya impresa,y los componentes soldados, y la IDE reconociendo el microcontrolador, intentamos cargar un programa (.hex) al C8051f352.
+%Resultado 5: Conectamos la placa a la PC, pero al momento de cargar el programa, la IDE tira un error con la flash del microcontrolador. No pudimos resolver este problema en esta iteración.
+
+
 % section pruebas (end)
 
 \section{Resultados} % (fold)
 \label{sec:resultados}
+En las siguientes imágenes podremos ver el resultado final de la placa.
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.80\textwidth, height = 10cm]{resultadohardware1}
+  \caption{Placa completa con todo sus componentes soldados.}\label{fig:resultadohardware1}
+\end{figure}
+
+En esta iteración cumplimos con los requerimientos planteados, construyendo una placa con un C8051f352, que contenga 8 señales analógicas de entrada y 4 entradas digitales. Le pudimos colocar una salida serial para conectar a una PC.
+Logramos alimentar por una fuente de tensión externa o con el debugger de SiliconLabs. El microcontrolador fue reconocido por la IDE de SiliconLabs cuando era conectado por el debugger en la PC, pero no pudimos cargarle un programa al c8051f352, ya que nos daba error con la memoria flash.
 % section resultados (end)
 
 % chapter iteracion_3 (end)
