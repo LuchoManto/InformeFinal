@@ -1,0 +1,44 @@
+\chapter{Iteracion 6: Implementacion de un sistema gestionador para la placa de instrumentacion} % (fold)
+\label{cha:iteracion_6}
+
+\section{Introduccion} % (fold)
+\label{sec:introduccion}
+
+El sistema de instrumentacion realiza mediciones para luego enviarselas a otro sistema que las gestiona o realiza acciones segun las mismas. En esta iteracion, realizamos una implementacion de un sistema que actua entre el dispositivo que maneja el usuario y la placa de instrumentacion. De esta forma obtuvimos un intermediario que interpreta acciones del usuario y las transforma en comandos para la placa de instrumentacion.
+
+% section introduccion (end)
+
+\section{Requerimientos de la iteracion} % (fold)
+\label{sec:requerimientos_de_la_iteracion}
+
+\begin{itemize}
+\item El sistema deberia estar implementado en una placa de desarrollo de manera que se pueda conectar a la placa de instrumentacion via comunicacion serial
+\item Deberia estar en el mismo lugar fisico que la placa de alimentacion.
+\item Deberia implementar un servidor web con una interfaz grafica de usuario. Esta interfaz deberia permitir:
+\begin{itemize}
+	\item Las mismas acciones que estando conectado directamente con la placa de adquisicion, solamente que via interfaz grafica, y no de comando.
+	\item Enviar cualquier comando que pueda ser interpretado por la placa de adquisicion
+	\item Establecer intervalos de tiempo usando hora y fecha en los que se debe medir sobre cierto canal
+\end{itemize}
+\item Deberia guardar datos de mediciones e informacion sobre transacciones en general entre ambas placas en una base de datos local, accesible via la interfaz grafica 
+\end{itemize}
+
+
+% section requerimientos_de_la_iteracion (end)
+
+\section{Desarrollo} % (fold)
+\label{sec:desarrollo}
+
+% section desarrollo (end)
+
+\section{Pruebas} % (fold)
+\label{sec:pruebas}
+
+% section pruebas (end)
+
+\section{Resultados} % (fold)
+\label{sec:resultados}
+
+% section resultados (end)
+
+% chapter iteracion_6 (end)

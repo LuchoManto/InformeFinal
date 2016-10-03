@@ -334,10 +334,6 @@ Para manejar los motores se precisa el conocimiento de la posición del rotor en
   \item Sin sensores: No tienen sensores; la posición se determina mediante la medición del efecto de la fuerza contraelectromotriz sobre las bobinas
 \end{itemize}
 
-
-
-
-
 %subsection clasificacion_motores (end)
 
 \subsection{Métodos de Control de Motores sin Escobillas}
@@ -570,13 +566,13 @@ En esta sección se explicaran brevemente las funcionalidades que se utilizaron 
 \subsection{Conversor Analógico-Digital} % (fold)
 \label{sub:conversor_analogico_digital}
 
-El C8051F350 incluye un ADC Sigma-Delta completamente diferencial de 16 bits con capacidad de calibración interna, con capacidad de 8 mediciones simultaneas en modo singular, y 4 mediciones simultaneas en modo diferencial. Tiene dos filtros separados de decimación programables con un throughput de hasta 1KHz. Tiene un voltaje de referencia interno de 2.5 V, y admite la administración de voltajes de referencia externos. Cada canal puede ser amplificado 1, 2, 4, 8, 16, 32, 64, o 128 veces.
+El C8051F350 incluye un ADC Sigma-Delta completamente diferencial de 16 bits con capacidad de calibración interna, con capacidad de 8 mediciones simultaneas en modo canal único, y 4 mediciones simultaneas en modo diferencial. Tiene dos filtros separados de decimación programables con un throughput de hasta 1KHz. Tiene un voltaje de referencia interno de 2.5 V, y admite la administración de voltajes de referencia externos. Cada canal puede ser amplificado 1, 2, 4, 8, 16, 32, 64, o 128 veces.
 
 \subsubsection{Modos de medición} % (fold)
 \label{ssub:modos_de_medicion}
 
 \begin{itemize}
-  \item \textbf{Singular}: La entrada es independiente y medida con respecto a tierra.
+  \item \textbf{Canal único}: La entrada es independiente y medida con respecto a tierra.
   \item \textbf{Diferencial}: Dos entradas medidas con respecto una de la otra.
 \end{itemize}
 % subsubsection modos_de_medición (end)
@@ -585,8 +581,8 @@ El C8051F350 incluye un ADC Sigma-Delta completamente diferencial de 16 bits con
 \label{ssub:modos_de_conversion}
 
 \begin{itemize}
-  \item \textbf{Singular}: Indica al ADC que genere información suficiente para producir un resultado luego de un ciclo de conversión. El filtro puede ser \emph{fast-filter} o \emph{SINC3}. En el primero, el resultado esta disponible luego de un solo ciclo de conversión del ADC. En el segundo, espera 3 ciclos antes de que este disponible el resultado.
-  \item \textbf{Continua}: El ADC comienza una nueva conversión inmediatamente después de terminar la anterior. Los filtros funcionan de manera análoga al modo singular.
+  \item \textbf{Simple}: Indica al ADC que genere información suficiente para producir un resultado luego de un ciclo de conversión. El filtro puede ser \emph{fast-filter} o \emph{SINC3}. En el primero, el resultado esta disponible luego de un solo ciclo de conversión del ADC. En el segundo, espera 3 ciclos antes de que este disponible el resultado.
+  \item \textbf{Continua}: El ADC comienza una nueva conversión inmediatamente después de terminar la anterior. Los filtros funcionan de manera análoga al modo simple.
 \end{itemize}
 % subsubsection modos_de_conversión (end)
 % subsubsection conversor_analógico_digital (end)
