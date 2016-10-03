@@ -10,7 +10,7 @@
 
 \subsection{Conversion analogico digital} % (fold)
 \label{sub:conversion_analogico_digital}
-%http://www2.uca.es/grup-invest/instrument_electro/ppjjgdr/Electronics_Instrum/Electronics_Instrum_Files/temas/T11_CAD.pdf
+%CITADO
 
 Para poder medir ciertos fenómenos naturales, se utilizan sensores físicos que miden las magnitudes de estos fenómenos y las traducen en tensiones voltaicas en la salida. Una lectura de dicha tensión nos da una idea de la magnitud física de lo que se esta midiendo. Si se obtiene, a partir de esta tensión, datos digitales que la representen, es posible construir un software que realice determinadas acciones en función de datos provenientes de los sensores. Un conversor analógico-digital es un dispositivo que toma como entrada una señal analógica voltaica, y la convierte en datos digitales.
 
@@ -18,7 +18,7 @@ La salida de los sensores, que permiten al equipo electrónico interaccionar con
 
 La conversión a digital se realiza en dos fases: cuantificación y codificación. Durante la primera se  muestrea la entrada y a  cada valor analógico obtenido se asigna un valor o estado, que depende del número de bits del CAD. El valor cuantificado se codifica en binario en una palabra digital, cuyo número de bits depende de las líneas de salida del CAD. Estos dos procesos determinan el diseño del circuito integrado. \\
 
-En la práctica, el proceso de conversión está sujeto a numerosas limitaciones resultado de los procesos de fabricación. Las más relevantes son el tiempo de conversión y la finitud del número de estados de salida. La conversión involucra un tiempo y, en consecuencia, supone  una  incertidumbre  que  limita  la  velocidad  máxima  de  la  entrada.  Los  valores discretos  del  proceso  de  cuantificación  llevan  consigo  un  error  y  una  limitación  de resolución del circuito. La elección del CAD en un diseño electrónico dependerá de la adaptación de sus rasgos a  los requerimientos de la aplicación. \cite{delta_sigma_1}
+En la práctica, el proceso de conversión está sujeto a numerosas limitaciones resultado de los procesos de fabricación. Las más relevantes son el tiempo de conversión y la finitud del número de estados de salida. La conversión involucra un tiempo y, en consecuencia, supone  una  incertidumbre  que  limita  la  velocidad  máxima  de  la  entrada.  Los  valores discretos  del  proceso  de  cuantificación  llevan  consigo  un  error  y  una  limitación  de resolución del circuito. La elección del CAD en un diseño electrónico dependerá de la adaptación de sus rasgos a  los requerimientos de la aplicación. \cite{adc}
 
 % subsection conversion_analogico_digital (end)
 
@@ -26,19 +26,18 @@ En la práctica, el proceso de conversión está sujeto a numerosas limitaciones
 
 \subsection{Conversores de canal único, de canal pseudo diferencial, y de canal totalmente diferencial}
 \label{sub:conversores_de_canal_unico_de_canal_pseudo_balanceado_y_de_canal_totalmente_balanceado}
-% https://www.maximintegrated.com/en/app-notes/index.mvp/id/1108
-% http://manual.audacityteam.org/man/dc_offset.html
+%CITADO
 
 Un Conversor Analógico-Digital puede obtener la señal de voltaje de entrada mediante tres métodos distintos: Canal único, Canal pseudo diferencial, y canal totalmente diferencial. \\
 
-En general, lo mas simple es elegir aquella estructura que sea compatible con el sensor que se utiliza. Pero a pesar de eso, existen ciertas características que reúne cada estructura que deben considerarse. Si existe un circuito de acondicionamiento de señal entre el sensor y el conversor, también puede afectar a la decisión sobre que tipo de estructura utilizar. Algunos conversores son configurables y permiten elegir entre canal único y pseudo diferencial, o canal único y totalmente diferencial.\cite{}
+En general, lo mas simple es elegir aquella estructura que sea compatible con el sensor que se utiliza. Pero a pesar de eso, existen ciertas características que reúne cada estructura que deben considerarse. Si existe un circuito de acondicionamiento de señal entre el sensor y el conversor, también puede afectar a la decisión sobre que tipo de estructura utilizar. Algunos conversores son configurables y permiten elegir entre canal único y pseudo diferencial, o canal único y totalmente diferencial.\cite{tipos_canales}
 
 \subsubsection{Canal único}
 \label{subs:canal_unico}
 
 Las entradas de canal único son suficientes para la mayoría de las aplicaciones. En este tipo de estructuras, la señal de entrada esta referenciada a la masa común del conversor. Esta masa es compartida por todas las entradas que estén configuradas en este modo. La figura \ref{fig:canalunico} ilustra el muestreo de una señal para esta estructura.
 
-A diferencia de las totalmente diferenciales, las entradas de canal único son mas sensibles al ruido y al desfasaje de continua. El desfasaje de continua (DC Offset) es un fenómeno que ocurre cuando el nivel de continua en la señal es distinto de 0. El ruido en el canal y el desfasaje de continua reducen la amplitud dinámica de la señal de entrada, lo cual provoca que la calidad de la conversión sea menor.
+A diferencia de las totalmente diferenciales, las entradas de canal único son mas sensibles al ruido y al desfasaje de continua. El desfasaje de continua (DC Offset) es un fenómeno que ocurre cuando el nivel de continua en la señal es distinto de 0. El ruido en el canal y el desfasaje de continua reducen la amplitud dinámica de la señal de entrada, lo cual provoca que la calidad de la conversión sea menor.\cite{dc_offset}
 
 Este tipo de entradas suelen utilizarse en aquellos casos en que la fuente que produce la señal y el conversor A/D están cerca uno del otro (Por ejemplo, en la misma placa de cobre), y por lo tanto el desfasaje de continua y el ruido no son tan presentes como en casos donde estén mas separados. También se puede incluir un circuito que adapte la señal y reduzca estos efectos no deseados.\cite{tipos_canales}
 
@@ -378,6 +377,8 @@ Tiene como ventajas su sencillez y facilidad de implementación por lo cual es e
   \caption{: Corrientes en las bobinas y torque del motor.}\label{fig:corrientes_bobinas}
 \end{figure}
 
+\cite{brushless_control}
+
 %subsubsection conmutacion_trapezoidal (end)
 
 \subsubsection{Conmutación Sinusoidal}
@@ -461,7 +462,7 @@ Si los motores son refrigerados por aire se suele utilizar un ventilador dirigid
 \section{Sistemas de comunicación serie con inmunidad al ruido} % (fold)
 \label{sec:sistemas_de_comunicacion_serie_con_inmunidad_al_ruido}
 
-%improving noise inmunity for serial connections: https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=5&ved=0ahUKEwjGy6Lc-IzPAhXDWx4KHcQwCwoQFgg8MAQ&url=http%3A%2F%2Fwww.latticesemi.com%2F~%2Fmedia%2FLatticeSemi%2FDocuments%2FWhitePapers%2FHM%2FImprovingNoiseImmunityforSerialInterface.pdf%3Fdocument_id%3D50728&usg=AFQjCNG00KXfdgaufV_zq0V5o_YFqEE8OQ&sig2=-0WOkLUVw2zrER9Gfq7-JQ&bvm=bv.132479545,d.dmo&cad=rja
+%CITADO
 
 \subsection{Comunicacion serial} % (fold)
 \label{sub:comunicacion_serial}
@@ -498,34 +499,13 @@ En un sistema complejo, puede existir ruido proveniente de varias fuentes distin
 	\item \textbf{Filtros digitales:} También es posible utilizar filtros digitales para reducir ruido. Esto se suele ver sobretodo en diseño de sistemas FPGA. Los filtros digitales pueden ser realizados en VHDL o Verilog, y filtran tanto la señal de datos como la señal del clock. Los distintos parámetros del filtro están dados en la frecuencia de oscilación y el tiempo de filtrado deseado. 
 \end{itemize}
 
-% \subsubsection{Filtro RC externo} % (fold)
-% \label{ssub:filtro_rc_externo}
-
-% Un filtro RC pasa-bajos externo es una manera de inmunizar el sistema al ruido en altas frecuencias. Pero presenta el problema de empeorar la velocidad de los flancos de subida en la comunicacion y agrega una carga a los pines involucrados. Un flanco lento es mas susceptible al ruido y puede causar inestabilidad en el sistema. Para resultados optimos, es necesario realizar un balance entre la reduccion de ruido y la reduccion en la velocidad del flanco. El balance se obtiene cambiando los valores de las resistencias involucradas en el filtro. Los valores dependeran del valor de reduccion de ruido requerido y la tension de alimentacion
-
-% % subsubsection filtro_rc_externo (end)
-
-% \subsubsection{Fuente de alimentacion desacoplada} % (fold)
-% \label{ssub:fuente_de_alimentacion_desacoplada}
-
-% Hay ocasiones en las que el ruido proveniente de la fuente de alimentacion puede causar errores en la comunicacion. La reduccion de este ruido se puede alcanzar utilizando filtros LC, tambien llamados ``Ferrite Beads''. Estos inductores estan hechos especificamente para ser colocados en serie con el cable de alimentacion para reducir el ruido en alta frecuencia producido por la fuente. Tipicamente, se suelen colocar capacitores de distintos valores luego del inductor para mejorar el filtrado. 
-
-% % subsubsection fuente_de_alimentacion_desacoplada (end)
-
-% \subsubsection{Filtros digitales} % (fold)
-% \label{ssub:filtros_digitales}
-
-% Tambien es posible utilizar filtros digitales para reducir ruido. Esto se suele ver sobretodo en diseño de sistemas FPGA. Los filtros digitales pueden ser realizados en VHDL o Verilog, y filtran tanto la señal de datos como la señal del clock. Los distintos parametros del filtro estan dados en la frecuencia de oscilacion y el tiempo de filtrado deseado. 
-
-% subsubsection filtros_digitales (end)
-
 % subsection implementando_la_inmunidad_al_ruido_en_comunicaciones_seriales (end)
 
 % section sistemas_de_comunicacion_serie_con_inmunidad_al_ruido (end)
 
 \section{Medición de frecuencia de RPM} % (fold)
 \label{sec:medicion_de_frecuencia_de_rpm}
-%https://www.elprocus.com/introduction-to-digital-tachometer-circuit-working-with-8051/
+%CITADO
 
 Un tacometro es un dispositivo digital que mide e indica la velocidad de un objeto en rotación. Un objeto en rotación puede ser un ventilador, la rueda de un auto, o cualquier cosa que esta en movimiento de revolución. Los tacometros digitales se pueden clasificar en cuatro tipos dependiendo de la técnica de adquisición de datos y la técnica de medición.
 
@@ -542,6 +522,7 @@ Basándose en la técnica de medición, pueden ser:
 	\item \textbf{Medición de tiempo:} Calcula la velocidad calculando el tiempo entre los pulsos medidos. Suelen ser mas precisos en velocidades bajas.
 	\item \textbf{Medición de frecuencia:} Calcula la velocidad midiendo la frecuencia de los pulsos en un intervalo de tiempo. Suelen ser mas precisos en velocidades altas.
 \end{itemize}
+\cite{tacometro}
 
 \subsection{Medición con fotointerruptor o sensor óptico} % (fold)
 \label{sub:medicion_con_fotointerruptor_o_sensor_optico}
