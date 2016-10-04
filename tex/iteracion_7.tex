@@ -4,7 +4,26 @@
 \section{Introduccion} % (fold)
 \label{sec:introduccion}
 
-Parte de este proyecto fue poner a prueba nuestro sistema utilizando un sensor de campo electrostatico. Ademas de obtener las mediciones, fue necesario realizar un sistema de control para el motor del sensor. En esta iteracion realizamos la adaptacion necesaria de los requisitos de funcionamiento del sensor a nuestro sistema de instrumentacion, probando asi el funcionamiento del mismo, asi como tambien el funcionamiento del sistema gestionador desarrollado en la iteracion \ref{} 
+Parte de este proyecto fue poner a prueba nuestro sistema utilizando un sensor detector de campo electrostatico. Ademas de obtener las mediciones, fue necesario realizar un sistema de control para el motor del sensor. En esta iteracion realizamos la adaptacion necesaria de los requisitos de funcionamiento del sensor a nuestro sistema de instrumentacion, probando asi el funcionamiento del mismo, asi como tambien el funcionamiento del sistema gestionador desarrollado en la iteracion \ref{cha:iteracion_6} 
+
+\subsection{Fundamentos} % (fold)
+\label{sub:fundamentos}
+
+La intensidad de un campo electrico se puede medir, en principio, colcando un medidor de voltaje entre dos placas metalicas paralelas separadas por una distancia. El problema de esto es que, como el medidor de voltaje suele tener una impedancia alta en la entrada, cualquier voltaje inducido en las placas se pierde rapidamente, y no podria usarse para medir el capo electrico. Para arreglar esto, se utiliza la tecnica de las aspas. Se coloca una placa conductora, y sobre la misma se posiciona un sistema con aspas de forma que cuando estas roten, se cubra y se exponga periodicamente la placa conductora al campo electrico ambiental. Para lograr esto apropiadamente, el rotor que hace girar las aspas debe estar conectado a tierra. La placa conductora esta conectada a tierra a traves de un amplificador de transconductancia, que convierte la corriente que va desde la placa a tierra en una tension. A medida que la placa conductora este expuesta al campo electrico, el campo induce una corriente a tierra mientras que atrae o repele la carga de la placa conductora. A medida que la placa esta cubierta del campo electrico, la carga inducida se drena. Entonces las placas inducen una corriente alterna a masa que es proporcional a la intensidad del campo electrico estatico. Esta corriente alterna luego puede ser rectificada para utilizarla como entrada a un conversor analogico digital y obtener asi la intensidad del campo electrico medido. \\
+
+Una vez obtenida la intensidad, es necesario saber el signo del campo electrico medido. Para obtenerlo, un metodo es que en el mismo conversor analogico digital se obtenga la medicion de manera diferencial. Un conversor analogico digital diferencial toma la diferencia entre dos canales para obtener un dato en lugar de tomar el valor de un canal y compararlo con tierra. De forma que es posible determinar cual es el canal con mayor tension. Con esto, se pueden conectar los canales de las señales de tierra y la de la placa conductora, y se miden de manera diferencial para obtener tento la intensidad como el signo del campo electrico estatico.
+\cite{sensorcampo}
+
+\subsection{El sensor} % (fold)
+\label{sub:el_sensor}
+
+El sensor es una estructura metalica compuesta por un motor que hace girar unas aspas que se se encargan de blindar y desblindar una placa que a su vez se carga y descarga con la electricidad estatica del ambiente. esta carga y descarga continua es lo que justamente se termina transformando en el nivel de voltaje que nos indica el nivel de electricidad estatica del ambiente, que es lo que queremos saber. Si imaginamos a la placa y a las aspas como un capacitor que se blinda y desblinda es mas facil. En el momento que las aspas estan descuburiendo la placa, el capacitor se carga, y en el momento que se cubre la placa, el capacitor se descarga. La descarga se hace sobre un amplificador que luego va a un conversor analogico digital, que termina en la lectura de un valor que nos dice el nivel del campo electrostatico ambiental. En el caso particular de este sensor, el motor que hace girar las aspas es un motor brushless manejado por un driver PWM.
+
+Ademas de las aspas que sirver para medir el campo, en el eje del motor se encuentra un segundo grupo de aspas, pero mas pequeño; junto a estas aspas se encuentra acoplado un fotointerruptor, de manera que el paso de cada aspa interrumpe el paso de luz de un extremo a otro. Si se construye el circuito requerido para el fotointerruptor, ocurrira que cuando el motor este girando, se generen pulsos cuadrados a la salida del fotointerruptor, permitiendo obtener cuentas que ayudaran a la hora de controlar la velocidad del motor.
+
+% subsection el_sensor (end)
+
+% subsection fundamentos (end)
 
 % section introduccion (end)
 
@@ -12,7 +31,11 @@ Parte de este proyecto fue poner a prueba nuestro sistema utilizando un sensor d
 \label{sec:requerimientos_de_la_iteracion}
 
 \begin{itemize}
-\item
+\item Se deberian utilizar las funcionalidades de los sistemas desarrollados en el transcurso del proyecto para obtener mediciones del sensor
+\item Se deberia controlar la velocidad del motor utilizando el fotointerruptor
+\item Se deberia diseñar y construir una placa con un circuito de adaptacion para el funcionamiento y la operacion del sensor
+\item La placa de adaptacion deberia poder ser acoplable a la placa de instrumentacion (como shield)
+\item Se deberia construir un recipiente donde pueda entrar el sensor junto con el sistema de instrumentacion y el sistema gestionador, para poder colocarlo en el aire libre con el objetivo de realizar una prueba de campo
 \end{itemize}
 
 
@@ -20,6 +43,26 @@ Parte de este proyecto fue poner a prueba nuestro sistema utilizando un sensor d
 
 \section{Desarrollo} % (fold)
 \label{sec:desarrollo}
+
+\subsection{Experimentacion} % (fold)
+\label{sub:experimentacion}
+
+El motor dentro de este sensor incluia un driver PWM. Para arrancar y dar velocidad a este motor, se utilizo, como primera instancia, una placa de desarrollo Arduino con un software hecho por Emiliano Pellicioni y Diego Gutierrez. Con el driver conectado a la placa y el programa funcionando, era posible arrancar el motor y darle una velocidad (aunque no muy constante).
+
+Teniendo el motor funcionando, la teoria indica que el sensor esta midiendo campo. Para probar esto, se utilizo una regla cargada con electricidad estatica y un osciloscopio conectado a la salida del sensor. Al acercar y alejar la regla de las aspas, se podia ver en la salida del osciloscopio como la onda resultante a la salida del sensor aumentaba y disminuia en amplitud. Lo que estabamos viendo, en ese momento, era una salida ``en crudo'' del sensor. Para poder convertir la señal y obtener datos coherentes, era necesario rectificar la señal. \\
+
+En el eje del motor, hay 
+
+A partir de estas pruebas sacamos las siguientes conclusiones para el circuito de adaptacion del sensor:
+
+\begin{itemize}
+	\item Debe poder conectarse la alimentacion y las entradas PWM del driver del motor
+	\item Debe incluir un circuito de adaptacion (rectificacion y amplificacion) de la señal del sensor
+	\item Debe incluir el circuito necesario para el funcionamiento del fotosensor.
+\end{itemize}
+
+% subsection experimentacion (end)
+
 
 % section desarrollo (end)
 
