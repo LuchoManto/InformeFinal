@@ -4,7 +4,7 @@
 \section{Motivación} % (fold)
 \label{sec:motivacion}
 
-Este proyecto surgió de la problemática de algunos trabajos realizados dentro del Laboratorio de Arquitectura de Computadoras que compartían el mismo inconveniente: la necesidad de un sistema que genéricamente obtenga las señales de los sensores y la pueda transmitir a un sistema principal, ya convertidas. Además de un contador de eventos que no requiera del uso de interrupciones por software.
+Este proyecto surgió de la problemática de algunos trabajos realizados dentro del Laboratorio de Arquitectura de Computadoras que compartían el mismo inconveniente. La necesidad de un sistema que genéricamente obtenga las señales de los sensores y la pueda transmitir al sistema principal, ya convertidas. Además de un contador de eventos que no requiera del uso de interrupciones por software.
 
 Motivaciones: 
 
@@ -54,18 +54,20 @@ Diseño y construcción de una placa de instrumentación de señales digitales y
 \label{sec: objetivos_secundarios}
 
 \begin{itemize}
-	\item La placa debe leer entre 8 y 16 señales analógicas en modo canal unico o diferencial.
+	\item La placa debe leer entre 8 y 16 señales analógicas.
     \item La placa debe contar eventos digitales con 2 o 3 contadores distintos.
     \item La placa debe transmitir los datos digitales a través de un protocolo serial, a alguna otra placa de desarrollo o procesador.
     \item El sistema debe tener un control de ganancias programable.
     \item Lograr que el sistema tenga menor a 1,2 Vatios.
     \item Lograr que el sistema tenga la mejor inmunidad al ruido.
     \item El sistema debe ser lo mas pequeño posible.
+    \item Se debe tener una sensibilidad apta para poder medir un sensor de campo electrostático.
+    \item Se debe controlar el arranque y velocidad de un motor brushless con un PWM (pulse-width modulation).
     \item El sensor de campo electrostático debe tener una placa por separado para el manejo de la potencia.
-    \item Se debe desarrollar un sistema administrador en alguna placa de desarrollo para poder controlar todas las acciones del sensor remotamente. Este sistema debe funcionar como un manejador o controlador de la placa de instrumentacion, pudiendo un usuario configurar todos los parametros de la ultima mediante una interfaz web grafica.
+    \item Se debe desarrollar un servidor web en alguna placa de desarrollo para poder controlar todas las acciones del sensor remotamente.
     \item El servidor web debe poder guardar datos de las lecturas que se realizan del sensor en una base de datos (preferentemente MySQL).
     \item Escribir la documentación sobre las instrucciones de uso para manejar el software embebido en la placa.
-    \item Realizar un caso de prueba utilizando un sensor de campo electrostatico. (Proveido por la Facultad de Matematica, Astronomia y Fisica)
+    \item Realizar una prueba de campo.
 \end{itemize}
 % section objetivos_secundarios (end)
 
@@ -85,33 +87,21 @@ Para facilitar la documentación, decidimos utilizar SysUML para documentar nues
 Partiendo de los objetivos planteados, podemos formalizar una lista de requerimientos para nuestro sistema.
 
 \begin{itemize}
-	\item Se debería poder recibir datos de sensores analógicos en modo canal unico o diferencial
-	\item Se debería poder contar eventos de fuentes externas
+	\item Se debería poder recibir datos de sensores analógicos en modo singular o equilibrado
+	\item Se debería poder contar eventos de señales digitales cuadradas
 	\item Se debería poder configurar una ganancia especifica y un tiempo entre mediciones especifico para cada entrada
-	\item Los parámetros que corresponden a la ganancia, el modo de conversión, el tiempo entre conversiones, y la cantidad de canales habilitados para la conversión y el conteo de eventos, deberían ser configurables a través de una interfaz de usuario
+	\item Los parámetros que corresponden a la ganancia, el modo de conversión, el tiempo entre conversiones, y la cantidad de canales habilitados para la conversión y el conteo de eventos, deberían ser configurables a través de una interfaz de linea de comando
 	\item Se debería usar un protocolo serial para la interfaz de linea de comando entre el sistema y el usuario
 	\item El usuario debería poder configurar el sistema conectándolo a un ordenador u otro sistema que soporte comunicación serial.
 	\item Se debería poder enviar datos de mediciones y posibles meta-datos a través de un canal de comunicación mediante un protocolo serial.
 \end{itemize}
 
-Ademas de estos requerimientos, se propuso construir ciertas implementaciones para el sistema administrador y para el caso de prueba con un sensor de campo electrostático. Adicionalmente a los requerimientos planteados anteriormente, se agregan: \\
+Como anexo al sistema, se propuso construir ciertas implementaciones para el sensor de campo electrostático y el servidor web. Adicionalmente a los requerimientos planteados anteriormente, entonces, se agregan los siguientes:
 
-
-Para el servidor web:
 \begin{itemize}
-	\item La comunicacion entre el administrador y la placa de instrumentacion deberia ser mediante protocolo serial
-	\item Deberia correr un servidor web con conexion a internet
-	\item Deberia guardar informacion de mediciones y transacciones con la placa de instrumentacion en una base de datos levantada en el mismo servidor.
-    \item La configuracion de todos los parametros del sistema de instrumentacion y medicion deberian poder ser establecidos via una interfaz web grafica.
+    \item La configuracion de los parametros para las mediciones deberian poder ser establecidas via una interfaz web grafica.
+    \item Todas las interacciones del sistema deberian guardarse en una base de datos junto con un timestamp.
     \item Se deberia poder establecer un sistema de reglas que provoque que el sistema reaccione ante ciertos niveles de los datos entrantes desde el sistema de adquisicion.
-\end{itemize}
-
-Para el caso de prueba con el sensor de campo electrostatico:
-\begin{itemize}
-    \item Se debe tener, en el sistema de instrumentacion, una sensibilidad apta para poder medir el sensor.
-    \item Se debe controlar el arranque y velocidad de un motor brushless mediante un modulador de pulsos o PWM (pulse-width modulation).
-	\item Se deberia construir un circuito anexo para el funcionamiento, control y medicion de los valores de campo del sensor.
-	\item El circuito anexo deberia ser implementado en una placa de tal manera que pueda acoplarse y desacoplarse facilmente de la placa de instrumentacion.
 \end{itemize}
 
 % subsection requerimientos_funcionales (end)
@@ -120,9 +110,7 @@ Para el caso de prueba con el sensor de campo electrostatico:
 \label{sub:requerimientos_no_funcionales}
 
 \begin{itemize}
-	\item El sistema debe documentarse con SysUML a través del programa Enterprise Architect.
-	\item El sistema deberia ser diseñado utilizando un patron bien conocido
-	\item La placa de instrumentacion deberia diseñarse para consumir lo menos posible
+	\item El sistema debe documentarse con SysUML a través del programa Enterprise Architec.
 \end{itemize}
 
 % subsection requerimientos_no_funcionales (end)
@@ -158,6 +146,27 @@ Un aspecto fundamental para guiar el desarrollo incremental es priorizar los req
 
 % section metodo_de_desarrollo (end)
 
+\section{Casos de uso} % (fold)
+\label{sec:casos_de_uso}
 
+Dado el contexto, el sistema se puede describir de una manera general mediante un diagrama de caso de uso. El diagrama puede verse en la figura \ref{fig:casouso1}. En esta figura, se pueden ver los requerimientos plasmados en los casos de uso.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.80\textwidth, height = 11cm]{casouso1}
+  \caption{Diagrama de caso de uso del sistema de adquisición}\label{fig:casouso1}
+\end{figure}
+
+El caso de uso ``configurar'' esta generalizado. Las acciones que incluye este caso son:
+\begin{itemize}
+	\item Configurar la interfaz serial
+	\item Configurar canal en modo singular
+	\item Configurar canal en modo equilibrado
+	\item Configurar contador de eventos
+	\item Configurar ganancia del del conversor
+	\item Configurar intervalo de medicion para conversion analogica
+\end{itemize}
+
+% section casos_de_uso (end)
 
 % chapter introduccion (end)

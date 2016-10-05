@@ -186,47 +186,51 @@ Cada una de las funciones, tanto si interactuan con el hardware del micro como s
 las pruebas de sistema se realizaron utilizando la placa de desarrollo mencionada en la seccion PONER ACA LA SECCION DONDE HABLAMOS DE LA SILICON LABS. Al no tener todavia una implementacion hecha del sistema, se utilizo esta placa para testear el codigo embebido en el microcontrolador, que en definitiva seria el mismo que iria en la placa a construir
 
 \begin{table}[h]
-\centering
 \caption{Test de sistema 1}
 \label{tab:testsistema1}
-\begin{tabular}{
->{\columncolor[HTML]{D3FBFA}}c 
->{\columncolor[HTML]{D3FBFA}}l }
+\begin{tabular}{p{2cm} p{9cm}}
 \multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}}                                                                                                                                                                                                                                                   \\
 Prueba \#        & 1                                                                                                                                                                                                                                                                                                                   \\
+\hline
 Nombre           & Comportamiento esperado del conversor en modo canal unico                                                                                                                                                                                                                                                           \\
+\hline
 Descripcion      & Se conecta un generador de tension en uno de los canales del conversor y se mide en ese canal en modo canal unico, y de esta forma comprobar no tan solo que se este midiendo, sino ademas que estas mediciones esten calibradas para este modo.                                                                                   \\
+\hline
 Pre-condiciones  & \tabitem Sistema configurado con un pin en modo canal unico \\
-                    \tabitem Generador de tension conectado al pin configurado \\
-                    \tabitem Computadora conectada al sistema mediante cable serial RS-232 \\
-                    \tabitem Lector de canal serial abierto en la computadora \\
-                    \tabitem Sistema midiendo en modo de conversiones continuas\\
+                 & \tabitem Generador de tension conectado al pin configurado  \\
+                 & \tabitem Computadora conectada al sistema mediante cable serial RS-232 \\
+                 & \tabitem Lector de canal serial abierto en la computadora  \\
+                 & \tabitem Sistema midiendo en modo de conversiones continuas\\
+\hline
 
 Post-condiciones & Los datos de las conversiones que aparezcan en el programa lector de interfaz serial en la computadora deberian corresponderse con los valores de tension provenientes del generador                     
 \\
+\hline
 Resultados       & Las mediciones dieron resultados coherentes, con algunas variaciones esperadas debido al ruido presente en el ambiente.                                                                                                   
 \end{tabular}
 \end{table}
 
 \begin{table}[h]
-\centering
 \caption{Test de sistema 2}
 \label{tab:testsistema2}
-\begin{tabular}{
->{\columncolor[HTML]{D3FBFA}}c 
->{\columncolor[HTML]{D3FBFA}}l }
+\begin{tabular}{p{2cm} p{9cm}}
 \multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}}                                                                                                                                                                                                                                                   \\
 Prueba \#        & 2                                                                                                                                                                                                                                                                                                                   \\
+\hline
 Nombre           & Comportamiento esperado del conversor en modo diferencial                                                                                                                                                                                                                                                          \\
+\hline
 Descripcion      & Se conecta un generador de tension en uno de los canales del conversor y se mide en ese canal en modo diferencial, y de esta forma comprobar no tan solo que se este midiendo, sino ademas que estas mediciones esten calibradas para este modo. Ademas, se comprueba el funcionamiento de las mediciones en modo diferencial, intentando medir tensiones negativas.                                                                                  \\
+\hline
 Pre-condiciones  & \tabitem Sistema configurado con un pin en modo diferencial \\
-                    \tabitem Generador de tension conectado al par de pines configurados en modo diferencial. Con el borne positivo en uno y masa en el otro\\
-                    \tabitem Computadora conectada al sistema mediante cable serial RS-232 \\
-                    \tabitem Lector de canal serial abierto en la computadora \\
-                    \tabitem Sistema midiendo en modo de conversiones continuas\\
+                 & \tabitem Generador de tension conectado al par de pines configurados en modo diferencial. Con el borne positivo en uno y masa en el otro\\
+                 & \tabitem Computadora conectada al sistema mediante cable serial RS-232 \\
+                 & \tabitem Lector de canal serial abierto en la computadora \\
+                 & \tabitem Sistema midiendo en modo de conversiones continuas\\
+\hline
 
 Post-condiciones & Los datos de las conversiones que aparezcan en el lector de interfaz serial en la computadora deberian corresponderse con los valores de tension provenientes del generador  
 \\ 
+\hline
 Resultados       & Las mediciones no dieron resultados coherentes. Aunque los cambios en el generador se reproducian en la medicion, los datos no eran los mismos. Esto se debe a que cuando se mide en modo diferencial, el cero pasa a ser la tension de referencia dividida en dos, para representar los valores negativos. La logica del programa no tenia en cuenta esto, y media las tensiones de forma desfasada.                                                                                                                                                     
 \end{tabular}
 \end{table}
@@ -235,20 +239,23 @@ Resultados       & Las mediciones no dieron resultados coherentes. Aunque los ca
 \centering
 \caption{Test de sistema 3}
 \label{tab:testsistema3}
-\begin{tabular}{
->{\columncolor[HTML]{D3FBFA}}c 
->{\columncolor[HTML]{D3FBFA}}l }
+\begin{tabular}{p{2cm} p{9cm}}
 \multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}}                                                                                                                                                                                                                                                   \\
 Prueba \#        & 3                                                                                                                                                                                                                                                                                                                   \\
+\hline
 Nombre           & Comportamiento esperado del contador de eventos                                                                                                                                                                                                                                                          \\
+\hline
 Descripcion      & Se conecta un generador de onda cuadrada en una entrada GPIO que pueda servir como entrada a algun contador de eventos. Si el contador esta activo, se deberia poder ver que el numero de cuentas incrementa al ritmo de la frecuencia configurada en el generador                                                                                  \\
+\hline
 Pre-condiciones  & \tabitem Sistema configurado con un contador de eventos activo \\
-                    \tabitem Generador de frecuencia conectado al pin configurado como contador. \\
-                    \tabitem Computadora conectada al sistema mediante cable serial RS-232 \\
-                    \tabitem Lector de canal serial abierto en la computadora \\
+                 & \tabitem Generador de frecuencia conectado al pin configurado como contador. \\
+                 & \tabitem Computadora conectada al sistema mediante cable serial RS-232 \\
+                 & \tabitem Lector de canal serial abierto en la computadora \\
+\hline
 
 Post-condiciones & El contador deberia contar con una frecuencia igual a la del generador de onda cuadrada
 \\ 
+\hline
 Resultados       & La cuenta era consistente con la frecuencia del generador.                                                                                                                                                     
 \end{tabular}
 \end{table}

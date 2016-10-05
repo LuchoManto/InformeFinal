@@ -10,7 +10,7 @@
 
 \subsection{Conversion analogico digital} % (fold)
 \label{sub:conversion_analogico_digital}
-%http://www2.uca.es/grup-invest/instrument_electro/ppjjgdr/Electronics_Instrum/Electronics_Instrum_Files/temas/T11_CAD.pdf
+%CITADO
 
 Para poder medir ciertos fenómenos naturales, se utilizan sensores físicos que miden las magnitudes de estos fenómenos y las traducen en tensiones voltaicas en la salida. Una lectura de dicha tensión nos da una idea de la magnitud física de lo que se esta midiendo. Si se obtiene, a partir de esta tensión, datos digitales que la representen, es posible construir un software que realice determinadas acciones en función de datos provenientes de los sensores. Un conversor analógico-digital es un dispositivo que toma como entrada una señal analógica voltaica, y la convierte en datos digitales.
 
@@ -18,7 +18,7 @@ La salida de los sensores, que permiten al equipo electrónico interaccionar con
 
 La conversión a digital se realiza en dos fases: cuantificación y codificación. Durante la primera se  muestrea la entrada y a  cada valor analógico obtenido se asigna un valor o estado, que depende del número de bits del CAD. El valor cuantificado se codifica en binario en una palabra digital, cuyo número de bits depende de las líneas de salida del CAD. Estos dos procesos determinan el diseño del circuito integrado. \\
 
-En la práctica, el proceso de conversión está sujeto a numerosas limitaciones resultado de los procesos de fabricación. Las más relevantes son el tiempo de conversión y la finitud del número de estados de salida. La conversión involucra un tiempo y, en consecuencia, supone  una  incertidumbre  que  limita  la  velocidad  máxima  de  la  entrada.  Los  valores discretos  del  proceso  de  cuantificación  llevan  consigo  un  error  y  una  limitación  de resolución del circuito. La elección del CAD en un diseño electrónico dependerá de la adaptación de sus rasgos a  los requerimientos de la aplicación. \cite{delta_sigma_1}
+En la práctica, el proceso de conversión está sujeto a numerosas limitaciones resultado de los procesos de fabricación. Las más relevantes son el tiempo de conversión y la finitud del número de estados de salida. La conversión involucra un tiempo y, en consecuencia, supone  una  incertidumbre  que  limita  la  velocidad  máxima  de  la  entrada.  Los  valores discretos  del  proceso  de  cuantificación  llevan  consigo  un  error  y  una  limitación  de resolución del circuito. La elección del CAD en un diseño electrónico dependerá de la adaptación de sus rasgos a  los requerimientos de la aplicación. \cite{adc}
 
 % subsection conversion_analogico_digital (end)
 
@@ -26,19 +26,18 @@ En la práctica, el proceso de conversión está sujeto a numerosas limitaciones
 
 \subsection{Conversores de canal único, de canal pseudo diferencial, y de canal totalmente diferencial}
 \label{sub:conversores_de_canal_unico_de_canal_pseudo_balanceado_y_de_canal_totalmente_balanceado}
-% https://www.maximintegrated.com/en/app-notes/index.mvp/id/1108
-% http://manual.audacityteam.org/man/dc_offset.html
+%CITADO
 
 Un Conversor Analógico-Digital puede obtener la señal de voltaje de entrada mediante tres métodos distintos: Canal único, Canal pseudo diferencial, y canal totalmente diferencial. \\
 
-En general, lo mas simple es elegir aquella estructura que sea compatible con el sensor que se utiliza. Pero a pesar de eso, existen ciertas características que reúne cada estructura que deben considerarse. Si existe un circuito de acondicionamiento de señal entre el sensor y el conversor, también puede afectar a la decisión sobre que tipo de estructura utilizar. Algunos conversores son configurables y permiten elegir entre canal único y pseudo diferencial, o canal único y totalmente diferencial.\cite{}
+En general, lo mas simple es elegir aquella estructura que sea compatible con el sensor que se utiliza. Pero a pesar de eso, existen ciertas características que reúne cada estructura que deben considerarse. Si existe un circuito de acondicionamiento de señal entre el sensor y el conversor, también puede afectar a la decisión sobre que tipo de estructura utilizar. Algunos conversores son configurables y permiten elegir entre canal único y pseudo diferencial, o canal único y totalmente diferencial.\cite{tipos_canales}
 
 \subsubsection{Canal único}
 \label{subs:canal_unico}
 
 Las entradas de canal único son suficientes para la mayoría de las aplicaciones. En este tipo de estructuras, la señal de entrada esta referenciada a la masa común del conversor. Esta masa es compartida por todas las entradas que estén configuradas en este modo. La figura \ref{fig:canalunico} ilustra el muestreo de una señal para esta estructura.
 
-A diferencia de las totalmente diferenciales, las entradas de canal único son mas sensibles al ruido y al desfasaje de continua. El desfasaje de continua (DC Offset) es un fenómeno que ocurre cuando el nivel de continua en la señal es distinto de 0. El ruido en el canal y el desfasaje de continua reducen la amplitud dinámica de la señal de entrada, lo cual provoca que la calidad de la conversión sea menor.
+A diferencia de las totalmente diferenciales, las entradas de canal único son mas sensibles al ruido y al desfasaje de continua. El desfasaje de continua (DC Offset) es un fenómeno que ocurre cuando el nivel de continua en la señal es distinto de 0. El ruido en el canal y el desfasaje de continua reducen la amplitud dinámica de la señal de entrada, lo cual provoca que la calidad de la conversión sea menor.\cite{dc_offset}
 
 Este tipo de entradas suelen utilizarse en aquellos casos en que la fuente que produce la señal y el conversor A/D están cerca uno del otro (Por ejemplo, en la misma placa de cobre), y por lo tanto el desfasaje de continua y el ruido no son tan presentes como en casos donde estén mas separados. También se puede incluir un circuito que adapte la señal y reduzca estos efectos no deseados.\cite{tipos_canales}
 
@@ -125,6 +124,10 @@ El filtro de decimacion selecciona algunos datos de la señal de salida del filt
 
 \section{Amplificadores de Instrumentación} %fold
 \label{sec:amplificadores_de_instrumentacion}
+
+%Bib: INSTRUMENTACIÓN ELECTRÓNICA DE COMUNICACIONES. José María Drake Moyano. UNIVERSIDAD DE CANTABRIA 2005.
+%Bib: Apuntes de Clases, Electrónica 2. Universidad Nacional de Rosario Facultad de Ciencias Exactas, Ingeniería y Agrimensura Escuela de Ingeniería Electrónica.
+%Bib: A Designer’s Guide to Instrumentation Amplifiers. 2da Edition, Charles Kitchin and Lew Count.
 
 Los amplificadores de instrumentación surgen ante la necesidad de medir tensiones de muy bajo nivel, eliminando señales de interferencias e indeseadas (ruido) en modo común.
 Se denomina amplificador de instrumentación a todo dispositivo creado a partir de amplificadores operacionales. Su diseño incluye:
@@ -293,6 +296,10 @@ La entrada puede provenir de un sistema multicanal multiplexado puesto que el am
 \section{Sistema de control para motor sin escobillas} % (fold)
 \label{sec:sistema_de_control_para_motor_sin_escobillas}
 
+%Bib : Control motor brushless sensorless. Trabajo de Fin de Grado. Gonzalo Solchaga y Jesus Maria Corres Sanz. Junio 2015.
+%Bib : Desarrollo de un controlador para motores DC brushless basado en CompactRIO y LabVIEW de National Instruments para el estudio de nuevos algoritmos de control.Proyecto fin de carrera. Juan Miguel Garcia Haro. 2011
+%Bib: http://www.digikey.com/en/articles/techzone/2013/mar/an-introduction-to-brushless-dc-motor-control
+
 \subsection{Motor DC sin escobillas (Motores Brushless)}
 \label{subsec: motor_sin_escobillas}
 
@@ -370,6 +377,8 @@ Tiene como ventajas su sencillez y facilidad de implementación por lo cual es e
   \caption{: Corrientes en las bobinas y torque del motor.}\label{fig:corrientes_bobinas}
 \end{figure}
 
+\cite{brushless_control}
+
 %subsubsection conmutacion_trapezoidal (end)
 
 \subsubsection{Conmutación Sinusoidal}
@@ -403,19 +412,57 @@ espacio de referencia está normalmente alineado con en el rotor de forma que pe
 
 %subsection metodos_control_motores (end)
 
+
+\pagebreak
+
+\subsubsection{Banco de Ensayos para Motores}
+\label{subsubsection: banco_ensayos}
+
+%Bib: Proyecto de Fin de Carrera."Sistemas de adquisición de datos y control en tiempo real para bancos de ensayos de motores". Rodriguez Luis Gustavo y Maffei Ignacio.
+
+El siguiente extracto está basado en la tesis de Rodriguez Luis Gustavo y Maffei Ignacio, "Sistemas de adquisición de datos y control en tiempo real para bancos de ensayos de motores", realizada en el Laboratorio de Arquitectura de Computadoras (LAC), Facultad de Ciencias Exactas Físicas y Naturales, UNC.
+
+Para realizar ensayos a un motor es necesario instalarlo en un banco de pruebas o de ensayos. Este consta básicamente de los siguientes elementos:
+
+\begin{itemize}
+\item Cimentación: absorbe las vibraciones que se producen debido a la existencia en el motor de fuerzas de inercia no equilibradas y de los correspondientes momentos resultantes.
+\item Bancada: soporta el motor ensayado.
+\item Soporte: permite montar y fijar el motor en la bancada, así como regular la altura y alinear el motor con el freno.
+\item Freno dinamométrico: absorbe la potencia desarrollada por el motor, ofreciendo una resistencia al giro de éste, y debe estar provisto de dispositivo para medir el par motor.
+\item Eje de Transmisión: Permite la unión mecánica del freno con el motor, con una cierta elasticidad y capacidad de absorber desalineaciones.
+\item Amortiguador torsional: su función es de amortiguar el movimiento alternativo del motor y las vibraciones del motor para que no influyan en el dinamómetro.
+\item Sistema de combustible: se debe suministrar el combustible al motor mediante cañerías directo desde un tanque de combustible o a través de los instrumentos de medición de consumo.
+\item Sistema de refrigeración del motor: si los motores son refrigerados por agua, normalmente se utiliza la bomba de agua del propio motor. Esta impulsa el agua a través del motor hacia un intercambiador de calor (agua/agua o agua/aire), en general con regulación termostática por medio de válvulas.
+Si los motores son refrigerados por aire se suele utilizar un ventilador dirigido hacia las aletas del motor.
+\item Sistema de refrigeración de aceite: en ocasiones también se refrigera el aceite del motor, ya que al no existir una corriente de aire al cárter, éste tiende a sobrecalentarse. El sistema consta de un intercambiador aceite/agua y en ocasiones una bomba auxiliar.
+\item Sistema de refrigeración del dinamómetro: los frenos dinamométricos por corrientes de Foucault y los hidráulicos transforman toda la energía mecánica que reciben del motor en calor. Este calor es eliminado por el sistema de refrigeración del freno, que suele ser mediante el abastecimiento continuo de agua a través de un circuito cerrado.
+\item Red de agua: es un circuito cerrado cuya función es disminuir la temperatura del agua proveniente del dinamómetro y del intercambiador de calor del agua y aceite del motor.
+\item Sistema de ventilación de la sala: se debe evitar el sobrecalentamiento de la sala por la radiación de calor del motor. Se efectúa mediante ventiladores axiales o centrífugos de impulsión y extracción.
+\item Sistema de evacuación de los gases de escape del motor: los gases de escape deben ser enviados a la atmósfera, tras pasar por una cámara de expansión.
+\item Sistema de arranque: este sistema permite poner en marcha el motor a ensayar sin necesidad de contar con el motor de arranque original del motor.
+\item Elementos de medición: los elementos principales de medición son:
+
+\begin{itemize}
+\item Taquímetro: mide la velocidad angular del motor (rpm).
+\item Celda de carga: mide el torque ejercido por el motor.
+\item Sensor temperatura de motor y del dinamómetro.
+\item Sensor presión de aceite del motor y del dinamómetro.
+\item Sensor de temperatura, presión, y humedad ambiente.
+\item Caudalímetro de aire y combustible.
+\item Sensores de otras temperaturas y presiones.
+\item etc.
+\end{itemize}
+
+\end{itemize}
+
+%subsection banco_ensayos (end)
+
 % section sistema_de_control_para_motor_sin_escobillas (end)
-
-
-\section{Diseño y construcción de circuitos impresos} % (fold)
-\label{sec:diseno_y_construccion_de_circuitos_impresos}
-
-% section diseño_y_construccion_de_circuitos_impresos (end)
-
 
 \section{Sistemas de comunicación serie con inmunidad al ruido} % (fold)
 \label{sec:sistemas_de_comunicacion_serie_con_inmunidad_al_ruido}
 
-%improving noise inmunity for serial connections: https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=5&ved=0ahUKEwjGy6Lc-IzPAhXDWx4KHcQwCwoQFgg8MAQ&url=http%3A%2F%2Fwww.latticesemi.com%2F~%2Fmedia%2FLatticeSemi%2FDocuments%2FWhitePapers%2FHM%2FImprovingNoiseImmunityforSerialInterface.pdf%3Fdocument_id%3D50728&usg=AFQjCNG00KXfdgaufV_zq0V5o_YFqEE8OQ&sig2=-0WOkLUVw2zrER9Gfq7-JQ&bvm=bv.132479545,d.dmo&cad=rja
+%CITADO
 
 \subsection{Comunicacion serial} % (fold)
 \label{sub:comunicacion_serial}
@@ -452,34 +499,13 @@ En un sistema complejo, puede existir ruido proveniente de varias fuentes distin
 	\item \textbf{Filtros digitales:} También es posible utilizar filtros digitales para reducir ruido. Esto se suele ver sobretodo en diseño de sistemas FPGA. Los filtros digitales pueden ser realizados en VHDL o Verilog, y filtran tanto la señal de datos como la señal del clock. Los distintos parámetros del filtro están dados en la frecuencia de oscilación y el tiempo de filtrado deseado. 
 \end{itemize}
 
-% \subsubsection{Filtro RC externo} % (fold)
-% \label{ssub:filtro_rc_externo}
-
-% Un filtro RC pasa-bajos externo es una manera de inmunizar el sistema al ruido en altas frecuencias. Pero presenta el problema de empeorar la velocidad de los flancos de subida en la comunicacion y agrega una carga a los pines involucrados. Un flanco lento es mas susceptible al ruido y puede causar inestabilidad en el sistema. Para resultados optimos, es necesario realizar un balance entre la reduccion de ruido y la reduccion en la velocidad del flanco. El balance se obtiene cambiando los valores de las resistencias involucradas en el filtro. Los valores dependeran del valor de reduccion de ruido requerido y la tension de alimentacion
-
-% % subsubsection filtro_rc_externo (end)
-
-% \subsubsection{Fuente de alimentacion desacoplada} % (fold)
-% \label{ssub:fuente_de_alimentacion_desacoplada}
-
-% Hay ocasiones en las que el ruido proveniente de la fuente de alimentacion puede causar errores en la comunicacion. La reduccion de este ruido se puede alcanzar utilizando filtros LC, tambien llamados ``Ferrite Beads''. Estos inductores estan hechos especificamente para ser colocados en serie con el cable de alimentacion para reducir el ruido en alta frecuencia producido por la fuente. Tipicamente, se suelen colocar capacitores de distintos valores luego del inductor para mejorar el filtrado. 
-
-% % subsubsection fuente_de_alimentacion_desacoplada (end)
-
-% \subsubsection{Filtros digitales} % (fold)
-% \label{ssub:filtros_digitales}
-
-% Tambien es posible utilizar filtros digitales para reducir ruido. Esto se suele ver sobretodo en diseño de sistemas FPGA. Los filtros digitales pueden ser realizados en VHDL o Verilog, y filtran tanto la señal de datos como la señal del clock. Los distintos parametros del filtro estan dados en la frecuencia de oscilacion y el tiempo de filtrado deseado. 
-
-% subsubsection filtros_digitales (end)
-
 % subsection implementando_la_inmunidad_al_ruido_en_comunicaciones_seriales (end)
 
 % section sistemas_de_comunicacion_serie_con_inmunidad_al_ruido (end)
 
 \section{Medición de frecuencia de RPM} % (fold)
 \label{sec:medicion_de_frecuencia_de_rpm}
-%https://www.elprocus.com/introduction-to-digital-tachometer-circuit-working-with-8051/
+%CITADO
 
 Un tacometro es un dispositivo digital que mide e indica la velocidad de un objeto en rotación. Un objeto en rotación puede ser un ventilador, la rueda de un auto, o cualquier cosa que esta en movimiento de revolución. Los tacometros digitales se pueden clasificar en cuatro tipos dependiendo de la técnica de adquisición de datos y la técnica de medición.
 
@@ -496,6 +522,7 @@ Basándose en la técnica de medición, pueden ser:
 	\item \textbf{Medición de tiempo:} Calcula la velocidad calculando el tiempo entre los pulsos medidos. Suelen ser mas precisos en velocidades bajas.
 	\item \textbf{Medición de frecuencia:} Calcula la velocidad midiendo la frecuencia de los pulsos en un intervalo de tiempo. Suelen ser mas precisos en velocidades altas.
 \end{itemize}
+\cite{tacometro}
 
 \subsection{Medición con fotointerruptor o sensor óptico} % (fold)
 \label{sub:medicion_con_fotointerruptor_o_sensor_optico}
@@ -561,67 +588,6 @@ Varios procesos o hilos pueden acceder a la misma base de datos sin problemas. V
 % subsection sqlite (end)
 
 % section sistemas_de_base_de_datos_para_sistemas_embebidos (end)
-
-\section{Silicon Labs \emph{C8051F352}} % (fold)
-\label{sec:silicon_labs_c8051f352}
-
-En esta sección se explicaran brevemente las funcionalidades que se utilizaron del microcontrolador elegido. Para información mas detallada referirse al datasheet del mismo. \cite{bib:datasheet}
-
-\subsection{Conversor Analógico-Digital} % (fold)
-\label{sub:conversor_analogico_digital}
-
-El C8051F350 incluye un ADC Sigma-Delta completamente diferencial de 16 bits con capacidad de calibración interna, con capacidad de 8 mediciones simultaneas en modo singular, y 4 mediciones simultaneas en modo diferencial. Tiene dos filtros separados de decimación programables con un throughput de hasta 1KHz. Tiene un voltaje de referencia interno de 2.5 V, y admite la administración de voltajes de referencia externos. Cada canal puede ser amplificado 1, 2, 4, 8, 16, 32, 64, o 128 veces.
-
-\subsubsection{Modos de medición} % (fold)
-\label{ssub:modos_de_medicion}
-
-\begin{itemize}
-  \item \textbf{Singular}: La entrada es independiente y medida con respecto a tierra.
-  \item \textbf{Diferencial}: Dos entradas medidas con respecto una de la otra.
-\end{itemize}
-% subsubsection modos_de_medición (end)
-
-\subsubsection{Modos de conversión} % (fold)
-\label{ssub:modos_de_conversion}
-
-\begin{itemize}
-  \item \textbf{Singular}: Indica al ADC que genere información suficiente para producir un resultado luego de un ciclo de conversión. El filtro puede ser \emph{fast-filter} o \emph{SINC3}. En el primero, el resultado esta disponible luego de un solo ciclo de conversión del ADC. En el segundo, espera 3 ciclos antes de que este disponible el resultado.
-  \item \textbf{Continua}: El ADC comienza una nueva conversión inmediatamente después de terminar la anterior. Los filtros funcionan de manera análoga al modo singular.
-\end{itemize}
-% subsubsection modos_de_conversión (end)
-% subsubsection conversor_analógico_digital (end)
-
-\subsection{Contadores} % (fold)
-\label{sub:contadores}
-
-El C8051F350 cuenta con 4 contadores: Timer0, Timer1, Timer2 y Timer3. Timer0 y Timer1 cuentan con 3 modos de operación:
-\begin{itemize}
-  \item Contador de 13 bits
-  \item Contador de 16 bits
-  \item Contador de 8 bits con valor de retorno
-\end{itemize}
-Timer0 cuenta con un modo mas que es el de separarse en dos contadores independientes de 8 bits.
-Timer2 y Timer3 tienen 2 modos:
- \begin{itemize}
-   \item Contador de 16 bits con valor de retorno
-   \item Dos contadores independientes de 8 bits con valor de retorno
- \end{itemize}
-
-Todos los timers pueden ser clockeados por fuente interna o externa. En el caso de los timers 2 y 3 la fuente externa se divide por 8.
-% subsection contadores (end)
-
-\subsection{Interfaz Serial} % (fold)
-\label{sub:interfaz_serial}
-
-El C8051F352 cuenta con dos protocolos de transferencia serial de datos: SMBus y UART. \textbf{SMBus} es una interfaz de dos cables bi-direccional. Es compatible con $I^{2}$C, es por esto que se considera que este microcontrolador cuenta con $I^{2}$C, por el hecho de tener SMBus. \textbf{UART} es una interfaz serial asíncrona full-duplex.
-% subsection interfaz_serial (end)
-
-\subsection{Flash} % (fold)
-\label{sub:flash}
-
-Incluye una memoria Flash de 8 Kilobytes re programable dentro del chip para almacenamiento de datos no volátil. Es programable mediante interfaz C2 o por software
-% subsection flash (end)
-% section silicon_labs_c8051f352 (end)
 
 
 
