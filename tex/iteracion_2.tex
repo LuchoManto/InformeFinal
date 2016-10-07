@@ -161,7 +161,16 @@ La primera interfaz fue de tipo ``Menu Based Interface'' o interfaz basada en me
 
 La segunda interfaz diseñada fue de tipo ``Command line interface''. En este tipo de interfaz, el usuario ingresa un comando y uno o varios argumentos en un formato que respeta una expresion regular. Bajo este concepto, se necesita un parser o analizador de comandos que extraiga de la entrada el comando y los argumentos, y realice acciones segun ellos. En nuestro caso, cada comando representa una funcion distinta de nuestro programa, y los argumentos pasan a ser parametros de la funcion. \\
 
-Luego de implementar un analizador de comandos, agregar funcionalidades al programa fue mas simple y rapido con una interfaz basada en linea de comando que con una basada en menu. Por lo que el primer diseño fue descartado y el segundo se mantuvo.
+Luego de implementar un analizador de comandos, agregar funcionalidades al programa fue mas simple y rapido con una interfaz basada en linea de comando que con una basada en menu. Por lo que el primer diseño fue descartado y el segundo se mantuvo. \\
+
+\subsubsection{Formato de los comandos} % (fold)
+\label{ssub:formato_de_los_comandos}
+
+Todos los comandos que pueden ingresarse por la interfaz respetan una expresion regular. En el caso nuestro, es la siguiente:
+
+
+
+% subsubsection formato_de_los_comandos (end)
 
 % subsection logica_de_las_funciones_de_la_interfaz (end)
 

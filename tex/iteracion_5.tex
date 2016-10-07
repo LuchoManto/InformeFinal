@@ -68,13 +68,40 @@ La funcion que se encarga de realizar las conversion, es disparada cada vez que 
 \item 11 -> canal 3,4 modo diferencial
 \end{itemize}
 
+
+Se tomaron las medidas suficientes, dentro del programa, para no permitir al usuario que establezca una configuracion donde provoque que se solapen las vias de conversion con respecto a los canales. 
+
+Las funciones "cambiar\_pin" y "analizar\_buffer" dentro del modulo de conversor, manejan los buffers y realizan las conversiones segun las configuraciones. Ambas son ejecutadas ciclicamente en el modo de conversiones continuas.
+
+\subsubsection{Descripcion de funcion: analizar\_buffer} % (fold)
+ \label{ssub:descripcion_de_funcion_analizar_buffer}
+ 
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.80\textwidth, height = 7cm]{actividadanalizarbuffer}
+  \caption{Diagrama de actividad que muestra el funcionamiento de la funcion analizar buffer. Esta funcion esta pensada para trabajar junto con "cambiar\_pin". En cada cambio de pin, se analiza el buffer para saber si hay que convertir o no, y actualizar el estado de los elementos del buffer, que corresponden en uno a uno con todas las vias de conversion posibles.}\label{fig:actividadanalizarbuffer}
+\end{figure}
+
+
+ % subsubsection descripcion_de_funcion_analizar\_buffer (end) 
+
+\subsubsection{Descripcion de funcion: cambiar\_pin} % (fold)
+\label{ssub:descripcion_de_funcion_cambiar_pin}
+
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.80\textwidth, height = 7cm]{actividadcambiarpin}
-  \caption{Diagrama de actividad que ilustra la logica dentro de la funcion cambiar_pin, dentro del modulo del conversor. Esta funcion es llamada luego de cada conversion. En cada llamado, se selecciona un nuevo canal a medir. No discrimina si el canal esta o no habilitado para medir, en caso en que no lo este, se llamara inmediatamente para cambiar el pin nuevamente sin realizar medicion alguna.}\label{fig:actividadcambiarpin}
+  \caption[Diagrama de actividad de la funcion cambiar pin]{Diagrama de actividad que ilustra la logica dentro de la funcion cambiar\_pin, dentro del modulo del conversor. Esta funcion es llamada luego de cada conversion. En cada llamado, se selecciona un nuevo canal a medir. No discrimina si el canal esta o no habilitado para medir, en caso en que no lo este, se llamara inmediatamente para cambiar el pin nuevamente sin realizar medicion alguna.}\label{fig:actividadcambiarpin}
 \end{figure}
 
-Se tomaron las medidas suficientes, dentro del programa, para no permitir al usuario que establezca una configuracion donde provoque que se solapen las vias de conversion con respecto a los canales. 
+\subsection{Interfaz de usuario} % (fold)
+\label{sub:interfaz_de_usuario}
+
+La interfaz de usuario siguio un diseño parecido al terminado en la iteteracion \ref{iteracion_2}. Agregarle funcionailidades es simple gracias al estilo del menu. Cada vez que exista una funcionalidad nueva, hay que conformar un nuevo comando e incluirlo en el espacio de nombres dentro de la interfaz
+
+% subsection interfaz_de_usuario (end)
+
+% subsubsection descripcion_de_funcion_cambiar\_pin (end)
 
 % subsection logica_para_permitir_intervalos_individuales_de_medicion_buffer_de_conversion_estatico_y_dinamico (end)
 
