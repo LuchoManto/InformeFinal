@@ -84,12 +84,12 @@ Para poder realizar el diseño esquemático del circuito utilizamos el software 
 El circuito contiene 8 entradas analógicas iguales cada una, por lo que mostraremos el ejemplo de una sola entrada. Podemos ver en la figura  el circuito para la entrada de la señal. 
 
 Sabemos que la señal entra al sistema con ruido (ya sea como interferencia de señales externas, o ruido provocado por los mismos componentes del circuito). Por lo que como primera medida, se aplica a la señal de entrada un filtro RC pasivo, pasa bajo. Así introducimos muy poca atenuación a las frecuencias que son menores que la frecuencia de corte. Las frecuencias que son mayores que la de corte son atenuadas fuertemente. 
-Como podemos ver en la figura \ref{fig:Entrada_y_filtro} tenemos un pin (AI0) de entrada para conectar la salida de un sensor analógico, seguido de un filtro RC, compuesto por una resistencia de 100 ohms, y un capacitor a tierra de 0,1 microFaradios. La salida de la resistencia esta conectada directamente a la entrada AIN0.0 del C8051f352.
+Como podemos ver en la figura \ref{fig:esquematicoFiltro} tenemos un pin (AI0) de entrada para conectar la salida de un sensor analógico, seguido de un filtro RC, compuesto por una resistencia de 100 ohms, y un capacitor a tierra de 0,1 microFaradios. La salida de la resistencia esta conectada directamente a la entrada AIN0.0 del C8051f352.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.70\textwidth, height = 4cm]{Entrada_y_filtro}
-  \caption{Esquemático del circuito de entrada analógica, más filtro RC pasa-bajo.}\label{fig:Entrada_y_filtro}
+  \includegraphics[width=0.70\textwidth, height = 4cm]{esquematicoFiltro}
+  \caption{Esquemático del circuito de entrada analógica, más filtro RC pasa-bajo.}\label{fig:esquematicoFiltro}
 \end{figure}
 
 %subsubsection entradas_analogicas (end)
@@ -99,15 +99,15 @@ Como podemos ver en la figura \ref{fig:Entrada_y_filtro} tenemos un pin (AI0) de
 
 Uno de los requerimientos de esta iteración es que la placa a desarrollar debe soportar comunicación serial, así que propusimos que dicha comunicación sea vía RS-232.
 
-Como el nivel de tensión que entrega la salida serial TTL del microcontrolador C8051f352 es distinta a la necesaria para aplicar el protocolo RS-232. Nos vimos obligados a realizar un circuito para adaptarlo, y así asegurar el correcto envío de datos. Para realizar dicho circuito se utilizó el integrado MAX232 y se configuró como se muestra en la figura \ref{fig:MAX232}. Como podemos ver se utilizaron Capacitores de 0,1 microFaradios. Los pines "XRX1", "XCTS1", "XTX1" y "XRTS1" son los que tendrá el modulo de salida RS-232.
+Como el nivel de tensión que entrega la salida serial TTL del microcontrolador C8051f352 es distinta a la necesaria para aplicar el protocolo RS-232. Nos vimos obligados a realizar un circuito para adaptarlo, y así asegurar el correcto envío de datos. Para realizar dicho circuito se utilizó el integrado MAX232 y se configuró como se muestra en la figura \ref{fig:esquematicoMax232}. Como podemos ver se utilizaron Capacitores de 0,1 microFaradios. Los pines "XRX1", "XCTS1", "XTX1" y "XRTS1" son los que tendrá el modulo de salida RS-232.
 Ademas colocamos 4 jumpers (JP1, JP2, JP3, JP4) a la entrada del MAX232 por si se necesita la salida TTL del microcontrolador (por ejemplo si se quiere conectar la salida serial a un arduino o raspberry pi).
 
 La tensión para alimentar el integrado es de 3.3V que se sacan del sub-circuito de potencia que se explicara en \ref{sub}.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.80\textwidth, height = 11cm]{MAX232}
-  \caption{Esquemático del Circuito MAX232 .}\label{fig:MAX232}
+  \includegraphics[width=0.80\textwidth, height = 11cm]{esquematicoMax232}
+  \caption{Esquemático del Circuito MAX232 .}\label{fig:esquematicoMax232}
 \end{figure}
 
 %subsubsection salida_serial (end)
@@ -116,10 +116,12 @@ La tensión para alimentar el integrado es de 3.3V que se sacan del sub-circuito
 \label{circuito_potencia}
 
 Del análisis del microcontrolador y de otros componentes que necesitamos utilizar en la placa(como MAX232, leds, etc), decidimos realizar separar el circuito de potencia para dividir la tensión en dos de distintos valores: 3,3V y 5V.
-Como podemos ver en la figura \ref{} el sistema de alimentación lo implementamos a través de un Jack de Power (Jack2P) para conectar una fuente de tensión de 5V, y a través del programador/debugger de Silicon Labs 5V(Debugger1). A continuación colocamos un jumper de 3 pines para poder seleccionar el método de alimentación (Jumper1).
+Como podemos ver en la figura \ref{fig:esquematicoPotencia} el sistema de alimentación lo implementamos a través de un Jack de Power (Jack2P) para conectar una fuente de tensión de 5V, y a través del programador/debugger de Silicon Labs 5V(Debugger1). A continuación colocamos un jumper de 3 pines para poder seleccionar el método de alimentación (Jumper1).
 
 \begin{figure}
-
+  \centering
+  \includegraphics[width=0.80\textwidth, height = 11cm]{esquematicoPotencia}
+  \caption{Esquemático del Circuito MAX232 .}\label{fig:esquematicoPotencia}
 \end{figure}
 
 Para poder alimentar al microcontrolador necesitábamos 3.3V así que utilizamos un regulador de tensión (LM2937). El C8051f352 tiene dos entradas de alimentación, una analógica y una digital, ambas con un rango entre 2.9V a 3.6V, ademas la corriente puede variar entre 5.7mA (en estado inactivo) hasta 11.3mA (en estado activo). Es por ello que se colocan las resistencias, y ademas se colocan capacitores en paralelo para disminuir el ruido de entrada.
@@ -183,7 +185,7 @@ Prueba \#        & 1                                                            
 \hline
 Nombre           & Correcto Diseño de PCB.                                                                                                                                                                                                                                                           \\
 \hline
-Descripcion      & Se chequea si existen errores en el diseño utilizando el ERC (perfom design rules check) que provee el KiCad.                                                                                   \\
+Descripción      & Se chequea si existen errores en el diseño utilizando el ERC (perfom design rules check) que provee el KiCad.                                                                                   \\
 \hline
 Pre-condiciones  & \tabitem Componentes colocados y ruteados. \\
                  & \tabitem Pads numerados con sus etiquetas.  \\
@@ -192,7 +194,7 @@ Pre-condiciones  & \tabitem Componentes colocados y ruteados. \\
 Post-condiciones & El resultado de ERC debe ser cero.                     
 \\
 \hline
-Resultados       & No se encuentrar errores de diseño en el PCB.                                                                                       
+Resultados       & No encontramos errores de diseño en el PCB.                                                                                       
 \end{tabular}
 \end{table}
 
@@ -203,18 +205,18 @@ Resultados       & No se encuentrar errores de diseño en el PCB.
 \multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}}                                                                                                                                                                                                                                                   \\
 Prueba \#        & 2                                                                                                                                                                                                                                                                                                                   \\
 \hline
-Nombre           & Correcta impresion de la placa.                                                                                                                                                                                                                                                          \\
+Nombre           & Correcta impresión de la placa.                                                                                                                                                                                                                                                          \\
 \hline
-Descripcion      & Corroboramos que todas las pistas y que todos los drills se hayan impreso. Luego con un multimetro seteado en cuntinuidad comprobamos que no existan cortocircuitos entre pistas y masa o entre pads y masa.                                                                                  \\
+Descripción      & Corroboramos que todas las pistas y que todos los drills se hayan impreso. Luego con un multimetro seteado en continuidad comprobamos que no existan cortocircuitos entre pistas y masa o entre pads y masa.                                                                                  \\
 \hline
 Pre-condiciones  & \tabitem Placa impresa. \\
-                 & \tabitem Multimetro seteado en continuidad.\\
+                 & \tabitem Multímetro seteado en continuidad.\\
 \hline
 
 Post-condiciones & La placa debe tener las mismas pistas que aparecen en el diseño de PCB, y al medir con el tester nunca debe dar continuidad entre masa y pistas, o entre pads y pistas.  
 \\ 
 \hline
-Resultados       & Todas las pistas estaban de acuerdo con el PCB. Al medir la continuidad de las pistas se encontraron algunos cortuciruitos producidos por una mala colocacion del la plancha al momento de la impresion. Se solucionaron volviendo a imprimir la placa.                                                                                                                                                   
+Resultados       & Todas las pistas estaban de acuerdo con el PCB. Al medir la continuidad de las pistas se encontraron algunos cortocircuitos producidos por una mala colocación del la plancha al momento de la impresión. Se solucionaron volviendo a imprimir la placa.                                                                                                                                                   
 \end{tabular}
 \end{table}
 
@@ -228,7 +230,7 @@ Prueba \#        & 3                                                            
 \hline
 Nombre           & Correcta soldadura de Componentes                                                                                                                                                                                                                                                         \\
 \hline
-Descripcion      & Se utiliza el multimetro seteado en continuidad para poder chequear si existen cortocircuitos y para saber si todos los componentes estan bien interconectados.                                                                                  \\
+Descripción      & Se utiliza el multimetro seteado en continuidad para poder chequear si existen cortocircuitos y para saber si todos los componentes estan bien interconectados.                                                                                  \\
 \hline
 Pre-condiciones  & \tabitem Placa impresa. \\
                  & \tabitem Pistas impresas correctamente. \\
@@ -239,9 +241,61 @@ Pre-condiciones  & \tabitem Placa impresa. \\
 Post-condiciones &  No deben encontrarse cortocircuitos, y deben comprobarse la continuidad de las interconexiones de componentes.
 \\ 
 \hline
-Resultados       & Se encontraron cortocircuitos luego de soldar los componentes, al intentar solucionarlo las pistas se rompieron. Para solucionar este problema volvimos a imprimir la placa, realizamos la prueba de sistema 2 de vuelta y soldamos todos los componentes, realizamos esta prueba de nuevo y no encontramos ningun cortocircuito.                                                                                                                                                     
+Resultados       & Encontramos cortocircuitos luego de soldar los componentes, al intentar solucionarlo las pistas se rompieron. Para solucionar este problema volvimos a imprimir la placa, realizamos la prueba de sistema 2 de vuelta y soldamos todos los componentes, realizamos esta prueba una vez mas y no encontramos ningún cortocircuito.                                                                                                                                                     
 \end{tabular}
 \end{table}
+
+\begin{table}[h]
+\centering
+\caption{Test de sistema 4}
+\label{tab:testsistema3}
+\begin{tabular}{p{2cm} p{9cm}}
+\multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}}                                                                                                                                                                                                                                                   \\
+Prueba \#        & 4                                                                                                                                                                                                                                                                                                                   \\
+\hline
+Nombre           & Correcta Comunicación Con IDE SiliconLabs.                                                                                                                                                                                                                                                         \\
+\hline
+Descripción      & Se utilizo el cable USB con el debugger de SiliconLabs para conectar la placa a la PC.                                                                                  \\
+\hline
+Pre-condiciones  & \tabitem Placa impresa. \\
+                 & \tabitem Pistas impresas correctamente. \\
+                 & \tabitem Componentes soldados. \\
+                 & \tabitem IDE SiliconLabs instalada en la PC. \\
+\hline
+
+Post-condiciones &  Al abrir la IDE y apretar el botón de "Connect" el programa debe reconocer el tipo de microcontrolador al que esta conectado.
+\\ 
+\hline
+Resultados       &  Conectamos la placa a la PC y en la IDE apretamos el botón de conectar, con lo que nos reconoció que el micro que se había conectado fue un C8051f352.                                                                                                                                                    
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{Test de sistema 5}
+\label{tab:testsistema3}
+\begin{tabular}{p{2cm} p{9cm}}
+\multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}}                                                                                                                                                                                                                                                   \\
+Prueba \#        & 4                                                                                                                                                                                                                                                                                                                   \\
+\hline
+Nombre           & Correcta programacion del microcontrolador.                                                                                                                                                                                                                                                         \\
+\hline
+Descripción      & Se utilizo el cable USB con el debugger de SiliconLabs para conectar la placa a la PC y descargarle un programa .hex al microcontrolador.                                                                                  \\
+\hline
+Pre-condiciones  & \tabitem Placa impresa. \\
+                 & \tabitem Pistas impresas correctamente. \\
+                 & \tabitem Componentes soldados. \\
+                 & \tabitem IDE SiliconLabs instalada en la PC. \\
+                 & \tabitem IDE SiliconLabs reconociendo el C8051f352. \\
+\hline
+
+Post-condiciones &  Al abrir la IDE y apretar el botón de "Connect" el programa debe reconocer el tipo de microcontrolador al que esta conectado y luego a traves de la misma IDE o del "Flash Programing Utilitys" cargarle un proframa .hex al c8051f352.
+\\ 
+\hline
+Resultados       &  Conectamos la placa a la PC y en la IDE al intentar cargar el programa nos devolvio un error para escribir la flash del microcontrolador.                                                                                                                                                    
+\end{tabular}
+\end{table}
+
 
 
 

@@ -4,7 +4,9 @@
 \section{Introduccion} % (fold)
 \label{sec:introduccion}
 
-Nos propusimos poder duplicar la cantidad de recursos de la placa, por el principar problema de medir varios sensores de modo diferencial, ya que con 8 entradas nomas solo podriamos tener 4 sensores como maximo. Entonces decidimos poner dos microcontroladores a la placa. Pasar de 8 a 16 entradas analogicas y utilizar todas las entradas digitales. 
+Nos propusimos poder duplicar la cantidad de recursos de la placa, ya que el principal problema era medir varios sensores de modo diferencial, con 8 entradas solo podriamos tener 4 sensores como maximo. Entonces decidimos poner dos microcontroladores a la placa. Pasar de 8 a 16 entradas analogicas y utilizar todas las entradas digitales. 
+Para no agrandar el tamaño decidimos rediseñar la placa, y como primera medida la diseñamos para poder construirla doble capa.
+En esta iteracion mostraremos como se realizo el diseño y la construccion de esta nueva placa.
 
 % section introduccion (end)
 
@@ -22,6 +24,27 @@ Nos propusimos poder duplicar la cantidad de recursos de la placa, por el princi
 
 \section{Desarrollo} % (fold)
 \label{sec:desarrollo}
+
+\subsection{Diseño Esquematico}
+\label{diseño_esquematico2}
+
+Para simplificar la explicación del diagrama, lo que haremos en esta sección es dividir el circuito entero en subcircuitos mas simples.
+
+\subsubsection{Entradas Analogicas}
+\label{entradas_analogicas2}
+
+Las entradas analogicas con sus filtros se mantuvieron exactamente igual que en el diseño de la primera placa. Para cada una de las entradas se le colocaria un filtro pasa-bajo RC como se muestra en la figura \ref{fig:esquematicoFiltro}.
+
+% subsubsection entradas_analogicas2 (end)
+
+\subsubsection{Circuito Salida Serial}
+\label{salida_serial2}
+
+La idea de tener una placa a la que se conecten varios sensores analógicos y digitales es que se pueda colocar el lugares remotos, por lo que decidimos que la salida serial deje de ser RS-232 y colocarle dos salidas seriales nivel TTL con un RX y un TX para cada microcontrolador, ademas colocando éste tipo de salida se ahorra mucho espacio, así que pudimos reducir el tamaño de la placa. 
+
+% subsubsection salida_serial2 (end)
+
+% subsection diseño_esquematico2 (end)
 
 % section desarrollo (end)
 
