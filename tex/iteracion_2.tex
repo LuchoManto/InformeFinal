@@ -174,7 +174,26 @@ Todos los comandos que pueden ingresarse por la interfaz respetan una expresion 
 
 % subsection logica_de_las_funciones_de_la_interfaz (end)
 
+\subsection{Contadores de eventos} % (fold)
+\label{sub:contadores_de_eventos}
 
+
+El modulo contador contiene declaraciones de las funciones involucradas en el proceso de obtener las cuentas de los contadores de eventos activos en el microcontrolador. La accion de obtener una cuenta no es nada mas que leer un registro con el valor de la cuenta. Eso es precisamente lo que hace cada funcion de este modulo. Se puede acceder al timer0, timer 2 y timer 3. Timer 1 no es accesible, la razon de esto se explica a continuacion. \\
+
+Los requerimientos iniciales indican que es necesario poder contar eventos de 3 o 4 fuentes distintas. Al momento de tomar la decision de cual microcontrolador utilizar, tuvimos en cuenta que este microcontrolador cuenta con 4 contadores que pueden ser configurados para que tomen fuentes externas para realizar el conteo. A pesar de esto, nos encontramos con algunas circunstancias. 
+
+En primer lugar, para poder utilizar el modulo serial del microcontrolador, es necesario que uno de los timers actue de generador de baud rate. Por defecto utiliza timer 1. El modulo serial es un requerimiento principal, por lo que de 4 contadores pasamos a tener 3. En segundo lugar, los timers 2 y 3 tienen los mismos pines fisicos de salida para ser conectados a una fuente externa. Es decir, si se cuenta con timer 2 desde una fuente externa, la lectura es la misma para timer 3. Por lo que es un unico timer si se habla de contar eventos externos.
+
+Estas circunstancias significaron que solo se pueden usar 2 timers. timer 0 y timer 2 o 3. Luego de este problema, se hablo de la posibilidad de duplicar la cantidad de microcontroladores en la placa, para duplicar los recursos y tener 4 contadores.
+
+% subsection contadores_de_eventos (end)
+
+\subsection{El modulo serial} % (fold)
+\label{sub:el_modulo_serial}
+
+Para hacer funcionar el modulo serial, es necesario utilizar uno de los timers como generador de baudios. La implementacion de la funcion no fue hecha por nosotros, vino ya hecha por Silicon Labs como ejemplo, y pudimos utilizar el ejemplo como estaba sin problemas. Utilizamos UART en lugar de SMBus. Es necesario destacar que en los requerimientos, se especifica que es necesario que se puedan transmitir los datos de las mediciones utilizando protocolo UART tanto con RS232 como con $I^{2}$C. El microcontrolador cuenta con una interfaz serial$^{\tiny{\ref{sub:interfaz_serial}}}$ llamada SMBus, que puede comunicarse con cualquier dispositivo que utilice $I^{2}$C porque es compatible. Sin embargo, no fue posible lograr que funcione, y luego de hacer algunas investigaciones, encontramos que suele ser un problema común que esta interfaz no suela funcionar en estos microcontroladores. Luego de intentar reiteradas veces sin obtener resultados, se opto por no utilizar SMBus y trabajar únicamente con el protocolo UART.
+
+% subsection el_modulo_serial (end)
 
 % section desarrollo (end)
 

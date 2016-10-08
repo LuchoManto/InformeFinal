@@ -94,16 +94,44 @@ Las funciones "cambiar\_pin" y "analizar\_buffer" dentro del modulo de conversor
   \caption[Diagrama de actividad de la funcion cambiar pin]{Diagrama de actividad que ilustra la logica dentro de la funcion cambiar\_pin, dentro del modulo del conversor. Esta funcion es llamada luego de cada conversion. En cada llamado, se selecciona un nuevo canal a medir. No discrimina si el canal esta o no habilitado para medir, en caso en que no lo este, se llamara inmediatamente para cambiar el pin nuevamente sin realizar medicion alguna.}\label{fig:actividadcambiarpin}
 \end{figure}
 
+
+% subsubsection descripcion_de_funcion_cambiar\_pin (end)
+% subsection logica_para_permitir_intervalos_individuales_de_medicion_buffer_de_conversion_estatico_y_dinamico (end)
+
 \subsection{Interfaz de usuario} % (fold)
 \label{sub:interfaz_de_usuario}
 
-La interfaz de usuario siguio un diseño parecido al terminado en la iteteracion \ref{iteracion_2}. Agregarle funcionailidades es simple gracias al estilo del menu. Cada vez que exista una funcionalidad nueva, hay que conformar un nuevo comando e incluirlo en el espacio de nombres dentro de la interfaz
+La interfaz de usuario siguio un diseño parecido al terminado en la iteteracion \ref{iteracion_2}. Agregarle funcionailidades es simple gracias al diseño de la interfaz. Cada vez que exista una funcionalidad nueva, hay que conformar un nuevo comando e incluirlo en el espacio de nombres.
+
+Los comandos disponibles al final de esta iteracion son:
+
+\begin{itemize}
+  \item SSE: - \textit{set single ended}: Establece un canal en modo unico.
+  \item SDI: - \textit{set differential}: Establece un par de canales en modo diferencial.
+  \item GSE: - \textit{get single ended}: Obtiene una conversion instantanea en modo canal unico sobre un canal.
+  \item GDI: - \textit{get differential}: Obtiene una conversion instantanea en modo diferencial sobre un par de canales.
+  \item GDI: - \textit{get differential}: Obtiene una conversion instantanea en modo diferencial sobre un par de canales.
+  \item SGA: - \textit{set gain}: Establece el nivel de ganancia del conversor.
+  \item GT0: - \textit{get timer 0}: Obtiene el valor actual de la cuenta de timer 0, configurado como contador de eventos.
+  \item GT2: - \textit{get timer 2}: Obtiene el valor actual de la cuenta de timer 2, configurado como contador de eventos.
+  \item SHA: - \textit{show configuration}: Muestra la configuracion actual de todos los canales y la ganancia del conversor.
+  \item ST: - \textit{start}: Inicia el modo de conversiones continuas.
+\end{itemize}
+
+Estas funciones estan descriptas con detalle en el apendice \ref{ap:instrucciones}.
 
 % subsection interfaz_de_usuario (end)
 
-% subsubsection descripcion_de_funcion_cambiar\_pin (end)
+\subsection{Memoria flash} % (fold)
+\label{sub:memoria_flash}
 
-% subsection logica_para_permitir_intervalos_individuales_de_medicion_buffer_de_conversion_estatico_y_dinamico (end)
+En esta iteracion, surgio la idea de utilizar la memoria flash del microcontrolador para guardar las configuraciones actuales, de forma que si el sistema se apaga, se pueda volver a iniciar con las configuraciones ya cargadas, sin necesidad de volver a establecer todo cada vez que se inicie nuevamente. Pero esto no pudo ser posible, las operaciones necesarias para leer y escribir la memoria y el tamaño de la misma hicieron que sea difícil realizar la escritura y la lectura de la misma. Para escribir una palabra en memoria, es necesario borrar toda la pagina en donde se encuentra la palabra para luego reescribirla. Cada pagina de la memoria flash ocupa 512 Bytes.
+
+Tanto el programa que corre en el microprocesador como los datos de configuración debe guardarse en la misma memoria flash de 8Kb. El programa ocupa alrededor de 7Kb. En el Kb que sobra, es posible guardar las configuraciones, pero lo que lo dificulta es que el método de escritura de la flash pone en riesgo la integridad del programa. Teniendo en cuenta esto, se decidió no utilizar la flash para guardar las configuraciones. Por lo tanto, cada vez que el sistema se apague, se pierden las configuraciones, sin posibilidad de guardarlas.
+
+% subsection memoria_flash (end)
+
+
 
 % section desarrollo (end)
 
