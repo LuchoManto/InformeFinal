@@ -2,25 +2,34 @@
 \label{cha:iteracion_5}
 
 \section{Introduccion} % (fold)
-\label{sec:introduccion}
+\label{it5:sec:introduccion}
+
+En este capitulo, se describe el desarrollo de la segunda itearacion de software. Hasta el momento, tenemos un programa embebido en el microcontrolador que cumple con los requerimientos especificados en la seccion \ref{it2:sub:estado_de_los_requerimientos}. En esta iteracion, los objetivos fueron principalmente orientados a profundizar las funciones del conversor para que se puedan establecer intervalos individuales entre cada medicion para cada canal. Ademas, se intento incluir a SMBus como alternativa de interfaz serial, que hasta el momento era unicamente UART. Se propuso tambien utilizar el modulo flash del microcontrolador con el objetivo de guardar las configuraciones una vez establecidas, de manera que no sea necesario volver a configurar el sistema en cada encendido.
 
 % section introduccion (end)
 
 \section{Requerimientos de la iteracion} % (fold)
-\label{sec:requerimientos_de_la_iteracion}
+\label{it5:sec:requerimientos_de_la_iteracion}
+
+De los requerimientos principales y el estado del programa al final de la iteracion 2 (cpitulo \ref{cha:iteracion_2}), se proponen los siguientes requerimientos para el programa:
 
 \begin{itemize}
-\item
+\item Se deberian poder configurar tiempos de intervalo entre cada medicion para cada canal por separado
+\item Se deberian poder guardar las configuraciones actuales en la memoria flash del microcontrolador, para poder reestablecerlas en caso que el sistema se apague y se vuelva a prender.
+\item Se deberia utilizar SMBus ademas de UART para transmitir los datos de la placa de instrumentacion a la placa de gestion.
+\item Todas las funcionalidades del sistema deberian estar testeadas utilizando unit-testing y realizando pruebas de sistema.
 \end{itemize}
 
 
 % section requerimientos_de_la_iteracion (end)
 
 \section{Desarrollo} % (fold)
-\label{sec:desarrollo}
+\label{it5:sec:desarrollo}
+
+Ademas de explicar las modificaciones hechas a los modulos del programa para que cumplan con los requerimientos de la iteracion, mencionaremos todos los modulos que han tenido cambios, influyan o no en los requerimientos. El objetivo es dar una idea de la actualizacion del programa embebido. 
 
 \subsection{Logica para permitir intervalos individuales de medicion: Buffer de conversion estatico y dinamico} % (fold)
-\label{sub:logica_para_permitir_intervalos_individuales_de_medicion_buffer_de_conversion_estatico_y_dinamico}
+\label{it5:sub:logica_para_permitir_intervalos_individuales_de_medicion_buffer_de_conversion_estatico_y_dinamico}
 
 En esta seccion, ocupamos el rediseño de las funciones del conversor con el objetivo de lograr que el usuario pueda configurar tiempos de intervalos de mediciones en cada canal por separado. El tiempo entre cada medicion no es menor, dado que dependiendo el tipo de sensor, puede necesitarse que las mediciones sean de frecuencia alta o baja.
 
@@ -54,18 +63,18 @@ El contenido de cada elemento en el buffer es un numero que va de 1 a 255, en el
 La funcion que se encarga de realizar las conversion, es disparada cada vez que se encuentra un 1 en una posicion del buffer dinamico. Con el numero de posicion del buffer, sabe el numero de la via de conversion por donde hay que convertir. Esta via de conversion, como mencionamos anteriormente, puede ser de 0 a 11. En cada numero, se mide lo siguiente:
 
 \begin{itemize}
-\item 0 -> canal 0 modo unico
-\item 1 -> canal 1 modo unico
-\item 2 -> canal 2 modo unico
-\item 3 -> canal 3 modo unico
-\item 4 -> canal 4 modo unico
-\item 5 -> canal 5 modo unico
-\item 6 -> canal 6 modo unico
-\item 7 -> canal 7 modo unico
-\item 8 -> canal 0,1 modo diferencial
-\item 9 -> canal 1,2 modo diferencial
-\item 10 -> canal 2,3 modo diferencial
-\item 11 -> canal 3,4 modo diferencial
+\item 0 \textrightarrow  canal 0 modo unico
+\item 1 \textrightarrow  canal 1 modo unico
+\item 2 \textrightarrow  canal 2 modo unico
+\item 3 \textrightarrow  canal 3 modo unico
+\item 4 \textrightarrow  canal 4 modo unico
+\item 5 \textrightarrow  canal 5 modo unico
+\item 6 \textrightarrow  canal 6 modo unico
+\item 7 \textrightarrow  canal 7 modo unico
+\item 8 \textrightarrow  canal 0,1 modo diferencial
+\item 9 \textrightarrow  canal 1,2 modo diferencial
+\item 10 \textrightarrow  canal 2,3 modo diferencial
+\item 11 \textrightarrow  canal 3,4 modo diferencial
 \end{itemize}
 
 
@@ -74,19 +83,19 @@ Se tomaron las medidas suficientes, dentro del programa, para no permitir al usu
 Las funciones "cambiar\_pin" y "analizar\_buffer" dentro del modulo de conversor, manejan los buffers y realizan las conversiones segun las configuraciones. Ambas son ejecutadas ciclicamente en el modo de conversiones continuas.
 
 \subsubsection{Descripcion de funcion: analizar\_buffer} % (fold)
- \label{ssub:descripcion_de_funcion_analizar_buffer}
+ \label{it5:ssub:descripcion_de_funcion_analizar_buffer}
  
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.80\textwidth, height = 7cm]{actividadanalizarbuffer}
-  \caption{Diagrama de actividad que muestra el funcionamiento de la funcion analizar buffer. Esta funcion esta pensada para trabajar junto con "cambiar\_pin". En cada cambio de pin, se analiza el buffer para saber si hay que convertir o no, y actualizar el estado de los elementos del buffer, que corresponden en uno a uno con todas las vias de conversion posibles.}\label{fig:actividadanalizarbuffer}
+  \caption[Diagrama de actividad de la funcion analizar buffer]{Diagrama de actividad que muestra el funcionamiento de la funcion analizar buffer. Esta funcion esta pensada para trabajar junto con "cambiar\_pin". En cada cambio de pin, se analiza el buffer para saber si hay que convertir o no, y actualizar el estado de los elementos del buffer, que corresponden en uno a uno con todas las vias de conversion posibles.}\label{fig:actividadanalizarbuffer}
 \end{figure}
 
 
  % subsubsection descripcion_de_funcion_analizar\_buffer (end) 
 
 \subsubsection{Descripcion de funcion: cambiar\_pin} % (fold)
-\label{ssub:descripcion_de_funcion_cambiar_pin}
+\label{it5:ssub:descripcion_de_funcion_cambiar_pin}
 
 \begin{figure}[h]
   \centering
@@ -99,7 +108,7 @@ Las funciones "cambiar\_pin" y "analizar\_buffer" dentro del modulo de conversor
 % subsection logica_para_permitir_intervalos_individuales_de_medicion_buffer_de_conversion_estatico_y_dinamico (end)
 
 \subsection{Interfaz de usuario} % (fold)
-\label{sub:interfaz_de_usuario}
+\label{it5:sub:interfaz_de_usuario}
 
 La interfaz de usuario siguio un diseño parecido al terminado en la iteteracion \ref{iteracion_2}. Agregarle funcionailidades es simple gracias al diseño de la interfaz. Cada vez que exista una funcionalidad nueva, hay que conformar un nuevo comando e incluirlo en el espacio de nombres.
 
@@ -119,11 +128,11 @@ Los comandos disponibles al final de esta iteracion son:
 \end{itemize}
 
 Estas funciones estan descriptas con detalle en el apendice \ref{ap:instrucciones}.
-
+s
 % subsection interfaz_de_usuario (end)
 
 \subsection{Memoria flash} % (fold)
-\label{sub:memoria_flash}
+\label{it5:sub:memoria_flash}
 
 En esta iteracion, surgio la idea de utilizar la memoria flash del microcontrolador para guardar las configuraciones actuales, de forma que si el sistema se apaga, se pueda volver a iniciar con las configuraciones ya cargadas, sin necesidad de volver a establecer todo cada vez que se inicie nuevamente. Pero esto no pudo ser posible, las operaciones necesarias para leer y escribir la memoria y el tamaño de la misma hicieron que sea difícil realizar la escritura y la lectura de la misma. Para escribir una palabra en memoria, es necesario borrar toda la pagina en donde se encuentra la palabra para luego reescribirla. Cada pagina de la memoria flash ocupa 512 Bytes.
 
@@ -131,17 +140,15 @@ Tanto el programa que corre en el microprocesador como los datos de configuraci�
 
 % subsection memoria_flash (end)
 
-
-
 % section desarrollo (end)
 
 \section{Pruebas} % (fold)
-\label{sec:pruebas}
+\label{it5:sec:pruebas}
 
 % section pruebas (end)
 
 \section{Resultados} % (fold)
-\label{sec:resultados}
+\label{it5:sec:resultados}
 
 % section resultados (end)
 

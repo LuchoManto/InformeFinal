@@ -1,2 +1,7 @@
 *.pdf
 informesBase/
+*.lof
+*.lot
+*.out
+*.gz
+*.toc
