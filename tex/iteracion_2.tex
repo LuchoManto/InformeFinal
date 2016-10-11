@@ -77,7 +77,7 @@ En la figura \ref{fig:casouso1}, se puede ver el diagrama de caso de uso para el
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.80\textwidth, height = 11cm]{bloquesprimeraiteracionsoftware}
+  \includegraphics[width=1\textwidth, height = 13.5cm]{bloquesprimeraiteracionsoftware}
   \caption{Diagrama de bloques de la primera iteracion de software}\label{fig:bloquesprimeraiteracionsoftware}
 \end{figure}
 
@@ -105,13 +105,13 @@ El objetivo de esta iteracion fue diseñar el programa con un paradigma de confi
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.80\textwidth, height = 11cm]{secuenciaconfiguracionbasica}
+  \includegraphics[width=1\textwidth, height = 9cm]{secuenciaconfiguracionbasica}
   \caption{Diagrama de secuencia para una configuracion del conversor. Establece el canal 3 en modo canal unico}\label{fig:secuenciaconfiguracionbasica}
 \end{figure}
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.80\textwidth, height = 11cm]{secuenciaconversioncontinua}
+  \includegraphics[width=1\textwidth, height = 9cm]{secuenciaconversioncontinua}
   \caption{Diagrama de secuencia para la activacion de conversiones en modo continuo luego de una configuracion previa.}\label{fig:secuenciaconversioncontinua}
 \end{figure}
 
@@ -163,12 +163,22 @@ La segunda interfaz diseñada fue de tipo ``Command line interface''. En este ti
 
 Luego de implementar un analizador de comandos, agregar funcionalidades al programa fue mas simple y rapido con una interfaz basada en linea de comando que con una basada en menu. Por lo que el primer diseño fue descartado y el segundo se mantuvo. \\
 
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.40\textwidth, height = 12cm]{actividadinterfaz}
+  \caption[Diagrama de actividad del comportamiento de la interfaz de usuario]{Diagrama de actividad del comportamiento de la interfaz de usuario. Se toma la entrada y se parsea para obtener el comando y los argumentos. Segun el comando, se ejecuta una u otra funcion dentro del programa. Los parametros necesarios para ejecutar la funcion se incluyen como argumentos dentro de un arreglo que esta en la estructura global. Este arreglo es luego utilizado por la funcion llamada para obtener los argumentos ingresados junto con el comando.}\label{fig:actividadinterfaz}
+\end{figure}
+
 \subsubsection{Formato de los comandos} % (fold)
 \label{it2:ssub:formato_de_los_comandos}
 
 Todos los comandos que pueden ingresarse por la interfaz respetan una expresion regular. En el caso nuestro, es la siguiente:
 
+\begin{equation}
+\backslash w\backslash w(\backslash w)?(,\backslash d(,\backslash d)?)?
+\end{equation}
 
+Dicho de otra manera, el comando ingresado esta conformado por 2 caracteres alfabeticos como minimo y 2 como maximo. El comando puede o no tener argumentos; si los tiene, son dos argumentos como maximo separados por comas, y cada uno es un unico caracter numerico. El comando y los argumentos tambien estan separados por una coma.
 
 % subsubsection formato_de_los_comandos (end)
 

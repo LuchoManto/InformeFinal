@@ -35,7 +35,7 @@ Para simplificar la explicación del diagrama, lo que haremos en esta sección e
 
 Las entradas analogicas con sus filtros se mantuvieron exactamente igual que en el diseño de la primera placa. Para cada una de las entradas se le colocaria un filtro pasa-bajo RC como se muestra en la figura \ref{fig:esquematicoFiltro}.
 
-Mostramos en la figura \ref{fig:esquematicoFiltro2} como quedan todas las entradas analógicas de un solo chip (en el otro es exactamente igual), podemos ver 8 entradas analogicas, cada una con su respectivo filtro. Ademas podemos observar 2 pines llamados PINHD_AGND_2, son dos accesos a la masa digital para aquellos sensores que necesiten estar referenciado a masa (colocamos dos masa analogicas para cada uno de los chips).
+Mostramos en la figura \ref{fig:esquematicoFiltro2} como quedan todas las entradas analógicas de un solo chip (en el otro es exactamente igual), podemos ver 8 entradas analogicas, cada una con su respectivo filtro. Ademas podemos observar 2 pines llamados PINHD\_AGND\_2, son dos accesos a la masa digital para aquellos sensores que necesiten estar referenciado a masa (colocamos dos masa analogicas para cada uno de los chips).
 
 Del lado derecho del microcontrolador hay dos entradas denominadas VREF+ y VREF-, que nos sirven para manejar los niveles de tension de referencia para la conversion que usara el ADC.
 
@@ -52,7 +52,7 @@ Del lado derecho del microcontrolador hay dos entradas denominadas VREF+ y VREF-
 
 Como podemos ver en la figura \ref{fig:esquematicoDigital2} colocamos 16 entradas/salidas digitales para el microcontrolador. Cada chip tiene las mismas 16 entradas.
 
-\begin{figura}	
+\begin{figure}	
 \centering
   \includegraphics[width=1.10\textwidth, height = 12cm]{esquematicoDigital2}
   \caption{Esquemático del Circuito Completo de entradas/salidas digitales.}\label{fig:esquematicoDigital2}
@@ -74,7 +74,7 @@ La idea de tener una placa a la que se conecten varios sensores analógicos y di
 Para programar cada uno de los microcontroladores en principio se penso en colocar dos entradas para el debugger de SiliconLabs, pero nos consumia mucho espacio y el cambio para programar uno y otro se hubiera hecho molesto. Por lo que decidimos poner uno solo, y utilizarlo para los dos microcontroladores, con un jumper de tres pines, para tener la opcion de elegir que micro programar.
 En la figura \ref{fig:esquematicoDebugger2} vemos en uno de los C8051f352 como queda conectado el modulo de debugger/programacion.
 
-\begin{figura}	
+\begin{figure}	
 \centering
   \includegraphics[width=1.10\textwidth, height = 12cm]{esquematicoDebugger2}
   \caption{Esquemático del Circuito para la programacion de los microcontroladores de la placa.}\label{fig:esquematicoDebugger2}
@@ -91,7 +91,7 @@ Sabemos que el principal problema de un sitema embebido es su consumo de energia
 
 En la figura \ref{fig:esquematicoPotencia2} se muestra como queda el esquematico del circuito de potencia.
 
-\begin{figura}	
+\begin{figure}	
 \centering
   \includegraphics[width=1.10\textwidth, height = 12cm]{esquematicoPotencia2}
   \caption{Esquemático del Circuit para la potencia de alimentación.}\label{fig:esquematicoPotencia2}
@@ -104,7 +104,7 @@ En la figura \ref{fig:esquematicoPotencia2} se muestra como queda el esquematico
 
 En la figura \ref{fig:esquematicoCompleto2} podemos ver como queda el esquematico entero con los dos microcontroladores y todos los subcircuitos que componen la placa.
 
-\begin{figura}	
+\begin{figure}	
 \centering
   \includegraphics[width=1.10\textwidth, height = 12cm]{esquematicoCompleto2}
   \caption{Esquemático del Circuit completo de la Placa de desarrollo.}\label{fig:esquematicoCompleto2}
@@ -122,13 +122,13 @@ Como esta nueva version de la placa fue diseñada para ser doble capa, se mostra
 A ambas capaz le tuvimos que dividir las masas, en una seccion analogica y una digital, la masa analogica de la capa superior con la de la capa inferior deben estar interconectadas, lo mismo pasa con la masa digital. Por lo que realizamos un drill (un hueco) para que las masas esten en contacto.
 En la figura \ref{fig:PCB2a} podemos ver como queda el diagrama PCB de capa superior o frontal, y en la figura \ref{fig:PCB23Da} vemos la misma capa con el visualizador 3D del KiCad.
 
-\begin{figura}	
+\begin{figure}	
 \centering
   \includegraphics[width=1.10\textwidth, height = 12cm]{PCB2a}
   \caption{Diseño PCB de la capa frontal de la placa.}\label{fig:PCB2a}
 \end{figure}
 
-\begin{figura}	
+\begin{figure}	
 \centering
   \includegraphics[width=1.10\textwidth, height = 12cm]{PCB23Da}
   \caption{Diseño PCB de la capa frontal de la placa en 3D.}\label{fig:PCB23Da}
@@ -136,13 +136,13 @@ En la figura \ref{fig:PCB2a} podemos ver como queda el diagrama PCB de capa supe
 
 En la figura \ref{fig:PCB2b} podemos ver como queda el diagrama PCB de capa inferior o posterior, y en la figura \ref{fig:PCB23Db} vemos la misma capa con el visualizador 3D del KiCad.
 
-\begin{figura}	
+\begin{figure}	
 \centering
   \includegraphics[width=1.10\textwidth, height = 12cm]{PCB2b}
   \caption{Diseño PCB de la capa posterior de la placa.}\label{fig:PCB2b}
 \end{figure}
 
-\begin{figura}	
+\begin{figure}	
 \centering
   \includegraphics[width=1.10\textwidth, height = 12cm]{PCB23Db}
   \caption{Diseño PCB de la capa posterior de la placa en 3D.}\label{fig:PCB23Db}
