@@ -230,7 +230,9 @@ las pruebas de sistema se realizaron utilizando la placa de desarrollo mencionad
 \multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}}                                                                                                                                                                                                                                                   \\
 Prueba \#        & 1                                                                                                                                                                                                                                                                                                                   \\
 \hline
-Nombre           & Comportamiento esperado del conversor en modo canal unico                                                                                                                                                                                                                                                           \\
+Nombre           & Comportamiento esperado del conversor en modo canal unico   \\
+\hline
+Requerimiento & Se debería poder recibir datos de sensores analógicos en modo canal unico
 \hline
 Descripcion      & Se conecta un generador de tension en uno de los canales del conversor y se mide en ese canal en modo canal unico, y de esta forma comprobar no tan solo que se este midiendo, sino ademas que estas mediciones esten calibradas para este modo.                                                                                   \\
 \hline
@@ -243,6 +245,12 @@ Pre-condiciones  & \tabitem Sistema configurado con un pin en modo canal unico \
 
 Post-condiciones & Los datos de las conversiones que aparezcan en el programa lector de interfaz serial en la computadora deberian corresponderse con los valores de tension provenientes del generador                     
 \\
+\hline
+Secuencia  & \tabitem Establecimos una tension de 1,5 voltios en el generador \\
+           & \tabitem La medicion resultante en el lector de canal serial era la misma que la del generador  \\
+           & \tabitem Variamos la tension en el generador y la variacion se correspondia en la lectura \\
+           & \tabitem Cambiamos a tensiones negativas y verificamos que la lectura daba 0  \\
+           & \tabitem Cambiamos a tensiones por sobre la tension de referencia (por defecto 2,5V), y verificamos que el sensor no da valores superiores a 2,5V\\
 \hline
 Resultados       & Las mediciones dieron resultados coherentes, con algunas variaciones esperadas debido al ruido presente en el ambiente.                                                                                                   
 \end{tabular}
@@ -257,6 +265,8 @@ Prueba \#        & 2                                                            
 \hline
 Nombre           & Comportamiento esperado del conversor en modo diferencial                                                                                                                                                                                                                                                          \\
 \hline
+Requerimiento & Se debería poder recibir datos de sensores analógicos en modo diferencial
+\hline
 Descripcion      & Se conecta un generador de tension en uno de los canales del conversor y se mide en ese canal en modo diferencial, y de esta forma comprobar no tan solo que se este midiendo, sino ademas que estas mediciones esten calibradas para este modo. Ademas, se comprueba el funcionamiento de las mediciones en modo diferencial, intentando medir tensiones negativas.                                                                                  \\
 \hline
 Pre-condiciones  & \tabitem Sistema configurado con un pin en modo diferencial \\
@@ -269,7 +279,14 @@ Pre-condiciones  & \tabitem Sistema configurado con un pin en modo diferencial \
 Post-condiciones & Los datos de las conversiones que aparezcan en el lector de interfaz serial en la computadora deberian corresponderse con los valores de tension provenientes del generador  
 \\ 
 \hline
-Resultados       & Las mediciones no dieron resultados coherentes. Aunque los cambios en el generador se reproducian en la medicion, los datos no eran los mismos. Esto se debe a que cuando se mide en modo diferencial, el cero pasa a ser la tension de referencia dividida en dos, para representar los valores negativos. La logica del programa no tenia en cuenta esto, y media las tensiones de forma desfasada.                                                                                                                                                     
+Secuencia  & \tabitem Establecimos una tension de 1 voltio en el generador \\
+           & \tabitem La medicion resultante en el lector de canal serial era distinta de la del generador. Leia 2V\\
+           & \tabitem Variamos la tension en el generador y la variacion se correspondia en la lectura \\
+           & \tabitem Subimos la tension a 1.25V y la lectura dio 2.5V, a partir de ahi, por mas que se subia la tension en el generador la lectura no daba mas de 2.5V. \\
+           & \tabitem Cambiamos a tensiones negativas y la lectura no era la esperada pero era consistente. Cuando en el generador habia un 0, leia 1.25V, a medida que la tension se hacia mas negativa, decrementaba aproximadamente al mismo paso que el generador, hasta que el generador llegaba a -1.5V, donde leia un 0  \\
+           & \tabitem  \\ 
+\hline
+Resultados       & Las mediciones no dieron los resultados esperados, aunque en si los resultados eran consistentes: los cambios en el generador se reproducian en la medicion, aunque los datos no eran los mismos. Esto se debe a que cuando se mide en modo diferencial, el cero pasa a ser la tension de referencia dividida en dos, para representar los valores negativos. La logica del programa no tenia en cuenta esto, y media las tensiones de forma desfasada.                                                                                                                                                     
 \end{tabular}
 \end{table}
 
