@@ -88,20 +88,25 @@ Partiendo de los objetivos planteados, podemos formalizar una lista de requerimi
 
 \begin{itemize}
 	\item Se debería poder recibir datos de sensores analógicos en modo singular o equilibrado
-	\item Se debería poder contar eventos de señales digitales cuadradas
-	\item Se debería poder configurar una ganancia especifica y un tiempo entre mediciones especifico para cada entrada
-	\item Los parámetros que corresponden a la ganancia, el modo de conversión, el tiempo entre conversiones, y la cantidad de canales habilitados para la conversión y el conteo de eventos, deberían ser configurables a través de una interfaz de linea de comando
+	\item Se debería poder contar eventos de señales digitales cuadradas.
+	\item Se debería poder configurar una ganancia especifica para canal mediante una interfaz de usuario.
+	\item Se debería poder configurar un tiempo entre mediciones especifico para cada entrada mediante una interfaz de usuario.
+	\item Se debería poder configurar el modo de conversión mediante una interfaz de usuario.
+	\item Cada canal se debería por configurar de manera individual mediante una interfaz de usuario.
+	\item El conteo de eventos, deberían ser configurables a través de una interfaz de de usuario.
 	\item Se debería usar un protocolo serial para la interfaz de linea de comando entre el sistema y el usuario
 	\item El usuario debería poder configurar el sistema conectándolo a un ordenador u otro sistema que soporte comunicación serial.
 	\item Se debería poder enviar datos de mediciones y posibles meta-datos a través de un canal de comunicación mediante un protocolo serial.
 \end{itemize}
 
-Como anexo al sistema, se propuso construir ciertas implementaciones para el sensor de campo electrostático y el servidor web. Adicionalmente a los requerimientos planteados anteriormente, entonces, se agregan los siguientes:
+Basandonos en los objetivos secundarios, obtenemos los siguientes requerimientos para la implementacion de un servidor web y la adaptacion para un sensor de campo electrostático:
 
 \begin{itemize}
     \item La configuracion de los parametros para las mediciones deberian poder ser establecidas via una interfaz web grafica.
     \item Todas las interacciones del sistema deberian guardarse en una base de datos junto con un timestamp.
     \item Se deberia poder establecer un sistema de reglas que provoque que el sistema reaccione ante ciertos niveles de los datos entrantes desde el sistema de adquisicion.
+    \item La placa de instrumentación desarrollada deberia poder obtener datos del sensor de campo electrostatico proveido por el FAMAF.
+    \item Las funcionalidades de la placa de instrumentación desarrollada deberian poder controlar el motor del sensor.
 \end{itemize}
 
 % subsection requerimientos_funcionales (end)
@@ -120,9 +125,9 @@ Como anexo al sistema, se propuso construir ciertas implementaciones para el sen
 \section{Características generales} % (fold)
 \label{sec:caracteristicas_generales}
 
-En una primera aproximación del sistema a construir, se puede establecer que se trata de un sistema capaz de recibir señales de distintos sensores digitales y analógicos. En caso que sean analógicos, convertir las señales a digital usando un conversor A-D de alta ganancia, que permita tanto entradas singulares como equilibradas. Luego de ser convertidas, estas señales deben ser enviadas mediante un protocolo de comunicacion a otro sistema que realice las acciones que deba realizar en función de los datos enviados.
+En una primera aproximación del sistema a construir, se puede establecer que se trata de un sistema capaz de recibir señales de distintos sensores digitales y analógicos. En caso que sean analógicos, convertir las señales a digital usando un conversor A-D de alta ganancia, que permita tanto entradas en modo único como como diferencial. Luego de ser convertidas, estas señales deben ser enviadas mediante un protocolo de comunicación a otro sistema que realice las acciones que deba realizar en función de los datos enviados.
 
-En nuestro contexto interactúan 3 actores: Un usuario, uno o mas sensores, y un controlador que por el momento no hacemos mención de sus características, por lo que lo llamamos simplemente ``controlador''.
+En nuestro contexto interactúan 3 actores: Un usuario, uno o más sensores, y un controlador que por el momento no hacemos mención de sus características, por lo que lo llamamos simplemente ``controlador''.
 
 \begin{figure}[h]
   \centering
@@ -149,7 +154,7 @@ Un aspecto fundamental para guiar el desarrollo incremental es priorizar los req
 \section{Casos de uso} % (fold)
 \label{sec:casos_de_uso}
 
-Dado el contexto, el sistema se puede describir de una manera general mediante un diagrama de caso de uso. El diagrama puede verse en la figura \ref{fig:casouso1}. En esta figura, se pueden ver los requerimientos plasmados en los casos de uso.
+Dado el contexto, el sistema se puede describir de una manera general mediante un diagrama de caso de uso. El diagrama puede verse en la figura \ref{fig:casouso1}. En esta figura, se puede ver plasmados los requerimientos.
 
 \begin{figure}[h]
   \centering

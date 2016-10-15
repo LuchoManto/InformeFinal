@@ -2,33 +2,41 @@
 \label{cha:iteracion_0}
 
 \section{Introduccion} % (fold)
-\label{sec:introduccion}
+\label{it0:sec:introduccion}
 
-El objetivo de esta iteracion es explicar el porque del orden elegido para el desarrollo de cada iteracion. Este orden proviene directamente de la dependencia de los requerimientos entre unos y otros. En caso de tener que elegir entre requerimientos independientes entre si, optamos por el de mayor riesgo.  \\
+El objetivo de esta iteracion es explicar porque elegimos el orden para el desarrollo de cada iteración. Este orden proviene directamente de la dependencia que existe entre los requerimientos. En caso de tener que elegir entre requerimientos independientes entre si, optamos por el de mayor riesgo. \\
 
-Los riesgos de los requerimientos del proyecto estan estimados en la tabla PONER RIESGO DE REQUERIMIENTOS
+Los riesgos de los requerimientos del proyecto están estimados en la tabla PONER RIESGO DE REQUERIMIENTOS
 
 % queremos indicar el orden de las iteraciones. no necesariamente tienen cualquier orden. Las iteraciones vienen directo de los requerimientos. Los requerimientos dependen a veces unos de otros, y eso determina el orden. Cuando no dependen uno de otro, se decide cual hacer primero segun el riesgo del requerimiento. Ponele, que el sistema cuente eventos y convierta de analogico a digital es de riesgo alto porque es clave. No se puede hacer nada si no se decide primero que micro usar,, y asi y asi.
 
 % section introduccion (end)
 
-\section{Determinacion del orden} % (fold)
-\label{sec:determinacion_del_orden}
+\section{Análisis de Requermientos y Riesgos} % (fold)
+\label{it0:sec:analisis_de_requermientos_y_riesgos}
 
-Como se puede ver en la tabla PONER RIESGO DE REQUERIMIENTOS, los requerimientos de mayor riesgo son la conversion, el conteo de eventos, y la ganancia. La razon de esto fue simplemente que el objetivo principal puesto por nuestro director era el de tener una placa generica para la conversion analogico digital y el conteo de eventos, el resto era secundario. \\
 
-Aunque estos requerimientos sean los de mayor riesgo, dependen de otro. Fue necesaria la seleccion de un microcontrolador que reuna las caracteristicas necesarias para cumplir con los requerimientos de mayor riesgo y la mayoria del resto. Es por esto que la primera iteracion fue dedicada a la seleccion de un microcontrolador. \\
 
-Teniendo un microcontrolador elegido, decidimos comprobar que al menos lo escencial funcionara correctamente. Esto es: Comprobar que funcione el conversor, la ganancia programable, y el conteo de eventos. La segunda iteracion fue dedicada a la experimentacion con el microcontrolador elegido con su placa de desarrollo, y la conformacion de un primer prototipo de programa que cumpla con los requerimientos de mayor riesgos. En el desarrollo de esta iteracion y las pruebas de sistema, surgieron cuestiones que provocaron cambios en los requerimientos, pero que no comprometieron la eleccion del microcontrolador.  \\
 
-Llegados a esta instancia, teniamos un prototipo de software que testeaba que los requerimientos de mayor riesgo estaban cubiertos con el microcontrolador elegido. El proximo paso era comprobar que el diseño de la placa de desarrollo podia ser implementado por nosotros, en una placa que reuna los requisitos de nuestro sistema, haciendo que pase de ser de un proposito general a un proposito especifico. En la tercera iteracion, se realizo un prototipo de placa de instrumentacion con el diseño de la placa de desarrollo elegida. Las mismas pruebas de la segunda iteracion se realizaron junto con las pruebas de la tercera iteracion, quedando asi un prototipo de sistema que cumplia con los requerimientos de mayor riesgo. \\
+% section análisis_de_requermientos_y_riesgos (end)
 
-Al final de la tercera iteracion, en lo que respecta unicamente a la placa de instrumentacion, teniamos un sistema que cumplia con los requerimientos minimos requeridos por nuestro director. Lo siguiente a realizar es pasar del prototipado a un sistema final. Las iteraciones 4 y 5 fueron destinadas a finalizar las implementaciones de hardware y sofware. \En la iteracion 4 se volvio a realizar el hardware, rediseñando ciertos aspectos y duplicando los recursos debido a los cambios en los requerimientos, y en la iteracion 5 se continuo con el desarrollo del software, dandole ya las funcionalidades suficientes para cubrir los requerimientos vinculados al programa. \\
+\section{Determinación del orden} % (fold)
+\label{it0:sec:determinacion_del_orden}
 
-A este punto, teniamos ya lo principal del proyecto: Una placa de instrumentacion implementada en una PCB, con 16 entradas analogicas con ganancia programable, y 4 contadores de eventos. El resto de las iteraciones fueron casos de prueba y mejoras al sistema. 
+Como se puede ver en la tabla PONER RIESGO DE REQUERIMIENTOS, los requerimientos de mayor riesgo son la conversión, el conteo de eventos, y la ganancia. Esto se explica porque que el objetivo principal propuesto por nuestro director era el de implementar una placa genérica para la obtension de datos de sensores analógico y contar eventos digitales, el resto era secundario. \\
+
+Aunque estos requerimientos mencionados anteriormente sean de mayor riesgo, dependen de que microcontrolador seleccionemos. Es por esto que la primera iteracion la dedicamos a la investigación y selección de un microcontrolador. \\
+
+Teniendo un microcontrolador elegido, decidimos comprobar que al menos lo escencial funcionara correctamente. Esto es: comprobar que funcione el conversor, la ganancia programable, y el conteo de eventos. La segunda iteracion la dedicamos a la experimentación con el microcontrolador elegido en su placa de desarrollo, y la conformacion de un primer prototipo de programa que cumpla con los requerimientos de mayor riesgo. En el desarrollo de esta iteracion y las pruebas de sistema, surgieron cuestiones que provocaron cambios en los requerimientos, pero que no comprometieron la eleccion del microcontrolador.  \\
+
+Llegados a esta instancia, teniamos un prototipo de software que cumplia con los requerimientos de mayor riesgo. En la tercera iteración diseñamos y construimos una placa de desarrollo que cumplia con los requisitos para nuestro sistema. Las mismas pruebas de la segunda iteración se realizaron junto con las pruebas de la tercera, nos quedó así un prototipo de sistema que cumplía con los requerimientos de mayor riesgo. \\
+
+Al final de la tercera iteracion, en lo que respecta a la placa de instrumentacion, teniamos un sistema que cumplía con los requerimientos mínimos. Lo siguiente a realizar fue pasar del prototipo al sistema final. Las iteraciones 4 y 5 las destinamos a finalizar las implementaciones de hardware y sofware. En la iteración 4 volvimos a realizar el hardware, rediseñando ciertos aspectos y duplicando los recursos debido a los cambios en los requerimientos. Y en la iteracion 5 continuamos con el desarrollo del software, dandole ya las funcionalidades suficientes para cubrir los requerimientos vinculados al programa. \\
+
+En este punto, teníamos ya lo principal del proyecto: Una placa de instrumentacion implementada en una PCB, con 16 entradas analogicas con ganancia programable, y 4 contadores de eventos. El resto de las iteraciones fueron casos de prueba y mejoras al sistema. 
 La iteracion 6 fue dedicada al desarrollo de un programa dentro de una placa Raspberry Pi que gestione la placa de instrumentacion hecha.  \\
 
-En la ultima iteracion, el objetivo principal era poner a prueba el sistema con un sensor de campo electrostatico, y ademas acondicionar el sistema para con este sensor, teniendo un prototipo de producto, con la idea de hacerlo comerciable. Por cuestiones de tiempos y otras circunstancias, quedo como un prototipo para unicamente fines academicos. La iteracion 7 cubre el desarrollo de la adaptacion del sistema realizado hasta el momento a este sensor. \\
+En la última iteracion, el objetivo principal fue poner a prueba el sistema con un sensor de campo electrostático, y ademas acondicionar el sistema para con este sensor, teniendo un prototipo de producto, con la idea de hacerlo comerciable. Por cuestiones de tiempos, el sistema final quedó hecho para fines académicos.En la iteración 7 cubrimos el desarrollo de la adaptación del sistema realizado hasta el momento a este sensor. \\
 
 % section determinacion_del_orden (end)
 

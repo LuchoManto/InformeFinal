@@ -6,30 +6,30 @@
 
 % fue cuando empezamos a tirar fruta. habiendo elegido el microcontrolador empezamos a probar todas las funcionalidades: El adc, los contadores de eventos, el modulo serial. Despues arrancamos a diseñar el primer prototipo. Consideramos que segun los requerimientos tenia que se un sistema que ofrezca algun tipo de interfaz para que un usuario interactue con el, para que pueda configurarle los parametros segun lo que se quiere lograr.
 
-En esta iteracion se realizo el primer prototipo de programa a embeber en el microcontrolador para cumplir con los requerimientos planteados. Los primeros pasos incluyeron programas de prueba para verificar el funcionamiento de los distintos modulos del microcontrolador a utilizar: El conversor analogico-digital, la ganancia programable, los contadores y el modulo serial. 
+En esta iteración realizamos el primer prototipo de programa a embeber en el microcontrolador para cumplir con los requerimientos planteados. Los primeros pasos incluyeron programas de prueba para verificar el funcionamiento de los distintos modulos del C8051: El conversor analógico-digital, la ganancia programable, los contadores y el módulo serial. 
 
 % section introduccion (end)
 
 \section{Requerimientos de la iteración} % (fold)
 \label{it2:sec:requerimientos_de_la_iteracion}
 
-De los requerimientos principales, surgen los siguientes requerimientos para el programa a embeber en el microcontrolador:
+Teniendo en cuenta los requerimientos principiales y el microcontrolador elegido, definimmos los siguientes requerimientos:
 
 \begin{itemize}
-\item Se deberia poder utilizar el conversor del microcontrolador para transformar señales analogicas de fuentes externas a datos digitales
-\item Se deberia poder utilizar los contadores del microcontrolador para contar eventos de fuentes externas
-\item Se deberia poder utilizar el modulo serial UART y SMBus del microcontrolador para enviar los datos a otra placa o microprocesador
+\item Se debería poder utilizar el conversor ADC del microcontrolador para transformar señales analogicas de fuentes externas a datos digitales, tanto en modo único como diferencial.
+\item Se debería poder utilizar los contadores del microcontrolador para contar eventos de fuentes externas.
+\item Se debería poder utilizar el modulo serial UART y SMBus del microcontrolador para enviar datos a otra placa o microprocesador.
 \item Para cada canal del conversor:
 \begin{itemize}
-\item Se deberia poder habilitar o inhabilitar el canal para la medicion
-\item Se deberia poder configurar el modo de medicion (canal unico o diferencial). En caso de ser canal unico deberia especificarse un solo canal, y dos canales para modo diferencial.
-\item Se deberia poder configurar un tiempo de intervalo entre cada medicion
+\item Se debería poder habilitar y deshabilitar el canal para la medición.
+\item Se debería poder configurar el modo de medición (canal único o diferencial). En caso de ser canal único debería especificarse un solo canal, y dos canales para modo diferencial.
+\item Se debería poder configurar un tiempo de intervalo entre cada medición.
 \end{itemize}
 \item Para cada contador:
 \begin{itemize}
-\item Se deberia poder contar eventos con los contadores o timers del microcontrolador.
+\item Se debería poder contar eventos con los contadores o timers del microcontrolador.
 \end{itemize}
-\item Datos de mediciones o meta-datos deberian ser enviados por protocolo serial utilizando los protocolos SMBus o UART incluidos en el microcontrolador, segun elija el usuario.
+\item Datos de mediciones o meta-datos deberían ser enviados por comunicación serial utilizando protocolo SMBus o UART, según elija el usuario.
 
 \end{itemize}
 
@@ -39,15 +39,15 @@ De los requerimientos principales, surgen los siguientes requerimientos para el 
 \section{Desarrollo} % (fold)
 \label{it2:sec:desarrollo}
 
-En esta seccion elaboramos el proceso de desarrollo que se llevo a cabo para construir el software a embeber en el microcontrolador C8051F252\cite{c8051f352}. Es necesario que se tenga en cuenta que fueron necesarias dos iteraciones para llegar al prototipo final. En esta seccion cubrimos solo la primera. La segunda iteracion de software, que fue en la que se llego al programa final de la placa de adquisicion, se encuentra en el capitulo \ref{cha:iteracion_5}
+En esta sección elaboramos el proceso de desarrollo que llevamos a cabo para construir el programa. Es necesario tener en cuenta que fueron necesarias dos iteraciones para llegar al prototipo final. En esta primera iteracion implementamos aquellos aspectos del programa que se relacionaban directamente con los requerimientos de mayor riesgo. La segunda iteracion de software, que fue en la que se llego al programa final de la placa de adquisicion, se encuentra en el capitulo \ref{cha:iteracion_5}
 
-\section{Diseño y modelos estaticos} % (fold)
-\label{it2:sec:diseno_y_modelos_estaticos}
+\subsection{Diseño y modelos estaticos} % (fold)
+\label{it2:sub:diseno_y_modelos_estaticos}
 
 Para poder describir el programa de manera grafica, utilizamos modelos del patron de diseño SysML 1.1. Aunque no usamos este patron de diseño para el programa, lo utilizamos en este informe para describirlo de una manera formal.
 
-\subsection{Modelos estaticos} % (fold)
-\label{it2:sub:modelos_estaticos}
+\subsubsection{Modelos estaticos} % (fold)
+\label{it2:subsub:modelos_estaticos}
 
 Como primera instancia, realizamos un diagrama de caso de uso para tener una idea de lo que se quiere lograr con el programa. Es necesario tener en cuenta que por las caracteristicas del microcontrolador, existen ciertas limitaciones que limitan el software. Estas limitaciones estan listadas en la seccion \ref{it2:sub:seleccion}.
 
@@ -96,8 +96,8 @@ El objetivo de los diagramas ilustrados es una descripcion grafica del sistema. 
 Los fabricantes del microcontrolador proporcionan una libreria en C para trabajar con los registros del procesador. Todos los bloques excepto el de la interfaz grafica, manipulan registros para realizar las distintas acciones que le corresponden segun la funcion que se ejecuta.  
 
 
-\subsection{Modelos dinamicos} % (fold)
-\label{it2:sub:modelos_dinamicos}
+\subsubsection{Modelos dinamicos} % (fold)
+\label{it2:subsub:modelos_dinamicos}
 
 Mediante el uso de diagramas de secuencia, explicamos en esta seccion las interacciones entre el usuario y el sistema que cubren los requerimientos principales. Las funciones incolucradas en cada interaccion son las mismas declaradas en el diagrama de bloques del sistema. La mayoria de los flujos que se describen en estos modelos fueron desarrollados iterativamente, es decir, son producto de un desarrollo incremental, hasta llegar a la iteracion actual. La iteracion \ref{cha:iteracion_5} modela las interacciones del programa en su estado final. \\
 
@@ -216,12 +216,14 @@ Para hacer funcionar el modulo serial, es necesario utilizar uno de los timers c
 
 Cada una de las funciones, tanto si interactuan con el hardware del micro como si no, estan testeadas utilizando unit-testing en C, con ayuda del framework ``minunit''\cite{minunit}. Los unit-tests se ejecutaban de la misma manera que se ejecutaba el programa principal, y corria todos los tests, dando como resultado la cantidad de tests que pasaron y los que fallaron.
 
+PONER TABLA DE TEST UNITARIOS!!!
+
 % subsection tests_unitarios (end)
 
 \subsection{Tests de sistema} % (fold)
 \label{it2:sub:tests_de_sistema}
 
-las pruebas de sistema se realizaron utilizando la placa de desarrollo mencionada en la seccion PONER ACA LA SECCION DONDE HABLAMOS DE LA SILICON LABS. Al no tener todavia una implementacion hecha del sistema, se utilizo esta placa para testear el codigo embebido en el microcontrolador, que en definitiva seria el mismo que iria en la placa a construir
+Las pruebas de sistema se realizaron utilizando la placa de desarrollo mencionada en la seccion PONER ACA LA SECCION DONDE HABLAMOS DE LA SILICON LABS. Al no tener todavia una implementacion hecha del sistema, se utilizo esta placa para testear el codigo embebido en el microcontrolador, que en definitiva seria el mismo que iria en la placa a construir
 
 \begin{table}[h]
 \caption{Test de sistema 1}
