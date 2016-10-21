@@ -8,15 +8,25 @@ En este capitulo, se describe el desarrollo de la segunda itearacion de software
 
 % section introduccion (end)
 
+\subsection{Objetivos} % (fold)
+\label{it5:ssec:objetivos}
+
+\begin{itemize}
+  \item Tener un prototipo final del programa comenzado en la iteracion 2
+  \item Tener todo el programa testeado mediante Unit-Testing y tests de sistema.
+\end{itemize}
+
+% subsection objetivos (end)
+
 \section{Requerimientos de la iteracion} % (fold)
 \label{it5:sec:requerimientos_de_la_iteracion}
 
-De los requerimientos principales y el estado del programa al final de la iteracion 2 (cpitulo \ref{cha:iteracion_2}), se proponen los siguientes requerimientos para el programa:
+Los requerimientos de esta iteracion estan planteados en base a los resultados de las pruebas y el desarrollo de la iteracion 2. El desarrollo del programa obligo a un extenso estudio de la documentacion del microcontrolador, que aclaro nuestro conocimiento al respecto y dio lugar a posibles mejoras en el sistema, no cubiertas en los requerimientos iniciales. Luego de acordarlo con el director, se proponen, para esta iteracion, el siguiente grupo de requerimientos: 
 
 \begin{itemize}
 \item Se deberian poder configurar tiempos de intervalo entre cada medicion para cada canal por separado
 \item Se deberian poder guardar las configuraciones actuales en la memoria flash del microcontrolador, para poder reestablecerlas en caso que el sistema se apague y se vuelva a prender.
-\item Se deberia utilizar SMBus ademas de UART para transmitir los datos de la placa de instrumentacion a la placa de gestion.
+\item Los datos que se envian a la placa de gestion para cada medicion deberia inculir la medicion, el pin o los pines de donde se esta midiendo, el modo de conversion, y una marca de tiempo relativa al inicio de conversiones.
 \item Todas las funcionalidades del sistema deberian estar testeadas utilizando unit-testing y realizando pruebas de sistema.
 \end{itemize}
 
@@ -26,10 +36,19 @@ De los requerimientos principales y el estado del programa al final de la iterac
 \section{Desarrollo} % (fold)
 \label{it5:sec:desarrollo}
 
-Ademas de explicar las modificaciones hechas a los modulos del programa para que cumplan con los requerimientos de la iteracion, mencionaremos todos los modulos que han tenido cambios, influyan o no en los requerimientos. El objetivo es dar una idea de la actualizacion del programa embebido. 
+Focalizamos el desarrollo del programa en el objetivo de obtener un prototipo final, listo para dejar andando en la placa desarrollada. En una primera instancia, terminamos aquellas funcionalidades que servian para cumplir los requerimientos principales, y luego nos dedicamos a comprobar el funcionamiento del mismo, mediante unit-testing y tests de sistema.
 
-\subsection{Logica para permitir intervalos individuales de medicion: Buffer de conversion estatico y dinamico} % (fold)
-\label{it5:sub:logica_para_permitir_intervalos_individuales_de_medicion_buffer_de_conversion_estatico_y_dinamico}
+La figura \ref{fig:bloquesquintaiteracion} muestra el diagrama de bloques del programa para esta iteracion. Con respecto al diagrama en la figura \ref{bloquesprimeraiteracionsoftware}, el cambio mas significativo no es en la estructura, sino que son las funciones dentro de los bloques lo que mas cambio. Hay funciones nuevas, funciones que sufrieron cambios y funciones que se eliminaron. La idea de esta seccion es describir cada una, con el proposito de que se entienda la logica del programa a un nivel general.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.80\textwidth, height = 9cm]{bloquesquintaiteracion}
+  \caption{}\label{fig:bloquesquintaiteracion}
+\end{figure}
+
+\subsection{Conversor} % (fold)
+\label{sub:conversor}
+
 
 En esta seccion, ocupamos el rediseño de las funciones del conversor con el objetivo de lograr que el usuario pueda configurar tiempos de intervalos de mediciones en cada canal por separado. El tiempo entre cada medicion no es menor, dado que dependiendo el tipo de sensor, puede necesitarse que las mediciones sean de frecuencia alta o baja.
 
@@ -96,14 +115,26 @@ Las funciones "cambiar\_pin" y "analizar\_buffer" dentro del modulo de conversor
   \caption[Diagrama de actividad de la funcion cambiar pin]{Diagrama de actividad que ilustra la logica dentro de la funcion cambiar\_pin, dentro del modulo del conversor. Esta funcion es llamada luego de cada conversion. En cada llamado, se selecciona un nuevo canal a medir. No discrimina si el canal esta o no habilitado para medir, en caso en que no lo este, se llamara inmediatamente para cambiar el pin nuevamente sin realizar medicion alguna.}\label{fig:actividadcambiarpin}
 \end{figure}
 
-% subsection logica_para_permitir_intervalos_individuales_de_medicion_buffer_de_conversion_estatico_y_dinamico (end)
+\subsubsection{Marca de tiempo} % (fold)
+\label{ssub:marca_de_tiempo}
+
+La obtencion de la marca de tiempo es un requerimiento que fue propuesto por nosotros en una etapa ya avanzada del proyecto. En algunos casos, puede ser necesario saber la hora, minuto y segundo en el que se midió. Para esto, sugerimos la idea de que se incluya una marca de tiempo dentro de los meta-datos enviados a la placa de gestion. Esta marca de tiempo es necesariamente relativa al momento de inicio de conversiones continuas. Esto se debe a que la placa de instrumentacion no tiene manera directa de calcular la fecha y hora exacta del dia, por lo que obtener una marca de tiempo absoluta de manera directa en esta placa no es practico. 
+La solucion planteada para obtener una marca de tiempo absoluta fue calculandola en la placa de gestion. Al estar esta placa conectada a internet, puede obtener facilmente la fecha y hora de inicio de conversiones. Con esto, a la fecha y hora se le suma la marca relativa de cada medicion, y se obtiene asi la marca de tiempo absoluta. Sabiendo esto, en esta seccion explicamos la obtencion de la marca de tiempo relativa. La absoluta se describe en la seccion \ref{it6:ssub:obtencion_de_marca_de_tiempo_absoluta}. \\
+
+El proceso para obtener la marca de tiempo esta descripto en la imagen \ref{fig:secuenciaobtenermarca} mediante un diagrama de secuencia. La marca de tiempo relativa se obtiene con el uso del timer2. Esto significa reducir la cantidad de contadores de eventos disponibles de 2 a 1, lo cual afecta de manera directa a un requerimiento principal. La solucion planteada fue dejar como opcional el calculo del timestamp, pudiendo asi elegir el uso del timer2 entre contador de eventos o contador interno para la marca de tiempo. Esto es posible porque hay casos donde no es necesario ser preciso a la hora de tener el tiempo de las mediciones, y se pueden calcular las marcas directamente desde el sistema de gestion, y asi dejar libre al timer2 para el conteo de eventos. Esto fue un compromiso dado el estado avanzado del proyecto.
+
+
+
+% subsubsection marca_de_tiempo (end)
+
+% subsection conversor (end)
 
 \subsection{Interfaz de usuario} % (fold)
 \label{it5:sub:interfaz_de_usuario}
 
-La interfaz de usuario siguio un diseño parecido al terminado en la iteteracion \ref{iteracion_2}. Agregarle funcionailidades es simple gracias al diseño de la interfaz. Cada vez que exista una funcionalidad nueva, hay que conformar un nuevo comando e incluirlo en el espacio de nombres.
+La interfaz de usuario siguio un diseño parecido al terminado en la iteteracion \ref{iteracion_2}. Gracias al diseño de la interfaz, agregar nuevos comandos con nuevos argumentos era facil siempre y cuando se respetara la expresion regular.
 
-Los comandos disponibles al final de esta iteracion son:
+Los comandos disponibles al final de esta iteracion fueron:
 
 \begin{itemize}
   \item SSE: - \textit{set single ended}: Establece un canal en modo unico.
@@ -118,8 +149,7 @@ Los comandos disponibles al final de esta iteracion son:
   \item ST: - \textit{start}: Inicia el modo de conversiones continuas.
 \end{itemize}
 
-Estas funciones estan descriptas con detalle en el apendice \ref{ap:instrucciones}.
-s
+El conjunto entero de comandos esta documentado con mayor detalle en el apendice \ref{ap:instrucciones}.
 % subsection interfaz_de_usuario (end)
 
 \subsection{Memoria flash} % (fold)
