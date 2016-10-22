@@ -254,7 +254,7 @@ Secuencia  & \tabitem Establecimos una tension de 1,5 voltios en el generador \\
            & \tabitem Cambiamos a tensiones negativas y verificamos que la lectura daba 0  \\
            & \tabitem Cambiamos a tensiones por sobre la tension de referencia (por defecto 2,5V), y verificamos que el sensor no da valores superiores a 2,5V\\
 \hline
-Resultados       & Las mediciones dieron resultados coherentes, con algunas variaciones esperadas debido al ruido presente en el ambiente.                                                                                                   
+Resultados       & Las mediciones dieron resultados coherentes, con algunas variaciones esperadas debido al ruido presente en el ambiente.
 \end{tabular}
 \end{table}
 
@@ -286,9 +286,9 @@ Secuencia  & \tabitem Establecimos una tension de 1 voltio en el generador \\
            & \tabitem Variamos la tension en el generador y la variacion se correspondia en la lectura \\
            & \tabitem Subimos la tension a 1.25V y la lectura dio 2.5V, a partir de ahi, por mas que se subia la tension en el generador la lectura no daba mas de 2.5V. \\
            & \tabitem Cambiamos a tensiones negativas y la lectura no era la esperada pero era consistente. Cuando en el generador habia un 0, leia 1.25V, a medida que la tension se hacia mas negativa, decrementaba aproximadamente al mismo paso que el generador, hasta que el generador llegaba a -1.5V, donde leia un 0  \\
-           & \tabitem  \\ 
 \hline
-Resultados       & Las mediciones no dieron los resultados esperados, aunque en si los resultados eran consistentes: los cambios en el generador se reproducian en la medicion, aunque los datos no eran los mismos. Esto se debe a que cuando se mide en modo diferencial, el cero pasa a ser la tension de referencia dividida en dos, para representar los valores negativos. La logica del programa no tenia en cuenta esto, y media las tensiones de forma desfasada.                                                                                                                                                     
+Resultados       & Las mediciones no dieron los resultados esperados, aunque en si los resultados eran consistentes: los cambios en el generador se reproducian en la medicion, aunque los datos no eran los mismos. Esto se debe a que cuando se mide en modo diferencial, el cero pasa a ser la tension de referencia dividida en dos, para representar los valores negativos. La logica del programa no tenia en cuenta esto, y media las tensiones de forma desfasada.
+
 \end{tabular}
 \end{table}
 
@@ -300,20 +300,30 @@ Resultados       & Las mediciones no dieron los resultados esperados, aunque en 
 \multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}}                                                                                                                                                                                                                                                   \\
 Prueba \#        & 3                                                                                                                                                                                                                                                                                                                   \\
 \hline
-Nombre           & Comportamiento esperado del contador de eventos                                                                                                                                                                                                                                                          \\
+Nombre           & Comportamiento esperado del contador de eventos                     
 \hline
-Descripcion      & Se conecta un generador de onda cuadrada en una entrada GPIO que pueda servir como entrada a algun contador de eventos. Si el contador esta activo, se deberia poder ver que el numero de cuentas incrementa al ritmo de la frecuencia configurada en el generador                                                                                  \\
+Requerimiento & Se debería poder contar eventos con los contadores o timers del microcontrolador.
 \hline
-Pre-condiciones  & \tabitem Sistema configurado con un contador de eventos activo \\
+Descripcion      & Se conecta un generador de onda cuadrada en una entrada GPIO que pueda servir como entrada a algun contador de eventos. Si el contador esta activo, se deberia poder ver que el numero de cuentas incrementa al ritmo de la frecuencia configurada en el generador \\
+\hline
+Pre-condiciones  & \tabitem Sistema con Timer0 configurado como un contador de eventos activo \\
                  & \tabitem Generador de frecuencia conectado al pin configurado como contador. \\
                  & \tabitem Computadora conectada al sistema mediante cable serial RS-232 \\
                  & \tabitem Lector de canal serial abierto en la computadora \\
+                 & \tabitem Lectura continua mediante el canal serial del valor de la cuenta de Timer0\\
 \hline
 
 Post-condiciones & El contador deberia contar con una frecuencia igual a la del generador de onda cuadrada
 \\ 
 \hline
-Resultados       & La cuenta era consistente con la frecuencia del generador.                                                                                                                                                     
+Secuencia  & \tabitem Establecimos una frecuencia de 1000 Hz en el generador \\
+           & \tabitem La salida del lector de canal serial mostraba que el contador incrementaba 1000 veces por segundo \\
+           & \tabitem Se espero por algunos minutos, verificando que la cuenta sea consistente\\
+           & \tabitem Se disminuyo el valor de frecuencia a 100 Hz y se repitio la misma verificacion. \\
+           & \tabitem Se disminuyo el valor de frecuencia a 0 Hz y se verifico que el valor de la cuenta quede fijo sin modificarse por 5 minutos\\
+\hline
+Resultados       & La cuenta era consistente con la frecuencia del generador. El contador de eventos funcionaba correctamente.
+
 \end{tabular}
 \end{table}
 % subsection tests_de_sistema (end)
@@ -322,18 +332,14 @@ Resultados       & La cuenta era consistente con la frecuencia del generador.
 \section{Conclusiones de la iteracion 2} % (fold)
 \label{it2:sec:conclusiones_de_la_iteracion_2}
 
-
-\subsection{Estado de los requerimientos} % (fold)
-\label{it2:sub:estado_de_los_requerimientos}
-
-
-De la seccion \ref{sec:requerimientos_de_la_iteracion}, volvemos a redactar los requerimientos, pero teniendo en cuenta el estado del programa al final de esta iteracion.
+Basandonos en el desarrollo y las pruebas de la iteracion, listamos los avances teniendo en cuenta los requerimientos:
 
 \begin{itemize}
 \item El programa utiliza el conversor del microcontrolador para transformar señales analogicas de fuentes externas a datos digitales
 \item El programa utiliza los contadores del microcontrolador para contar eventos de fuentes externas
 \item El programa utiliza el modulo serial UART del microcontrolador para enviar los datos a otra placa o microprocesador
 \item No es posible utilizar el modulo SMBus del microcontrolador.
+\item Los datos de conversion correspondientes al numero de pin y el modo de conversion no son enviados junto con la medicion.
 \item Para cada canal del conversor:
 \begin{itemize}
 \item El usuario puede habilitar o inhabilitar el canal para la medicion
@@ -347,12 +353,11 @@ De la seccion \ref{sec:requerimientos_de_la_iteracion}, volvemos a redactar los 
 \item No es posible elegir el protocolo serial para comunicarse con la placa o microprocesador externo que recibira los datos, obligadamente debe usarse UART.
 
 \end{itemize}
-% subsection estado_de_los_requerimientos (end)
 
 \subsection{Objetivos para la proxima iteracion} % (fold)
 \label{it2:sub:objetivos_para_la_proxima_iteracion}
 
-Teniendo un prototipo de software, lo ideal fue comenzar a pensar en un diseño de hardware en donde hacerlo correr. Por lo que el objetivo de la iteracion 3 fue realizar un diseño de harware para la placa de instrumentacion e implementarlo en un PCB; y una vez construido, realizar pruebas que aseguren el funcionamiento del mismo.
+Teniendo un prototipo de software, lo ideal fue comenzar a pensar en un diseño de hardware en donde hacerlo funcionar. Por lo que el objetivo de la iteracion 3 fue realizar una implementacion de la placa de instrumentacion en un PCB; y una vez construido, realizar las pruebas que aseguren el funcionamiento del mismo.
 
 
 % subsection objetivos_para_la_proxima_iteracion (end)
