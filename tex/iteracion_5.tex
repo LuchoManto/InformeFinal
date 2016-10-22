@@ -26,8 +26,9 @@ Los requerimientos de esta iteracion estan planteados en base a los resultados d
 \begin{itemize}
 \item Se deberian poder configurar tiempos de intervalo entre cada medicion para cada canal por separado
 \item Se deberian poder guardar las configuraciones actuales en la memoria flash del microcontrolador, para poder reestablecerlas en caso que el sistema se apague y se vuelva a prender.
-\item Los datos que se envian a la placa de gestion para cada medicion deberia inculir la medicion, el pin o los pines de donde se esta midiendo, el modo de conversion, y una marca de tiempo relativa al inicio de conversiones.
-\item Todas las funcionalidades del sistema deberian estar testeadas utilizando unit-testing y realizando pruebas de sistema.
+\item Los datos que se envian a la placa de gestion para cada medicion deberia inculir, ademas de la medicion, el numero de pin o pines (si es modo diferencial) de donde se esta midiendo. 
+\item Los datos que se envian a la placa de gestion para cada medicion deberia inculir, ademas de la medicion, el modo de conversion del canal por donde se esta midiendo.
+\item Los datos que se envian a la placa de gestion para cada medicion deberia inculir, ademas de la medicion, la marca de tiempo relativa correspondiente de la medicion hecha. 
 \end{itemize}
 
 
@@ -54,8 +55,16 @@ En esta seccion, ocupamos el redise√±o de las funciones del conversor con el obj
 
 En la seccion \ref{sub:logica_de_las_funciones_del_conversor}, se explica el funcionamiento del buffer del conversor. Este buffer posee 8 posiciones, una por cada canal, con el objetivo de informar al programa el estado de ese canal. Estos estados son: inhabilitado, canal unico, diferencial.
 
-En esta version, se utilizan dos buffers de 11 posiciones cada uno. Cada posicion ya no representa un unico canal sino que representa una via de conversion. Elaboraremos esto mas adelante. Estos buffers pueden diferenciarse uno del otro en que uno puede decirse que es "estatico", y el otro "dinamico". De la misma manera que el buffer original, el buffer estatico determina si un canal esta habilitado o no: Si la posicion que corresponde a ese canal contiene un 0, entonces ese canal esta habilitado. Cualquier numero distinto de 0 indica que el canal esta habilitado. A diferencia del buffer original, el modo de conversion ya no se identifica con un numero, sino con la posicion dentro del buffer, ya sea estatico o dinamico. Las posiciones del 0 al 7 estan reservadas para los 8 canales del conversor en modo canal unico, y las posiciones del 8 al 11 son para el modo diferencial. 
-El contenido de cada elemento en el buffer es un numero que va de 1 a 255, en el caso en que este habilitado. Ese numero representa el tiempo que existe entre cada medicion. Mientras mayor es el numero, mayor es el intervalo entre mediciones. Esto funciona de la siguiente manera:
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.80\textwidth, height = 7cm]{bufferdinamicovacio}
+  \caption{Estado de los buffers en el momento en que se terminaron de configurar las distintas vias de conversion, pero aun no se activo el modo de conversion continua}\label{fig:bufferdinamicovacio}
+\end{figure}
+
+
+
+En esta version, se utilizan dos buffers de 11 posiciones cada uno. Cada posicion ya no representa un unico canal sino que representa una via de conversion. Elaboraremos esto mas adelante. Estos buffers pueden diferenciarse uno del otro en que uno puede decirse que es "estatico", y el otro "dinamico". De la misma manera que el buffer original, el bufferestatico determina si un canal esta habilitado o no: Si la posicion que corresponde a ese canal contiene un 0, entonces ese canal esta habilitado. Cualquier numero mayor a  0 indica que el canal esta habilitado. A diferencia del buffer original, el modo de conversion ya no se identifica con un numero, sino con la posicion dentro del buffer, ya sea estatico o dinamico. Las posiciones del 0 al 7 estan reservadas para los 8 canales del conversor en modo canal unico, y las posiciones del 8 al 11 son para el modo diferencial. 
+El contenido de cada elemento en el buffer es un numero que va de 1 a 65546, en el caso en que este habilitado. Ese numero representa el tiempo que existe entre cada medicion. Mientras mayor es el numero, mayor es el intervalo entre mediciones. Esto funciona de la siguiente manera:
 
 \begin{enumerate}
 \item Cuando se configura el buffer, se establecen las vias de conversion con sus respectivos intervalos poniendo numeros de 1 a 255 en elementos del buffer estatico.
@@ -65,19 +74,15 @@ El contenido de cada elemento en el buffer es un numero que va de 1 a 255, en el
 \item Luego de esto, copia el valor que se encuentra en el buffer estatico para la misma posicion en la que se encuentra, para seguir con el proximo elemento.
 \end{enumerate}
 
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.80\textwidth, height = 7cm]{bufferdinamicovacio}
-  \caption{Estado de los buffers en el momento en que se terminaron de configurar las distintas vias de conversion, pero aun no se activo el modo de conversion continua}\label{fig:bufferdinamicovacio}
-\end{figure}
-
-
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.80\textwidth, height = 7cm]{bufferdinamicolleno}
   \caption{Estado de los buffers en el momento que se activa la conversion continua. Cada vez que un valor del buffer dinamico llega a 1, se reestablece usando el buffer estatico como referencia.}\label{fig:bufferdinamicolleno}
 \end{figure}
+
+El numero dentro de cada posicion representa el tiempo del intervalo. El intervalo mas corto es 1, y el mas largo es 65536. Los tiempos en segundos con respecto a los intervalos siguen una escala que tiende a ser lineal, pero si se quiere ser muy preciso es necesario calibrarlo. Para mejorar la practicidad a la hora de establecer intervalos, conformamos una tabla con valores de medicion tipicos.
+
+PONER LA TABLA DE LOS VALORES TIPICOS ACA
 
 La funcion que se encarga de realizar las conversion, es disparada cada vez que se encuentra un 1 en una posicion del buffer dinamico. Con el numero de posicion del buffer, sabe el numero de la via de conversion por donde hay que convertir. Esta via de conversion, como mencionamos anteriormente, puede ser de 0 a 11. En cada numero, se mide lo siguiente:
 
@@ -171,11 +176,74 @@ Tanto el programa que corre en el microprocesador como los datos de configuraci√
 \section{Pruebas} % (fold)
 \label{it5:sec:pruebas}
 
+\begin{table}[h]
+\centering
+\caption{Test de sistema 1}
+\label{it5:tab:testsistema1}
+\begin{tabular}{p{2cm} p{9cm}}
+\multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}}                                                                                                                                                                                                                                                   \\
+Prueba \#        & 3                                                                                                                                                                                                                                                                                                                   \\
+\hline
+Nombre           & Comportamiento esperado del conversor                     
+\hline
+Requerimiento & Se deberian poder configurar tiempos de intervalo entre cada medicion para cada canal por separado.
+\hline
+Descripcion      & Con este test, se comprueba que el sistema permite establecer intervalos de medicion individuales para cada canal, y que se comporta de manera consistente con el el paso del tiempo. \\
+\hline
+Pre-condiciones  & \tabitem Sistema configurado con dos pines en modo canal unico \\
+                 & \tabitem Un canal esta configurado con un tiempo de 1 y otro con 50 \\
+                 & \tabitem Generadores de tension conectados a los pines configurados  \\
+                 & \tabitem Computadora conectada al sistema mediante cable serial RS-232 \\
+                 & \tabitem Lector de canal serial abierto en la computadora  \\
+                 & \tabitem Sistema midiendo en modo de conversiones continuas\\
+\hline
+
+Post-condiciones & La frecuencia de medicion para el canal en 1 deberia ser mayor a la frecuencia del canal en 50.                     
+\\
+\hline
+Secuencia  & \tabitem Establecimos una tension de 1,5 voltios en el primer generador, conectado al canal con intervalo 1 y una de 2 voltios en el segundo, con intervalo 50 \\
+\hline
+Resultados       & El canal con intervalo 1 tenia una frecuencia mucho mayor al canal con intervalo 50, que era lo esperado. La relacion entre las frecuencias parecia ser lineal (50 veces mas frecuente el primero que el segundo), aunque no teniamos una manera precisa de medirlo, mas que contar la cantidad de mediciones en un intervalo grande de tiempo.
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{Test de sistema 1}
+\label{it5:tab:testsistema1}
+\begin{tabular}{p{2cm} p{9cm}}
+\multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}}                                                                                                                                                                                                                                                   \\
+Prueba \#        & 3                                                                                                                                                                                                                                                                                                                   \\
+\hline
+Nombre           & Formato esperado del mensaje                     
+\hline
+Requerimiento    & \tabitem Los datos que se envian a la placa de gestion para cada medicion deberia inculir, ademas de la medicion, el numero de pin o pines (si es mododiferencial) de donde se esta midiendo. 
+                 & \tabitem Los datos que se envian a la placa de gestion para cada medicion deberia inculir, ademas de la medicion, el modo de conversion del canal por donde se esta midiendo.
+                 & \tabitem Los datos que se envian a la placa de gestion para cada medicion deberia inculir, ademas de la medicion, la marca de tiempo relativa correspondiente de la medicion hecha. 
+\hline
+Descripcion      & Cada dato que se envia a la placa de gestion incluye la siguiente informacion: Medicion, pin, modo, marca de tiempo. Estos datos estan enviados con un formato especial, y se envian en simultaneo. Esta prueba verifica que cada mensaje contenga el formato correcto y que los datos sean coherentes a las configuraciones. \\
+\hline
+Pre-condiciones  & \tabitem Sistema configurado con el pin 3 en modo canal unico, con un intervalo de 10 \\
+                 & \tabitem Generador de tension conectado al pin configurado con un valor de 1,5 volts  \\
+                 & \tabitem Computadora conectada al sistema mediante cable serial RS-232 \\
+                 & \tabitem Lector de canal serial abierto en la computadora  \\
+                 & \tabitem Sistema midiendo en modo de conversiones continuas\\
+\hline
+
+Post-condiciones & El mensaje recibido en el lector serial deberia ser "1500,3,SE,[marca de tiempo]".                     
+\\
+\hline
+Resultados       & El formato era correcto
+\end{tabular}
+\end{table}
+
 % section pruebas (end)
 
-\section{Resultados} % (fold)
-\label{it5:sec:resultados}
+\section{Conclusiones} % (fold)
+\label{sec:conclusiones}
 
-% section resultados (end)
+
+
+% section conclusiones (end)
 
 % chapter iteracion_5 (end)
