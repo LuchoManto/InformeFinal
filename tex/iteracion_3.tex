@@ -7,7 +7,7 @@
 
 En la iteracion pasada obtivimos un software que cumplía con los requerimientos de mayor riesgo, funcionando en la placa de desarrollo SiliconLabs (modelo C8051f352DK). Nos propusimos realizar el diseño y construccion de una placa propia basada en la mencionada anteriormente.
 
-En esta iteración mostramos el desarrollo del diseño y construcción del circuito de la placa de desarrollo.
+En esta iteración mostramos el elaboración del diseño y la construcción del circuito de la placa de desarrollo.
 
 
 %la primera placa que fue una verga. tenia el rs232, tenia 8 entradas, tenia la alimentacion separada de la entrada para la programacion del micro. osea podia alimentarse mediante el debugger o alimentacion externa. se adapto el diseño de la placa para poder programar el micro con el debugger de silicon labs. hay que tener en cuenta que nos basamos en el diseño hecho por silicon labs de la placa de desarrollo c8051f352 que teniamos en el lac. la vamos a haber construido en esta iteracion, y lo unico que llego a hacer fue conectarse con la ide. nada mas, el resto no anduvo nada. %
@@ -20,11 +20,10 @@ En esta iteración mostramos el desarrollo del diseño y construcción del circu
 Diseñar y construir un prototipo de placa que cumpla con los siguientes requeriimientos:
 
 \begin{itemize}
-\item El circuito debe incluir en su diseño aquellos requisitos de hardware impuestos por el mismo microcontrolador(?)
 \item Al circuito se le deben poder conectar 8 entradas analógicas.
 \item Al circuito se le deben poder conectar 4 entradas de eventos digitales externos.
 \item Las entradas analógicas deben tener filtros para mejorar la inmunidad al ruido.
-\item Se debe incluir en el diseño el circuito necesario para soportar comunicación vía RS232
+\item Se debe incluir en el diseño el circuito necesario para soportar comunicación vía RS232.
 \item La placa debería poder alimentarse a través de una fuente de tensión externa.
 \item Se debería poder conectar el debugger del microcontrolador a la placa para poder programarlo.
 \item El circuito de programación del microcontrolador debería estar separado la placa principal.
@@ -180,12 +179,18 @@ En la figura \ref{fig:PCB1} podemos ver como quedo el diseño del circuito PCB:
 
 \begin{table}[h]
 \caption{Test de sistema 1}
-\label{tab:testsistema1}
+\label{it3:tab:testsistema1}
 \begin{tabular}{p{2cm} p{9cm}}
 \multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}}                                                                                                                                                                                                                                                   \\
 Prueba \#        & 1                                                                                                                                                                                                                                                                                                                   \\
 \hline
-Nombre           & Correcto Diseño de PCB.                                                                                                                                                                                                                                                           \\
+Nombre           & Correcto Diseño de PCB.                                                                                          
+
+\hline
+Requerimientos &   \tabitem Al circuito se le deben poder conectar 8 entradas analógicas. \\
+                  \tabitem Al circuito se le deben poder conectar 4 entradas de eventos digitales externos. \\
+                  \tabitem Las entradas analógicas deben tener filtros para mejorar la inmunidad al ruido. \\
+                  \tabitem Se debe incluir en el diseño el circuito necesario para soportar comunicación vía RS232.                 \tabitem La placa debería poder alimentarse a través de una fuente de tensión externa.  \\                                                                                                                                          \\
 \hline
 Descripción      & Se chequea si existen errores en el diseño utilizando el ERC (perfom design rules check) que provee el KiCad.                                                                                   \\
 \hline
@@ -202,12 +207,18 @@ Resultados       & No encontramos errores de diseño en el PCB.
 
 \begin{table}[h]
 \caption{Test de sistema 2}
-\label{tab:testsistema2}
+\label{it3:tab:testsistema2}
 \begin{tabular}{p{2cm} p{9cm}}
 \multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}}                                                                                                                                                                                                                                                   \\
 Prueba \#        & 2                                                                                                                                                                                                                                                                                                                   \\
 \hline
-Nombre           & Correcta impresión de la placa.                                                                                                                                                                                                                                                          \\
+Nombre           & Correcta impresión de la placa.                                                                                              
+
+\hline
+Requerimientos &   \tabitem Al circuito se le deben poder conectar 8 entradas analógicas. \\
+                  \tabitem Al circuito se le deben poder conectar 4 entradas de eventos digitales externos. \\
+                  \tabitem Las entradas analógicas deben tener filtros para mejorar la inmunidad al ruido. \\
+                  \tabitem Se debe incluir en el diseño el circuito necesario para soportar comunicación vía RS232.                 \tabitem La placa debería poder alimentarse a través de una fuente de tensión externa.  \\                                                                                                                                                                \\
 \hline
 Descripción      & Corroboramos que todas las pistas y que todos los drills se hayan impreso. Luego con un multimetro seteado en continuidad comprobamos que no existan cortocircuitos entre pistas y masa o entre pads y masa.                                                                                  \\
 \hline
@@ -225,12 +236,18 @@ Resultados       & Todas las pistas estaban de acuerdo con el PCB. Al medir la c
 \begin{table}[h]
 \centering
 \caption{Test de sistema 3}
-\label{tab:testsistema3}
+\label{it3:tab:testsistema3}
 \begin{tabular}{p{2cm} p{9cm}}
 \multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}}                                                                                                                                                                                                                                                   \\
 Prueba \#        & 3                                                                                                                                                                                                                                                                                                                   \\
 \hline
-Nombre           & Correcta soldadura de Componentes                                                                                                                                                                                                                                                         \\
+Nombre           & Correcta soldadura de Componentes                                                                                
+
+\hline
+Requerimiento &   \tabitem Al circuito se le deben poder conectar 8 entradas analógicas. \\
+                  \tabitem Al circuito se le deben poder conectar 4 entradas de eventos digitales externos. \\
+                  \tabitem Las entradas analógicas deben tener filtros para mejorar la inmunidad al ruido. \\
+                  \tabitem Se debe incluir en el diseño el circuito necesario para soportar comunicación vía RS232.                 \tabitem La placa debería poder alimentarse a través de una fuente de tensión externa.  \\                                                                                                                                                                             \\
 \hline
 Descripción      & Se utiliza el multimetro seteado en continuidad para poder chequear si existen cortocircuitos y para saber si todos los componentes estan bien interconectados.                                                                                  \\
 \hline
@@ -250,12 +267,16 @@ Resultados       & Encontramos cortocircuitos luego de soldar los componentes, a
 \begin{table}[h]
 \centering
 \caption{Test de sistema 4}
-\label{tab:testsistema3}
+\label{it3:tab:testsistema4}
 \begin{tabular}{p{2cm} p{9cm}}
 \multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}}                                                                                                                                                                                                                                                   \\
 Prueba \#        & 4                                                                                                                                                                                                                                                                                                                   \\
 \hline
-Nombre           & Correcta Comunicación Con IDE SiliconLabs.                                                                                                                                                                                                                                                         \\
+Nombre           & Correcta Comunicación Con IDE SiliconLabs.                                                                       
+
+\hline
+Requerimiento &   \tabitem Se debería poder conectar el debugger del microcontrolador a la placa para poder programarlo. \\
+                                                                                                                                                                                     \\
 \hline
 Descripción      & Se utilizo el cable USB con el debugger de SiliconLabs para conectar la placa a la PC.                                                                                  \\
 \hline
@@ -275,12 +296,19 @@ Resultados       &  Conectamos la placa a la PC y en la IDE apretamos el botón 
 \begin{table}[h]
 \centering
 \caption{Test de sistema 5}
-\label{tab:testsistema3}
+\label{it3:tab:testsistema5}
 \begin{tabular}{p{2cm} p{9cm}}
 \multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}}                                                                                                                                                                                                                                                   \\
 Prueba \#        & 4                                                                                                                                                                                                                                                                                                                   \\
 \hline
-Nombre           & Correcta programacion del microcontrolador.                                                                                                                                                                                                                                                         \\
+Nombre           & Correcta programacion del microcontrolador.                                                                      
+
+\hline
+Requerimiento &   \tabitem Se debería poder conectar el debugger del microcontrolador a la placa para poder programarlo. \\
+
+
+\hline
+Requerimiento & Se debería poder recibir datos de sensores analógicos en modo canal unico                                                                                                                                                                                   \\
 \hline
 Descripción      & Se utilizo el cable USB con el debugger de SiliconLabs para conectar la placa a la PC y descargarle un programa .hex al microcontrolador.                                                                                  \\
 \hline
@@ -313,8 +341,26 @@ En las siguientes imágenes podremos ver el resultado final de la placa.
   \caption{Placa completa con todo sus componentes soldados.}\label{fig:resultadohardware1}
 \end{figure}
 
-En esta iteración cumplimos con los requerimientos planteados, construyendo una placa con un C8051f352, que contenga 8 señales analógicas de entrada y 4 entradas digitales. Le pudimos colocar una salida serial para conectar a una PC.
-Logramos alimentar por una fuente de tensión externa o con el debugger de SiliconLabs. El microcontrolador fue reconocido por la IDE de SiliconLabs cuando era conectado por el debugger en la PC, pero no pudimos cargarle un programa al c8051f352, ya que nos daba error con la memoria flash.
+En esta iteración cumplimos con los siguientes requerimientos planteados:
+\begin{itemize}
+  \item Al circuito se le deben poder conectar 8 entradas analógicas.
+  \item Al circuito se le deben poder conectar 4 entradas de eventos digitales externos.
+  \item Las entradas analógicas deben tener filtros para mejorar la inmunidad al ruido.
+  \item Se debe incluir en el diseño el circuito necesario para soportar comunicación vía RS232.
+  \item La placa debería poder alimentarse a través de una fuente de tensión externa.
+  \item Se debería poder conectar el debugger del microcontrolador a la placa para poder programarlo.
+  \item El circuito de programación del microcontrolador debería estar separado la placa principal.
+\end{item\ize}
+
+En las siguientes imágenes podremos ver el resultado final de la placa.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.80\textwidth, height = 10cm]{resultadohardware1}
+  \caption{Placa completa con todo sus componentes soldados.}\label{fig:resultadohardware1}
+\end{figure}
+
+Pero no pudimos cargarle un programa al c8051f352, como muestra el Test de Sistema 5 \ref{it3:tab:testsistema5} , ya que nos daba error con la escritura en la memoria flash.
 % section resultados (end)
 
 % chapter iteracion_3 (end)
