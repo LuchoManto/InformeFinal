@@ -6,3 +6,4 @@ cosas que hacen falta:
 -sacar fotos de la primera interfaz pedorra que hicimos
 -sacar fotos de la interfaz pulenta
 -medir bien cuanto es el intervalo cuando pones un 1. y calibrarlo, es decir, si no es muy lineal, hacer una tabla de 15 o 20 entradas para intervalos tipicos. que se yo, 10ms, 1 seg, 5 seg, 1 min, 5 min. algo asi..
+- dejar la opcion de usar el timestamp o timer1

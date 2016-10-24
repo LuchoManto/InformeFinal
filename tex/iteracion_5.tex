@@ -181,8 +181,8 @@ Tanto el programa que corre en el microprocesador como los datos de configuraci√
 \caption{Test de sistema 1}
 \label{it5:tab:testsistema1}
 \begin{tabular}{p{2cm} p{9cm}}
-\multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}}                                                                                                                                                                                                                                                   \\
-Prueba \#        & 3                                                                                                                                                                                                                                                                                                                   \\
+\multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}} \\
+Prueba \#        & 3 \\
 \hline
 Nombre           & Comportamiento esperado del conversor                     
 \hline
@@ -242,6 +242,18 @@ Resultados       & El formato era correcto
 \section{Conclusiones} % (fold)
 \label{sec:conclusiones}
 
+En esta iteracion, llegamos a obtener un prototipo final del software, listo para embeber en el microcontrolador dentro de la placa construida en las iteraciones anteriores. No se cubrieron todos los requerimientos, pero si los de mayor riesgo:
+
+\begin{itemize}
+\item Es posible configurar tiempos de intervalo entre cada medicion para cada canal por separado
+\item Los datos que se envian a la placa de gestion para cada medicion incluyen, ademas de la medicion, el numero de pin o pines (si es modo diferencial) de donde se esta midiendo. 
+\item Los datos que se envian a la placa de gestion para cada medicion incluyen, ademas de la medicion, el modo de conversion del canal por donde se esta midiendo.
+\item Los datos que se envian a la placa de gestion para cada medicion incluyen, ademas de la medicion, la marca de tiempo relativa correspondiente de la medicion hecha. 
+\end{itemize}
+
+Las funciones correspondientes al conversor, son las que hacen de mayor utilidad a la placa, yendo mas alla de las funcionalidades que el microcontrolador ya posee de manera nativa. Esto es, entre otras cosas, la posibilidad de configurar cada canal por separado, en el modo que se desee, y con un intervalo de tiempo que cubre una ventana amplia.
+
+El uso de la marca de tiempo fue implementado, pero con la particularidad de que utiliza uno de los contadores del microcontrolador, restando en 1 la cantidad de contadores de eventos disponibles. Optamos por dejarlo como opcion al usuario de usar la marca de tiempo o usar el contador.
 
 
 % section conclusiones (end)
