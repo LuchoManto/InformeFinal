@@ -9,7 +9,8 @@ Parte de este proyecto fue poner a prueba nuestro sistema utilizando un sensor d
 \subsection{Marco teorico} % (fold)
 \label{sub:marco_teorico}
 
-La intensidad de un campo electrico se puede medir, en principio, colcando un medidor de voltaje entre dos placas metalicas paralelas separadas por una distancia. El problema de esto es que, como el medidor de voltaje suele tener una impedancia alta en la entrada, cualquier voltaje inducido en las placas se pierde rapidamente, y no podria usarse para medir el capo electrico. Para arreglar esto, se utiliza la tecnica de las aspas. Se coloca una placa conductora, y sobre la misma se posiciona un sistema con aspas de forma que cuando estas roten, se cubra y se exponga periodicamente la placa conductora al campo electrico ambiental. Para lograr esto apropiadamente, el rotor que hace girar las aspas debe estar conectado a tierra. La placa conductora esta conectada a tierra a traves de un amplificador de transconductancia, que convierte la corriente que va desde la placa a tierra en una tension. A medida que la placa conductora este expuesta al campo electrico, el campo induce una corriente a tierra mientras que atrae o repele la carga de la placa conductora. A medida que la placa esta cubierta del campo electrico, la carga inducida se drena. Entonces las placas inducen una corriente alterna a masa que es proporcional a la intensidad del campo electrico estatico. Esta corriente alterna luego puede ser rectificada para utilizarla como entrada a un conversor analogico digital y obtener asi la intensidad del campo electrico medido. \\
+La intensidad de un campo electrico se puede medir, en principio, colcando un medidor de voltaje entre dos placas metalicas paralelas separadas por una distancia. El problema de esto es que, como el medidor de voltaje suele tener una impedancia alta en la entrada, cualquier voltaje inducido en las placas se pierde rapidamente, y no podria usarse para medir el capo electrico. Para arreglar esto, se utiliza la tecnica de las aspas. Se coloca una placa conductora, y sobre la misma se posiciona un sistema con aspas de forma que cuando estas roten, se cubra y se exponga periodicamente la placa conductora al campo electrico ambiental. Para lograr esto apropiadamente, el rotor que hace girar las aspas debe estar conectado a tierra. La placa conductora esta conectada a tierra a traves de un amplificador de transconductancia, que convierte la corriente que va desde la placa a tierra en una tension.
+A medida que la placa conductora este expuesta al campo electrico, el campo induce una corriente a tierra mientras que atrae o repele la carga de la placa conductora. A medida que la placa esta cubierta del campo electrico, la carga inducida se drena. Entonces las placas inducen una corriente alterna a masa que es proporcional a la intensidad del campo electrico estatico. Esta corriente alterna luego puede ser rectificada para utilizarla como entrada a un conversor analogico digital y obtener asi la intensidad del campo electrico medido. \\
 
 Una vez obtenida la intensidad, es necesario saber el signo del campo electrico medido. Para obtenerlo, un metodo es que en el mismo conversor analogico digital se obtenga la medicion de manera diferencial. Un conversor analogico digital diferencial toma la diferencia entre dos canales para obtener un dato en lugar de tomar el valor de un canal y compararlo con tierra. De forma que es posible determinar cual es el canal con mayor tension. Con esto, se pueden conectar los canales de las señales de tierra y la de la placa conductora, y se miden de manera diferencial para obtener tento la intensidad como el signo del campo electrico estatico.
 \cite{sensorcampo}
@@ -36,7 +37,7 @@ La placa y las aspas funcionan como un capacitor que se blinda y se des\-blinda 
   \caption[Imagen del sensor de campo electrostatico utilizado (vertical)]{Foto del sensor en vertical. Puede verse en el eje, el sistema de aspas y fotointerruptor utilizado para medir las RPM.}\label{fig:sensorvertical}
 \end{figure}
 
-Ademas de las aspas que sirver para medir el campo, en el eje del motor se encuentra un segundo grupo de aspas, pero mas pequeño; junto a estas aspas se encuentra acoplado un fotointerruptor, de manera que el paso de cada aspa interrumpe el paso de luz de un extremo a otro. Si se construye el circuito requerido para el fotointerruptor, ocurrira que cuando el motor este girando, se generen pulsos cuadrados a la salida del fotointerruptor, permitiendo obtener cuentas que ayudaran a la hora de controlar la velocidad del motor. Las aspas secundarias y el fotointerruptor pueden verse en la figura \ref{fig:sensorvertical}
+Ademas de las aspas que miden el campo electrico, en el eje del motor se encuentra un segundo grupo de aspas, pero mas pequeño; junto a estas aspas se encuentra acoplado un fotointerruptor, de manera que el paso de cada aspa interrumpe el paso de luz de un extremo a otro. Si se construye el circuito requerido para el fotointerruptor, ocurrira que cuando el motor este girando, se generen pulsos cuadrados a la salida del fotointerruptor, permitiendo obtener cuentas que ayudaran a la hora de controlar la velocidad del motor. Las aspas secundarias y el fotointerruptor pueden verse en la figura \ref{fig:sensorvertical}
 
 % subsection el_sensor (end)
 
@@ -111,19 +112,32 @@ La figura \ref{fig:fotointerruptorcircuitotipico} muestra el circuito que implem
   \caption{Circuito utilizado para el fotointerruptor}\label{fig:fotointerruptorcircuitotipico}
 \end{figure}
 
+En esta disposicion, cuando el fotosensor esta iluminado, hay 5 Volts en la salida; de lo contrario 0 Volts. Esto hace que cuando el motor gira, las aspas van a tapar y destapar la entrada de luz al fotosensor generando una onda cuadrada a la salida del circuito, cuya frecuencia depende de la velocidad del motor.
+Esta señal se utiliza como entrada para el contador de eventos, luego en el programa se calcula la velocidad del motor utilizando las cuentas obtenidas sobre una base de tiempo. 
+
 % subsection circuito_de_adaptacion_para_la_señal_de_pulsos_del_fotointerruptor (end)
 
 \subsection{Circuito de alimentacion} % (fold)
 \label{sub:circuito_de_alimentacion}
 
-poner aca lo que hicimos con el rele y todo eso que esta bastante bueno. y una imagen del circuito
+El sistema entero esta preparado para estar siempre encendido. Al no consumir mucho, no trae problemas de consumo o temperatura. Pero este sensor tiene un motor alimentado con 12 Volts de continua. Para ahorrar consumo, propusimos agregar un control de encendido y apagado del sensor, utilizando uno de los pines GPIO del microcontrolador. \\
+
+La figura PONER FIGURA DEL CIRCUITO muestra el circuito que prepara la señal del microcontrolador que controla el encendido y apagado del motor. Utilizamos un relé, un optoacoplador, un transistor, un diodo y resistencias. El optoacoplador sirve para aislar opticamente el circuito logico del motor con el circuito de 12 V. El rele electromecanico conmuta la conductividad entre el motor y masa, de manera que en un estado del rele el motor esta prendido, y en el otro esta apagado. Utilizamos un transistor porque los 5V a la salida del optoacoplador no eran suficientes para la tension de switching del relé.
 
 % subsection circuito_de_alimentacion (end)
 
-\subsection{Circuito de adaptacion para la señal modulada en ancho de pulso para el driver del motor} % (fold)
-\label{sub:circuito_de_adaptacion_para_la_señal_modulada_en_ancho_de_pulso_para_el_driver_del_motor}
+\subsection{Señal modulada en ancho de pulso para el driver del motor} % (fold)
+\label{sub:señal_modulada_en_ancho_de_pulso_para_el_driver_del_motor}
 
-aca en realidad no hicimos nada porque lo unico que hay es el cable de salida del pwm que viene de la placa y se conecta de pecho al driver.. pero bueno explicar eso.. y explicar tambnein que pasamos desde el arduino que hacia todo por interrupciones al pwm de la placa que lo hace todo por HW y funciona mucho mejor. aunque no explicar como funciona el programa porque eso va despues
+% aca en realidad no hicimos nada porque lo unico que hay es el cable de salida del pwm que viene de la placa y se conecta de pecho al driver.. pero bueno explicar eso.. y explicar tambnein que pasamos desde el arduino que hacia todo por interrupciones al pwm de la placa que lo hace todo por HW y funciona mucho mejor. aunque no explicar como funciona el programa porque eso va despues
+
+El driver del motor funciona a base de señales moduladas en pulso. Los anchos de pulso funcionan como codigos que representan distintos modos para el driver. El manual del driver especifica los distintos anchos de pulso que lo configuran de distintas maneras. Para guiarse en el proceso de configuracion, el driver suena con distintos ``beeps'' de distintos tonos que indican distintas cosas.
+
+En nuestro caso, necesitabamos arrancar el motor y hacerlo a andar a una unica velocidad. Lo cual es uno de los modos mas simples. De igual manera, era necesario una serie de señales sucesivas con distintos anchos de pulso para arrancar el motor. Estas señales las hicimos utilizando un modulo del microcontrolador denominado PCA.
+
+
+
+
 
 % subsection circuito_de_adaptacion_para_la_señal_modulada_en_ancho_de_pulso_para_el_driver_del_motor (end)
 
@@ -155,18 +169,11 @@ La medicion en si de los datos del sensor no esta como funcion especifica del mi
   \caption{Diagrama de bloques fisicos del sistema de adaptacion del sensor}\label{fig:diagramabloquessensor}
 \end{figure}
 
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.80\textwidth, height = 7cm]{bloquessoftconsensor}
-  \caption{Diagrama de bloques de software del sistema de adaptacion del sensor}\label{fig:bloquessoftconsensor}
-\end{figure}
+Y DE ACTIVIDAD PARA BER LA SUCESION DE COSAS QUE OCURREN CUANDO SE:
+-PRENDE EL MOTOR
+-SE CONTROLA VELOCIDAD
 
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.80\textwidth, height = 7cm]{actividadcontrolrpm}
-  \caption{Diagrama de actividad que describe el comportamiento de la funcion "control_rpm".}[Diagrama de actividad que describe el comportamiento de la funcion "control_rpm". que realiza el control de velocidad del motor del sensor.]\label{fig:actividadcontrolrpm}
-\end{figure}
+MAS QUE NADA.. ES LO MAS IMPORTANTE.
 
 % section funcionalidades_desarrolladas_dentro_del_software_de_la_placa_de_instrumentacion_para_trabajar_junto_con_el_sensor (end)
 
