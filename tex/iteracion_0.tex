@@ -23,6 +23,24 @@ Los riesgos de los requerimientos del proyecto están estimados en la tabla PONE
 \section{Determinación del orden} % (fold)
 \label{it0:sec:determinacion_del_orden}
 
+el porque y el como del orden.
+
+-parrafo 1:
+que es lo que hizo que eligieramos la primera iteracion como la primera? los parametros del microcontrolador nos ajustaban de todos lados. osea los parametros del microcontrolador eran escenciales. aquellos que eran criticos hacian depender a todos los demas. asi que lo primero que habia que hacer era conformar una tabla con una serie de microcontroladores candidatos, y optar aquel que mejor cumpla con los requerimientos de mayor riesgo, y si es posible con los otros requerimientos que dependian de los primeros.
+
+-parrafo 2:
+elegido ya el microcontrolador. que habia que hacer? lo primero y principal es aprender a usar las FUNCIONALIDADES PRINCIPALES del micro. necesitabamos una placa de desarrollo que tenga el microcontrolador y probar sus funcionalidades. particularmente aquellas que estaban ligadas a los requerimientos principales. si alguna de las funcionalidades no andaba bien, o alguna de las pruebas no daba los resultados esperados, podia ser posible hasta tener que cambiar el microcontrolador. Osea que habiendo uno ya selecto, lo primero a hacer fue comprarlo y realizar pruebas hasta comprobar que las funcionalidades del micro anden como era esperado.
+
+-parrafo 3:
+que sigue despues de tener un microcontrolador elegido y puesto a prueba segun los requerimientos? comenzar a diseñar e implementar el HARDWARE DE LA PLACA DE INSTRUMENTACION. Todo el hardware esta ligado al microcontrolador por lo que claramente no podia hacerse antes. El diseño se hizo basandonos en la placa de desarrollo donde hicimos las pruebas en la iteracion 2, teniendo el cuidado de no incluir aquellas partes de la placa que no eran necesarias en la placa de instrumentacion.
+
+
+-parrafo 4:
+que tenemos hasta el momento? un software que testeaba el sistema para sus requerimientos de mayor riesgo y un diseño terminado con una implementacion que no andaba de la placa de instrumentacion. la IMPLEMENTACION no andaba, osea que habia que hacerlo andar. en la iteracion 4 seguimos con la implementacion de la placa, corrigiendo errores de diseño, hasta que anduvo. Ademas, una vez que salio andando, se rediseño la placa para duplicar los parametros.
+
+
+
+
 Como se puede ver en la tabla PONER RIESGO DE REQUERIMIENTOS, los requerimientos de mayor riesgo son la conversión, el conteo de eventos, y la ganancia. Esto se explica porque que el objetivo principal propuesto por nuestro director era el de implementar una placa genérica para la obtension de datos de sensores analógico y contar eventos digitales, el resto era secundario. \\
 
 Aunque estos requerimientos mencionados anteriormente sean de mayor riesgo, dependen de que microcontrolador seleccionemos. Es por esto que la primera iteracion la dedicamos a la investigación y selección de un microcontrolador. \\
