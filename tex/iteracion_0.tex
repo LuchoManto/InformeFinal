@@ -6,7 +6,7 @@
 
 El objetivo de esta iteracion es explicar porque elegimos el orden para el desarrollo de cada iteración. Este orden proviene directamente de la dependencia que existe entre los requerimientos. En caso de tener que elegir entre requerimientos independientes entre si, optamos por el de mayor riesgo. \\
 
-Los riesgos de los requerimientos del proyecto están estimados en la tabla PONER RIESGO DE REQUERIMIENTOS
+Los requerimientos tienen un riesgo asociado. Este riesgo esta determinado por la dependencia existente entre los requerimientos. La tabla TABLA enumera los requerimientos y les asocia un riesgo estimado, calculado segun estas dependencias. El orden de las iteraciones fue dado segun esta tabla.
 
 % queremos indicar el orden de las iteraciones. no necesariamente tienen cualquier orden. Las iteraciones vienen directo de los requerimientos. Los requerimientos dependen a veces unos de otros, y eso determina el orden. Cuando no dependen uno de otro, se decide cual hacer primero segun el riesgo del requerimiento. Ponele, que el sistema cuente eventos y convierta de analogico a digital es de riesgo alto porque es clave. No se puede hacer nada si no se decide primero que micro usar,, y asi y asi.
 
@@ -23,38 +23,92 @@ Los riesgos de los requerimientos del proyecto están estimados en la tabla PONE
 \section{Determinación del orden} % (fold)
 \label{it0:sec:determinacion_del_orden}
 
-el porque y el como del orden.
+% -iteracion 1
+% que es lo que hizo que eligieramos la primera iteracion como la primera? los parametros del microcontrolador nos ajustaban de todos lados. osea los parametros del microcontrolador eran escenciales. aquellos que eran criticos hacian depender a todos los demas. asi que lo primero que habia que hacer era conformar una tabla con una serie de microcontroladores candidatos, y optar aquel que mejor cumpla con los requerimientos de mayor riesgo, y si es posible con los otros requerimientos que dependian de los primeros.
+\subsection{Iteracion 1} % (fold)
+\label{sub:iteracion_1}
 
--parrafo 1:
-que es lo que hizo que eligieramos la primera iteracion como la primera? los parametros del microcontrolador nos ajustaban de todos lados. osea los parametros del microcontrolador eran escenciales. aquellos que eran criticos hacian depender a todos los demas. asi que lo primero que habia que hacer era conformar una tabla con una serie de microcontroladores candidatos, y optar aquel que mejor cumpla con los requerimientos de mayor riesgo, y si es posible con los otros requerimientos que dependian de los primeros.
+Los parametros del microcontrolador son escenciales porque condicionan a todo el sistema. En la primera iteracion, nos dedicamos a la investigacion de aquellos microcontroladores que mejor se ajustaban a las nececidades impuestas por los requerimientos. Conformamos una tabla para una mejor interpretacion de las diferencias y ventajas entre cada uno. La decision final se tomo a partir del analisis de dicha tabla.
 
--parrafo 2:
-elegido ya el microcontrolador. que habia que hacer? lo primero y principal es aprender a usar las FUNCIONALIDADES PRINCIPALES del micro. necesitabamos una placa de desarrollo que tenga el microcontrolador y probar sus funcionalidades. particularmente aquellas que estaban ligadas a los requerimientos principales. si alguna de las funcionalidades no andaba bien, o alguna de las pruebas no daba los resultados esperados, podia ser posible hasta tener que cambiar el microcontrolador. Osea que habiendo uno ya selecto, lo primero a hacer fue comprarlo y realizar pruebas hasta comprobar que las funcionalidades del micro anden como era esperado.
+% subsection iteracion_1 (end)
 
--parrafo 3:
-que sigue despues de tener un microcontrolador elegido y puesto a prueba segun los requerimientos? comenzar a diseñar e implementar el HARDWARE DE LA PLACA DE INSTRUMENTACION. Todo el hardware esta ligado al microcontrolador por lo que claramente no podia hacerse antes. El diseño se hizo basandonos en la placa de desarrollo donde hicimos las pruebas en la iteracion 2, teniendo el cuidado de no incluir aquellas partes de la placa que no eran necesarias en la placa de instrumentacion.
+% -iteracion 2:
+% elegido ya el microcontrolador. que habia que hacer? lo primero y principal es aprender a usar las FUNCIONALIDADES PRINCIPALES del micro. necesitabamos una placa de desarrollo que tenga el microcontrolador y probar sus funcionalidades. particularmente aquellas que estaban ligadas a los requerimientos principales. si alguna de las funcionalidades no andaba bien, o alguna de las pruebas no daba los resultados esperados, podia ser posible hasta tener que cambiar el microcontrolador. Osea que habiendo uno ya selecto, lo primero a hacer fue comprarlo y realizar pruebas hasta comprobar que las funcionalidades del micro anden como era esperado.
+
+\subsection{Iteracion 2} % (fold)
+\label{sub:iteracion_2}
+
+El microcontrolador seleccionado fue elegido debido a sus funcionalidades, principalmente aquellas que prometian cumplir con los requerimientos de mayor riesgo. Si las funcionalidades principales no funcionan bien o no responden como es necesario, podria ser necesaria una reeleccion del microcontrolador. La segunda iteracion consistio en conformar un primer prototipo de software, y de esta manera aseguramos que los requerimientos principales eran posibles de cumplir con el microcontrolador seleccionado.
+En el laboratorio, se contaba con una placa de desarrollo Silicon Labs C8051f350, que tenia el microcontrolador elegido. El software realizado fue programado en esta placa para realizar las pruebas.
+
+% subsection iteracion_2 (end)
+
+% -iteracion 3:
+% que sigue despues de tener un microcontrolador elegido y puesto a prueba segun los requerimientos? comenzar a diseñar e implementar el HARDWARE DE LA PLACA DE INSTRUMENTACION. Todo el hardware esta ligado al microcontrolador por lo que claramente no podia hacerse antes. El diseño se hizo basandonos en la placa de desarrollo donde hicimos las pruebas en la iteracion 2, teniendo el cuidado de no incluir aquellas partes de la placa que no eran necesarias en la placa de instrumentacion.
+\subsection{Iteracion 3} % (fold)
+\label{sub:iteracion_3}
+
+Uno de los requerimientos principales del proyecto es la construccion en PCB de la placa de instrumentacion. Esto no podia comenzar sin antes haber hecho la seleccion del microcontrolador y tener sus funcionalidades puestas a prueba. La placa de desarrollo utilizada para realizar las pruebas en la iteracion 2, sirvio como base para nuestro diseño. En la tercera iteracion, entonces, diseñamos e implementamos la placa de instrumentacion en PCB.
+% subsection iteracion_3 (end)
+
+% -iteracion 4:
+% que tenemos hasta el momento? un software que testeaba el sistema para sus requerimientos de mayor riesgo y un diseño terminado con una implementacion que no andaba de la placa de instrumentacion. la IMPLEMENTACION no andaba, osea que habia que hacerlo andar. en la iteracion 4 seguimos con la implementacion de la placa, corrigiendo errores de diseño, hasta que anduvo. Ademas, una vez que salio andando, se rediseño la placa para duplicar los parametros.
+\subsection{Iteracion 4} % (fold)
+\label{sub:iteracion_4}
+
+En la cuarta iteracion, se continuo trabajando en el diseño y construccion de la placa de instrumentacion en PCB, dado que los resultados de las pruebas en la iteracion anterior no fueron exitosos. Se corrigieron errores tanto de diseño como en la misma construccion de la placa, hasta tener un prototipo que respondiera como era esperado.
+Se diseño ademas, una segunda version de la placa de instrumentacion, donde se colocaban 2 microcontroladores en lugar de uno solo, duplicando asi la cantidad de recursos. 
+
+% subsection iteracion_4 (end)
+
+% -iteracion 5:
+% idea principal: terminar un primer prototipo de la placa de instrumentacion. para eso necesitabamos mejoras en el software. para que? para cumplir con la mayor cantidad de requerimientos posibles del lado del software. y tener la placa con el software listo.
+\subsection{Iteracion 5} % (fold)
+\label{sub:iteracion_5}
+
+En la quinta iteracion, dimos un cierre al software del sistema. Era importante contar con un programa basico que testeara las funcionalidades principales del microcontrolador, sobretodo aquellas ligadas a los requerimientos principales. Faltaba entonces un prototipo final de programa, que cumpla con todos los requerimientos. 
+
+% subsection iteracion_5 (end)
+
+% -iteracion 6:
+% hasta el momento ya obtuvimos un prototipo de la placa de instrumentacion. lo que hay que hacer ahora es usarla. falta diseñarle un prototipo de sistema de gestion para que no tenga que estar siempre conectada a la pc. enctonces la idea de esta iteracion es tener un prototipo de sistema de gestion que haga de receptor para la telemetria de la placa de instrumentacion. para dejar de usar la computadora como receptor directo y comenzar a manejarla de una manera mas remota.
+\subsection{Iteracion 6} % (fold)
+\label{sub:iteracion_6}
+
+Uno de los requerimientos del sistema es que la placa de instrumentacion envie la informacion de telemetria y meta-datos a otra placa gestionadora mediante protocolo serial. Al momento de comenzar la iteracion 6, toda la gestion estaba hecha mediante el uso de un ordenador. Esta iteracion consistio en la implementacion de una placa de gestion, utilizando alguna placa de desarrollo con posibilidad de albergar un sistema operativo. 
+La placa de desarrollo utilizada fue una Raspberry Pi, con un sistema operativo Raspbian embebido. 
+
+% subsection iteracion_6 (end)
+
+% -iteracion 7:
+% teniendo una placa de instrumentacion lista, y el sistema de gestion andando, falta hacer una prueba de campo con un sensor de verdad y poner a prueba el sistema. nos propusieron usar el sensor de campo electrostatico para probarlo.
+% otro parrafo: ademas de usarlo para probar el sistema como placa de instrumentacion + sistema de gestion, en esta it diseñamos una adaptacion al sensor para su correcto funcionamiento, usando funcionalidades del microcontrolador de la placa de instrumentacion.
+\subsection{Iteracion 7} % (fold)
+\label{sub:iteracion_7}
+
+Al final de la iteracion anterior, el sistema estaba diseñado y prototipado. Esta iteracion fue dedicada al desarrollo de una prueba de campo utilizando el sensor de campo electrostatico mencionado en los objetivos. El objetivo principal fue comprobar todos los aspectos de la placa de instrumentacion, y ademas utilizar la placa de gestion para manejar la primera.
 
 
--parrafo 4:
-que tenemos hasta el momento? un software que testeaba el sistema para sus requerimientos de mayor riesgo y un diseño terminado con una implementacion que no andaba de la placa de instrumentacion. la IMPLEMENTACION no andaba, osea que habia que hacerlo andar. en la iteracion 4 seguimos con la implementacion de la placa, corrigiendo errores de diseño, hasta que anduvo. Ademas, una vez que salio andando, se rediseño la placa para duplicar los parametros.
+% subsection iteracion_7 (end)
 
 
 
 
-Como se puede ver en la tabla PONER RIESGO DE REQUERIMIENTOS, los requerimientos de mayor riesgo son la conversión, el conteo de eventos, y la ganancia. Esto se explica porque que el objetivo principal propuesto por nuestro director era el de implementar una placa genérica para la obtension de datos de sensores analógico y contar eventos digitales, el resto era secundario. \\
 
-Aunque estos requerimientos mencionados anteriormente sean de mayor riesgo, dependen de que microcontrolador seleccionemos. Es por esto que la primera iteracion la dedicamos a la investigación y selección de un microcontrolador. \\
+% Como se puede ver en la tabla PONER RIESGO DE REQUERIMIENTOS, los requerimientos de mayor riesgo son la conversión, el conteo de eventos, y la ganancia. Esto se explica porque que el objetivo principal propuesto por nuestro director era el de implementar una placa genérica para la obtension de datos de sensores analógico y contar eventos digitales, el resto era secundario. \\
 
-Teniendo un microcontrolador elegido, decidimos comprobar que al menos lo escencial funcionara correctamente. Esto es: comprobar que funcione el conversor, la ganancia programable, y el conteo de eventos. La segunda iteracion la dedicamos a la experimentación con el microcontrolador elegido en su placa de desarrollo, y la conformacion de un primer prototipo de programa que cumpla con los requerimientos de mayor riesgo. En el desarrollo de esta iteracion y las pruebas de sistema, surgieron cuestiones que provocaron cambios en los requerimientos, pero que no comprometieron la eleccion del microcontrolador.  \\
+% Aunque estos requerimientos mencionados anteriormente sean de mayor riesgo, dependen de que microcontrolador seleccionemos. Es por esto que la primera iteracion la dedicamos a la investigación y selección de un microcontrolador. \\
 
-Llegados a esta instancia, teniamos un prototipo de software que cumplia con los requerimientos de mayor riesgo. En la tercera iteración diseñamos y construimos una placa de desarrollo que cumplia con los requisitos para nuestro sistema. Las mismas pruebas de la segunda iteración se realizaron junto con las pruebas de la tercera, nos quedó así un prototipo de sistema que cumplía con los requerimientos de mayor riesgo. \\
+% Teniendo un microcontrolador elegido, decidimos comprobar que al menos lo escencial funcionara correctamente. Esto es: comprobar que funcione el conversor, la ganancia programable, y el conteo de eventos. La segunda iteracion la dedicamos a la experimentación con el microcontrolador elegido en su placa de desarrollo, y la conformacion de un primer prototipo de programa que cumpla con los requerimientos de mayor riesgo. En el desarrollo de esta iteracion y las pruebas de sistema, surgieron cuestiones que provocaron cambios en los requerimientos, pero que no comprometieron la eleccion del microcontrolador.  \\
 
-Al final de la tercera iteracion, en lo que respecta a la placa de instrumentacion, teniamos un sistema que cumplía con los requerimientos mínimos. Lo siguiente a realizar fue pasar del prototipo al sistema final. Las iteraciones 4 y 5 las destinamos a finalizar las implementaciones de hardware y sofware. En la iteración 4 volvimos a realizar el hardware, rediseñando ciertos aspectos y duplicando los recursos debido a los cambios en los requerimientos. Y en la iteracion 5 continuamos con el desarrollo del software, dandole ya las funcionalidades suficientes para cubrir los requerimientos vinculados al programa. \\
+% Llegados a esta instancia, teniamos un prototipo de software que cumplia con los requerimientos de mayor riesgo. En la tercera iteración diseñamos y construimos una placa de desarrollo que cumplia con los requisitos para nuestro sistema. Las mismas pruebas de la segunda iteración se realizaron junto con las pruebas de la tercera, nos quedó así un prototipo de sistema que cumplía con los requerimientos de mayor riesgo. \\
 
-En este punto, teníamos ya lo principal del proyecto: Una placa de instrumentacion implementada en una PCB, con 16 entradas analogicas con ganancia programable, y 4 contadores de eventos. El resto de las iteraciones fueron casos de prueba y mejoras al sistema. 
-La iteracion 6 fue dedicada al desarrollo de un programa dentro de una placa Raspberry Pi que gestione la placa de instrumentacion hecha.  \\
+% Al final de la tercera iteracion, en lo que respecta a la placa de instrumentacion, teniamos un sistema que cumplía con los requerimientos mínimos. Lo siguiente a realizar fue pasar del prototipo al sistema final. Las iteraciones 4 y 5 las destinamos a finalizar las implementaciones de hardware y sofware. En la iteración 4 volvimos a realizar el hardware, rediseñando ciertos aspectos y duplicando los recursos debido a los cambios en los requerimientos. Y en la iteracion 5 continuamos con el desarrollo del software, dandole ya las funcionalidades suficientes para cubrir los requerimientos vinculados al programa. \\
 
-En la última iteracion, el objetivo principal fue poner a prueba el sistema con un sensor de campo electrostático, y ademas acondicionar el sistema para con este sensor, teniendo un prototipo de producto, con la idea de hacerlo comerciable. Por cuestiones de tiempos, el sistema final quedó hecho para fines académicos.En la iteración 7 cubrimos el desarrollo de la adaptación del sistema realizado hasta el momento a este sensor. \\
+% En este punto, teníamos ya lo principal del proyecto: Una placa de instrumentacion implementada en una PCB, con 16 entradas analogicas con ganancia programable, y 4 contadores de eventos. El resto de las iteraciones fueron casos de prueba y mejoras al sistema. 
+% La iteracion 6 fue dedicada al desarrollo de un programa dentro de una placa Raspberry Pi que gestione la placa de instrumentacion hecha.  \\
+
+% En la última iteracion, el objetivo principal fue poner a prueba el sistema con un sensor de campo electrostático, y ademas acondicionar el sistema para con este sensor, teniendo un prototipo de producto, con la idea de hacerlo comerciable. Por cuestiones de tiempos, el sistema final quedó hecho para fines académicos.En la iteración 7 cubrimos el desarrollo de la adaptación del sistema realizado hasta el momento a este sensor. \\
 
 % section determinacion_del_orden (end)
 
