@@ -6,7 +6,7 @@
 
 El objetivo de esta iteracion es explicar porque elegimos el orden para el desarrollo de cada iteración. Este orden proviene directamente de la dependencia que existe entre los requerimientos. En caso de tener que elegir entre requerimientos independientes entre si, optamos por el de mayor riesgo. \\
 
-Los requerimientos tienen un riesgo asociado. Este riesgo esta determinado por la dependencia existente entre los requerimientos. La tabla TABLA enumera los requerimientos y les asocia un riesgo estimado, calculado segun estas dependencias. El orden de las iteraciones fue dado segun esta tabla.
+Los requerimientos tienen un riesgo asociado. Este riesgo esta determinado por la dependencia existente entre los ellos. La tabla TABLA enumera los requerimientos y les asocia un riesgo estimado, calculado segun estas dependencias. El orden de las iteraciones fue dado segun esta tabla.
 
 % queremos indicar el orden de las iteraciones. no necesariamente tienen cualquier orden. Las iteraciones vienen directo de los requerimientos. Los requerimientos dependen a veces unos de otros, y eso determina el orden. Cuando no dependen uno de otro, se decide cual hacer primero segun el riesgo del requerimiento. Ponele, que el sistema cuente eventos y convierta de analogico a digital es de riesgo alto porque es clave. No se puede hacer nada si no se decide primero que micro usar,, y asi y asi.
 
@@ -28,7 +28,7 @@ Los requerimientos tienen un riesgo asociado. Este riesgo esta determinado por l
 \subsection{Iteracion 1} % (fold)
 \label{sub:iteracion_1}
 
-Los parametros del microcontrolador son escenciales porque condicionan a todo el sistema. En la primera iteracion, nos dedicamos a la investigacion de aquellos microcontroladores que mejor se ajustaban a las nececidades impuestas por los requerimientos. Conformamos una tabla para una mejor interpretacion de las diferencias y ventajas entre cada uno. La decision final se tomo a partir del analisis de dicha tabla.
+Los parametros del microcontrolador son escenciales porque condicionan a todo el sistema. En la primera iteración, nos dedicamos a la investigacion de aquellos microcontroladores que mejor se ajustaban a las nececidades impuestas por los requerimientos. Conformamos una tabla para una mejor interpretación de las diferencias y ventajas entre cada uno de los micros. La decisión final se tomó a partir del análisis de dicha tabla.
 
 % subsection iteracion_1 (end)
 
@@ -38,8 +38,9 @@ Los parametros del microcontrolador son escenciales porque condicionan a todo el
 \subsection{Iteracion 2} % (fold)
 \label{sub:iteracion_2}
 
-El microcontrolador seleccionado fue elegido debido a sus funcionalidades, principalmente aquellas que prometian cumplir con los requerimientos de mayor riesgo. Si las funcionalidades principales no funcionan bien o no responden como es necesario, podria ser necesaria una reeleccion del microcontrolador. La segunda iteracion consistio en conformar un primer prototipo de software, y de esta manera aseguramos que los requerimientos principales eran posibles de cumplir con el microcontrolador seleccionado.
-En el laboratorio, se contaba con una placa de desarrollo Silicon Labs C8051f350, que tenia el microcontrolador elegido. El software realizado fue programado en esta placa para realizar las pruebas.
+El microcontrolador seleccionado fue elegido debido a sus funcionalidades, principalmente aquellas que prometian cumplir con los requerimientos de mayor riesgo. Si las funcionalidades principales no se desempeñan bien o no responden optimamente, podria ser necesaria la reeleccion del microcontrolador. La segunda iteracion consistio en conformar un primer prototipo de software para aseguramos que los requerimientos principales eran posibles de cumplir con el microcontrolador seleccionado.
+
+En el laboratorio se contaba con una placa de desarrollo Silicon Labs C8051f350, que tenia el microcontrolador elegido. El software realizado fue programado en esta placa para realizar las pruebas.
 
 % subsection iteracion_2 (end)
 
@@ -48,7 +49,9 @@ En el laboratorio, se contaba con una placa de desarrollo Silicon Labs C8051f350
 \subsection{Iteracion 3} % (fold)
 \label{sub:iteracion_3}
 
-Uno de los requerimientos principales del proyecto es la construccion en PCB de la placa de instrumentacion. Esto no podia comenzar sin antes haber hecho la seleccion del microcontrolador y tener sus funcionalidades puestas a prueba. La placa de desarrollo utilizada para realizar las pruebas en la iteracion 2, sirvio como base para nuestro diseño. En la tercera iteracion, entonces, diseñamos e implementamos la placa de instrumentacion en PCB.
+Uno de los requerimientos principales del proyecto es la construccion en PCB de la placa de instrumentacion. Luego de haber hecho la seleccion del microcontrolador y tener sus funcionalidades puestas a prueba, estabamos en condiciones de cumplir con dichos requerimientos.
+
+La placa de desarrollo utilizada para realizar las pruebas en la iteracion 2, sirvio como base para nuestro diseño. En la tercera iteracion, entonces, diseñamos e implementamos el prototipo de la placa de instrumentacion en PCB.
 % subsection iteracion_3 (end)
 
 % -iteracion 4:
@@ -57,7 +60,7 @@ Uno de los requerimientos principales del proyecto es la construccion en PCB de 
 \label{sub:iteracion_4}
 
 En la cuarta iteracion, se continuo trabajando en el diseño y construccion de la placa de instrumentacion en PCB, dado que los resultados de las pruebas en la iteracion anterior no fueron exitosos. Se corrigieron errores tanto de diseño como en la misma construccion de la placa, hasta tener un prototipo que respondiera como era esperado.
-Se diseño ademas, una segunda version de la placa de instrumentacion, donde se colocaban 2 microcontroladores en lugar de uno solo, duplicando asi la cantidad de recursos. 
+Se diseño ademas una segunda version de la placa de instrumentacion, donde se colocaban 2 microcontroladores en lugar de uno solo, duplicando asi la cantidad de recursos. 
 
 % subsection iteracion_4 (end)
 
@@ -66,7 +69,7 @@ Se diseño ademas, una segunda version de la placa de instrumentacion, donde se 
 \subsection{Iteracion 5} % (fold)
 \label{sub:iteracion_5}
 
-En la quinta iteracion, dimos un cierre al software del sistema. Era importante contar con un programa basico que testeara las funcionalidades principales del microcontrolador, sobretodo aquellas ligadas a los requerimientos principales. Faltaba entonces un prototipo final de programa, que cumpla con todos los requerimientos. 
+En la quinta iteracion dimos un cierre al software del sistema. Era importante contar con un programa basico que testeara las funcionalidades principales del microcontrolador, sobretodo aquellas ligadas a los requerimientos principales. Faltaba entonces un prototipo final de programa, que cumpla con todos los requerimientos. 
 
 % subsection iteracion_5 (end)
 
@@ -75,7 +78,9 @@ En la quinta iteracion, dimos un cierre al software del sistema. Era importante 
 \subsection{Iteracion 6} % (fold)
 \label{sub:iteracion_6}
 
-Uno de los requerimientos del sistema es que la placa de instrumentacion envie la informacion de telemetria y meta-datos a otra placa gestionadora mediante protocolo serial. Al momento de comenzar la iteracion 6, toda la gestion estaba hecha mediante el uso de un ordenador. Esta iteracion consistio en la implementacion de una placa de gestion, utilizando alguna placa de desarrollo con posibilidad de albergar un sistema operativo. 
+Uno de los requerimientos del sistema es que la placa de instrumentacion envie la informacion de telemetria y meta-datos a otra placa gestionadora mediante protocolo serial. 
+
+Al momento de comenzar la iteracion 6, toda la gestion estaba hecha mediante el uso de un ordenador. Esta iteracion consistio en la implementacion de una placa de gestion, utilizando alguna placa de desarrollo con posibilidad de albergar un sistema operativo. 
 La placa de desarrollo utilizada fue una Raspberry Pi, con un sistema operativo Raspbian embebido. 
 
 % subsection iteracion_6 (end)
@@ -86,7 +91,9 @@ La placa de desarrollo utilizada fue una Raspberry Pi, con un sistema operativo 
 \subsection{Iteracion 7} % (fold)
 \label{sub:iteracion_7}
 
-Al final de la iteracion anterior, el sistema estaba diseñado y prototipado. Esta iteracion fue dedicada al desarrollo de una prueba de campo utilizando el sensor de campo electrostatico mencionado en los objetivos. El objetivo principal fue comprobar todos los aspectos de la placa de instrumentacion, y ademas utilizar la placa de gestion para manejar la primera.
+Al final de la iteracion anterior el sistema estaba diseñado y prototipado. Esta iteracion fue dedicada entonces al desarrollo de una prueba de campo utilizando el sensor de campo electrostatico mencionado en los objetivos. 
+
+El objetivo principal fue comprobar todos los aspectos y funcionalidades de la placa de instrumentacion así como utilizar la placa de gestion para que el usuario pueda controlar el sistema en su totalidad.
 
 
 % subsection iteracion_7 (end)
