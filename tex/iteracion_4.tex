@@ -4,9 +4,9 @@
 \section{Introduccion} % (fold)
 \label{sec:introduccion}
 
-Nos propusimos poder duplicar la cantidad de recursos de la placa, ya que el principal problema era medir varios sensores de modo diferencial, con 8 entradas solo podriamos tener 4 sensores como maximo. Entonces decidimos poner dos microcontroladores a la placa. Pasar de 8 a 16 entradas analogicas y utilizar todas las entradas digitales. 
+Nos propusimos poder duplicar la cantidad de recursos de la placa, ya que el principal problema era que medir varios sensores de modo diferencial, con 8 entradas solo nos daría la chance de tener 4 sensores como máximo. Decidimos entonces poner dos C8051f352 a la placa. Pasar de 8 a 16 entradas analogicas y utilizar todas las entradas/salidas digitales que provee el microcontrolador. 
 Para no agrandar el tamaño decidimos rediseñar la placa, y como primera medida la diseñamos para poder construirla doble capa.
-En esta iteracion mostraremos como se realizo el diseño y la construccion de esta nueva placa.
+En esta iteración mostraremos como se realizó el diseño y la construccion de esta nueva placa.
 
 % section introduccion (end)
 
@@ -14,10 +14,11 @@ En esta iteracion mostraremos como se realizo el diseño y la construccion de es
 \label{sec:requerimientos_de_la_iteracion}
 
 \begin{itemize}
-	\item La placa debe tener dos microcontroladores C8051f352.
-	\item La placa debe tener 16 entradas analogicas.
-	\item La placa debe tener 32 entradas digitales.
-	\item La placa debe tener 2 salidas seriales. 
+  \item La placa debe tener dos microcontroladores C8051f352.
+  \item La placa debe tener 16 entradas analogicas.
+  \item La placa debe tener 32 entradas digitales.
+  \item La placa debe tener 2 salidas seriales. 
+  \item Se debería poder conectar el debugger del microcontrolador a la placa para poder programarlo.
 \end{itemize}
 
 % section requerimientos_de_la_iteracion (end)
@@ -39,9 +40,9 @@ Mostramos en la figura \ref{fig:esquematicoFiltro2} como quedan todas las entrad
 
 Del lado derecho del microcontrolador hay dos entradas denominadas VREF+ y VREF-, que nos sirven para manejar los niveles de tension de referencia para la conversion que usara el ADC.
 
-\begin{figure}
+\begin{figure}[H]
 \centering
-  \includegraphics[width=1.10\textwidth, height = 12cm]{esquematicoFiltro2}
+  \includegraphics[width=1.10\textwidth, height = 9cm]{esquematicoFiltro2}
   \caption{Esquemático del Circuito Completo de entradas analogicas.}\label{fig:esquematicoFiltro2}
 \end{figure}
 
@@ -52,9 +53,9 @@ Del lado derecho del microcontrolador hay dos entradas denominadas VREF+ y VREF-
 
 Como podemos ver en la figura \ref{fig:esquematicoDigital2} colocamos 16 entradas/salidas digitales para el microcontrolador. Cada chip tiene las mismas 16 entradas.
 
-\begin{figure}	
+\begin{figure}  [H]
 \centering
-  \includegraphics[width=1.10\textwidth, height = 12cm]{esquematicoDigital2}
+  \includegraphics[width=1.0\textwidth, height = 10cm]{esquematicoDigital2}
   \caption{Esquemático del Circuito Completo de entradas/salidas digitales.}\label{fig:esquematicoDigital2}
 \end{figure}
 
@@ -74,9 +75,9 @@ La idea de tener una placa a la que se conecten varios sensores analógicos y di
 Para programar cada uno de los microcontroladores en principio se penso en colocar dos entradas para el debugger de SiliconLabs, pero nos consumia mucho espacio y el cambio para programar uno y otro se hubiera hecho molesto. Por lo que decidimos poner uno solo, y utilizarlo para los dos microcontroladores, con un jumper de tres pines, para tener la opcion de elegir que micro programar.
 En la figura \ref{fig:esquematicoDebugger2} vemos en uno de los C8051f352 como queda conectado el modulo de debugger/programacion.
 
-\begin{figure}	
+\begin{figure}  [H]
 \centering
-  \includegraphics[width=1.10\textwidth, height = 12cm]{esquematicoDebugger2}
+  \includegraphics[width=1.0\textwidth, height = 8cm]{esquematicoDebugger2}
   \caption{Esquemático del Circuito para la programacion de los microcontroladores de la placa.}\label{fig:esquematicoDebugger2}
 \end{figure}
 
@@ -91,9 +92,9 @@ Sabemos que el principal problema de un sitema embebido es su consumo de energia
 
 En la figura \ref{fig:esquematicoPotencia2} se muestra como queda el esquematico del circuito de potencia.
 
-\begin{figure}	
+\begin{figure}[H] 
 \centering
-  \includegraphics[width=1.10\textwidth, height = 12cm]{esquematicoPotencia2}
+  \includegraphics[width=1.0\textwidth, height = 10cm]{esquematicoPotencia2}
   \caption{Esquemático del Circuit para la potencia de alimentación.}\label{fig:esquematicoPotencia2}
 \end{figure}
 
@@ -104,7 +105,7 @@ En la figura \ref{fig:esquematicoPotencia2} se muestra como queda el esquematico
 
 En la figura \ref{fig:esquematicoCompleto2} podemos ver como queda el esquematico entero con los dos microcontroladores y todos los subcircuitos que componen la placa.
 
-\begin{figure}	
+\begin{figure}  
 \centering
   \includegraphics[width=1.10\textwidth, height = 12cm]{esquematicoCompleto2}
   \caption{Esquemático del Circuit completo de la Placa de desarrollo.}\label{fig:esquematicoCompleto2}
@@ -122,29 +123,29 @@ Como esta nueva version de la placa fue diseñada para ser doble capa, se mostra
 A ambas capaz le tuvimos que dividir las masas, en una seccion analogica y una digital, la masa analogica de la capa superior con la de la capa inferior deben estar interconectadas, lo mismo pasa con la masa digital. Por lo que realizamos un drill (un hueco) para que las masas esten en contacto.
 En la figura \ref{fig:PCB2a} podemos ver como queda el diagrama PCB de capa superior o frontal, y en la figura \ref{fig:PCB23Da} vemos la misma capa con el visualizador 3D del KiCad.
 
-\begin{figure}	
+\begin{figure}[H]
 \centering
-  \includegraphics[width=1.10\textwidth, height = 12cm]{PCB2a}
+  \includegraphics[width=1.0\textwidth, height = 8cm]{PCB2a}
   \caption{Diseño PCB de la capa frontal de la placa.}\label{fig:PCB2a}
 \end{figure}
 
-\begin{figure}	
+\begin{figure}  [H]
 \centering
-  \includegraphics[width=1.10\textwidth, height = 12cm]{PCB23Da}
+  \includegraphics[width=1.0\textwidth, height = 8cm]{PCB23Da}
   \caption{Diseño PCB de la capa frontal de la placa en 3D.}\label{fig:PCB23Da}
 \end{figure}
 
 En la figura \ref{fig:PCB2b} podemos ver como queda el diagrama PCB de capa inferior o posterior, y en la figura \ref{fig:PCB23Db} vemos la misma capa con el visualizador 3D del KiCad.
 
-\begin{figure}	
+\begin{figure}[H] 
 \centering
-  \includegraphics[width=1.10\textwidth, height = 12cm]{PCB2b}
+  \includegraphics[width=1.0\textwidth, height = 8cm]{PCB2b}
   \caption{Diseño PCB de la capa posterior de la placa.}\label{fig:PCB2b}
 \end{figure}
 
-\begin{figure}	
+\begin{figure}  [H]
 \centering
-  \includegraphics[width=1.10\textwidth, height = 12cm]{PCB23Db}
+  \includegraphics[width=1.0\textwidth, height = 8cm]{PCB23Db}
   \caption{Diseño PCB de la capa posterior de la placa en 3D.}\label{fig:PCB23Db}
 \end{figure}
 
@@ -158,12 +159,18 @@ En la tabla de pruebas se veran repetidos los mismos tests que en la iteracion a
 
 \begin{table}[h]
 \caption{Test de sistema 1}
-\label{tab:testsistema1}
+\label{it4:tab:testsistema1}
 \begin{tabular}{p{2cm} p{9cm}}
 \multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}}                                                                                                                                                                                                                                                   \\
 Prueba \#        & 1                                                                                                                                                                                                                                                                                                                   \\
 \hline
-Nombre           & Correcto Diseño de PCB.                                                                                                                                                                                                                                                           \\
+Nombre           & Correcto Diseño de PCB.                                                                                                  
+\\
+\hline
+Requerimientos  &  \tabitem La placa debe tener dos microcontroladores C8051f352. \\
+                &  \tabitem La placa debe tener 16 entradas analogicas. \\
+                &  \tabitem La placa debe tener 32 entradas digitales. \\
+                &  \tabitem La placa debe tener 2 salidas seriales.   \\                                                                                                                                                     \\
 \hline
 Descripción      & Se chequea si existen errores en el diseño utilizando el ERC (perfom design rules check) que provee el KiCad.                                                                                   \\
 \hline
@@ -174,18 +181,24 @@ Pre-condiciones  & \tabitem Componentes colocados y ruteados. \\
 Post-condiciones & El resultado de ERC debe ser cero.                     
 \\
 \hline
-Resultados       & No encontramos errores de diseño en el PCB.                                                                                       
+Resultados       & No encontramos errores de diseño en el PCB.           \\                                                                           
 \end{tabular}
 \end{table}
 
 \begin{table}[h]
 \caption{Test de sistema 2}
-\label{tab:testsistema2}
+\label{it4:tab:testsistema2}
 \begin{tabular}{p{2cm} p{9cm}}
 \multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}}                                                                                                                                                                                                                                                   \\
 Prueba \#        & 2                                                                                                                                                                                                                                                                                                                   \\
 \hline
-Nombre           & Correcta impresión de la placa.                                                                                                                                                                                                                                                          \\
+Nombre           & Correcta impresión de la placa.   \\
+
+\hline
+Requerimientos &    \tabitem La placa debe tener dos microcontroladores C8051f352. \\
+               &    \tabitem La placa debe tener 16 entradas analogicas.\\
+               &    \tabitem La placa debe tener 32 entradas digitales. \\
+               &    \tabitem La placa debe tener 2 salidas seriales.    \\                                                                                                                                                                                                                                                     \\
 \hline
 Descripción      & Corroboramos que todas las pistas y que todos los drills se hayan impreso. Luego con un multimetro seteado en continuidad comprobamos que no existan cortocircuitos entre pistas y masa o entre pads y masa.                                                                                  \\
 \hline
@@ -196,19 +209,25 @@ Pre-condiciones  & \tabitem Placa impresa. \\
 Post-condiciones & La placa debe tener las mismas pistas que aparecen en el diseño de PCB, y al medir con el tester nunca debe dar continuidad entre masa y pistas, o entre pads y pistas.  
 \\ 
 \hline
-Resultados       & Todas las pistas estaban de acuerdo con el PCB. Al medir la continuidad de las pistas no se encontraron a cortocircuitos.                                                                                                                                            
+Resultados       & Todas las pistas estaban de acuerdo con el PCB. Al medir la continuidad de las pistas no se encontraron a cortocircuitos.       \\                                                                                                                                     
 \end{tabular}
 \end{table}
 
 \begin{table}[h]
 \centering
 \caption{Test de sistema 3}
-\label{tab:testsistema3}
+\label{it4:tab:testsistema3}
 \begin{tabular}{p{2cm} p{9cm}}
 \multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}}                                                                                                                                                                                                                                                   \\
 Prueba \#        & 3                                                                                                                                                                                                                                                                                                                   \\
 \hline
-Nombre           & Correcta soldadura de Componentes                                                                                                                                                                                                                                                         \\
+Nombre           & Correcta soldadura de Componentes.    \\    
+
+\hline
+Requerimientos &    \tabitem La placa debe tener dos microcontroladores C8051f352. \\
+               &    \tabitem La placa debe tener 16 entradas analogicas. \\
+               &    \tabitem La placa debe tener 32 entradas digitales. \\
+               &    \tabitem La placa debe tener 2 salidas seriales.      \\                                                                                                                                                                                                                                                     \\
 \hline
 Descripción      & Se utiliza el multimetro seteado en continuidad para poder chequear si existen cortocircuitos y para saber si todos los componentes estan bien interconectados.                                                                                  \\
 \hline
@@ -221,19 +240,22 @@ Pre-condiciones  & \tabitem Placa impresa. \\
 Post-condiciones &  No deben encontrarse cortocircuitos, y deben comprobarse la continuidad de las interconexiones de componentes.
 \\ 
 \hline
-Resultados       & Encontramos cortocircuitos luego de soldar los componentes, se solucionaron desoldando y volviendo a soldar los componentes.                                                                                                                                                    
+Resultados       & Encontramos cortocircuitos luego de soldar los componentes, se solucionaron desoldando y volviendo a soldar los componentes.       \\                                                                                                                                             
 \end{tabular}
 \end{table}
 
 \begin{table}[h]
 \centering
 \caption{Test de sistema 4}
-\label{tab:testsistema4}
+\label{it4:tab:testsistema4}
 \begin{tabular}{p{2cm} p{9cm}}
 \multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}}                                                                                                                                                                                                                                                   \\
 Prueba \#        & 4                                                                                                                                                                                                                                                                                                                   \\
 \hline
-Nombre           & Correcta Comunicación Con IDE SiliconLabs.                                                                                                                                                                                                                                                         \\
+Nombre           & Correcta Comunicación Con IDE SiliconLabs.                  \\                                                            
+
+\hline
+Requerimientos &  \tabitem Se debería poder conectar el debugger del microcontrolador a la placa para poder programarlo. \\                                                                                                                                                                       
 \hline
 Descripción      & Se utilizo el cable USB con el debugger de SiliconLabs para conectar la placa a la PC.                                                                                  \\
 \hline
@@ -246,19 +268,21 @@ Pre-condiciones  & \tabitem Placa impresa. \\
 Post-condiciones &  Al abrir la IDE y apretar el botón de "Connect" el programa debe reconocer el tipo de microcontrolador al que esta conectado.
 \\ 
 \hline
-Resultados       &  Conectamos la placa a la PC y en la IDE apretamos el botón de conectar, con lo que nos reconoció que el micro que se había conectado fue un C8051f352.                                                                                                                                                    
+Resultados       &  Conectamos la placa a la PC y en la IDE apretamos el botón de conectar, con lo que nos reconoció que el micro que se había conectado fue un C8051f352.     \\                                                                                                                                               
 \end{tabular}
 \end{table}
 
 \begin{table}[h]
 \centering
 \caption{Test de sistema 5}
-\label{tab:testsistema5}
+\label{it4:tab:testsistema5}
 \begin{tabular}{p{2cm} p{9cm}}
 \multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}}                                                                                                                                                                                                                                                   \\
 Prueba \#        & 4                                                                                                                                                                                                                                                                                                                   \\
 \hline
-Nombre           & Correcta programacion del microcontrolador.                                                                                                                                                                                                                                                         \\
+Nombre           & Correcta programacion del microcontrolador.         \\                                                                                                                                                                                                 \hline
+Requerimientos &  \tabitem Se debería poder conectar el debugger del microcontrolador a la placa para poder programarlo. \\            
+                                   
 \hline
 Descripción      & Se utilizo el cable USB con el debugger de SiliconLabs para conectar la placa a la PC y descargarle un programa .hex al microcontrolador.                                                                                  \\
 \hline
@@ -272,19 +296,24 @@ Pre-condiciones  & \tabitem Placa impresa. \\
 Post-condiciones &  Al abrir la IDE y apretar el botón de "Connect" el programa debe reconocer el tipo de microcontrolador al que esta conectado y luego a traves de la misma IDE o del "Flash Programing Utilitys" cargarle un proframa .hex al c8051f352.
 \\ 
 \hline
-Resultados       &  Conectamos la placa a la PC y desde el "Flash Programing Utilitys" se pudo cargar un programa a los microcontroladores soldados en la placa.                                                                                                                  
+Resultados       &  Conectamos la placa a la PC y desde el "Flash Programing Utilitys" se pudo cargar un programa a los microcontroladores soldados en la placa.                \                                                                                                  
 \end{tabular}
 \end{table}
 
 \begin{table}[h]
 \centering
 \caption{Test de sistema 6}
-\label{tab:testsistema6}
+\label{it4:tab:testsistema6}
 \begin{tabular}{p{2cm} p{9cm}}
 \multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}}                                                                                                                                                                                                                                                   \\
 Prueba \#        & 4                                                                                                                                                                                                                                                                                                                   \\
 \hline
-Nombre           & Correcta funcionamiento de las entradas analogicas y salidas digitales.                                                                                                                                                                                                                                                         \\
+Nombre           & Correcta funcionamiento de las entradas analogicas y salidas digitales.                      \\                      
+
+\hline
+Requerimientos &    \tabitem La placa debe tener dos microcontroladores C8051f352. \\
+               &    \tabitem La placa debe tener 32 entradas digitales. \\
+               &    \tabitem La placa debe tener 16 entradas analogicas.                                                                                                                                                                                                             \\
 \hline
 Descripción      & Cargamos un programa a los microcontroladores con el que medimos una entrada analogica proveniente de una fuente (prestada en el Pañol) y utilizamos el ADC para poder transformar esa señal analogica en digital, luego en una de las salidas/entradas digitales se conecto un led, el cual titilaria con mayor frecuencia a medida que se aumenta el voltage que entrega la fuente utilizada.                                                                                  \\
 \hline
@@ -302,7 +331,7 @@ Pre-condiciones  & \tabitem Placa impresa. \\
 Post-condiciones &  Al apregar el boton de "Go" en el "Flash Programing Utilitys" para que arranque a funcionar el programa cargado en el microcontrolador debe titilar el led variando su frecuencia en directa relacion con la variacion de la tension de la fuente conectada a las entradas analogicas.
 \\ 
 \hline
-Resultados       &  Cargamos el programa en el microcontrolador, y con todas las pre-condiciones cumplidas hicimos correr el programa. El led efectivamente vario su frecuencia de prendido y apagado a medida que aumentabamos o disminuiamos la tension que entregaba la fuente externa.                                                                                                             
+Resultados       &  Cargamos el programa en el microcontrolador, y con todas las pre-condiciones cumplidas hicimos correr el programa. El led efectivamente vario su frecuencia de prendido y apagado a medida que aumentabamos o disminuiamos la tension que entregaba la fuente externa. \\                                                                                                            
 \end{tabular}
 \end{table}
 
@@ -312,8 +341,22 @@ Resultados       &  Cargamos el programa en el microcontrolador, y con todas las
 \section{Resultados} % (fold)
 \label{sec:resultados}
 
-Cumplimos con los requerimientos planteados para esta iteracion. Obtivimos una placa de desarrollo que dobla en recursos a la placa de la iteración anterior. La placa quedo totalmente funcional.
+Cumplimos con los requerimientos planteados para esta iteracion:
+
+\begin{itemize}
+  \item La placa debe tener dos microcontroladores C8051f352.
+  \item La placa debe tener 16 entradas analogicas.
+  \item La placa debe tener 32 entradas digitales.
+  \item La placa debe tener 2 salidas seriales. 
+  \item Se debería poder conectar el debugger del microcontrolador a la placa para poder programarlo.
+\end{itemize}
+
+
+ Obtivimos una placa de desarrollo que dobla en recursos a la placa de la iteración anterior. La placa quedó totalmente funcional.
 En la figura \ref{fig:} y \ref{fig:} podemos ver como quedo la placa tanto de la capa superior como de la inferior. Lo que observamos es que todos los pines y modulos que se pueden utilizar para conectar alguna interfaz/cable quedaron en la capa frontal, por una cuestion de comodidad al momento de utilizarla.
+
+"AGREGAAAAAAAAAAAAAAAAAR LAS FOTTTOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOS"
+
 % section resultados (end)
 
 % chapter iteracion_4 (end)
