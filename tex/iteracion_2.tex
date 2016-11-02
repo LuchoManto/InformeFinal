@@ -229,12 +229,12 @@ Las pruebas de sistema se realizaron utilizando la placa de desarrollo mencionad
 \caption{Test de sistema 1}
 \label{it2:tab:testsistema1}
 \begin{tabular}{p{2cm} p{9cm}}
-\multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}}                                                                                                                                                                                                                                                   \\
-Prueba \#        & 1                                                                                                                                                                                                                                                                                                                   \\
+\multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}} \\
+Prueba \#        & 1 \\
 \hline
 Nombre           & Comportamiento esperado del conversor en modo canal unico   \\
 \hline
-Requerimiento & Se debería poder recibir datos de sensores analógicos en modo canal unico
+Requerimiento & Se debería poder recibir datos de sensores analógicos en modo canal unico \\
 \hline
 Descripcion      & Se conecta un generador de tension en uno de los canales del conversor y se mide en ese canal en modo canal unico, y de esta forma comprobar no tan solo que se este midiendo, sino ademas que estas mediciones esten calibradas para este modo.                                                                                   \\
 \hline
@@ -242,7 +242,7 @@ Pre-condiciones  & \tabitem Sistema configurado con un pin en modo canal unico \
                  & \tabitem Generador de tension conectado al pin configurado  \\
                  & \tabitem Computadora conectada al sistema mediante cable serial RS-232 \\
                  & \tabitem Lector de canal serial abierto en la computadora  \\
-                 & \tabitem Sistema midiendo en modo de conversiones continuas\\
+                 & \tabitem Sistema midiendo en modo de conversiones continuas \\
 \hline
 
 Post-condiciones & Los datos de las conversiones que aparezcan en el programa lector de interfaz serial en la computadora deberian corresponderse con los valores de tension provenientes del generador                     
@@ -252,7 +252,7 @@ Secuencia  & \tabitem Establecimos una tension de 1,5 voltios en el generador \\
            & \tabitem La medicion resultante en el lector de canal serial era la misma que la del generador  \\
            & \tabitem Variamos la tension en el generador y la variacion se correspondia en la lectura \\
            & \tabitem Cambiamos a tensiones negativas y verificamos que la lectura daba 0  \\
-           & \tabitem Cambiamos a tensiones por sobre la tension de referencia (por defecto 2,5V), y verificamos que el sensor no da valores superiores a 2,5V\\
+           & \tabitem Cambiamos a tensiones por sobre la tension de referencia (por defecto 2,5V), y verificamos que el sensor no da valores superiores a 2,5V \\
 \hline
 Resultados       & Las mediciones dieron resultados coherentes, con algunas variaciones esperadas debido al ruido presente en el ambiente.
 \end{tabular}
@@ -262,12 +262,12 @@ Resultados       & Las mediciones dieron resultados coherentes, con algunas vari
 \caption{Test de sistema 2}
 \label{it2:tab:testsistema2}
 \begin{tabular}{p{2cm} p{9cm}}
-\multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}}                                                                                                                                                                                                                                                   \\
-Prueba \#        & 2                                                                                                                                                                                                                                                                                                                   \\
+\multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}} \\
+Prueba \#        & 2 \\
 \hline
-Nombre           & Comportamiento esperado del conversor en modo diferencial                                                                                                                                                                                                                                                          \\
+Nombre           & Comportamiento esperado del conversor en modo diferencial \\
 \hline
-Requerimiento & Se debería poder recibir datos de sensores analógicos en modo diferencial
+Requerimiento & Se debería poder recibir datos de sensores analógicos en modo diferencial \\
 \hline
 Descripcion      & Se conecta un generador de tension en uno de los canales del conversor y se mide en ese canal en modo diferencial, y de esta forma comprobar no tan solo que se este midiendo, sino ademas que estas mediciones esten calibradas para este modo. Ademas, se comprueba el funcionamiento de las mediciones en modo diferencial, intentando medir tensiones negativas.                                                                                  \\
 \hline
@@ -288,7 +288,6 @@ Secuencia  & \tabitem Establecimos una tension de 1 voltio en el generador \\
            & \tabitem Cambiamos a tensiones negativas y la lectura no era la esperada pero era consistente. Cuando en el generador habia un 0, leia 1.25V, a medida que la tension se hacia mas negativa, decrementaba aproximadamente al mismo paso que el generador, hasta que el generador llegaba a -1.5V, donde leia un 0  \\
 \hline
 Resultados       & Las mediciones no dieron los resultados esperados, aunque en si los resultados eran consistentes: los cambios en el generador se reproducian en la medicion, aunque los datos no eran los mismos. Esto se debe a que cuando se mide en modo diferencial, el cero pasa a ser la tension de referencia dividida en dos, para representar los valores negativos. La logica del programa no tenia en cuenta esto, y media las tensiones de forma desfasada.
-
 \end{tabular}
 \end{table}
 
@@ -297,12 +296,12 @@ Resultados       & Las mediciones no dieron los resultados esperados, aunque en 
 \caption{Test de sistema 3}
 \label{it2:tab:testsistema3}
 \begin{tabular}{p{2cm} p{9cm}}
-\multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}}                                                                                                                                                                                                                                                   \\
-Prueba \#        & 3                                                                                                                                                                                                                                                                                                                   \\
+\multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}} \\
+Prueba \#        & 3 \\
 \hline
-Nombre           & Comportamiento esperado del contador de eventos                     
+Nombre           & Comportamiento esperado del contador de eventos \\
 \hline
-Requerimiento & Se debería poder contar eventos con los contadores o timers del microcontrolador.
+Requerimiento & Se debería poder contar eventos con los contadores o timers del microcontrolador. \\
 \hline
 Descripcion      & Se conecta un generador de onda cuadrada en una entrada GPIO que pueda servir como entrada a algun contador de eventos. Si el contador esta activo, se deberia poder ver que el numero de cuentas incrementa al ritmo de la frecuencia configurada en el generador \\
 \hline

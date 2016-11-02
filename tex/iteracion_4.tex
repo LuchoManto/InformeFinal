@@ -161,27 +161,24 @@ En la tabla de pruebas se veran repetidos los mismos tests que en la iteracion a
 \caption{Test de sistema 1}
 \label{it4:tab:testsistema1}
 \begin{tabular}{p{2cm} p{9cm}}
-\multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}}                                                                                                                                                                                                                                                   \\
-Prueba \#        & 1                                                                                                                                                                                                                                                                                                                   \\
+\multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}} \\
+Prueba \#        & 1 \\
 \hline
-Nombre           & Correcto Diseño de PCB.                                                                                                  
-\\
+Nombre           & Correcto Diseño de PCB. \\
 \hline
 Requerimientos  &  \tabitem La placa debe tener dos microcontroladores C8051f352. \\
                 &  \tabitem La placa debe tener 16 entradas analogicas. \\
                 &  \tabitem La placa debe tener 32 entradas digitales. \\
-                &  \tabitem La placa debe tener 2 salidas seriales.   \\                                                                                                                                                     \\
+                &  \tabitem La placa debe tener 2 salidas seriales.   \\
 \hline
-Descripción      & Se chequea si existen errores en el diseño utilizando el ERC (perfom design rules check) que provee el KiCad.                                                                                   \\
+Descripción      & Se chequea si existen errores en el diseño utilizando el ERC (perfom design rules check) que provee KiCad. \\
 \hline
 Pre-condiciones  & \tabitem Componentes colocados y ruteados. \\
                  & \tabitem Pads numerados con sus etiquetas.  \\
 \hline
-
-Post-condiciones & El resultado de ERC debe ser cero.                     
-\\
+Post-condiciones & El resultado de ERC debe ser cero. \\
 \hline
-Resultados       & No encontramos errores de diseño en el PCB.           \\                                                                           
+Resultados       & No encontramos errores de diseño en el PCB. \\                                                                           
 \end{tabular}
 \end{table}
 
@@ -189,8 +186,8 @@ Resultados       & No encontramos errores de diseño en el PCB.           \\
 \caption{Test de sistema 2}
 \label{it4:tab:testsistema2}
 \begin{tabular}{p{2cm} p{9cm}}
-\multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}}                                                                                                                                                                                                                                                   \\
-Prueba \#        & 2                                                                                                                                                                                                                                                                                                                   \\
+\multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}} \\
+Prueba \#        & 2 \\
 \hline
 Nombre           & Correcta impresión de la placa.   \\
 
@@ -198,18 +195,16 @@ Nombre           & Correcta impresión de la placa.   \\
 Requerimientos &    \tabitem La placa debe tener dos microcontroladores C8051f352. \\
                &    \tabitem La placa debe tener 16 entradas analogicas.\\
                &    \tabitem La placa debe tener 32 entradas digitales. \\
-               &    \tabitem La placa debe tener 2 salidas seriales.    \\                                                                                                                                                                                                                                                     \\
+               &    \tabitem La placa debe tener 2 salidas seriales.    \\
 \hline
-Descripción      & Corroboramos que todas las pistas y que todos los drills se hayan impreso. Luego con un multimetro seteado en continuidad comprobamos que no existan cortocircuitos entre pistas y masa o entre pads y masa.                                                                                  \\
+Descripción      & Corroboramos que todas las pistas y que todos los drills se hayan impreso. Luego con un multimetro seteado en continuidad comprobamos que no existan cortocircuitos entre pistas y masa o entre pads y masa. \\
 \hline
 Pre-condiciones  & \tabitem Placa impresa. \\
-                 & \tabitem Multímetro seteado en continuidad.\\
+                 & \tabitem Multímetro seteado en continuidad. \\
 \hline
-
-Post-condiciones & La placa debe tener las mismas pistas que aparecen en el diseño de PCB, y al medir con el tester nunca debe dar continuidad entre masa y pistas, o entre pads y pistas.  
-\\ 
+Post-condiciones & La placa debe tener las mismas pistas que aparecen en el diseño de PCB, y al medir con el tester nunca debe dar continuidad entre masa y pistas, o entre pads y pistas. \\ 
 \hline
-Resultados       & Todas las pistas estaban de acuerdo con el PCB. Al medir la continuidad de las pistas no se encontraron a cortocircuitos.       \\                                                                                                                                     
+Resultados       & Todas las pistas estaban de acuerdo con el PCB. Al medir la continuidad de las pistas no se encontraron a cortocircuitos. \\                                                                                                                                     
 \end{tabular}
 \end{table}
 
@@ -218,29 +213,26 @@ Resultados       & Todas las pistas estaban de acuerdo con el PCB. Al medir la c
 \caption{Test de sistema 3}
 \label{it4:tab:testsistema3}
 \begin{tabular}{p{2cm} p{9cm}}
-\multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}}                                                                                                                                                                                                                                                   \\
-Prueba \#        & 3                                                                                                                                                                                                                                                                                                                   \\
+\multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}} \\
+Prueba \#        & 3 \\
 \hline
-Nombre           & Correcta soldadura de Componentes.    \\    
-
+Nombre           & Correcta soldadura de Componentes. \\
 \hline
 Requerimientos &    \tabitem La placa debe tener dos microcontroladores C8051f352. \\
                &    \tabitem La placa debe tener 16 entradas analogicas. \\
                &    \tabitem La placa debe tener 32 entradas digitales. \\
-               &    \tabitem La placa debe tener 2 salidas seriales.      \\                                                                                                                                                                                                                                                     \\
+               &    \tabitem La placa debe tener 2 salidas seriales.      \\
 \hline
-Descripción      & Se utiliza el multimetro seteado en continuidad para poder chequear si existen cortocircuitos y para saber si todos los componentes estan bien interconectados.                                                                                  \\
+Descripción      & Se utiliza el multimetro seteado en continuidad para poder chequear si existen cortocircuitos y para saber si todos los componentes estan bien interconectados. \\
 \hline
 Pre-condiciones  & \tabitem Placa impresa. \\
                  & \tabitem Pistas impresas correctamente. \\
                  & \tabitem Componentes soldados. \\
                  & \tabitem Multimetro seteado en continuidad. \\
 \hline
-
-Post-condiciones &  No deben encontrarse cortocircuitos, y deben comprobarse la continuidad de las interconexiones de componentes.
-\\ 
+Post-condiciones &  No deben encontrarse cortocircuitos, y deben comprobarse la continuidad de las interconexiones de componentes. \\ 
 \hline
-Resultados       & Encontramos cortocircuitos luego de soldar los componentes, se solucionaron desoldando y volviendo a soldar los componentes.       \\                                                                                                                                             
+Resultados       & Encontramos cortocircuitos luego de soldar los componentes, se solucionaron desoldando y volviendo a soldar los componentes. \\                                                                                                                                             
 \end{tabular}
 \end{table}
 
@@ -249,24 +241,21 @@ Resultados       & Encontramos cortocircuitos luego de soldar los componentes, s
 \caption{Test de sistema 4}
 \label{it4:tab:testsistema4}
 \begin{tabular}{p{2cm} p{9cm}}
-\multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}}                                                                                                                                                                                                                                                   \\
-Prueba \#        & 4                                                                                                                                                                                                                                                                                                                   \\
+\multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}} \\
+Prueba \#        & 4 \\
 \hline
-Nombre           & Correcta Comunicación Con IDE SiliconLabs.                  \\                                                            
-
+Nombre           & Correcta Comunicación Con IDE SiliconLabs. \\
 \hline
-Requerimientos &  \tabitem Se debería poder conectar el debugger del microcontrolador a la placa para poder programarlo. \\                                                                                                                                                                       
+Requerimientos &  \tabitem Se debería poder conectar el debugger del microcontrolador a la placa para poder programarlo. \\
 \hline
-Descripción      & Se utilizo el cable USB con el debugger de SiliconLabs para conectar la placa a la PC.                                                                                  \\
+Descripción      & Se utilizo el cable USB con el debugger de SiliconLabs para conectar la placa a la PC. \\
 \hline
 Pre-condiciones  & \tabitem Placa impresa. \\
                  & \tabitem Pistas impresas correctamente. \\
                  & \tabitem Componentes soldados. \\
                  & \tabitem IDE SiliconLabs instalada en la PC. \\
 \hline
-
-Post-condiciones &  Al abrir la IDE y apretar el botón de "Connect" el programa debe reconocer el tipo de microcontrolador al que esta conectado.
-\\ 
+Post-condiciones &  Al abrir la IDE y apretar el botón de "Connect" el programa debe reconocer el tipo de microcontrolador al que esta conectado. \\ 
 \hline
 Resultados       &  Conectamos la placa a la PC y en la IDE apretamos el botón de conectar, con lo que nos reconoció que el micro que se había conectado fue un C8051f352.     \\                                                                                                                                               
 \end{tabular}
@@ -277,14 +266,14 @@ Resultados       &  Conectamos la placa a la PC y en la IDE apretamos el botón 
 \caption{Test de sistema 5}
 \label{it4:tab:testsistema5}
 \begin{tabular}{p{2cm} p{9cm}}
-\multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}}                                                                                                                                                                                                                                                   \\
-Prueba \#        & 4                                                                                                                                                                                                                                                                                                                   \\
+\multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}} \\
+Prueba \#        & 4 \\
 \hline
-Nombre           & Correcta programacion del microcontrolador.         \\                                                                                                                                                                                                 \hline
-Requerimientos &  \tabitem Se debería poder conectar el debugger del microcontrolador a la placa para poder programarlo. \\            
-                                   
+Nombre           & Correcta programacion del microcontrolador. \\
 \hline
-Descripción      & Se utilizo el cable USB con el debugger de SiliconLabs para conectar la placa a la PC y descargarle un programa .hex al microcontrolador.                                                                                  \\
+Requerimientos &  \tabitem Se debería poder conectar el debugger del microcontrolador a la placa para poder programarlo. \\                                   
+\hline
+Descripción      & Se utilizo el cable USB con el debugger de SiliconLabs para conectar la placa a la PC y descargarle un programa .hex al microcontrolador. \\
 \hline
 Pre-condiciones  & \tabitem Placa impresa. \\
                  & \tabitem Pistas impresas correctamente. \\
@@ -292,11 +281,9 @@ Pre-condiciones  & \tabitem Placa impresa. \\
                  & \tabitem IDE SiliconLabs instalada en la PC. \\
                  & \tabitem IDE SiliconLabs reconociendo el C8051f352. \\
 \hline
-
-Post-condiciones &  Al abrir la IDE y apretar el botón de "Connect" el programa debe reconocer el tipo de microcontrolador al que esta conectado y luego a traves de la misma IDE o del "Flash Programing Utilitys" cargarle un proframa .hex al c8051f352.
-\\ 
+Post-condiciones &  Al abrir la IDE y apretar el botón de "Connect" el programa debe reconocer el tipo de microcontrolador al que esta conectado y luego a traves de la misma IDE o del "Flash Programing Utilitys" cargarle un proframa .hex al c8051f352. \\ 
 \hline
-Resultados       &  Conectamos la placa a la PC y desde el "Flash Programing Utilitys" se pudo cargar un programa a los microcontroladores soldados en la placa.                \                                                                                                  
+Resultados       &  Conectamos la placa a la PC y desde el "Flash Programing Utilitys" se pudo cargar un programa a los microcontroladores soldados en la placa. \\                                                                                                  
 \end{tabular}
 \end{table}
 
@@ -305,17 +292,17 @@ Resultados       &  Conectamos la placa a la PC y desde el "Flash Programing Uti
 \caption{Test de sistema 6}
 \label{it4:tab:testsistema6}
 \begin{tabular}{p{2cm} p{9cm}}
-\multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}}                                                                                                                                                                                                                                                   \\
-Prueba \#        & 4                                                                                                                                                                                                                                                                                                                   \\
+\multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}} \\
+Prueba \#        & 4 \\
 \hline
-Nombre           & Correcta funcionamiento de las entradas analogicas y salidas digitales.                      \\                      
+Nombre           & Correcta funcionamiento de las entradas analogicas y salidas digitales. \\                      
 
 \hline
 Requerimientos &    \tabitem La placa debe tener dos microcontroladores C8051f352. \\
                &    \tabitem La placa debe tener 32 entradas digitales. \\
-               &    \tabitem La placa debe tener 16 entradas analogicas.                                                                                                                                                                                                             \\
+               &    \tabitem La placa debe tener 16 entradas analogicas. \\
 \hline
-Descripción      & Cargamos un programa a los microcontroladores con el que medimos una entrada analogica proveniente de una fuente (prestada en el Pañol) y utilizamos el ADC para poder transformar esa señal analogica en digital, luego en una de las salidas/entradas digitales se conecto un led, el cual titilaria con mayor frecuencia a medida que se aumenta el voltage que entrega la fuente utilizada.                                                                                  \\
+Descripción      & Cargamos un programa a los microcontroladores con el que medimos una entrada analogica proveniente de una fuente (prestada en el Pañol) y utilizamos el ADC para poder transformar esa señal analogica en digital, luego en una de las salidas/entradas digitales se conecto un led, el cual titilaria con mayor frecuencia a medida que se aumenta el voltage que entrega la fuente utilizada. \\
 \hline
 Pre-condiciones  & \tabitem Placa impresa. \\
                  & \tabitem Pistas impresas correctamente. \\
@@ -325,11 +312,8 @@ Pre-condiciones  & \tabitem Placa impresa. \\
                  & \tabitem Programa de prueba correctamente cargado en el C8051f352. \\
                  & \tabitem Fuente de Tension externa conecectada a las entradas analogicas con referencia en masa analogica. \\
                  & \tabitem Resistencia conectada en serie con un Led a una salida digital del C8051f352. \\
-
 \hline
-
-Post-condiciones &  Al apregar el boton de "Go" en el "Flash Programing Utilitys" para que arranque a funcionar el programa cargado en el microcontrolador debe titilar el led variando su frecuencia en directa relacion con la variacion de la tension de la fuente conectada a las entradas analogicas.
-\\ 
+Post-condiciones &  Al apregar el boton de "Go" en el "Flash Programing Utilitys" para que arranque a funcionar el programa cargado en el microcontrolador debe titilar el led variando su frecuencia en directa relacion con la variacion de la tension de la fuente conectada a las entradas analogicas. \\ 
 \hline
 Resultados       &  Cargamos el programa en el microcontrolador, y con todas las pre-condiciones cumplidas hicimos correr el programa. El led efectivamente vario su frecuencia de prendido y apagado a medida que aumentabamos o disminuiamos la tension que entregaba la fuente externa. \\                                                                                                            
 \end{tabular}

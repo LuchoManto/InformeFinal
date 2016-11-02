@@ -4,21 +4,11 @@
 \section{Introduccion} % (fold)
 \label{it0:sec:introduccion}
 
-El objetivo de esta iteracion es explicar porque elegimos el orden para el desarrollo de cada iteración. Este orden proviene directamente de la dependencia que existe entre los requerimientos. En caso de tener que elegir entre requerimientos independientes entre si, optamos por el de mayor riesgo. \\
-
-Los requerimientos tienen un riesgo asociado. Este riesgo esta determinado por la dependencia existente entre los ellos. La tabla TABLA enumera los requerimientos y les asocia un riesgo estimado, calculado segun estas dependencias. El orden de las iteraciones fue dado segun esta tabla.
+Las iteraciones fueron desarrolladas siguiendo un orden particular. Este orden proviene directamente de la dependencia que existe entre los requerimientos del sistema. En caso de haber requerimientos independientes entre si, se opta por el de mayor riesgo. El riesgo de cada requerimiento esta determinado por la dependencia existente entre cada uno. La tabla TABLA enumera los requerimientos y les asocia un riesgo estimado, calculado segun estas dependencias. El orden de las iteraciones fue dado segun esta tabla.
 
 % queremos indicar el orden de las iteraciones. no necesariamente tienen cualquier orden. Las iteraciones vienen directo de los requerimientos. Los requerimientos dependen a veces unos de otros, y eso determina el orden. Cuando no dependen uno de otro, se decide cual hacer primero segun el riesgo del requerimiento. Ponele, que el sistema cuente eventos y convierta de analogico a digital es de riesgo alto porque es clave. No se puede hacer nada si no se decide primero que micro usar,, y asi y asi.
 
 % section introduccion (end)
-
-\section{Análisis de Requermientos y Riesgos} % (fold)
-\label{it0:sec:analisis_de_requermientos_y_riesgos}
-
-
-
-
-% section análisis_de_requermientos_y_riesgos (end)
 
 \section{Determinación del orden} % (fold)
 \label{it0:sec:determinacion_del_orden}
@@ -28,7 +18,7 @@ Los requerimientos tienen un riesgo asociado. Este riesgo esta determinado por l
 \subsection{Iteracion 1} % (fold)
 \label{sub:iteracion_1}
 
-Los parametros del microcontrolador son escenciales porque condicionan a todo el sistema. En la primera iteración, nos dedicamos a la investigacion de aquellos microcontroladores que mejor se ajustaban a las nececidades impuestas por los requerimientos. Conformamos una tabla para una mejor interpretación de las diferencias y ventajas entre cada uno de los micros. La decisión final se tomó a partir del análisis de dicha tabla.
+Los parametros del microcontrolador son escenciales porque condicionan a todo el sistema. En la primera iteración, nos dedicamos a la investigacion de aquellos microcontroladores que mejor se ajustaban a las nececidades impuestas por los requerimientos. Conformamos una tabla para una mejor interpretación de las diferencias y ventajas entre cada uno. La decisión final se tomó a partir del análisis de dicha tabla.
 
 % subsection iteracion_1 (end)
 
@@ -59,8 +49,8 @@ La placa de desarrollo utilizada para realizar las pruebas en la iteracion 2, si
 \subsection{Iteracion 4} % (fold)
 \label{sub:iteracion_4}
 
-En la cuarta iteracion, se continuo trabajando en el diseño y construccion de la placa de instrumentacion en PCB, dado que los resultados de las pruebas en la iteracion anterior no fueron exitosos. Se corrigieron errores tanto de diseño como en la misma construccion de la placa, hasta tener un prototipo que respondiera como era esperado.
-Se diseño ademas una segunda version de la placa de instrumentacion, donde se colocaban 2 microcontroladores en lugar de uno solo, duplicando asi la cantidad de recursos. 
+En la cuarta iteracion, se continuo trabajando en el diseño y construccion de la placa de instrumentacion en PCB, dado que los resultados de las pruebas en la iteracion anterior no fueron exitosos. Se corrigieron errores tanto de diseño como en la misma construccion de la placa, hasta tener un prototipo que respondiera como era necesario.
+Se diseño ademas una segunda version de la placa de instrumentacion, donde se colocaron 2 microcontroladores en lugar de uno solo, duplicando asi la cantidad de recursos. 
 
 % subsection iteracion_4 (end)
 
@@ -91,12 +81,13 @@ La placa de desarrollo utilizada fue una Raspberry Pi, con un sistema operativo 
 \subsection{Iteracion 7} % (fold)
 \label{sub:iteracion_7}
 
-Al final de la iteracion anterior el sistema estaba diseñado y prototipado. Esta iteracion fue dedicada entonces al desarrollo de una prueba de campo utilizando el sensor de campo electrostatico mencionado en los objetivos. 
+Al final de la iteracion anterior el sistema estaba diseñado y prototipado. Esta iteracion fue dedicada al desarrollo de una prueba de campo utilizando el sensor de campo electrostatico mencionado en los objetivos. 
 
-El objetivo principal fue comprobar todos los aspectos y funcionalidades de la placa de instrumentacion así como utilizar la placa de gestion para que el usuario pueda controlar el sistema en su totalidad.
+El objetivo principal fue comprobar todos los aspectos y funcionalidades de la placa de instrumentacion así como utilizar la placa de gestion en lugar de un ordenador para controlar el sistema.
 
 
 % subsection iteracion_7 (end)
+% section análisis_de_requermientos_y_riesgos (end)
 
 
 
