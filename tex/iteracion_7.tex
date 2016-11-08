@@ -73,38 +73,50 @@ ACA FALTARIA INCLUIR IMAGENES DE:
 
 % section experimentacion (end)
 
-\section{Implementacion de una placa de adaptacion para el sensor de campo} % (fold)
-\label{sec:implementacion_de_una_placa_de_adaptacion_para_el_sensor_de_campo}
+\section{Adaptacion de la plataforma al sensor} % (fold)
+\label{sec:adaptacion_de_la_plataforma_al_sensor}
 
-Para el debido funcionamiento y control del sensor, se planteo en los requerimientos el desarrollo de una placa con que contenga los circuitos necesarios para alimentar el motor, tratar la señal de medicion de campo, y tratar los pulsos cuadrados del fotointerruptor, de forma que la placa de instrumentacion pueda leer ya procesados los datos necesarios para medir el campo y controlar la velocidad del motor.
+\subsection{Circuito de adaptacion} % (fold)
+\label{sub:circuito_de_adaptacion}
 
+% subsection circuito_de_adaptacion (end)
 
-\subsection{Requerimientos} % (fold)
-\label{sub:requerimientos}
-
-A partir de estas pruebas sacamos las siguientes conclusiones para el circuito de adaptacion del sensor:
+Este sensor particular requiere de ciertos requerimientos para funcionar de manera correcta:
 
 \begin{itemize}
-	\item Debe poder conectarse la alimentacion y las entradas PWM del driver del motor
-	\item Debe incluir un circuito de adaptacion (rectificacion y amplificacion) de la señal del sensor
-	\item Debe incluir el circuito necesario para el funcionamiento del fotosensor.
-	\item El diseño de la placa deberia ser tal que sea acoplable y desacoplable a la placa de instrumentacion.
+  \item El motor deberia estar alimentado con una señal continua de 12 Voltios
+  \item El driver del motor deberia estar conectado a una salida de un generador de señales moduladas en ancho de pulso, con un nivel de 5 Voltios en alto y 0 Voltios en bajo.
+  \item La velocidad del motor deberia ser rapida y estable; priorizando la estabilidad a la velocidad.
+  \item La señal de campo electrostatico deberia ser rectificada y amplificada previa a ser convertida a digital
 \end{itemize}
 
-Mediante investigacion y prueba y error, se desarrollaron los circuitos necesarios para cumplir con estos requerimientos y se fusionaron en un unico circuito que luego iria impreso en una placa. Para mejorar la practicidad, la placa deberia poder ser acoplable y desacoplable a la placa de instrumentacion. Esto ultimo se tuvo en cuenta a la hora de diseñar el despliegue de componentes y las dimensiones de la placa.
+
+Ademas de los requerimientos principales mencionados, fueron propuestos los siguientes requerimientos secundarios:
+
+\begin{itemize}
+  \item El diseño de la placa deberia ser tal que sea acoplable y desacoplable a la placa de instrumentacion.
+  \item Deberia consumir lo menos posible
+\end{itemize}
+
+Para cumplir con estos requerimientos, fue necesario desarrollar funcionalidades aparte dentro del programa embebido en la plataforma de instrumentacion, ademas de un circuito de adaptacion acoplado a la misma.
 
 % subsection requerimientos (end)
-\subsection{Circuito de adaptacion para la señal de nivel de campo} % (fold)
-\label{sub:circuito_de_adaptacion_para_la_señal_de_nivel_de_campo}
+\subsubsection{Circuito de adaptacion para la señal de nivel de campo} % (fold)
+\label{ssub:circuito_de_adaptacion_para_la_señal_de_nivel_de_campo}
+
+La señal a la salida del sensor es alterna y de muy baja intensidad. El conversor analogico digital requiere de una señal rectificada y de un umbral minimo para funcionar correctamente. Para esto, se diseño un circuito de adaptacion de señal, que rectifica y amplifica la salida del sensor. Este circuito puede verse en la figura FIGURA.  
 
 aca va el operacional con el amplificador y rectificador que se pone para que vaya antes del conversor.. con imagen
 
+
+
 % subsection circuito_de_adaptacion_para_la_señal_de_nivel_de_campo (end)
 
-\subsection{Circuito de adaptacion para la señal de pulsos del fotointerruptor} % (fold)
-\label{sub:circuito_de_adaptacion_para_la_señal_de_pulsos_del_fotointerruptor}
+\subsubsection{Circuito de adaptacion para la señal de pulsos del fotointerruptor} % (fold)
+\label{ssub:circuito_de_adaptacion_para_la_señal_de_pulsos_del_fotointerruptor}
 
-La figura \ref{fig:fotointerruptorcircuitotipico} muestra el circuito que implementamos para el fotointerruptor. Es un diseño tipico utilizado en la mayoria de los casos en los que se utiliza este tipo de sensor. 
+
+En esta configuracion, el fotointerruptor genera una señal de pulsos cuadrados a medida que el motor gira. Esta señal puede usarse como entrada a un contador de eventos, y de esta manera medir la velocidad de giro del motor. La figura \ref{fig:fotointerruptorcircuitotipico} muestra el circuito implementado para este fin. 
 
 \begin{figure}[h]
   \centering
@@ -112,13 +124,12 @@ La figura \ref{fig:fotointerruptorcircuitotipico} muestra el circuito que implem
   \caption{Circuito utilizado para el fotointerruptor}\label{fig:fotointerruptorcircuitotipico}
 \end{figure}
 
-En esta disposicion, cuando el fotosensor esta iluminado, hay 5 Volts en la salida; de lo contrario 0 Volts. Esto hace que cuando el motor gira, las aspas van a tapar y destapar la entrada de luz al fotosensor generando una onda cuadrada a la salida del circuito, cuya frecuencia depende de la velocidad del motor.
-Esta señal se utiliza como entrada para el contador de eventos, luego en el programa se calcula la velocidad del motor utilizando las cuentas obtenidas sobre una base de tiempo. 
+En esta disposicion, cuando el fotosensor esta iluminado, hay 5 Volts en la salida; de lo contrario 0 Volts. Esto hace que cuando el motor gira, las aspas van a tapar y destapar la entrada de luz al fotosensor generando una onda cuadrada a la salida del circuito, cuya frecuencia depende de la velocidad del motor. Dentro del software de la plataforma de instrumentacion, se utilizo uno de los contadores de eventos disponibles para obtener las cuetnas del fotoiterruptor y medir la velocidad del motor. Con esta informacion, se modifica el ancho de pulso de la señal PWM a la entrada del driver del motor. Corrigiendo asi la velocidad, para mantenerla lo mas estable posible. 
 
 % subsection circuito_de_adaptacion_para_la_señal_de_pulsos_del_fotointerruptor (end)
 
-\subsection{Circuito de alimentacion} % (fold)
-\label{sub:circuito_de_alimentacion}
+\subsubsection{Circuito de alimentacion} % (fold)
+\label{ssub:circuito_de_alimentacion}
 
 La placa de instrumentacion esta diseñada para estar siempre encendida. Al no consumir mucho, no trae problemas de consumo o temperatura. Pero habiendo hecho esta adaptacion, era necesario tener en cuenta el consumo del motor mientras esta encendido pero sin girar. Para ahorrar consumo, propusimos agregar un control de encendido y apagado del sensor, utilizando uno de los pines GPIO del microcontrolador. \\
 
@@ -126,23 +137,22 @@ La figura PONER FIGURA DEL CIRCUITO muestra el circuito que prepara la señal de
 
 % subsection circuito_de_alimentacion (end)
 
-\subsection{Señal modulada en ancho de pulso para el driver del motor} % (fold)
-\label{sub:señal_modulada_en_ancho_de_pulso_para_el_driver_del_motor}
+\subsubsection{Señal modulada en ancho de pulso para el adaptador del motor} % (fold)
+\label{ssub:señal_modulada_en_ancho_de_pulso_para_el_adaptador_del_motor}
 
 % aca en realidad no hicimos nada porque lo unico que hay es el cable de salida del pwm que viene de la placa y se conecta de pecho al driver.. pero bueno explicar eso.. y explicar tambnein que pasamos desde el arduino que hacia todo por interrupciones al pwm de la placa que lo hace todo por HW y funciona mucho mejor. aunque no explicar como funciona el programa porque eso va despues
 
-El driver del motor funciona a base de señales moduladas en pulso. Los anchos de pulso funcionan como codigos que representan distintos modos para el driver. El manual del driver especifica los distintos anchos de pulso que lo configuran de distintas maneras. Para guiarse en el proceso de configuracion, el driver suena con distintos ``beeps'' de distintos tonos que indican distintas cosas.
+El motor dentro de la estructura que conforma el motor tiene un modulo adaptador programable que funciona como interfaz, haciendo que una señal modulada en ancho de pulso se convierta en la velocidad de giro del motor, asi como tambien en distintas configuraciones. Los distintos anchos de pulso son codigos que representan distintos modos para el driver. En el manual, especifica las distintas configuraciones disponibles y como establecerlas utilizando distintas señales moduladas en ancho de pulso. Tanto en el proceso de configuracion como en el funcionamiento normal, el driver emite sonidos en distintos tonos que dan informacion sobre el estado en cada momento.
 
-En nuestro caso, necesitabamos arrancar el motor y hacerlo a andar a una unica velocidad. Lo cual es uno de los modos mas simples. De igual manera, era necesario una serie de señales sucesivas con distintos anchos de pulso para arrancar el motor. Estas señales las hicimos utilizando un modulo del microcontrolador denominado PCA.
-
-
-
+Para una respuesta estable del sensor, era importante que las aspas giren a una velocidad alta y constante. Alrededor de los 4000 RPM, priorizando la estabilidad a la velocidad. Dentro del programa de la plataforma de instrumentacion, existen rutinas que establecen el driver automaticamente en el modo requerido por nuestro sistema. Estas rutinas utilizan un modulo del microcontrolador denominado PCA, que incluye, en uno de sus modos, un generador de señal modulada en pulsos. Cuando el motor esta en funcionamiento, el mismo programa se encarga de estabilizar su velocidad con las funciones descritas en la seccion \ref{sec:software_de_adaptacion}
 
 
 % subsection circuito_de_adaptacion_para_la_señal_modulada_en_ancho_de_pulso_para_el_driver_del_motor (end)
 
-\subsection{Circuito final} % (fold)
-\label{sub:circuito_final}
+\subsubsection{Circuito final} % (fold)
+\label{ssub:circuito_final}
+
+En las secciones anteriores, describimos por separado cada una de las partes del circuito de adaptacion para el sensor de campo. La figura FIGURA muestra el despliegue de componentes del circuito final. Este diseño se imprimio en un PCB para acoplar a la plataforma de instrumentacion. El circuito impreso y acoplado se muestra en la figura FIGURA.
 
 
 % subsection circuito_final (end)
@@ -150,24 +160,49 @@ En nuestro caso, necesitabamos arrancar el motor y hacerlo a andar a una unica v
 % section implementacion_de_una_placa_de_adaptacion_para_el_sensor_de_campo (end)
 
 
-\section{Funcionalidades desarrolladas dentro del software de la placa de instrumentacion para trabajar junto con el sensor} % (fold)
-\label{sec:funcionalidades_desarrolladas_dentro_del_software_de_la_placa_de_instrumentacion_para_trabajar_junto_con_el_sensor}
+\subsection{Software de adaptacion} % (fold)
+\label{sec:software_de_adaptacion}
 
-Al programa embebido en el microcontrolador, le agregamos funcionalidades especificas para trabajar con este sensor. Realizamos un modulo aparte llamado sensor, cuyas funciones estan desarrolladas especificamente para este sensor y no otro. Estas funciones incluyen:
+
+El circuito de adaptacion, prepara las señales de entrada y salida necesarias para el funcionamiento correcto del sensor. Dentro de la placa de instrumentacion, desarrollamos funcionalidades anexas al software principal para trabajar estas señales.
+Realizamos un modulo aparte llamado ``sensor_CE'', cuyas funciones estan desarrolladas de manera especifica para este sensor. Estas funciones incluyen:
 
 \begin{itemize}
 	\item Dar arranque y parada al motor
-	\item Establecer una velocidad al motor
 	\item Controlar la velocidad del motor.
 \end{itemize}
 
-La medicion en si de los datos del sensor no esta como funcion especifica del mismo porque ya se cubre con las funciones ya hechas en el modulo del conversor.
+La medicion de campo no es parte del software de adaptacion, dado que se realiza utilizando funciones del modulo ``conversor''. La señal proveniente del circuito de adaptacion que corresponde a la telemetria proveniente del sensor, se conecta a uno de los pines de entrada del conversor analogico-digital. \\
+
+La figura \ref{fig:diagramabloquessensor} muestra el diagrama de bloques de la adaptacion del software a la plataforma de instrumentacion.
 
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.80\textwidth, height = 7cm]{diagramabloquessensor}
   \caption{Diagrama de bloques fisicos del sistema de adaptacion del sensor}\label{fig:diagramabloquessensor}
 \end{figure}
+
+\subsubsection{Arranque y parada} % (fold)
+\label{ssub:arranque_y_parada}
+
+El motor esta controlado por un driver PWM que traduce señales moduladas en ancho de pulso en la corriente trifasica que da giro al motor. Para dar arranque al motor, es necesario seguir una serie de pasos que dependen del modo configurado en el driver. Para dar fin al giro del motor, simplemente hay que apagar la señal PWM. \\
+
+Para este caso particular, es necesario utulizar un unico modo de configuracion, ya que se necesita que el motor gire a una unica velocidad, lo mas estable posible. El modo de configuracion esta establecido aunque el driver esta apagado. En caso de necesitar reconfigurarlo, existen funciones dentro del software de adaptacion que lo permiten. \\
+
+Si el driver esta configurado correctamente y esta alimentado a 12 Voltios, es necesario activar la secuencia de arranque para que comience a girar. Esta secuencia de arranque consiste en 3 señales de distintos anchos de pulso separadas por intervalos de un segundo. Luego de esta secuencia, se establece el ancho de pulso que da la velocidad estable al motor, configurada en este caso para 4000 RPM. \\
+
+Una vez que el motor alcanzo su velocidad estable, se activa el control de velocidad, para evitar que se desestabilice. 
+
+% subsubsection arranque_y_parada (end)
+
+\subsubsection{Control de velocidad} % (fold)
+\label{ssub:control_de_velocidad}
+
+La velocidad de giro del motor deberia ser rapida y constante para un mejor funcionamiento del motor, priorizando estabilidad a velocidad. Para lograr esto, utilizamos el fotointerruptor acoplado al sensor como generador de pulsos cuadrados. Estos pulsos se usan como entrada a uno de los contadores de eventos de la plataforma de instrumentacion. Con el valor de esta cuenta, es posible calcular la velocidad del motor en tiempo real, con una precision de unos 30 milisegundos por medicion. \\
+
+La estabilidad en en la velocidad de giro del motor se alcanzo mediante un control basico de velocidad, hecho por software. Estableciendo una base de tiempo con uno de los timer del microcontrolador, se cuenta la cantidad de eventos sobre esa base de tiempo, la cantidad de cuentas entonces, da la velocidad. Una velocidad ``estable'' esta establecida en una variable fija, y se corresponde a una cantidad fija de eventos en la misma base de tiempo. Comparando la cantidad de eventos medidos sobre la base de tiempo con la cantidad de eventos que corresponden a la velocidad estable, se sabe si el motor esta girando demasiado rapido, o demasiado lento. Con esta informacion, se ajusta la velocidad del motor para acelerarlo o desacelerarlo, modificando el ancho de pulso del modulo PCA conectado al driver PWM del motor. Una descripcion grafica de este proceso se ilustra en la figura \ref{diagramaactividadescontrolvelocidad}
+
+% subsubsection control_de_velocidad (end)
 
 Y DE ACTIVIDAD PARA BER LA SUCESION DE COSAS QUE OCURREN CUANDO SE:
 -PRENDE EL MOTOR
