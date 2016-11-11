@@ -6,7 +6,9 @@
 
 % fue cuando empezamos a tirar fruta. habiendo elegido el microcontrolador empezamos a probar todas las funcionalidades: El adc, los contadores de eventos, el modulo serial. Despues arrancamos a diseñar el primer prototipo. Consideramos que segun los requerimientos tenia que se un sistema que ofrezca algun tipo de interfaz para que un usuario interactue con el, para que pueda configurarle los parametros segun lo que se quiere lograr.
 
-En esta iteración realizamos el primer prototipo de programa a embeber en el microcontrolador para cumplir con los requerimientos planteados. Los primeros pasos incluyeron programas de prueba para verificar el funcionamiento de los distintos modulos del C8051: El conversor analógico-digital, la ganancia programable, los contadores y el módulo serial. 
+Los requerimientos de mayor riesgo, son calificados de esta manera porque, de no poder cumplirse, logran que la plataforma sea obsoleta con respecto a sus objetivos principales. La manera de verificar que estos requerimientos son posibles de cumplir, es seleccionar un microcontrolador y luego desarrollar un programa de prueba que compruebe las distintas funcionalidades ligadas a dichos requerimientos. La iteracion anterior fue dedicada a dicha seleccion. En la actual iteracion, verificamos la seleccion mediante un programa basico de prueba.
+
+El objetivo principal de esta iteracion, es conformar un primer prototipo de software. Este prototipo no debe necesariamente cumplir con todos los requerimientos, pero si debe verificar el funcionamiento de los modulos del C8051F352 ligados a aquellos requerimientos de mayor riesgo: El conversor analógico-digital; la ganancia programable; los contadores; y el módulo serial.
 
 % section introduccion (end)
 
@@ -16,7 +18,7 @@ En esta iteración realizamos el primer prototipo de programa a embeber en el mi
 Teniendo en cuenta los requerimientos principiales y el microcontrolador elegido, definimmos los siguientes requerimientos:
 
 \begin{itemize}
-\item Se debería poder utilizar el conversor ADC del microcontrolador para transformar señales analogicas de fuentes externas a datos digitales, tanto en modo único como diferencial.
+\item Se debería poder utilizar el conversor ADC del microcontrolador para transformar señales analogicas de fuentes externas a datos digitales, tanto en modo canal único como canal diferencial.
 \item Se debería poder utilizar los contadores del microcontrolador para contar eventos de fuentes externas.
 \item Se debería poder utilizar el modulo serial UART y SMBus del microcontrolador para enviar datos a otra placa o microprocesador.
 \item Para cada canal del conversor:
@@ -39,17 +41,15 @@ Teniendo en cuenta los requerimientos principiales y el microcontrolador elegido
 \section{Desarrollo} % (fold)
 \label{it2:sec:desarrollo}
 
-En esta sección elaboramos el proceso de desarrollo que llevamos a cabo para construir el programa. Es necesario tener en cuenta que fueron necesarias dos iteraciones para llegar al prototipo final. En esta primera iteracion implementamos aquellos aspectos del programa que se relacionaban directamente con los requerimientos de mayor riesgo. La segunda iteracion de software, que fue en la que se llego al programa final de la placa de adquisicion, se encuentra en el capitulo \ref{cha:iteracion_5}
+El objetivo principal de esta iteracion era implementar aquellos aspectos del software de la plataforma que se relacionaban directamente con los requerimientos de mayor riesgo. El software esta descrito mediante diagramas y modelos del patron de diseño SysML. Es importante destacar que el desarrollo del software no fue realizado con uso de este patron de diseño, sino que se utiliza meramente como herramienta para una mejor descripcion.
 
 \subsection{Diseño y modelos estaticos} % (fold)
 \label{it2:sub:diseno_y_modelos_estaticos}
 
-Para poder describir el programa de manera grafica, utilizamos modelos del patron de diseño SysML 1.1. Aunque no usamos este patron de diseño para el programa, lo utilizamos en este informe para describirlo de una manera formal.
-
 \subsubsection{Modelos estaticos} % (fold)
 \label{it2:subsub:modelos_estaticos}
 
-Como primera instancia, realizamos un diagrama de caso de uso para tener una idea de lo que se quiere lograr con el programa. Es necesario tener en cuenta que por las caracteristicas del microcontrolador, existen ciertas limitaciones que limitan el software. Estas limitaciones estan listadas en la seccion \ref{it2:sub:seleccion}.
+El diagrama de caso de uso de la figura \ref{fig:casouso1}, establece de manera basica aquello que se quiere lograr con el programa embebido en la plataforma. En cada caso de uso, pueden visualizarse las distintas acciones que el programa deberia realizar. Como el programa esta desarrollado en lenguaje C, no es posible conformar un diagrama de clases. En lugar de esto, se separo en distintos modulos que agrupan funciones de caracteristicas similares. Esto ultimo es una posibilidad que ofrece SysML. Estos modulos estan ilustrados como bloques en la figura \ref{fig:bloquesprimeraiteracionsoftware}. Cada bloque correponde a un modulo distinto dentro del programa. Se pueden ver los nombres de cada funcion y el tipo de retorno en cada uno de ellos. Con esto ultimo, damos una idea de las acciones realizadas por las funciones de cada modulo. Una descripcion mas detallada esta en la documentacion del programa \ref{documentacionsoftware}.
 
 \begin{figure}[h]
   \centering
@@ -67,13 +67,6 @@ El caso de uso ``configurar'' esta generalizado. Las acciones que incluye este c
   \item Configurar intervalo de medicion para conversion analogica
 \end{itemize}
 
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.80\textwidth, height = 11cm]{casousoAdministrador}
-  \caption{Diagrama de caso de uso del sistema administrador}\label{fig:casousoAdministrador}
-\end{figure}
-
-En la figura \ref{fig:casouso1}, se puede ver el diagrama de caso de uso para el software a realizar. En cada caso de uso, pueden comenzar a visualizarse las distintas acciones que el programa debe realizar. Al no contar con la posibilidad de organizar el programa en clases, se separo en distintos modulos que agrupan funciones de caracteristicas similares. Estos modulos estan ilustrados como bloques en la figura \ref{fig:bloquesprimeraiteracionsoftware}. Cada bloque correponde a un modulo distinto dentro del programa. Se pueden ver los nombres de cada funcion y el tipo de retorno en cada uno de ellos. Con esto ultimo, damos una idea de las acciones realizadas por las funciones de cada modulo. Una descripcion mas detallada esta en la documentacion del programa \ref{documentacionsoftware}.
 
 \begin{figure}[h]
   \centering
@@ -81,7 +74,9 @@ En la figura \ref{fig:casouso1}, se puede ver el diagrama de caso de uso para el
   \caption{Diagrama de bloques de la primera iteracion de software}\label{fig:bloquesprimeraiteracionsoftware}
 \end{figure}
 
-El objetivo de los diagramas ilustrados es una descripcion grafica del sistema. Es necesario destacar que, desde el principio, la evolucion del programa ocasiono que los diseños de los modulos fueran cambiando. Los cambios fueron debidos a multiples razones: particularidades del funcionamiento del microcontrolador que no se tuvieron en cuenta, limitaciones del entorno, etcetera. En el presente informe, intentamos describir de manera general el funcionamiento del programa, y destacar aquellos cambios que surgieron de problemas imprevistos, y que tuvieron incidencia importante en el sistema.
+El objetivo de los diagramas es una descripcion grafica del sistema. Es necesario destacar que, desde el principio, la evolucion del programa ocasiono que los diseños de los modulos fueran cambiando. Los cambios fueron debidos a multiples razones: particularidades del funcionamiento del microcontrolador que no se tuvieron en cuenta, limitaciones del entorno, etcetera. En el presente informe, intentamos describir de manera general el funcionamiento del programa, y destacar aquellos cambios que surgieron de problemas imprevistos, y que tuvieron incidencia importante en el sistema.
+
+A continuacion, elaboramos una pequeña descripcion de los bloques que aparecen en el diagrama de la figura \ref{fig:bloquesprimeraiteracionsoftware}.
 
 \begin{itemize}
   \item El \textbf{Main o Bloque Principal} principalmente obtiene los datos de los sensores, los procesa, y los envia al modulo principal. Ademas de esto, configura el funcionamiento del ADC segun los parametros dados por el usuario. El usuario puede elegir la cantidad de pines que va a utilizar como entrada segun la cantidad de sensores que quiera medir, puede elegir un nivel de ganancia de amplificacion de la señal antes de la conversion, y puede tambien elegir el modo de obtencion de los datos (diferencial o single-ended).
