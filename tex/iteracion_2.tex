@@ -8,14 +8,20 @@
 
 Los requerimientos de mayor riesgo, son calificados de esta manera porque, de no poder cumplirse, logran que la plataforma sea obsoleta con respecto a sus objetivos principales. La manera de verificar que estos requerimientos son posibles de cumplir, es seleccionar un microcontrolador y luego desarrollar un programa de prueba que compruebe las distintas funcionalidades ligadas a dichos requerimientos. La iteracion anterior fue dedicada a dicha seleccion. En la actual iteracion, verificamos la seleccion mediante un programa basico de prueba.
 
+\subsection{Objetivo de la iteracion} % (fold)
+\label{sub:objetivo_de_la_iteracion}
+
 El objetivo principal de esta iteracion, es conformar un primer prototipo de software. Este prototipo no debe necesariamente cumplir con todos los requerimientos, pero si debe verificar el funcionamiento de los modulos del C8051F352 ligados a aquellos requerimientos de mayor riesgo: El conversor analógico-digital; la ganancia programable; los contadores; y el módulo serial.
+
+% subsection objetivo_de_la_iteracion (end)
+
 
 % section introduccion (end)
 
 \section{Requerimientos de la iteración} % (fold)
 \label{it2:sec:requerimientos_de_la_iteracion}
 
-Teniendo en cuenta los requerimientos principiales y el microcontrolador elegido, definimmos los siguientes requerimientos:
+Teniendo en cuenta los requerimientos principiales y el microcontrolador elegido, definimmos los siguientes requerimientos para el software de la plataforma:
 
 \begin{itemize}
 \item Se debería poder utilizar el conversor ADC del microcontrolador para transformar señales analogicas de fuentes externas a datos digitales, tanto en modo canal único como canal diferencial.
@@ -41,15 +47,12 @@ Teniendo en cuenta los requerimientos principiales y el microcontrolador elegido
 \section{Desarrollo} % (fold)
 \label{it2:sec:desarrollo}
 
-El objetivo principal de esta iteracion era implementar aquellos aspectos del software de la plataforma que se relacionaban directamente con los requerimientos de mayor riesgo. El software esta descrito mediante diagramas y modelos del patron de diseño SysML. Es importante destacar que el desarrollo del software no fue realizado con uso de este patron de diseño, sino que se utiliza meramente como herramienta para una mejor descripcion.
+En esta seccion se describiran las distintas partes del software y la interaccion entre ellas para cumplir con los requerimientos. Esta descripcion se hara mediante modelos del patron de diseño SysML. El programa en si no fue diseñado mediante este patron, pero realizamos un proceso de ingenieria inversa para facilitar la compresion del lector en el presente informe.
 
-\subsection{Diseño y modelos estaticos} % (fold)
-\label{it2:sub:diseno_y_modelos_estaticos}
+\subsection{Modelos estaticos} % (fold)
+\label{it2:sub:modelos_estaticos}
 
-\subsubsection{Modelos estaticos} % (fold)
-\label{it2:subsub:modelos_estaticos}
-
-El diagrama de caso de uso de la figura \ref{fig:casouso1}, establece de manera basica aquello que se quiere lograr con el programa embebido en la plataforma. En cada caso de uso, pueden visualizarse las distintas acciones que el programa deberia realizar. Como el programa esta desarrollado en lenguaje C, no es posible conformar un diagrama de clases. En lugar de esto, se separo en distintos modulos que agrupan funciones de caracteristicas similares. Esto ultimo es una posibilidad que ofrece SysML. Estos modulos estan ilustrados como bloques en la figura \ref{fig:bloquesprimeraiteracionsoftware}. Cada bloque correponde a un modulo distinto dentro del programa. Se pueden ver los nombres de cada funcion y el tipo de retorno en cada uno de ellos. Con esto ultimo, damos una idea de las acciones realizadas por las funciones de cada modulo. Una descripcion mas detallada esta en la documentacion del programa \ref{documentacionsoftware}.
+El diagrama de caso de uso de la figura \ref{fig:casouso1}, establece de manera basica aquello que se quiere lograr con el programa embebido en la plataforma. En cada caso de uso, pueden visualizarse las distintas acciones que el programa deberia realizar. Como el programa esta desarrollado en lenguaje C, no es posible conformar un diagrama de clases. En lugar de esto, se separo en distintos modulos que agrupan funciones de caracteristicas similares. Estos modulos estan ilustrados como bloques en la figura \ref{fig:bloquesprimeraiteracionsoftware}. Cada bloque representa distintas partes principales del programa. Se pueden ver los nombres de cada funcion y el tipo de retorno en cada uno de ellos. Con esto ultimo, se intenta dar una idea de las acciones realizadas por las funciones de cada modulo. Una descripcion mas detallada esta en la documentacion del programa \ref{documentacionsoftware}.
 
 \begin{figure}[h]
   \centering
@@ -74,16 +77,16 @@ El caso de uso ``configurar'' esta generalizado. Las acciones que incluye este c
   \caption{Diagrama de bloques de la primera iteracion de software}\label{fig:bloquesprimeraiteracionsoftware}
 \end{figure}
 
-El objetivo de los diagramas es una descripcion grafica del sistema. Es necesario destacar que, desde el principio, la evolucion del programa ocasiono que los diseños de los modulos fueran cambiando. Los cambios fueron debidos a multiples razones: particularidades del funcionamiento del microcontrolador que no se tuvieron en cuenta, limitaciones del entorno, etcetera. En el presente informe, intentamos describir de manera general el funcionamiento del programa, y destacar aquellos cambios que surgieron de problemas imprevistos, y que tuvieron incidencia importante en el sistema.
+El objetivo de los diagramas es una descripcion grafica del sistema. Es necesario destacar que, desde el principio, la evolucion del programa ocasiono que los diseños de los modulos fueran cambiando. Los cambios fueron debidos a multiples razones: particularidades del funcionamiento del microcontrolador que no se tuvieron en cuenta, limitaciones del entorno, cambios en los requerimientos, etcetera. 
 
 A continuacion, elaboramos una pequeña descripcion de los bloques que aparecen en el diagrama de la figura \ref{fig:bloquesprimeraiteracionsoftware}.
 
 \begin{itemize}
-  \item El \textbf{Main o Bloque Principal} principalmente obtiene los datos de los sensores, los procesa, y los envia al modulo principal. Ademas de esto, configura el funcionamiento del ADC segun los parametros dados por el usuario. El usuario puede elegir la cantidad de pines que va a utilizar como entrada segun la cantidad de sensores que quiera medir, puede elegir un nivel de ganancia de amplificacion de la señal antes de la conversion, y puede tambien elegir el modo de obtencion de los datos (diferencial o single-ended).
-  \item El \textbf{Contador} se encarga de obtener los valores en los contadores de eventos.
-  \item El \textbf{Interfaz de Usuario} en este modulo se levanta la interfaz con la que interactua el usuario para establecer los parametros configurables del sistema.
-  \item El \textbf{Configurador} interactua directamente con el hardware del microcontrolador. Realiza todas las configuraciones necesarias para poder hacer funcionar cada modulo. Inicializa todos los registros pertinentes, el clock del sistema y setea los puertos de entrada y salida.
-  \item El \textbf{Serial} envia los datos por interfaz serial. Puede ser UART o $I^{2}$C.
+  \item \textbf{Main o Bloque Principal}: Orquestrador del resto de los modulos. Tiene, ademas, la rutina principal donde se entra al modo de configuracion, para luego iniciar el modo de conversiones continuas.
+  \item \textbf{Contador:} Inicializa el hardware de los contadores de eventos del microcontrolador, y contiene las funciones para obtener los valores de los mismos.
+  \item \textbf{Interfaz de Usuario:} Levanta la interfaz con la que interactua el usuario para establecer los parametros configurables del sistema, ademas de iniciar el modo de conversiones continuas.
+  \item \textbf{Configurador:} Accede a los registros de configuracion de los distintos modulos del microcontrolador. Contiene funciones que realizan todas las configuraciones necesarias para poder hacer funcionar cada modulo del programa.
+  \item \textbf{Serial:} Configura el modulo serial para el envio y recepcion de caracteres. Puede ser UART o $I^{2}$C.
 \end{itemize}
 
 % subsection modelos_estaticos (end)
@@ -91,12 +94,14 @@ A continuacion, elaboramos una pequeña descripcion de los bloques que aparecen 
 Los fabricantes del microcontrolador proporcionan una libreria en C para trabajar con los registros del procesador. Todos los bloques excepto el de la interfaz grafica, manipulan registros para realizar las distintas acciones que le corresponden segun la funcion que se ejecuta.  
 
 
-\subsubsection{Modelos dinamicos} % (fold)
-\label{it2:subsub:modelos_dinamicos}
+\subsection{Modelos dinamicos} % (fold)
+\label{it2:sub:modelos_dinamicos}
 
-Mediante el uso de diagramas de secuencia, explicamos en esta seccion las interacciones entre el usuario y el sistema que cubren los requerimientos principales. Las funciones incolucradas en cada interaccion son las mismas declaradas en el diagrama de bloques del sistema. La mayoria de los flujos que se describen en estos modelos fueron desarrollados iterativamente, es decir, son producto de un desarrollo incremental, hasta llegar a la iteracion actual. La iteracion \ref{cha:iteracion_5} modela las interacciones del programa en su estado final. \\
+Utilizamos los modelos dinamicos del patron SysML para describir las distintas interacciones entre los distintos modulos del programa. En esta seccion, describimos las interacciones entre el usuario y el sistema que cubren los requerimientos principales. Las funciones incolucradas en cada interaccion son las mismas declaradas en el diagrama de bloques del sistema. Los distintos flujos que se describen en estos modelos fueron desarrollados iterativamente, es decir, son producto de un desarrollo incremental, hasta llegar al estado que se describe en esta iteracion. \\
 
-El objetivo de esta iteracion fue diseñar el programa con un paradigma de configuracion y loop infinito. Es decir, en una etapa inicial, el usuario configura todos los parametros necesarios del sistema, y una vez que se le da arranque, el sistema convierte en modo automatico en un loop infinito, hasta que el usuario le da parada. La figura \ref{secuenciaconfiguracionbasica} muestra una secuencia para realizar una configuracion de un canal del conversor en modo de canal unico. En la figura \ref{fig:secuenciaconversioncontinua}, ilustra como el sistema se coloca en modo de conversion continua, idealmente luego de una configuracion previa. 
+Un flujo de ejecucion tipico del programa consiste en una configuracion y un inicio de conversiones continuas. Las conversiones continuas son un loop infinito donde se convierte ciclicamente sobre los canales configurados para la conversion y se envian los datos convertidos por interfaz serial, utilizando el mismo canal serial por donde se realiza el intercambio de comandos para la configuracion. Cuando se interrumpen las conversiones continuas, el programa devuelve al usuario la posibilidad de configurar el sistema, dando fin a las conversiones y el envio de datos. \\
+
+La figura \ref{fig:secuenciaconfiguracionbasica} muestra un diagrama de secuencia para una configuracion de un canal del conversor en modo canal único. Realizada la configuracion, la figura \ref{fig:secuenciaconversioncontinua} muestra como el sistema se establece en modo de conversion continua, entrando en un loop infinito de conversion y envio de telemetria.
 
 \begin{figure}[h]
   \centering
@@ -111,8 +116,9 @@ El objetivo de esta iteracion fue diseñar el programa con un paradigma de confi
 \end{figure}
 
 
-\subsection{Logica de las funciones del conversor} % (fold)
-\label{it2:sub:logica_de_las_funciones_del_conversor}
+
+\subsection{El modulo conversor} % (fold)
+\label{it2:sub:el_modulo_conversor}
 
 Los registros del microcontrolador permiten manipular el conversor de la siguiente manera (para propositos de la logica de conversion):
 
@@ -122,22 +128,33 @@ Los registros del microcontrolador permiten manipular el conversor de la siguien
   \item Se puede establecer un nivel de ganancia de x2 a x128 para todos los canales
 \end{itemize}
 
-La logica de las funciones dentro del bloque de software perteneciente al conversor permiten establecer la configuracion del conversor para las mediciones que se quieran hacer. Las funciones que interactuan con el conversor analogico digital o con la logica de conversion de manera directa, son las siguientes (figura \ref{fig:bloquesprimeraiteracionsoftware}):
+Esta lista nos permite concluir que las posibilidades que permite el microcontrolador son limitadas para el uso que se le quiere dar. El modulo conversor del programa deberia, por un lado, permitir la configuracion necesaria de los registros del conversor; y ademas, deberia tener funciones que permitan una configuracion mas compleja de los canales, teniendo en cuenta los requerimientos principales.
+Con esto en mente, se desarrollaron distintas funciones que realizan configuraciones segun ciertos parametros de entrada, ingresados por el usuario. Para facilitar la configuracion, se creo un buffer denominado ``buffer de canales''. Este buffer contiene 8 posiciones, y cada una de ellas se corresponde con uno de los canales del conversor. Se elaborara sobre este buffer mas adelante.
+
+Estas son las funciones del modulo conversor:
 
 \begin{itemize}
   \item \textit{convertir}: Interactua con el hardware del microcontrolador para obtener la ultima conversion realizada. Es ejecutada unicamente por la rutina de interrupcion del ADC (iniciada en cada "End of Conversion")
-  \item \textit{cargar\_buffer\_single}: carga el buffer de conversion en una posicion que depende de un parametro de entrada, con el numero "1", indicando que el canal que se corresponde con esa posicion en el buffer se debe leer en modo canal unico
-  \item \textit{cargar\_buffer\_dif}: carga el buffer de conversion en una posicion que depende de un parametro de entrada, con el numero "2", indicando que el canal que se corresponde con esa posicion en el buffer, y el canal siguiente a ese, deben ser leidos en modo diferencial.
-  \item \textit{cambiar\_pin}: Establece el canal por donde se medira la proxima conversion.
+  \item \textit{cargar\_buffer\_single}: Segun un parametro de entrada entero entre 0 y 7, se carga una posicion dentro del buffer de canales con el numero "1", indicando que el canal que se corresponde con esa posicion en el buffer se debe leer en modo canal unico.
+  \item \textit{cargar\_buffer\_dif}: Segun un parametro de entrada entero y par entre 0 y 6, se carga una posicion dentro del buffer de canales con el numero "2", indicando que el canal ligado a esa posicion en el buffer, y el siguiente en numero, deben ser leidos en modo diferencial.
+  \item \textit{cambiar\_pin}: Cambia el canal por donde se medira en la proxima conversion.
 \end{itemize}
 % subsection modelos_dinamicos (end)
 
-\subsection{Buffer de conversion y logica de cambio de canal en conversion continua} % (fold)
-\label{it2:sub:buffer_de_conversion_y_logica_de_cambio_de_canal_en_conversion_continua}
+\subsection{Buffer de canales y logica de cambio de canal en modo de conversiones continuas} % (fold)
+\label{it2:sub:buffer_de_canales_y_logica_de_cambio_de_canal_en_modo_de_conversiones_continuas}
 
-Las funciones \textit{cargar\_buffer\_single} y \textit{cargar\_buffer\_dif}, establecen el modo en el que se leera un canal. Dentro del programa, se crea un buffer de 8 posiciones, cada una representando un canal distinto del ADC. Los valores posibles para estas posiciones son 0, 1 y 2; estos valores representan, respectivamente, que el canal esta o deshabilitado, en modo canal unico o en modo diferencial. Estas funciones, al ser ejecutadas, cargan algun numero en el buffer según que funcion es la que se ejecuto. El buffer se inicializa por defecto en 0, por lo que inicialmente ningun canal esta habilitado para convertir. \\
+Las funciones \textit{cargar\_buffer\_single} y \textit{cargar\_buffer\_dif}, establecen el modo (canal unico o diferencial) en el que se leera un canal. Las 8 posiciones del buffer de canales representan, cada una, un canal distinto del ADC. Los valores posibles para estas posiciones son 0, 1 y 2; estos valores representan, respectivamente, que el canal esta deshabilitado, en modo canal unico, o en modo diferencial. Estas funciones, al ser ejecutadas, cargan algun numero en el buffer según que funcion es la que se ejecuto. El buffer se inicializa por defecto en 0, por lo que inicialmente ningun canal esta habilitado para convertir. \\
 
-Cuando se inicia la conversion continua, despues de cada conversion se llama la funcion \textit{cambiar\_pin}. Esta funcion utiliza este buffer para saber cual es el proximo canal a medir. Simplemente maneja un indice que se incrementa hasta 7 y vuelve a 0, recorriendo el buffer cada vez. Segun el numero que tenga la posicion en la que se encuentra, se sabe si debe medirse un canal en modo unico, o el canal y el siguiente en modo diferencial. \\
+Cuando se inicia la conversion continua, se convierte continuamente en un loop infinito. Al final de cada conversion, se llama a la funcion \textit{cambiar\_pin}. Esta funcion utiliza el buffer de canales para obtener cual es el proximo canal a medir. Esto lo hace manejando un indice que comienza en 0, se incrementa hasta 7 y vuelve a 0; recorriendo ciclicamente el buffer de canales. 
+En cada ejecucion, analiza una posicion buffer segun el valor del indice. El valor de la posicion del buffer dice si se debe medir en modo canal unico o diferencial, o si es necesario saltear el pin. Una descripcion grafica del comportamiento de esta funcion puede verse en el diagrama de actividades de la figura \ref{actividadescambiarpinit2} \\
+
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=1\textwidth, height = 7cm]{actividadescambiarpinit2}
+  \caption{Diagrama de actividad de la funcion cambiar\_pin}\label{fig:actividadescambiarpinit2}
+\end{figure}
 
 %Este algoritmo fue el primer prototipo de logica de asignacion y cambio de canal para la lectura de mediciones del conversor. A simple vista es posible ver que los potenciales problemas son muchos. Para empezar, si se asigna el pin 5 en modo canal unico y el modo 4 en modo diferencial, el programa intentara medir en dos modos distintos el mismo canal, dando seguramente resultados inconsistentes. 
 
@@ -152,7 +169,7 @@ Cuando se inicia la conversion continua, despues de cada conversion se llama la 
 
 La interfaz de usuario tuvo dos implementaciones, siendo la segunda un reemplazo de la primera.
 
-La primera interfaz fue de tipo ``Menu Based Interface'' o interfaz basada en menu, donde las acciones a realizar son ofrecidas por la interfaz y seleccionadas por un usuario. Cada accion esta clasificada segun el grupo de acciones al que pertenezca. Por ejemplo: para configurar el pin 4 del ADC en modo canal unico, es necesario navegar por las opciones del menu de la forma ``configuracion->configurar pin ADC->pin 4->modo canal unico''. Siguiendo este patron de diseño, en cada adicion de una nueva accion, habia que buscar el grupo al que pertenecia y programar la logica necesaria para ejecutar la accion en base a la navegacion del usuario dentro del menu. Esta forma de desarrollo probo ser muy poco escalable, y tuvimos que cambiarla por la dificultad que traia a la hora de agregar nuevas acciones. \\
+La primera interfaz fue de tipo ``Menu Based Interface'' o interfaz basada en menu, donde las acciones a realizar son ofrecidas por la interfaz y seleccionadas por un usuario. Cada accion esta clasificada segun el grupo de acciones al que pertenezca. Por ejemplo: para configurar el pin 4 del ADC en modo canal unico, es necesario navegar por las opciones del menu de la forma ``configuracion->configurar pin ADC->pin 4->modo canal unico''. Siguiendo este patron de diseño, en cada adicion de una nueva accion, era necesario buscar el grupo al que pertenecia y programar la logica necesaria para ejecutar la accion en base a la navegacion del usuario dentro del menu. Esta forma de desarrollo probo ser muy poco escalable, y fue necesario cambiarla por la dificultad que implicaba a la hora de agregar nuevas funcionalidades. \\
 
 La segunda interfaz diseñada fue de tipo ``Command line interface''. En este tipo de interfaz, el usuario ingresa un comando y uno o varios argumentos en un formato que respeta una expresion regular. Bajo este concepto, se necesita un parser o analizador de comandos que extraiga de la entrada el comando y los argumentos, y realice acciones segun ellos. En nuestro caso, cada comando representa una funcion distinta de nuestro programa, y los argumentos pasan a ser parametros de la funcion. \\
 
@@ -183,20 +200,27 @@ Dicho de otra manera, el comando ingresado esta conformado por 2 caracteres alfa
 \label{it2:sub:contadores_de_eventos}
 
 
-El modulo contador contiene declaraciones de las funciones involucradas en el proceso de obtener las cuentas de los contadores de eventos activos en el microcontrolador. La accion de obtener una cuenta no es nada mas que leer un registro con el valor de la cuenta. Eso es precisamente lo que hace cada funcion de este modulo. Se puede acceder al timer0, timer 2 y timer 3. Timer 1 no es accesible, la razon de esto se explica a continuacion. \\
+El modulo contador contiene las funciones involucradas en el proceso de obtener las cuentas de los contadores de eventos activos en el microcontrolador. Para obtener el valor de una cuenta, simplemente se lee el registro ligado al contador que lleva dicha cuenta. Las funciones de este modulo obtienen la cuenta y la devuelven en forma de cadena de caracteres. \\
 
-Los requerimientos iniciales indican que es necesario poder contar eventos de 3 o 4 fuentes distintas. Al momento de tomar la decision de cual microcontrolador utilizar, tuvimos en cuenta que este microcontrolador cuenta con 4 contadores que pueden ser configurados para que tomen fuentes externas para realizar el conteo. A pesar de esto, nos encontramos con algunas circunstancias. 
+Los requerimientos principales indican que es necesario poder contar eventos de 3 o 4 fuentes distintas. Al momento de tomar la decision de cual microcontrolador utilizar, tuvimos en cuenta que este microcontrolador contaba con 4 contadores que podian ser configurados para que tomen fuentes externas para realizar el conteo. En pleno desarrollo del programa, llegamos a la conclusion de que esto no iba a ser posible por las siguientes razones:
 
-En primer lugar, para poder utilizar el modulo serial del microcontrolador, es necesario que uno de los timers actue de generador de baud rate. Por defecto utiliza timer 1. El modulo serial es un requerimiento principal, por lo que de 4 contadores pasamos a tener 3. En segundo lugar, los timers 2 y 3 tienen los mismos pines fisicos de salida para ser conectados a una fuente externa. Es decir, si se cuenta con timer 2 desde una fuente externa, la lectura es la misma para timer 3. Por lo que es un unico timer si se habla de contar eventos externos.
+\begin{itemize}
+  \item El modulo serial del microcontrolador hace uso de uno de los timers para el generador de baudios.
+  \item Los timers 2 y 3 comparten la fuente externa de donde ingresan los eventos que se cuentan.
+\end{itemize}
 
-Estas circunstancias significaron que solo se pueden usar 2 timers. timer 0 y timer 2 o 3. Luego de este problema, se hablo de la posibilidad de duplicar la cantidad de microcontroladores en la placa, para duplicar los recursos y tener 4 contadores.
+Teniendo en cuenta esto, solo es posible contar eventos de 2 fuentes en simultaneo, utilizando timer 0 y timer 2 o timer 3. \\
+
+La reduccion de recursos disponibles para cumplir los requerimientos no fueron suficientes para que sea practico un cambio de microcontrolador, siendo que el resto de las funcionalidades funcionaban correctamente y como era esperado (Con excepcion de SMBus, que se desarrolla mas adelante). Para solucionar este problema, se considero la posibilidad de un diseño de una plataforma con dos microcontroladores, duplicando la cantidad de recursos, y llegando asi al requisito de 4 contadores de eventos de fuentes externas.
 
 % subsection contadores_de_eventos (end)
 
 \subsection{El modulo serial} % (fold)
 \label{it2:sub:el_modulo_serial}
 
-Para hacer funcionar el modulo serial, es necesario utilizar uno de los timers como generador de baudios. La implementacion de la funcion no fue hecha por nosotros, vino ya hecha por Silicon Labs como ejemplo, y pudimos utilizar el ejemplo como estaba sin problemas. Utilizamos UART en lugar de SMBus. Es necesario destacar que en los requerimientos, se especifica que es necesario que se puedan transmitir los datos de las mediciones utilizando protocolo UART tanto con RS232 como con $I^{2}$C. El microcontrolador cuenta con una interfaz serial  SMBus, que puede comunicarse con cualquier dispositivo que utilice $I^{2}$C porque es compatible. Sin embargo, no fue posible lograr que funcione, y luego de hacer algunas investigaciones, encontramos que suele ser un problema común que esta interfaz no suela funcionar en estos microcontroladores. Luego de intentar reiteradas veces sin obtener resultados, se opto por no utilizar SMBus y trabajar únicamente con el protocolo UART.
+Para hacer funcionar el modulo serial, es necesario utilizar uno de los timers como generador de baudios. La implementacion de la funcion que configura el modulo serial del microcontrolador vino ya implementada por Silicon Labs como ejemplo de programa. De todas formas, este ejemplo funcionaba correctamente en nuestro programa y no fue necesario hacerle ningun cambio, mas que modificaciones en el baud rate. \\
+
+Segun los requerimientos, era necesario poder alternar entre SMBus (equivalente a $I^{2}$C) y UART para la interfaz serial. Sin embargo, a pesar de haber realizado multiples pruebas, no fue posible lograr que funcione el modulo SMBus. Luego de acordarlo con el director, decidimos utilizar UART como unico protocolo para la interfaz serial.
 
 % subsection el_modulo_serial (end)
 
