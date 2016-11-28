@@ -235,7 +235,24 @@ Segun los requerimientos, era necesario poder alternar entre SMBus (equivalente 
 
 Cada una de las funciones, tanto si interactuan con el hardware del micro como si no, estan testeadas utilizando unit-testing en C, con ayuda del framework ``minunit''\cite{minunit}. Los unit-tests se ejecutaban de la misma manera que se ejecutaba el programa principal, y corria todos los tests, dando como resultado la cantidad de tests que pasaron y los que fallaron.
 
-PONER TABLA DE TEST UNITARIOS!!!
+\begin{table}[h]
+\caption{Tests unitarios}
+\label{it2:sub:tests_unitarios}
+\begin{tabular}{|l|l|
+>{\columncolor[HTML]{67FD9A}}l |ll}
+\hline
+\cellcolor[HTML]{68CBD0}Nombre & \cellcolor[HTML]{68CBD0}Descripcion & \cellcolor[HTML]{68CBD0}Estado &  &  \\ \hline
+test\_cargar\_buffer\_unico & intenta configurar un pin enmodo canal unico & {\color[HTML]{009901} Pass} &  &  \\ \cline{1-3}
+test\_cargar\_buffer\_diferencial & intenta configurar un pin en modo diferencial & {\color[HTML]{009901} Pass} &  &  \\ \cline{1-3}
+test\_GDI & intenta ingresar el comando GDI con combinaciones correctas e incorrectas de parametros, esperando que no haya error en los primeros casos y que si los haya en los segundos & {\color[HTML]{009901} Pass} &  &  \\ \hline
+test\_GSE & Analogo a test\_GDI & {\color[HTML]{009901} Pass} &  &  \\ \cline{1-3}
+test\_SSE & Analogo a test\_GDI & {\color[HTML]{009901} Pass} &  &  \\ \cline{1-3}
+test\_SDI & Analogo a test\_GDI & {\color[HTML]{009901} Pass} &  &  \\ \cline{1-3}
+test\_obtener\_entrada & Pide al usuario que ingrese una serie de comandos y verifica que la respuesta del programa sea la esperada & {\color[HTML]{009901} Pass} &  &  \\ \cline{1-3}
+test\_iniciales & Compruebael funcionamiento del modulo serial del microcontrolador y el conversor analogico digital & {\color[HTML]{009901} Pass} &  &  \\ \cline{1-3}
+test\_blinkled & Prueba el funcionamiento de la plataforma con un programa que hace parpadear un led. Este test esta pensado para ser ejecutado en la plataforma a construir & \cellcolor[HTML]{FF9E9E}{\color[HTML]{CB0000} Fail} &  &  \\ \cline{1-3}
+\end{tabular}
+\end{table}
 
 % subsection tests_unitarios (end)
 

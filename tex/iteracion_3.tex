@@ -5,9 +5,7 @@
 \section{Introducción} % (fold)
 \label{it3:sec:introduccion}
 
-En la iteracion pasada obtivimos un software que cumplía con los requerimientos de mayor riesgo, funcionando en la placa de desarrollo SiliconLabs (modelo C8051f352DK). Nos propusimos realizar el diseño y construccion de una placa propia basada en la mencionada anteriormente.
-
-En esta iteración mostramos el elaboración del diseño y la construcción del circuito de la placa de desarrollo.
+Para realizar las pruebas en la iteracion anterior, utilizamos una placa de desarrollo Silicon Labs (modelo C8051f352DK). Esta placa de desarrollo es suficiente para albergar nuestro programa y funcionar como la plataforma de instrumentacion que intentamos construir. Pero, su tamaño y su precio no justifican su uso. En esta iteracion, nos enfocaremos en diseñar un circuito optimizado en base al mismo circuito que tiene esta placa de desarrollo; teniendo en cuenta aquellas funcionalidades que utilizamos para nuestra plataforma, y descartando aquellas que no sean necesarias. De esta manera, obtendremos un PCB optimizado, mas pequeño, y de menor costo.
 
 
 %la primera placa que fue una verga. tenia el rs232, tenia 8 entradas, tenia la alimentacion separada de la entrada para la programacion del micro. osea podia alimentarse mediante el debugger o alimentacion externa. se adapto el diseño de la placa para poder programar el micro con el debugger de silicon labs. hay que tener en cuenta que nos basamos en el diseño hecho por silicon labs de la placa de desarrollo c8051f352 que teniamos en el lac. la vamos a haber construido en esta iteracion, y lo unico que llego a hacer fue conectarse con la ide. nada mas, el resto no anduvo nada. %
@@ -17,13 +15,13 @@ En esta iteración mostramos el elaboración del diseño y la construcción del 
 \section{Requerimientos de la iteracion} % (fold)
 \label{it3:sec:requerimientos_de_la_iteracion}
 
-Diseñar y construir un prototipo de placa que cumpla con los siguientes requeriimientos:
+Diseñar y construir un prototipo de placa que cumpla con los siguientes requerimientos:
 
 \begin{itemize}
-\item Al circuito se le deben poder conectar 8 entradas analógicas.
-\item Al circuito se le deben poder conectar 4 entradas de eventos digitales externos.
-\item Las entradas analógicas deben tener filtros para mejorar la inmunidad al ruido.
-\item Se debe incluir en el diseño el circuito necesario para soportar comunicación vía RS232.
+\item Al circuito se le deberian poder conectar 8 entradas analógicas.
+\item Al circuito se le deberian poder conectar 4 entradas de eventos digitales externos.
+\item Las entradas analógicas deberian tener filtros para mejorar la inmunidad al ruido.
+\item Se deberia incluir en el diseño el circuito necesario para soportar comunicación vía RS232.
 \item La placa debería poder alimentarse a través de una fuente de tensión externa.
 \item Se debería poder conectar el debugger del microcontrolador a la placa para poder programarlo.
 \item El circuito de programación del microcontrolador debería estar separado la placa principal.
@@ -38,9 +36,8 @@ Diseñar y construir un prototipo de placa que cumpla con los siguientes requeri
 \subsection{Elección de Herramientas para Diseño} %(fold)
 \label{it3:sec:herramientas_para_diseno}
 
-Gracias a que en el LAC en dicho momento estaba realizando trabajos Santiago Rodríguez (Ingeniero en Computación, egresado de la UNC), pudimos consultar con él sobre el diseño y desarrollo de placas PCB. 
+Las herramientas de diseño fueron elegidas basandonos en experiencias de otros alumnos e ingenieros en el LAC (Laboratorio de Arquitectura de Computadoras). En particular, el ingeniero Santigago Rodriguez, nos aconsejo utilizar una de las siguientes herramientas:
 
-Santiago nos recomendó utilizar varias herramientas para el diseño:
 \begin{itemize}
 \item Kicad.
 \item Altium Designer.
@@ -48,17 +45,16 @@ Santiago nos recomendó utilizar varias herramientas para el diseño:
 \item PCBwizard.
 \end{itemize}
 
-Ademas para poder realizar la impresión de la placa PCB en la fresadora que tiene el LAC, ProtoMat E33 de LPKF, necesitamos tener instalado el software de la empresa, llamado LPKF Circuit Pro PM.
+La impresion del PCB se realizo utilizando una maquina fresadora perteneciente al laboratorio, modelo ProtoMat E33 de LPKF. Para realizar una impresion, era necesario instalar el programa LPKF Circuit en un ordenador.
 
-Luego de probar las herramientas para diseñar la placa, nos terminamos decidiendo por Kicad, ya que fue el mas sencillo de utilizar, mas amigable su interfaz y era el que nos exportaba los archivos que necesitábamos para poder utilizar el Circuit Pro e imprimir la placa en la Fresadora.
+La herramienta de diseño que mas se ajusto a nuestras necesidades fue Kicad, debido principalmente a su sencillez, y su facilidad para exportar archivos en el formato correcto para la maquina fresadora.
 
 %subsection herramientas_para_diseno (end)
 
 \subsection{Diagramas de Bloques de Hardware}
 \label{diagra_bloques_hardware}
 
-La primera etapa de diseño consiste en realizar un diagrama de bloques que, en base a los requerimientos planteados para esta iteración, ilustre a grandes rasgos la organización del circuito que pretendemos realizar.
-Podemos ver en la figura \ref{fig:BloquesHardw1} el diagrama de bloque que hicimos.
+La primera etapa de diseño consistió en realizar un diagrama de bloques que, en base a los requerimientos planteados para esta iteración, ilustre a grandes rasgos la organización del circuito que pretendemos realizar.
 
 \begin{figure}[h]
   \centering
@@ -66,24 +62,25 @@ Podemos ver en la figura \ref{fig:BloquesHardw1} el diagrama de bloque que hicim
   \caption{Diagrama de Bloque de la Placa.}\label{fig:BloquesHardw1}
 \end{figure}
 
-Los bloques en la figura 5 representan de forma general los distintos módulos a implementar. Las entradas analógicas se introducen al sistema (microcontrolador) a través de filtros reductores del ruido (filtros RC). Luego, las señales, son procesadas por el microcontrolador (C8051f352). El bloque de GPIO y contadores de eventos es simplemente un grupo de pines direccionados a distintas entradas del microcontrolador, GPIO significa "General Purpose Input Output"(en español, "entrada y salida de propósito general" ). Son 4 pines que se separaron para uso general, por necesidad eventual de necesitarlos. Parte de estos GPIO son los pines contadores de eventos, por lo cual se incluyeron dentro del mismo bloque.
+Los bloques en la figura \ref{fig:BloquesHardw1} representan de forma general los distintos módulos a implementar. Las entradas analógicas se introducen al microcontrolador a través de filtros RC (reductores del ruido), para luego pasar al conversor analogico-digital. El bloque GPIO ("Entrada/Salida de proposito general") consiste en un grupo de pines direccionados a distintas entradas del microcontrolador. Estos pines pueden tener funcionalidades generales, y algunos pueden tener otras mas especificas, como ser: contador de eventos, PCA, PWM, etc. En nuestro diseño, separamos aquellos pines especificos que se utilizan como contadores de eventos, y ademas agregamos 4 pines de proposito general, por la eventual necesidad de requerirlos. 
 
-Es posible alimentar el sistema por medio del programador o debugger (propietario de Silicon Labs), o mediante una fuente de tensión externa de 5V, que al pasar por un regulador de tensión disminuye su voltaje a 3.3V para llegar al nivel de tensión del C8051f352. Ademas tendrá una llave selectora donde decidimos si se alimenta el sistema usando la fuente continua de 5V, o utilizando el programador.
+La alimentacion del sistema puede ser suministrada de dos formas posibles: Mediante una fuenta de tension externa de 5V, o por el mismo debugger del microcontrolador. Por la posible necesidad de reprogramar el microcontrolador, decidimos colocar una llave selectora que permite seleccionar la entrada de alimentacion. Por lo que es posible alimentarlo de ambas formas.
 
 %subsection diagra_bloques_hardware (end)
 
 \subsection{Diseño Esquemático}
 \label{diseno_esquematico}
 
-Para poder realizar el diseño esquemático del circuito utilizamos el software KiCad. Para simplificar la explicación del diagrama, lo que haremos en esta sección es dividir el circuito entero en subcircuitos mas simples. Al final mostraremos el sistema final.
+El diseño esquematico del circuito fue realizado con la herramienta de software KiCad. Para facilitar la descripcion, seccionamos el circuito final en varios subcircuitos, y los elaboraremos por separado, para luego mostrar el circuito final.
 
 \subsubsection{Entradas Analógicas}
 \label{entradas_analogicas}
 
-El circuito contiene 8 entradas analógicas iguales cada una, por lo que mostraremos el ejemplo de una sola entrada. Podemos ver en la figura  el circuito para la entrada de la señal. 
+Cada una de las 8 entradas analogicas tienen circuitos de conexion similares. La figura \ref{fig:esquematicoFiltro} ilustra el circuito para una de estas entradas. \\
 
-Sabemos que la señal entra al sistema con ruido (ya sea como interferencia de señales externas, o ruido provocado por los mismos componentes del circuito). Por lo que como primera medida, se aplica a la señal de entrada un filtro RC pasivo, pasa bajo. Así introducimos muy poca atenuación a las frecuencias que son menores que la frecuencia de corte. Las frecuencias que son mayores que la de corte son atenuadas fuertemente. 
-Como podemos ver en la figura \ref{fig:esquematicoFiltro} tenemos un pin (AI0) de entrada para conectar la salida de un sensor analógico, seguido de un filtro RC, compuesto por una resistencia de 100 ohms, y un capacitor a tierra de 0,1 microFaradios. La salida de la resistencia esta conectada directamente a la entrada AIN0.0 del C8051f352.
+El ruido en el sistema es un factor importante a tener en cuenta. Ingresa por interferencia de señales externas, por temperatura, por la fuente de tension, y por los mismos componentes que conforman el circuito. Como primera medida, cada entrada analogica contiene un filtro RC pasivo que reduce el ruido en una primera instancia. Ademas, el mismo microcontrolador trata el ruido de la señal para mejorar la relacion SNR. \\
+
+En la figura \ref{fig:esquematicoFiltro} se muestra un pin de entrada AI0, que se conecta a la salida de un dispositivo de instrumentacion. La señal de este sensor, se filtra mediante el circuito RC compuesto por una resistencia de 100 Ohms y un capacitor de 0,1 $\mu$F.
 
 \begin{figure}[H]
   \centering
@@ -96,12 +93,11 @@ Como podemos ver en la figura \ref{fig:esquematicoFiltro} tenemos un pin (AI0) d
 \subsubsection{Circuito Salida Serial}
 \label{salida_serial}
 
-Uno de los requerimientos de esta iteración es que la placa a desarrollar debe soportar comunicación serial, así que propusimos que dicha comunicación sea vía RS-232.
+La interfaz serial RS-232 es necesaria para el acondicionamiento del canal de datos entre la plataforma y el sistema embebido de destino. En esta seccion elaboramos la construccion del circuito de dicha interfaz. \\
 
-Como el nivel de tensión que entrega la salida serial TTL del microcontrolador C8051f352 es distinta a la necesaria para aplicar el protocolo RS-232. Nos vimos obligados a realizar un circuito para adaptarlo, y así asegurar el correcto envío de datos. Para realizar dicho circuito se utilizó el integrado MAX232 y se configuró como se muestra en la figura \ref{fig:esquematicoMax232}. Como podemos ver se utilizaron Capacitores de 0,1 microFaradios. Los pines "XRX1", "XCTS1", "XTX1" y "XRTS1" son los que tendrá el modulo de salida RS-232.
-Ademas colocamos 4 jumpers (JP1, JP2, JP3, JP4) a la entrada del MAX232 por si se necesita la salida TTL del microcontrolador (por ejemplo si se quiere conectar la salida serial a un arduino o raspberry pi).
+La salida serial del microcontrolador tiene un nivel de tension TTL, insuficiente para un adaptador RS-232, por lo que fue necesario adaptar este nivel para asegurar el correcto envio de datos. El circuito de adaptacion se muestra en la figura \ref{fig:esquematicoMax232}. Contiene un integrado MAX232 que es utilizado ampliamente en la industria para adptar niveles TTL a RS-232. Los pines "XRX1", "XCTS1", "XTX1" y "XRTS1" son los correspondientes al modulo de salida del adaptador serial. \\
 
-La tensión para alimentar el integrado es de 3.3V que se sacan del sub-circuito de potencia que se explicara en \ref{sub}.
+Ademas de la adaptacion, colocamos 4 jumpers (JP1, JP2, JP3, JP4) a la entrada del integrado MAX232 en caso en que se requiera la salida TTL del microcontrolador. \\
 
 \begin{figure}[H]
   \centering
