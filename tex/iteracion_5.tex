@@ -4,19 +4,13 @@
 \section{Introduccion} % (fold)
 \label{it5:sec:introduccion}
 
-En este capitulo, se describe el desarrollo de la segunda itearacion de software. Hasta el momento, teniamos un programa embebido en el microcontrolador que cumplia con los requerimientos especificados en la seccion \ref{it2:sub:estado_de_los_requerimientos}. En esta iteracion, el objetivo principal es obtener un prototipo final del programa, que cumpla, en lo posible, con todos los requerimientos, priorizando aquellos de mayor riesgo.
+En esta iteracion, se intentó dar un cierre a un primer prototipo de software que cumpla con todos los requerimientos, o la mayor cantidad posible, teniendo en cuenta el riesgo intrinseco de cada uno.
+
+Al final de la iteracion 2, en la seccion \ref{it2:sub:estado_de_los_requerimientos}, se especifica una lista con requerimientos cumplidos. Nuestro punto de partida para continuar el desarrollo del programa es esta lista. 
+
+El objetivo principal de esta iteracion es conformar un programa que cumpla con todos los requerimientos inherentes al software de la plataforma.
 
 % section introduccion (end)
-
-\subsection{Objetivos} % (fold)
-\label{it5:ssec:objetivos}
-
-\begin{itemize}
-  \item Tener un prototipo final del programa comenzado en la iteracion 2
-  \item Tener todo el programa testeado mediante Unit-Testing y tests de sistema.
-\end{itemize}
-
-% subsection objetivos (end)
 
 \section{Requerimientos de la iteracion} % (fold)
 \label{it5:sec:requerimientos_de_la_iteracion}
@@ -38,9 +32,9 @@ Los requerimientos de esta iteracion estan planteados en base a los resultados d
 \section{Desarrollo} % (fold)
 \label{it5:sec:desarrollo}
 
-Focalizamos el desarrollo del programa en el objetivo de obtener un prototipo final, listo para dejar andando en la placa de instrumentacion construida. En una primera instancia, terminamos aquellas funcionalidades ligadas a los requerimientos principales, y luego nos dedicamos a comprobar el funcionamiento del mismo, mediante unit-testing y tests de sistema.
+Focalizamos el desarrollo del programa en obtener un prototipo final, preparado para que se ejecute de manera continua en la placa de instrumentacion construida. En una primera instancia, terminamos aquellas funcionalidades ligadas a los requerimientos principales, y luego nos dedicamos a comprobar el funcionamiento del mismo, mediante unit-testing y tests de sistema.
 
-La figura \ref{fig:bloquesquintaiteracion} muestra el diagrama de bloques del programa para esta iteracion. Con respecto al diagrama en la figura \ref{bloquesprimeraiteracionsoftware}, el cambio mas significativo no es en la estructura, sino que son las funciones dentro de los bloques lo que mas cambio. Hay funciones nuevas, funciones que sufrieron cambios y funciones que se eliminaron. La idea de esta seccion es describir cada una, con el proposito de que se entienda la logica del programa a un nivel general.
+La figura \ref{fig:bloquesquintaiteracion} muestra el diagrama de bloques del programa terminado, al final esta iteracion. Si se compara con la figura \ref{bloquesprimeraiteracionsoftware}, el cambio en la estructura no es significativo. El mayor cambio esta en las funciones dentro de los bloques. Hay funciones nuevas, funciones que sufrieron cambios y funciones que se eliminaron.
 
 \begin{figure}[h]
   \centering

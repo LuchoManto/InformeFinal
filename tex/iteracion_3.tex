@@ -34,7 +34,7 @@ Diseñar y construir un prototipo de placa que cumpla con los siguientes requeri
 \label{it3:sec:desarrollo}
 
 \subsection{Elección de Herramientas para Diseño} %(fold)
-\label{it3:sec:herramientas_para_diseno}
+\label{it3:sub:herramientas_para_diseno}
 
 Las herramientas de diseño fueron elegidas basandonos en experiencias de otros alumnos e ingenieros en el LAC (Laboratorio de Arquitectura de Computadoras). En particular, el ingeniero Santigago Rodriguez, nos aconsejo utilizar una de las siguientes herramientas:
 
@@ -52,7 +52,7 @@ La herramienta de diseño que mas se ajusto a nuestras necesidades fue Kicad, de
 %subsection herramientas_para_diseno (end)
 
 \subsection{Diagramas de Bloques de Hardware}
-\label{diagra_bloques_hardware}
+\label{it3:sub:diagrama_de_bloques_de_hardware}
 
 La primera etapa de diseño consistió en realizar un diagrama de bloques que, en base a los requerimientos planteados para esta iteración, ilustre a grandes rasgos la organización del circuito que pretendemos realizar.
 
@@ -69,12 +69,12 @@ La alimentacion del sistema puede ser suministrada de dos formas posibles: Media
 %subsection diagra_bloques_hardware (end)
 
 \subsection{Diseño Esquemático}
-\label{diseno_esquematico}
+\label{it3:sub:diseno_esquematico}
 
 El diseño esquematico del circuito fue realizado con la herramienta de software KiCad. Para facilitar la descripcion, seccionamos el circuito final en varios subcircuitos, y los elaboraremos por separado, para luego mostrar el circuito final.
 
 \subsubsection{Entradas Analógicas}
-\label{entradas_analogicas}
+\label{it3:ssub:entradas_analogicas}
 
 Cada una de las 8 entradas analogicas tienen circuitos de conexion similares. La figura \ref{fig:esquematicoFiltro} ilustra el circuito para una de estas entradas. \\
 
@@ -90,8 +90,8 @@ En la figura \ref{fig:esquematicoFiltro} se muestra un pin de entrada AI0, que s
 
 %subsubsection entradas_analogicas (end)
 
-\subsubsection{Circuito Salida Serial}
-\label{salida_serial}
+\subsubsection{Circuito de interfaz serial}
+\label{it3:ssub:circuito_de_interfaz_serial}
 
 La interfaz serial RS-232 es necesaria para el acondicionamiento del canal de datos entre la plataforma y el sistema embebido de destino. En esta seccion elaboramos la construccion del circuito de dicha interfaz. \\
 
@@ -107,11 +107,14 @@ Ademas de la adaptacion, colocamos 4 jumpers (JP1, JP2, JP3, JP4) a la entrada d
 
 %subsubsection salida_serial (end)
 
-\subsubsection{Circuito de Potencia}
-\label{circuito_potencia}
+\subsubsection{Circuito de alimentacion}
+\label{it3:ssub:circuito_de_alimentacion}
 
-Del análisis del microcontrolador y de otros componentes que necesitamos utilizar en la placa(como MAX232, leds, etc), decidimos realizar separar el circuito de potencia para dividir la tensión en dos de distintos valores: 3,3V y 5V.
-Como podemos ver en la figura \ref{fig:esquematicoPotencia} el sistema de alimentación lo implementamos a través de un Jack de Power (Jack2P) para conectar una fuente de tensión de 5V, y a través del programador/debugger de Silicon Labs 5V(Debugger1). A continuación colocamos un jumper de 3 pines para poder seleccionar el método de alimentación (Jumper1).
+La tension de alimentacion del circuito de la plataforma es de 3,3V. Con el proposito de utilizar una fuente de alimentacion generica de 5V, utilizamos un regulador de tension LM2937 que baja de un nivel de 5V a 3,3V.
+
+Es posible alimentar el circuito mediante una fuente de 5V o el debugger del mismo microcontrolador. Este debugger entrega 3,3V a la salida, por lo que, si el debugger esta conectado como alimentacion, no es necesario utilizar el regulador de tension.
+
+La figura \ref{fig:esquematicoPotencia} muestra el circuito de alimentacion. Colocamos una serie de jumpers que permiten seleccionar si se alimentara el circuito con una fuente de 5V, o el debugger del microcontrolador
 
 \begin{figure}[H]
   \centering
@@ -119,15 +122,14 @@ Como podemos ver en la figura \ref{fig:esquematicoPotencia} el sistema de alimen
   \caption{Esquemático del Circuito de Potencia.}\label{fig:esquematicoPotencia}
 \end{figure}
 
-Para poder alimentar al microcontrolador necesitábamos 3.3V así que utilizamos un regulador de tensión (LM2937). El C8051f352 tiene dos entradas de alimentación, una analógica y una digital, ambas con un rango entre 2.9V a 3.6V, ademas la corriente puede variar entre 5.7mA (en estado inactivo) hasta 11.3mA (en estado activo). Es por ello que se colocan las resistencias, y ademas se colocan capacitores en paralelo para disminuir el ruido de entrada.
+%Para poder alimentar al microcontrolador necesitábamos 3.3V así que utilizamos un regulador de tensión (LM2937). El C8051f352 tiene dos entradas de alimentación, una analógica y una digital, ambas con un rango entre 2.9V a 3.6V, ademas la corriente puede variar entre 5.7mA (en estado inactivo) hasta 11.3mA (en estado activo). Es por ello que se colocan las resistencias, y ademas se colocan capacitores en paralelo para disminuir el ruido de entrada.
 
 %subsubsection circuito_potencia (end)
 
 \subsubsection{Diagrama Esquematico Final}
-\label{esquematico_final_1}
+\label{it3:ssub:diagrama_esquematico_final}
 
-En la figura \ref{fig:EsquematicoCompleto1} se puede ver el diagrama de la placa completo. 
-Podemos distinguir un apartado donde hay dos ferrite brides para dividir la masa analógica de la masa digital y así evitar ruidos para la conversión del ADC, debido a posibles frecuencias altas.
+De los circuitos descritos anteriormente, se ilustra el circuito final en la figura \ref{fig:EsquematicoCompleto1}
 
 \begin{figure}[H]
 \centering
@@ -139,14 +141,14 @@ Podemos distinguir un apartado donde hay dos ferrite brides para dividir la masa
 
 %subsection diseno_esquematico (end)
 
-\subsection{Diseño de Plaqueta de Circuito Impreso (PCB)}
-\label{pcb1}
+\subsection{Impresion de circuito en placa de cobre}
+\label{it3:sub:impresion_de_circuito_en_placa_de_cobre}
 
-En electrónica, plaqueta de circuito impreso (printed circuit board, PCB), es la superficie constituida por caminos o pistas de material conductor laminadas sobre una base no conductora. El circuito que se imprime en un plaqueta se utiliza para interconectar distintos dispositivos electrónicos.
+Una plaqueta de circuito impreso (PCB) es una superficie constituida por caminos o pistas de material conductor, laminadas sobre una base no conductora. El circuito que se imprime en un plaqueta se utiliza para interconectar distintos dispositivos electrónicos.
 
-En el Laboratorio de Arquitectura de Computadoras hay instalada una fresadora para la impresión de placas PCB, el modelo es LPKF E33, por lo que el software que utilizamos fue "Circuit Pro" que es propietario de LPKF, así nos aseguramos la compatibilidad de archivos y drivers.
+En el Laboratorio de Arquitectura de Computadoras, donde fue realizado este proyecto, esta disponible una maquina fresadora con control numerico por computadora, para la impresión de placas PCB, modelo LPKF E33. El PCB diseñado fue impreso con esta maquina. El software utilizado para la impresion fue ``Circuit Pro'', proveido por los mismos fabricantes de la maquina fresadora. 
 
-En la figura \ref{fig:PCB1} podemos ver como quedo el diseño del circuito PCB:
+La figura \ref{fig:PCB1} ilustra la proyeccion de componentes en el PCB, antes de ser impreso.
 
 \begin{figure}
 \centering
@@ -156,6 +158,8 @@ En la figura \ref{fig:PCB1} podemos ver como quedo el diseño del circuito PCB:
 
 
 %subsection pcb1 (end)
+
+FALTAN PONER IMAGENES DE LA PLACA IMPRESA CON LOS COMPONENTES SOLDADOS.
 
 % section desarrollo (end)
 

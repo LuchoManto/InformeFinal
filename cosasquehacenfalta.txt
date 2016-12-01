@@ -9,3 +9,5 @@ cosas que hacen falta:
 - dejar la opcion de usar el timestamp o timer1
 - hacer la segunda prueba de sistema de la iteracion 5
 - medir las cosas con el sensor de CE
+- imagenes del osciloscopio con la salida del sensor midiendo
+- imagenes del osciloscopio con la salida del fotointerruptor
