@@ -34,12 +34,12 @@ Los requerimientos de esta iteracion estan planteados en base a los resultados d
 
 Focalizamos el desarrollo del programa en obtener un prototipo final, preparado para que se ejecute de manera continua en la placa de instrumentacion construida. En una primera instancia, terminamos aquellas funcionalidades ligadas a los requerimientos principales, y luego nos dedicamos a comprobar el funcionamiento del mismo, mediante unit-testing y tests de sistema.
 
-La figura \ref{fig:bloquesquintaiteracion} muestra el diagrama de bloques del programa terminado, al final esta iteracion. Si se compara con la figura \ref{bloquesprimeraiteracionsoftware}, el cambio en la estructura no es significativo. El mayor cambio esta en las funciones dentro de los bloques. Hay funciones nuevas, funciones que sufrieron cambios y funciones que se eliminaron.
+La figura \ref{it5:fig:bloquesquintaiteracion} muestra el diagrama de bloques del programa terminado, al final esta iteracion. Si se compara con la figura \ref{bloquesprimeraiteracionsoftware}, el cambio en la estructura no es significativo. El mayor cambio esta en las funciones dentro de los bloques. Hay funciones nuevas, funciones que sufrieron cambios y funciones que se eliminaron.
 
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.80\textwidth, height = 9cm]{bloquesquintaiteracion}
-  \caption{}\label{fig:bloquesquintaiteracion}
+  \caption{}\label{it5:fig:bloquesquintaiteracion}
 \end{figure}
 
 \subsection{Conversor} % (fold)
@@ -52,7 +52,7 @@ En la seccion \ref{sub:logica_de_las_funciones_del_conversor}, se explica el fun
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.80\textwidth, height = 7cm]{bufferdinamicovacio}
-  \caption{Estado de los buffers en el momento en que se terminaron de configurar las distintas vias de conversion, pero aun no se activo el modo de conversion continua}\label{fig:bufferdinamicovacio}
+  \caption{Estado de los buffers en el momento en que se terminaron de configurar las distintas vias de conversion, pero aun no se activo el modo de conversion continua}\label{it5:fig:bufferdinamicovacio}
 \end{figure}
 
 En esta version del programa, utilizamos dos buffers de 11 posiciones cada uno. A diferencia del buffer de conversion de la iteracion 2, cada posicion ya no representa un unico canal sino que representa una "via de conversion". Una via de conversion es una fuente de telemetria que puede provenir de un canal unico o diferencial.
@@ -92,19 +92,44 @@ Se tomaron las medidas suficientes, dentro del programa, para no permitir al usu
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.80\textwidth, height = 7cm]{bufferdinamicolleno}
-  \caption{Estado de los buffers en el momento que se activa la conversion continua. Cada vez que un valor del buffer dinamico llega a 1, se reestablece usando el buffer estatico como referencia.}\label{fig:bufferdinamicolleno}
+  \caption{Estado de los buffers en el momento que se activa la conversion continua. Cada vez que un valor del buffer dinamico llega a 1, se reestablece usando el buffer estatico como referencia.}\label{it5:fig:bufferdinamicolleno}
 \end{figure}
 
-El numero dentro de cada posicion representa el tiempo del intervalo. El intervalo mas corto es 1, y el mas largo es 65536. Los tiempos en segundos con respecto a los intervalos siguen una escala que tiende a ser lineal, pero necesaria de calibrar en caso de ser necesaria una meyor presicion. Para mejorar la practicidad a la hora de establecer intervalos, conformamos una tabla con valores de intervalos nominales.
+El numero dentro de cada posicion representa el tiempo del intervalo. El intervalo mas corto es 1, y el mas largo es 65536. Los tiempos en segundos con respecto a los intervalos siguen una escala que tiende a ser lineal, pero necesaria de calibrar en caso de ser necesaria una meyor presicion. Para mejorar la practicidad a la hora de establecer intervalos, conformamos una tabla con valores de intervalos nominales. A partir de dicha tabla, elabramos un grafico que se muestra en la figura \ref{it5:fig:relacionintervalotiempo}.
 
-PONER LA TABLA DE LOS VALORES TIPICOS ACA
+\begin{table}[h]
+\centering
+\caption{Tabla con mediciones de tiempo para distintos valores de intervalos.}
+\label{it5:tab:tablamediciones}
+\begin{tabular}{|l|l|}
+\hline
+\rowcolor[HTML]{34CDF9} 
+Intervalo & Tiempo (s) \\ \hline
+\rowcolor[HTML]{CBF3FF} 
+9         & 1          \\ \hline
+\rowcolor[HTML]{CBF3FF} 
+28        & 3          \\ \hline
+\rowcolor[HTML]{CBF3FF} 
+55        & 6          \\ \hline
+\rowcolor[HTML]{CBF3FF} 
+92        & 10         \\ \hline
+\rowcolor[HTML]{CBF3FF} 
+138       & 15         \\ \hline
+\end{tabular}
+\end{table}
 
-Las funciones "cambiar\_pin" y "analizar\_buffer" dentro del modulo de conversor, manejan los buffers y realizan las conversiones segun las configuraciones. Ambas son ejecutadas ciclicamente en el modo de conversiones continuas. "cambiar\_pin" prepara el hardware del conversor segun cual es el canal proximo a medir, y "analizar\_buffer" recorre el buffer, habilitando o no la conversion, y actualizandolo en cada corrida. Las figuras \ref{fig:actividadanalizarbuffer} y \ref{fig:actividadcambiarpin} describen las funciones con diagramas de actividad.
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.80\textwidth, height = 7cm]{relacionintervalotiempo}
+  \caption{Grafico Grafico elaborado a partir de la tabla \ref{it5:tab:tablamediciones}}[Grafico elaborado a partir de la tabla \ref{it5:tab:tablamediciones}, obtenidos midiendo el tiempo entre cada medicion para los intervalos en el eje de las abscisas. Observando la curva, llegamos a la conclusion del que los distintos valores de tiempo correspondientes a los intervalos se comportan de manera lineal. Haciendo una extrapolacion basica, podemos decir que el intervalo mas largo, con un valor de 65536, corresponde a un tiempo de aproximadamente 2 horas entre cada medicion.]\label{it5:fig:relacionintervalotiempo}
+\end{figure}
+
+Las funciones "cambiar\_pin" y "analizar\_buffer" dentro del modulo de conversor, manejan los buffers y realizan las conversiones segun las configuraciones. Ambas son ejecutadas ciclicamente en el modo de conversiones continuas. "cambiar\_pin" prepara el hardware del conversor segun cual es el canal proximo a medir, y "analizar\_buffer" recorre el buffer, habilitando o no la conversion, y actualizandolo en cada corrida. Las figuras \ref{it5:fig:actividadanalizarbuffer} y \ref{it5:fig:actividadcambiarpin} describen las funciones con diagramas de actividad.
  
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.80\textwidth, height = 7cm]{actividadanalizarbuffer}
-  \caption[Diagrama de actividad de la funcion analizar buffer]{Diagrama de actividad que muestra el funcionamiento de la funcion analizar buffer. Esta funcion esta pensada para trabajar junto con "cambiar\_pin". En cada cambio de pin, se analiza el buffer para saber si hay que convertir o no, y actualizar el estado de los elementos del buffer, que corresponden en uno a uno con todas las vias de conversion posibles.}\label{fig:actividadanalizarbuffer}
+  \caption[Diagrama de actividad de la funcion analizar buffer]{Diagrama de actividad que muestra el funcionamiento de la funcion analizar buffer. Esta funcion esta pensada para trabajar junto con "cambiar\_pin". En cada cambio de pin, se analiza el buffer para saber si hay que convertir o no, y actualizar el estado de los elementos del buffer, que corresponden en uno a uno con todas las vias de conversion posibles.}\label{it5:fig:actividadanalizarbuffer}
 \end{figure}
 
 
@@ -112,7 +137,7 @@ Las funciones "cambiar\_pin" y "analizar\_buffer" dentro del modulo de conversor
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.80\textwidth, height = 7cm]{actividadcambiarpin}
-  \caption[Diagrama de actividad de la funcion cambiar pin]{Diagrama de actividad que ilustra la logica dentro de la funcion cambiar\_pin, dentro del modulo del conversor. Esta funcion es llamada luego de cada conversion. En cada llamado, se selecciona un nuevo canal a medir. No discrimina si el canal esta o no habilitado para medir, en caso en que no lo este, se llamara inmediatamente para cambiar el pin nuevamente sin realizar medicion alguna.}\label{fig:actividadcambiarpin}
+  \caption[Diagrama de actividad de la funcion cambiar pin]{Diagrama de actividad que ilustra la logica dentro de la funcion cambiar\_pin, dentro del modulo del conversor. Esta funcion es llamada luego de cada conversion. En cada llamado, se selecciona un nuevo canal a medir. No discrimina si el canal esta o no habilitado para medir, en caso en que no lo este, se llamara inmediatamente para cambiar el pin nuevamente sin realizar medicion alguna.}\label{it5:fig:actividadcambiarpin}
 \end{figure}
 
 \subsubsection{Marca de tiempo} % (fold)
@@ -121,13 +146,13 @@ Las funciones "cambiar\_pin" y "analizar\_buffer" dentro del modulo de conversor
 En algunos casos, puede ser necesario saber la hora, minuto y segundo en el que se midió. Para esto, sugerimos la idea de que se incluya una marca de tiempo dentro de los meta-datos enviados a la placa de gestion. Fue un requerimiento propuesto por nosotros en una etapa ya avanzada del proyecto. Esta marca de tiempo es necesariamente relativa al momento de inicio de conversiones continuas. Esto se debe a que la placa de instrumentacion no tiene manera directa de calcular la fecha y hora exacta del dia, por lo que obtener una marca de tiempo absoluta de manera directa en esta placa no es practico. 
 La solucion planteada para obtener una marca de tiempo absoluta fue calculandola en la placa de gestion. Al estar esta placa conectada a internet, puede obtener facilmente la fecha y hora de inicio de conversiones. Con esto, a la fecha y hora se le suma la marca relativa de cada medicion, y se obtiene asi la marca de tiempo absoluta. Sabiendo esto, en esta seccion explicamos la obtencion de la marca de tiempo relativa. La absoluta se describe en la seccion \ref{it6:ssub:obtencion_de_marca_de_tiempo_absoluta}. \\
 
-El proceso para obtener la marca de tiempo esta descripto en la imagen \ref{fig:secuenciaobtenermarca} mediante un diagrama de secuencia. La marca de tiempo relativa se obtiene con el uso del timer2. Esto significa reducir la cantidad de contadores de eventos disponibles de 2 a 1, lo cual afecta de manera directa a un requerimiento principal. La solucion planteada fue dejar como opcional el calculo del timestamp, pudiendo asi elegir el uso del timer2 entre contador de eventos o contador interno para la marca de tiempo. Esto es posible porque hay casos donde no es necesario ser preciso a la hora de tener el tiempo de las mediciones, y se pueden calcular las marcas directamente desde el sistema de gestion, y asi dejar libre al timer2 para el conteo de eventos. Esto fue un compromiso dado el estado avanzado del proyecto.
+El proceso para obtener la marca de tiempo esta descripto en la imagen \ref{it5:fig:secuenciaobtenermarca} mediante un diagrama de secuencia. La marca de tiempo relativa se obtiene con el uso del timer2. Esto significa reducir la cantidad de contadores de eventos disponibles de 2 a 1, lo cual afecta de manera directa a un requerimiento principal. La solucion planteada fue dejar como opcional el calculo del timestamp, pudiendo asi elegir el uso del timer2 entre contador de eventos o contador interno para la marca de tiempo. Esto es posible porque hay casos donde no es necesario ser preciso a la hora de tener el tiempo de las mediciones, y se pueden calcular las marcas directamente desde el sistema de gestion, y asi dejar libre al timer2 para el conteo de eventos. Esto fue un compromiso dado el estado avanzado del proyecto.
 
 
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.80\textwidth, height = 7cm]{secuenciaobtenermarca}
-  \caption[Diagrama de secuencia para la obtencion de una marca de tiempo]{Diagrama de secuencia que muestra la interaccion entre el conversor y timer 2 para obtener la marca de tiempo. En el diagrama, la marca de tiempo esta representada mediante un objeto que alberga un unico campo, que es la marca de tiempo. En cada interrupcion de Timer 2 este valor se actualiza, y en cada conversion se obtiene el valor actual para enviarlo junto con la medicion obtenida en la conversion.}\label{fig:secuenciaobtenermarca}
+  \caption[Diagrama de secuencia para la obtencion de una marca de tiempo]{Diagrama de secuencia que muestra la interaccion entre el conversor y timer 2 para obtener la marca de tiempo. En el diagrama, la marca de tiempo esta representada mediante un objeto que alberga un unico campo, que es la marca de tiempo. En cada interrupcion de Timer 2 este valor se actualiza, y en cada conversion se obtiene el valor actual para enviarlo junto con la medicion obtenida en la conversion.}\label{it5:fig:secuenciaobtenermarca}
 \end{figure}
 
 % subsubsection marca_de_tiempo (end)
@@ -217,7 +242,7 @@ Requerimiento & Se deberia generar una marca de tiempo relativa al inicio de con
 \hline
 Descripcion      & En cada conversion, se deberia registrar una marca de tiempo con un numero que hace referencia al tiempo que transcurrio desde el momento que se iniciaron las conversiones al momento donde se toma la medicion. \\
 \hline
-Pre-condiciones  & \tabitem Sistema configurado con un pin en modo canal unico, con un intervalo de 10, que corresponde a SEGUNDOS segundos segun la tabla LA TABLAAA \\
+Pre-condiciones  & \tabitem Sistema configurado con un pin en modo canal unico, con un intervalo de 9, que corresponde a 1 segundo segun la tabla \ref{it5:tab:tablamediciones} \\
                  & \tabitem Generador de tension conectado al pin configurado  \\
                  & \tabitem Computadora conectada al sistema mediante cable serial RS-232 \\
                  & \tabitem Lector de canal serial abierto en la computadora  \\
@@ -225,13 +250,14 @@ Pre-condiciones  & \tabitem Sistema configurado con un pin en modo canal unico, 
                  & \tabitem Reloj en hora\\
 \hline
 
-Post-condiciones & La diferencia entre cada marca de tiempo y la siguiente deberia ser constante, y deberia ser aproximada al valor en segundos dado por el intervalo. El calculo en fecha y hora de la ultima marca de tiempo y el valor del cronometro (hecho con ayuda del reloj) deberia dar aproximadamente igual. VER ESTO ACA PORQUE HAY UN DRAMA CON EL TEMA PRECISION QUE NO LO DISCUTIMOS MUCHO Y HABRIA QUE DEFINIRLO \\
+Post-condiciones & La diferencia entre cada marca de tiempo y la siguiente deberia ser constante, y deberia ser aproximada al valor en segundos dado por el intervalo. El calculo en fecha y hora de la ultima marca de tiempo y el valor del cronometro (hecho con ayuda del reloj) deberia dar aproximadamente igual. \\
 \hline
 Secuencia  & \tabitem Establecimos una tension en el generador.
-           & \tabitem En simultaneo, dimos arranque al cronometro y iniciamos las conversiones continuas.
-           & \tabitem Luego de 10 segundos, paramos el cronometro y las conversiones, tambien en simultaneo.
+           & \tabitem Iniciamos las conversiones continuas.
+           & \tabitem Dimos arranque al cronometro.
+           & \tabitem Medimos el tiempo entre cada medicion con ayuda del cronometro en 30 mediciones sucesivas.
 
-Resultados       & VA A HABER QUE HACERLO
+Resultados       & Los resultados fueron los esperados. El intervalo de tiempo entre cada medicion era aproximadamente 1 segundo en todos los casos. Lo que significa que el tiempo entre cada medicion no varia con el paso del tiempo para un intervalo constante. 
 \end{tabular}
 \end{table}
 
@@ -270,7 +296,14 @@ Resultados       & El formato era correcto
 \section{Conclusiones} % (fold)
 \label{sec:conclusiones}
 
-En esta iteracion, llegamos a obtener un prototipo final del software, listo para embeber en el microcontrolador dentro de la placa construida en las iteraciones anteriores. No se cubrieron todos los requerimientos, pero si los de mayor riesgo:
+Algunos de los requerimientos principales y secundarios no se llegaron a cumplir por inconvenientes en el desarrollo, pero se tomaron ciertas medidas para compensar los problemas, sobretodo en aquellos que involucraban a los requerimientos principales y de mayor riesgo.
+
+\begin{itemize}
+\item Guardar las configuraciones y parametros del programa en la memoria flash no fue posible debido al poco espacio dentro de la memoria, y la impracticidad del metodo de escritura y lectura. Este no era un requerimiento principal, por lo que simplemente lo descartamos.
+\item La cantidad de contadores posibles paso de cuatro a dos, o solo uno si se utiliza la funcionalidad del timestamp. Los 4 contadores eran un requerimiento principal. En la iteracion 4, diseñamos y construimos un PCB en doble faz, que contiene los dos circuitos de la plataforma identicos en cada lado, obteniendo dos plataformas y duplicando la cantidad de recursos. Esto da un total de 4 contadores utilizables, con el timestamp inhabilitado en ambas plataformas. 
+\end{itemize}
+
+A pesar de esto, el software de la plataforma es estable, robusto y funcional. Los tests unitarios aseguran la respuesta necesaria ante cualquier error por parte del usuario. Ademas, el hecho que no sea un software de gran tamaño permite que no se cuelgue en medio de una ejecucion, interrumpiendo una sesion de adquisicion de datos. A continuacion listamos las funcionalidades principales desarrolladas, en esta iteracion, segun los requerimientos principales.
 
 \begin{itemize}
 \item Es posible configurar tiempos de intervalo entre cada medicion para cada canal por separado
@@ -278,11 +311,6 @@ En esta iteracion, llegamos a obtener un prototipo final del software, listo par
 \item Los datos que se envian a la placa de gestion para cada medicion incluyen, ademas de la medicion, el modo de conversion del canal por donde se esta midiendo.
 \item Los datos que se envian a la placa de gestion para cada medicion incluyen, ademas de la medicion, la marca de tiempo relativa correspondiente de la medicion hecha. 
 \end{itemize}
-
-Las funciones correspondientes al conversor, son las que hacen de mayor utilidad a la placa, yendo mas alla de las funcionalidades que el microcontrolador ya posee de manera nativa. Esto es, entre otras cosas, la posibilidad de configurar cada canal por separado, en el modo que se desee, y con un intervalo de tiempo que cubre una ventana amplia.
-
-El uso de la marca de tiempo fue implementado, pero con la particularidad de que utiliza uno de los contadores del microcontrolador, restando en 1 la cantidad de contadores de eventos disponibles. Optamos por dejarlo como opcion al usuario de usar la marca de tiempo o usar el contador.
-
 
 % section conclusiones (end)
 

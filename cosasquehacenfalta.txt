@@ -1,13 +1,16 @@
 cosas que hacen falta:
 
 
--adaptar el formato de envio de mediciones para que sea PIN,MODO,VALOR,TIMESTAMP
 -terminar la base de datos en el servidor
--sacar fotos de la primera interfaz pedorra que hicimos
--sacar fotos de la interfaz pulenta
--medir bien cuanto es el intervalo cuando pones un 1. y calibrarlo, es decir, si no es muy lineal, hacer una tabla de 15 o 20 entradas para intervalos tipicos. que se yo, 10ms, 1 seg, 5 seg, 1 min, 5 min. algo asi..
 - dejar la opcion de usar el timestamp o timer1
-- hacer la segunda prueba de sistema de la iteracion 5
 - medir las cosas con el sensor de CE
 - imagenes del osciloscopio con la salida del sensor midiendo
 - imagenes del osciloscopio con la salida del fotointerruptor
+
+hecho:
+
+-sacar fotos de la primera interfaz pedorra que hicimos
+-sacar fotos de la interfaz pulenta
+-adaptar el formato de envio de mediciones para que sea MODO,PIN,VALOR,TIMESTAMP
+-medir bien cuanto es el intervalo cuando pones un 1. y calibrarlo, es decir, si no es muy lineal, hacer una tabla de 15 o 20 entradas para intervalos tipicos. que se yo, 10ms, 1 seg, 5 seg, 1 min, 5 min. algo asi..
+- hacer la segunda prueba de sistema de la iteracion 5

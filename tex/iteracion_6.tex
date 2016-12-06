@@ -4,8 +4,11 @@
 \section{Introduccion} % (fold)
 \label{sec:introduccion}
 
-El sistema de instrumentacion recibe, interpreta y distribuye datos de sensores, para luego enviarselas a otro sistema que extiende las funciones del primero, teniendo entonces un sistema de gestion y administracion para los datos de los sensores. En esta iteracion, realizamos una implementacion de este ultimo sistema. La idea es tener un sistema cuyas funciones incluyan el manejo de la placa de instrumentacion, pero que ademas, permita un uso mas general en lo que respecta al manejo de sistemas administradores de sensores y actuadores
-La figura \ref{fig:topologiaplacas} muestra una topologia basica que describe el rol de este sistema a implementar.
+La plataforma de instrumentacion diseñada, recibe, concentra, y distribuye datos de telemetria, para luego enviar estos datos a otro sistema que realice alguna accion segun la informacion que brindan estos datos. Esta iteracion se dedicará al desarrollo de un sistema de gestion simple, que implementa un servidor web con base de datos. La informacion de telemetria se guardara en esta base de datos, y sera posible accederla via internet. Ademas de esto, se proveera una interfaz grafica de usuario, que permita la configuracion tanto del sistema de gestion como de la plataforma.
+
+El obejtivo principal es tener un sistema cuyas funciones incluyan el manejo de la placa de instrumentacion, pero que ademas, permita un uso mas general en lo que respecta al manejo de sistemas administradores de sensores y actuadores.
+
+Este sistema fue construido teniendo como base otro sistema gestionador, desarrollado por Gaston Lucero Berrini; tambien estudiante, desarrollando su proyecto integrador en el Laboratorio de Arquitectura de Computadoras. Su proyecto es un sistema gestionador de dispositivos IoT. El software de gestion de este proyecto cubre una gran parte de las necesidades de nuestro sistema de gestion. Principalmente, en esta iteracion, nos dedicamos a acondicionar este software, para su uso con nuestra plataforma.
 
 % section introduccion (end)
 
@@ -17,12 +20,12 @@ La figura \ref{fig:topologiaplacas} muestra una topologia basica que describe el
 \item Deberia estar en el mismo lugar fisico que la placa de alimentacion.
 \item Deberia implementar un servidor web con una interfaz grafica de usuario. Esta interfaz deberia permitir:
 \begin{itemize}
-	\item Las mismas acciones que si el usuario se conectara directamente con la placa de instrumentacion via interfaz de comando, solamente que via interfaz grafica.
-	\item Enviar cualquier comando que pueda ser interpretado por la placa de instrumentacion
-	\item Establecer intervalos de tiempo usando hora y fecha en los que se debe medir sobre cierto canal
+	\item La misma configuracion que se le permite a un usuario que esta conectado directamente a la placa de instrumentacion, via una interfaz web grafica con conexion a internet. 
+	\item Enviar y recibir la respuesta de cualquier comando que pueda ser interpretado por la placa de instrumentacion
+	\item Establecer intervalos de tiempo usando hora y fecha en los que se debe medir sobre algun canal, pudiendo elegir el modo y el intervalo del mismo.
 \end{itemize}
-\item Deberia guardar datos de mediciones e informacion sobre transacciones en general entre ambas placas en una base de datos local, accesible via la interfaz grafica 
-\item La conexion entre el sistema y el usuario (dispositivo del usuario) deberia ser via Wi-Fi o algun otro protocolo inalambrico
+\item Deberia guardar datos de mediciones e informacion sobre transacciones en general entre ambas placas en una base de datos local, accesible via la interfaz web grafica 
+\item La conexion entre el sistema y el usuario (dispositivo del usuario: computadora con conexion a internet, smartphone) deberia ser via Wi-Fi o algun otro protocolo inalambrico
 \end{itemize}
 
 
@@ -34,7 +37,15 @@ La figura \ref{fig:topologiaplacas} muestra una topologia basica que describe el
 \subsection{Placa de desarrollo elegida para la implementacion} % (fold)
 \label{sub:placa_de_desarrollo_elegida_para_la_implementacion}
 
-Sin una seleccion previa teniendo en cuenta los requisitos, y por una cuestion de accesibilidad, se decidio implementar este sistema en una placa de desarrollo Raspberry Pi B+ (figura \ref{fig:raspberrypi}), embebida con un sistema operativo Raspbian (Debian para Raspberry). Bajo estas condiciones, es posible cubrir todos los requerimientos.
+Teniendo en cuenta los requerimientos, podemos listar una serie de requisitos que debe cumplir la placa de desarrollo que se seleccione:
+
+\begin{itemize}
+	\item Deberia poder albergar un sistema operativo basado en Linux o Unix
+	\item Deberia permitir la conexion de un adaptador Wi-Fi USB
+	\item Deberia tener interfaz serial UART
+\end{itemize}
+
+Por una cuestion de disponibilidad, decidimos implementar este sistema en una placa de desarrollo Raspberry Pi B+ (figura \ref{fig:raspberrypi}), embebida con un sistema operativo Raspbian (Debian para Raspberry). Esta placa de desarrollo cumple con todos los requisitos mencionados anteriormente, por lo que es posible cubrir todos los requerimientos del sistema de gestion.
 
 \begin{figure}[h]
   \centering
@@ -43,8 +54,38 @@ Sin una seleccion previa teniendo en cuenta los requisitos, y por una cuestion d
 \end{figure}
 % subsection placa_de_desarrollo_elegida_para_la_implementacion (end)
 
+\subsection{Diagramas de bloques} % (fold)
+\label{sub:diagramas_de_bloques}
+
+Como etapa inicial del desarrollo, procedemos a graficar diagramas de bloques que describen el diseño estatico del sistema.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.80\textwidth, height = 7cm]{bloquessistemadegestion}
+  \caption{Diagrama de bloques del sistema de gestion, implementado en una placa de desarrollo Raspberry Pi.}\label{fig:bloquessistemadegestion}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.80\textwidth, height = 7cm]{interaccionplataformaygestionador}
+  \caption{Diagrama que ilustra la interaccion entre la plataforma de instrumentacion y el sistema gestionador}\label{fig:interaccionplataformaygestionador}
+\end{figure}
+
+La Figura \ref{fig:bloquessistemadegestion} muestra los distintos bloques del sistema de gestion y la figura \ref{fig:interaccionplataformaygestionador} ilustra la interaccion con la plataforma de instrumentacion. El sistema esta compuesto por cuatro bloques basicos:
+
+\begin{itemize}
+	\item Una interfaz grafica, que interactua con el usuario
+	\item Una interfaz serial, que interactua con la plataforma de instrumentacion
+	\item Un bloque que maneja el sistema de gestion de una base de datos MySQL, para guardar la informacion de telemetria junto con los metadatos
+	\item Un Servidor Web, que ademas de proveer conexion a internet, maneja los bloques mencionados.
+\end{itemize}
+
+
+% subsection diagramas_de_bloques (end)
+
 \subsection{Servidor web} % (fold)
 \label{sub:servidor_web}
+
 
 % subsection servidor_web (end)
 
