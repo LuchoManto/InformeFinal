@@ -1,114 +1,303 @@
-\chapter{Iteracion 6: Implementacion de un sistema gestionador para la placa de instrumentacion} % (fold)
+\chapter{Iteracion 6: Caso de prueba con un sensor de campo electrostatico} % (fold)
 \label{cha:iteracion_6}
 
 \section{Introduccion} % (fold)
-\label{sec:introduccion}
+\label{it6:sec:introduccion}
 
-La plataforma de instrumentacion diseñada, recibe, concentra, y distribuye datos de telemetria, para luego enviar estos datos a otro sistema que realice alguna accion segun la informacion que brindan estos datos. Esta iteracion se dedicará al desarrollo de un sistema de gestion simple, que implementa un servidor web con base de datos. La informacion de telemetria se guardara en esta base de datos, y sera posible accederla via internet. Ademas de esto, se proveera una interfaz grafica de usuario, que permita la configuracion tanto del sistema de gestion como de la plataforma.
+Parte de este proyecto fue poner a prueba nuestro sistema utilizando un sensor detector de campo electrostatico. Ademas de obtener las mediciones, fue necesario realizar un sistema de control para el motor del sensor. En esta iteracion realizamos la adaptacion necesaria de los requisitos de funcionamiento del sensor a nuestro sistema de instrumentacion, probando asi el funcionamiento del mismo, asi como tambien el funcionamiento del sistema gestionador desarrollado en la iteracion \ref{cha:iteracion_6} 
 
-El obejtivo principal es tener un sistema cuyas funciones incluyan el manejo de la placa de instrumentacion, pero que ademas, permita un uso mas general en lo que respecta al manejo de sistemas administradores de sensores y actuadores.
+\subsection{Marco teorico} % (fold)
+\label{it6:sub:marco_teorico}
 
-Este sistema fue construido teniendo como base otro sistema gestionador, desarrollado por Gaston Lucero Berrini; tambien estudiante, desarrollando su proyecto integrador en el Laboratorio de Arquitectura de Computadoras. Su proyecto es un sistema gestionador de dispositivos IoT. El software de gestion de este proyecto cubre una gran parte de las necesidades de nuestro sistema de gestion. Principalmente, en esta iteracion, nos dedicamos a acondicionar este software, para su uso con nuestra plataforma.
+La intensidad de un campo electrico se puede medir, en principio, colcando un medidor de voltaje entre dos placas metalicas paralelas separadas por una distancia. El problema de esto es que, como el medidor de voltaje suele tener una impedancia alta en la entrada, cualquier voltaje inducido en las placas se pierde rapidamente, y no podria usarse para medir el capo electrico. Para arreglar esto, se utiliza la tecnica de las aspas. Se coloca una placa conductora, y sobre la misma se posiciona un sistema con aspas de forma que cuando estas roten, se cubra y se exponga periodicamente la placa conductora al campo electrico ambiental. Para lograr esto apropiadamente, el rotor que hace girar las aspas debe estar conectado a tierra. La placa conductora esta conectada a tierra a traves de un amplificador de transconductancia, que convierte la corriente que va desde la placa a tierra en una tension. \\
+
+A medida que la placa conductora este expuesta al campo electrico, el campo induce una corriente a tierra mientras que atrae o repele la carga de la placa conductora. A medida que la placa esta cubierta del campo electrico, la carga inducida se drena. Entonces las placas inducen una corriente alterna a masa que es proporcional a la intensidad del campo electrico estatico. Esta corriente alterna luego puede ser rectificada para utilizarla como entrada a un conversor analogico digital y obtener asi la intensidad del campo electrico medido. \\
+
+Una vez obtenida la intensidad, es necesario saber el signo del campo electrico medido. Para obtenerlo, un metodo es que en el mismo conversor analogico digital se obtenga la medicion de manera diferencial. Un conversor analogico digital diferencial toma la diferencia entre dos canales para obtener un dato en lugar de tomar el valor de un canal y compararlo con tierra. De forma que es posible determinar cual es el canal con mayor tension. Con esto, se pueden conectar los canales de las señales de tierra y la de la placa conductora, y se miden de manera diferencial para obtener tento la intensidad como el signo del campo electrico estatico.
+\cite{sensorcampo}
+
+% subsection marco_teorico (end)
+\subsection{El sensor} % (fold)
+\label{it6:sub:el_sensor}
+
+El sensor utilizado es un dispositivo que mide la intensidad del campo electrico en el ambiente debido al campo electrostatico generado por la carga electrica de las nubes en el momento. Se puede utilizar para detectar la posibilidad de que caiga un rayo en una zona cercana al sensor, y tambien para investigar los efectos de la electricidad estatica. Para funcionar, el sensor necesita de un motor que gire a velocidad constante. Este motor funciona en base a un driver que tiene como entrada una señal modulada por ancho de pulso.
+Mientras el motor gire a velocidad constante, es posible obtener datos validos del sensor. La idea es hacer que el funcionamiento del sensor como la adquisicion de las mediciones sea logrado con funcionalidades de la placa de instrumentacion, mas otras caracteristicas que ofrece el microcontrolador C8051F352, como ser el modulo de PWM para generar la señal modulada por ancho de pulso, y el uso de los timers para establecer las bases de tiempo que utilizamos para hacer un control de estabilidad en la velocidad del motor. \\
+
+Fisicamente, es una estructura metalica compuesta por un motor que hace girar unas aspas que se se encargan de blindar y desblindar una placa que a su vez se carga y descarga con la electricidad estatica del ambiente. esta carga y descarga continua es lo que justamente se termina transformando en el nivel de voltaje que nos indica el nivel de electricidad estatica del ambiente, que es lo que queremos saber.
+
+La placa y las aspas funcionan como un capacitor que se blinda y se des\-blinda a medida que el motor gira. En el momento que las aspas estan descuburiendo la placa, el capacitor se carga, y en el momento que se cubre la placa, el capacitor se descarga. La descarga se hace sobre un amplificador que luego va a un conversor analogico digital, que termina en la lectura de un valor que nos dice el nivel del campo electrostatico ambiental. En el caso particular de este sensor, el motor que hace girar las aspas es un motor brushless manejado por un driver PWM.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.80\textwidth, height = 7cm]{sensorhorizontal}
+  \caption[Imagen del sensor de campo electrostatico utilizado (horizontal)]{Foto del sensor en horizontal. Las aspas que pueden verse son las responsables de cubrir y descubrir la placa cargada (color cobre), que es la que se carga con la electricidad estatica del ambiente.}\label{fig:sensorhorizontal}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.80\textwidth, height = 7cm]{sensorvertical}
+  \caption[Imagen del sensor de campo electrostatico utilizado (vertical)]{Foto del sensor en vertical. Puede verse en el eje, el sistema de aspas y fotointerruptor utilizado para medir las RPM.}\label{fig:sensorvertical}
+\end{figure}
+
+Ademas de las aspas que miden el campo electrico, en el eje del motor se encuentra un segundo grupo de aspas, pero mas pequeño; junto a estas aspas se encuentra acoplado un fotointerruptor, de manera que el paso de cada aspa interrumpe el paso de luz de un extremo a otro. Si se construye el circuito requerido para el fotointerruptor, ocurrira que cuando el motor este girando, se generen pulsos cuadrados a la salida del fotointerruptor, permitiendo obtener cuentas que ayudaran a la hora de controlar la velocidad del motor. Las aspas secundarias y el fotointerruptor pueden verse en la figura \ref{fig:sensorvertical}
+
+% subsection el_sensor (end)
 
 % section introduccion (end)
 
 \section{Requerimientos de la iteracion} % (fold)
-\label{sec:requerimientos_de_la_iteracion}
+\label{it6:sec:requerimientos_de_la_iteracion}
 
 \begin{itemize}
-\item El sistema deberia estar implementado en una placa de desarrollo de manera que se pueda conectar a la placa de instrumentacion via comunicacion serial
-\item Deberia estar en el mismo lugar fisico que la placa de alimentacion.
-\item Deberia implementar un servidor web con una interfaz grafica de usuario. Esta interfaz deberia permitir:
-\begin{itemize}
-	\item La misma configuracion que se le permite a un usuario que esta conectado directamente a la placa de instrumentacion, via una interfaz web grafica con conexion a internet. 
-	\item Enviar y recibir la respuesta de cualquier comando que pueda ser interpretado por la placa de instrumentacion
-	\item Establecer intervalos de tiempo usando hora y fecha en los que se debe medir sobre algun canal, pudiendo elegir el modo y el intervalo del mismo.
-\end{itemize}
-\item Deberia guardar datos de mediciones e informacion sobre transacciones en general entre ambas placas en una base de datos local, accesible via la interfaz web grafica 
-\item La conexion entre el sistema y el usuario (dispositivo del usuario: computadora con conexion a internet, smartphone) deberia ser via Wi-Fi o algun otro protocolo inalambrico
+\item Se deberian utilizar las funcionalidades de la plataforma de instrumentacion para obtener mediciones del sensor
+\item Se deberia controlar la velocidad del motor.
+\item Se deberia rectificar y amplificar, con el menor ruido posible, la señal de salida del sensor, antes de que ingrese a la plataforma
+\item Si se construye un circuito de adaptacion para los requerimientos anteriores, este deberia ser acoplable a la plataforma de instrumentacion, en forma de ``shield''
+\item Se deberia construir un recipiente donde pueda entrar el sensor junto con el sistema de instrumentacion, para poder colocarlo en el aire libre con el objetivo de realizar una prueba de campo
 \end{itemize}
 
 
 % section requerimientos_de_la_iteracion (end)
 
-\section{Desarrollo} % (fold)
-\label{sec:desarrollo}
+\section{Experimentacion} % (fold)
+\label{it6:sec:experimentacion}
 
-\subsection{Placa de desarrollo elegida para la implementacion} % (fold)
-\label{sub:placa_de_desarrollo_elegida_para_la_implementacion}
+El motor dentro de este sensor incluia un driver PWM. Para arrancar y dar velocidad a este motor, se utilizo, como primera instancia, una placa de desarrollo Arduino con un software hecho por Emiliano Pellicioni y Diego Gutierrez. Con el driver conectado a la placa y el programa funcionando, era posible arrancar el motor y darle una velocidad (aunque no muy constante). \\
 
-Teniendo en cuenta los requerimientos, podemos listar una serie de requisitos que debe cumplir la placa de desarrollo que se seleccione:
+Teniendo el motor funcionando, la teoria indica que el sensor esta midiendo campo. Para probar esto, se utilizo una regla de plastico cargada con electricidad estatica y un osciloscopio conectado a la salida del sensor. Al acercar y alejar la regla de las aspas, se podia ver en la salida del osciloscopio como la onda resultante a la salida del sensor aumentaba y disminuia en amplitud. Lo que estabamos viendo, en ese momento, era una salida ``en crudo'' del sensor. Para poder convertir la señal y obtener datos coherentes, era necesario rectificar la señal. \\
 
-\begin{itemize}
-	\item Deberia poder albergar un sistema operativo basado en Linux o Unix
-	\item Deberia permitir la conexion de un adaptador Wi-Fi USB
-	\item Deberia tener interfaz serial UART
-\end{itemize}
+El fotointerruptor acoplado al eje del motor da la posibilidad de realizar un conteo de señales cuadradas que nos proporcione los datos suficientes como para realizar una medicion de las vueltas por minuto del motor. Necesita de un circuito basico para funcionar. Lo construimos en una protoboard junto con todo lo necesario para hacer funcionar el motor. Con ayuda de un osciloscopio, fue posible ver los pulsos cudadrados de 5 Volts generados por el fotointerruptor. Estos pulsos son los que luego servirian de entrada a un contador de eventos de la placa de instrumentacion, con el objetivo de controlar la velocidad del motor. \\
 
-Por una cuestion de disponibilidad, decidimos implementar este sistema en una placa de desarrollo Raspberry Pi B+ (figura \ref{fig:raspberrypi}), embebida con un sistema operativo Raspbian (Debian para Raspberry). Esta placa de desarrollo cumple con todos los requisitos mencionados anteriormente, por lo que es posible cubrir todos los requerimientos del sistema de gestion.
+ACA FALTARIA INCLUIR IMAGENES DE:
 
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.80\textwidth, height = 7cm]{raspberrypi}
-  \caption{Placa de desarrollo Raspberry Pi B+}\label{fig:raspberrypi}
-\end{figure}
-% subsection placa_de_desarrollo_elegida_para_la_implementacion (end)
+-EL OSCILOSCOPIO CON LA SALIDA DEL SENSOR MIDIENDO
+-EL OSCILOSCOPIO CON LA SALIDA DEL FOTO INTERRUPTOR
 
-\subsection{Diagramas de bloques} % (fold)
-\label{sub:diagramas_de_bloques}
+% section experimentacion (end)
 
-Como etapa inicial del desarrollo, procedemos a graficar diagramas de bloques que describen el diseño estatico del sistema.
+\section{Adaptacion de la plataforma al sensor} % (fold)
+\label{it6:sec:adaptacion_de_la_plataforma_al_sensor}
 
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.80\textwidth, height = 7cm]{bloquessistemadegestion}
-  \caption{Diagrama de bloques del sistema de gestion, implementado en una placa de desarrollo Raspberry Pi.}\label{fig:bloquessistemadegestion}
-\end{figure}
+\subsection{Circuito de adaptacion} % (fold)
+\label{it6:sub:circuito_de_adaptacion}
 
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.80\textwidth, height = 7cm]{interaccionplataformaygestionador}
-  \caption{Diagrama que ilustra la interaccion entre la plataforma de instrumentacion y el sistema gestionador}\label{fig:interaccionplataformaygestionador}
-\end{figure}
+% subsection circuito_de_adaptacion (end)
 
-La Figura \ref{fig:bloquessistemadegestion} muestra los distintos bloques del sistema de gestion y la figura \ref{fig:interaccionplataformaygestionador} ilustra la interaccion con la plataforma de instrumentacion. El sistema esta compuesto por cuatro bloques basicos:
+Este sensor particular requiere de ciertos requerimientos para funcionar de manera correcta:
 
 \begin{itemize}
-	\item Una interfaz grafica, que interactua con el usuario
-	\item Una interfaz serial, que interactua con la plataforma de instrumentacion
-	\item Un bloque que maneja el sistema de gestion de una base de datos MySQL, para guardar la informacion de telemetria junto con los metadatos
-	\item Un Servidor Web, que ademas de proveer conexion a internet, maneja los bloques mencionados.
+  \item El motor deberia estar alimentado con una señal continua de 12 Voltios
+  \item El driver del motor deberia estar conectado a una salida de un generador de señales moduladas en ancho de pulso, con un nivel de 5 Voltios en alto y 0 Voltios en bajo.
+  \item La velocidad del motor deberia ser rapida y estable; priorizando la estabilidad a la velocidad.
+  \item La señal de campo electrostatico deberia ser rectificada y amplificada previa a ser convertida a digital
 \end{itemize}
 
 
-% subsection diagramas_de_bloques (end)
+Ademas de los requerimientos principales mencionados, fueron propuestos los siguientes requerimientos secundarios:
 
-\subsection{Servidor web} % (fold)
-\label{sub:servidor_web}
+\begin{itemize}
+  \item El diseño de la placa deberia ser tal que sea acoplable y desacoplable a la placa de instrumentacion.
+  \item Deberia consumir lo menos posible
+\end{itemize}
+
+Para cumplir con estos requerimientos, fue necesario desarrollar funcionalidades aparte dentro del programa embebido en la plataforma de instrumentacion, ademas de un circuito de adaptacion acoplado a la misma.
+
+% subsection requerimientos (end)
+\subsubsection{Circuito de adaptacion para la señal de nivel de campo} % (fold)
+\label{it6:ssub:circuito_de_adaptacion_para_la_señal_de_nivel_de_campo}
+
+La señal a la salida del sensor es alterna y de muy baja intensidad. El conversor analogico digital requiere de una señal rectificada y de un umbral minimo para funcionar correctamente. Para esto, se diseño un circuito de adaptacion de señal, que rectifica y amplifica la salida del sensor. Este circuito puede verse en la figura FIGURA.  
+
+ACA VA EL OPERACIONAL CON EL AMPLIFICADOR Y RECTIFICADOR QUE SE PONE PARA QUE VAYA ANTES DEL CONVERSOR.. CON IMAGEN
 
 
-% subsection servidor_web (end)
 
-\subsection{Base de datos} % (fold)
-\label{sub:base_de_datos}
+% subsection circuito_de_adaptacion_para_la_señal_de_nivel_de_campo (end)
 
-% subsection base_de_datos (end)
+\subsubsection{Circuito de adaptacion para la señal de pulsos del fotointerruptor} % (fold)
+\label{it6:ssub:circuito_de_adaptacion_para_la_señal_de_pulsos_del_fotointerruptor}
 
-\subsection{Interfaz grafica de usuario} % (fold)
-\label{sub:interfaz_grafica_de_usuario}
 
-% subsection interfaz_grafica_de_usuario (end)
+En esta configuracion, el fotointerruptor genera una señal de pulsos cuadrados a medida que el motor gira. Esta señal puede usarse como entrada a un contador de eventos, y de esta manera medir la velocidad de giro del motor. La figura \ref{fig:fotointerruptorcircuitotipico} muestra el circuito implementado para este fin. 
 
-% section desarrollo (end)
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.80\textwidth, height = 7cm]{fotointerruptorcircuitotipico}
+  \caption{Circuito utilizado para el fotointerruptor}\label{fig:fotointerruptorcircuitotipico}
+\end{figure}
+
+En esta disposicion, cuando el fotosensor esta iluminado, hay 5 Volts en la salida; de lo contrario 0 Volts. Esto hace que cuando el motor gira, las aspas van a tapar y destapar la entrada de luz al fotosensor generando una onda cuadrada a la salida del circuito, cuya frecuencia depende de la velocidad del motor. Dentro del software de la plataforma de instrumentacion, se utilizo uno de los contadores de eventos disponibles para obtener las cuetnas del fotoiterruptor y medir la velocidad del motor. Con esta informacion, se modifica el ancho de pulso de la señal PWM a la entrada del driver del motor. Corrigiendo asi la velocidad, para mantenerla lo mas estable posible. 
+
+% subsection circuito_de_adaptacion_para_la_señal_de_pulsos_del_fotointerruptor (end)
+
+\subsubsection{Circuito de alimentacion} % (fold)
+\label{it6:ssub:circuito_de_alimentacion}
+
+La placa de instrumentacion esta diseñada para estar siempre encendida. Al no consumir mucho, no trae problemas de consumo o temperatura. Pero habiendo hecho esta adaptacion, era necesario tener en cuenta el consumo del motor mientras esta encendido pero sin girar. Para ahorrar consumo, propusimos agregar un control de encendido y apagado del sensor, utilizando uno de los pines GPIO del microcontrolador. \\
+
+La figura PONER FIGURA DEL CIRCUITO muestra el circuito que prepara la señal del microcontrolador que controla el encendido y apagado del motor. Utilizamos un relé, un optoacoplador, un transistor, un diodo y resistencias. El optoacoplador sirve para aislar opticamente el circuito logico del motor con el circuito de 12 V. El rele electromecanico conmuta la conductividad entre el motor y masa, de manera que en un estado del rele el motor esta prendido, y en el otro esta apagado. Utilizamos un transistor porque los 5V a la salida del optoacoplador no eran suficientes para la tension de switching del relé.
+
+% subsection circuito_de_alimentacion (end)
+
+\subsubsection{Señal modulada en ancho de pulso para el adaptador del motor} % (fold)
+\label{it6:ssub:señal_modulada_en_ancho_de_pulso_para_el_adaptador_del_motor}
+
+% aca en realidad no hicimos nada porque lo unico que hay es el cable de salida del pwm que viene de la placa y se conecta de pecho al driver.. pero bueno explicar eso.. y explicar tambnein que pasamos desde el arduino que hacia todo por interrupciones al pwm de la placa que lo hace todo por HW y funciona mucho mejor. aunque no explicar como funciona el programa porque eso va despues
+
+El motor dentro de la estructura que conforma el motor tiene un modulo adaptador programable que funciona como interfaz, haciendo que una señal modulada en ancho de pulso se convierta en la velocidad de giro del motor, asi como tambien en distintas configuraciones. Los distintos anchos de pulso son codigos que representan distintos modos para el driver. En el manual, especifica las distintas configuraciones disponibles y como establecerlas utilizando distintas señales moduladas en ancho de pulso. Tanto en el proceso de configuracion como en el funcionamiento normal, el driver emite sonidos en distintos tonos que dan informacion sobre el estado en cada momento.
+
+Para una respuesta estable del sensor, era importante que las aspas giren a una velocidad alta y constante. Alrededor de los 4000 RPM, priorizando la estabilidad a la velocidad. Dentro del programa de la plataforma de instrumentacion, existen rutinas que establecen el driver automaticamente en el modo requerido por nuestro sistema. Estas rutinas utilizan un modulo del microcontrolador denominado PCA, que incluye, en uno de sus modos, un generador de señal modulada en pulsos. Cuando el motor esta en funcionamiento, el mismo programa se encarga de estabilizar su velocidad con las funciones descritas en la seccion \ref{it6:sec:software_de_adaptacion}
+
+
+% subsection circuito_de_adaptacion_para_la_señal_modulada_en_ancho_de_pulso_para_el_driver_del_motor (end)
+
+\subsubsection{Circuito final} % (fold)
+\label{it6:ssub:circuito_final}
+
+En las secciones anteriores, describimos por separado cada una de las partes del circuito de adaptacion para el sensor de campo. La figura FIGURA muestra el despliegue de componentes del circuito final. Este diseño se imprimio en un PCB para acoplar a la plataforma de instrumentacion. El circuito impreso y acoplado se muestra en la figura FIGURA.
+
+
+% subsection circuito_final (end)
+
+% section implementacion_de_una_placa_de_adaptacion_para_el_sensor_de_campo (end)
+
+
+\subsection{Software de adaptacion} % (fold)
+\label{it6:sec:software_de_adaptacion}
+
+
+El circuito de adaptacion, prepara las señales de entrada y salida necesarias para el funcionamiento correcto del sensor. Dentro de la placa de instrumentacion, desarrollamos funcionalidades anexas al software principal para trabajar estas señales.
+Realizamos un modulo aparte llamado ``sensor_CE.c'', cuyas funciones estan desarrolladas de manera especifica para este sensor. Estas funciones incluyen:
+
+\begin{itemize}
+	\item Dar arranque y parada al motor
+	\item Controlar la velocidad del motor.
+\end{itemize}
+
+La medicion de campo no es parte del software de adaptacion, dado que se realiza utilizando funciones del modulo ``conversor''. La señal proveniente del circuito de adaptacion que corresponde a la telemetria proveniente del sensor, se conecta a uno de los pines de entrada del conversor analogico-digital. \\
+
+La figura \ref{fig:diagramabloquessensor} muestra el diagrama de bloques de la adaptacion del software a la plataforma de instrumentacion.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.80\textwidth, height = 7cm]{diagramabloquessensor}
+  \caption{Diagrama de bloques fisicos del sistema de adaptacion del sensor}\label{fig:diagramabloquessensor}
+\end{figure}
+
+\subsubsection{Arranque y parada} % (fold)
+\label{it6:ssub:arranque_y_parada}
+
+El motor esta controlado por un driver PWM que traduce señales moduladas en ancho de pulso en la corriente trifasica que da giro al motor. Para dar arranque al motor, es necesario seguir una serie de pasos que dependen del modo configurado en el driver. Para dar fin al giro del motor, simplemente hay que apagar la señal PWM. \\
+
+Para este caso particular, es necesario utulizar un unico modo de configuracion, ya que se necesita que el motor gire a una unica velocidad, lo mas estable posible. El modo de configuracion esta establecido aunque el driver esta apagado. En caso de necesitar reconfigurarlo, existen funciones dentro del software de adaptacion que lo permiten. \\
+
+Si el driver esta configurado correctamente y esta alimentado a 12 Voltios, es necesario activar la secuencia de arranque para que comience a girar. Esta secuencia de arranque consiste en 3 señales de distintos anchos de pulso separadas por intervalos de un segundo. Luego de esta secuencia, se establece el ancho de pulso que da la velocidad estable al motor, configurada en este caso para 4000 RPM. \\
+
+Una vez que el motor alcanzo su velocidad estable, se activa el control de velocidad, para evitar que se desestabilice. 
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.80\textwidth, height = 7cm]{diagramaactividadescontrolvelocidad}
+  \caption{Diagrama de actividades para el control de velocidad del motor}\label{fig:diagramaactividadescontrolvelocidad}
+\end{figure}
+
+% subsubsection arranque_y_parada (end)
+
+\subsubsection{Control de velocidad} % (fold)
+\label{it6:ssub:control_de_velocidad}
+
+La velocidad de giro del motor deberia ser rapida y constante para un mejor funcionamiento del sensor, priorizando estabilidad a velocidad. Para lograr esto, utilizamos el fotointerruptor acoplado al sensor, como generador de pulsos cuadrados. Estos pulsos se usan como entrada a uno de los contadores de eventos de la plataforma de instrumentacion. Con el valor de esta cuenta, es posible calcular la velocidad del motor en tiempo real, con una precision de unos 30 milisegundos por medicion. \\
+
+La estabilidad en en la velocidad de giro del motor se alcanzo mediante un control basico de velocidad, hecho por software. Estableciendo una base de tiempo con uno de los timer del microcontrolador, se cuenta la cantidad de eventos sobre esa base de tiempo, la cantidad de cuentas entonces, da la velocidad. Una velocidad ``estable'' esta establecida en una variable fija, y se corresponde a una cantidad fija de eventos en la misma base de tiempo. Comparando la cantidad de eventos medidos sobre la base de tiempo con la cantidad de eventos que corresponden a la velocidad estable, se sabe si el motor esta girando demasiado rapido, o demasiado lento. Con esta informacion, se ajusta la velocidad del motor para acelerarlo o desacelerarlo, modificando el ancho de pulso del modulo PCA conectado al driver PWM del motor. Una descripcion grafica de este proceso se ilustra en la figura \ref{fig:diagramaactividadescontrolvelocidad}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.80\textwidth, height = 7cm]{diagramaactividadescontrolvelocidad}
+  \caption{Diagrama de actividades para el control de velocidad del motor}\label{fig:diagramaactividadescontrolvelocidad}
+\end{figure}
+
+% subsubsection control_de_velocidad (end)
+
+
+
+% section funcionalidades_desarrolladas_dentro_del_software_de_la_placa_de_instrumentacion_para_trabajar_junto_con_el_sensor (end)
 
 \section{Pruebas} % (fold)
-\label{sec:pruebas}
+\label{it6:sec:pruebas}
+
+\begin{table}[h]
+\centering
+\caption{Test de sistema 1}
+\label{it7:tab:testsistema1}
+\begin{tabular}{p{2cm} p{9cm}}
+\multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}} \\
+Prueba \#        & 1 \\
+\hline
+Nombre           & Comprobacion de estabilidad del motor \\                     
+\hline
+Requerimiento    & Se deberia controlar la velocidad del motor utilizando el fotointerruptor  \\
+\hline
+Descripcion      & Se arranca el motor del sensor y se lo configura en la velocidad de medicion. Verificando que se se estabilice en esa velocidad\\
+\hline
+Pre-condiciones  & \tabitem Plataforma de instrumentacion encendida y disponible para configurar  \\
+                 & \tabitem Computadora conectada al sistema mediante cable serial RS-232 \\
+                 & \tabitem Lector de canal serial abierto en la computadora  \\
+                 & \tabitem Circuito de adaptacion del sensor alimentado y correctamente conectado a la plataforma \\
+                 & \tabitem Velocidad estable de 3000 RPM configurada en el codigo de las funciones del sensor, dentro de la plataforma. \\
+                 & \tabitem Impresion en pantalla de velocidad del motor incluida en la funcion de control del mismo, dentro del codigo de la plataforma. \\
+\hline
+
+Post-condiciones & La velocidad del motor deberia ser estable.  \\
+\hline
+Secuencia  & \tabitem Ingresamos el comando ``PWM'' en la interfaz MML
+           & \tabitem Esperamos que el motor finalice la secuencia de arranque.
+           & \tabitem Una vez que el motor anduvo durante 10 segundos seguidos, se le da parada mediante el comando ``NTP''
+
+\hline
+Resultados       & La velocidad fue medianamente estable, con algunas perturbaciones no periodicas, en la velocidad configurada (3000 RPM). La influencia de las perturbaciones en la velocidad sobre las mediciones de campo, fue analizada en la prueba de sistema 2.
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{Test de sistema 2}
+\label{it7:tab:testsistema1}
+\begin{tabular}{p{2cm} p{9cm}}
+\multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}} \\
+Prueba \#        & 1 \\
+\hline
+Nombre           & Medicion de campo \\                     
+\hline
+Requerimiento    & Se deberian utilizar las funcionalidades de la plataforma de instrumentacion para obtener mediciones del sensor  \\
+\hline
+Descripcion      & Se arranca el motor del sensor y se mide campo, esperando obtener una medicion estable, que ademas cambie de valor a medida que se perturba el campo electrico cerca del sensor.\\
+\hline
+Pre-condiciones  & \tabitem Sistema configurado con el pin 0 en modo canal unico, con un intervalo de 1 \\
+                 & \tabitem Salida correspondiente a la señal del sensor (rectificada y amplificada por el circuito de adaptacion) conectada al pin configurado en el punto anterior. \\
+                 & \tabitem Plataforma de instrumentacion encendida y disponible para configurar  \\
+                 & \tabitem Computadora conectada al sistema mediante cable serial RS-232 \\
+                 & \tabitem Lector de canal serial abierto en la computadora  \\
+                 & \tabitem Circuito de adaptacion del sensor alimentado y correctamente conectado a la plataforma \\
+                 & \tabitem Motor del sensor encendido y girando a una velocidad estable \\
+                 & \tabitem Plataforma de instrumentacion midiendo en modo de conversiones continuas \\
+\hline
+
+Post-condiciones & \tabitem El campo electrico medido deberia ser estable, a pesar de las variaciones en la velocidad del motor registradas en la prueba de sistema 1. \\
+\hline
+Secuencia  & \tabitem Leimos los datos de salida de las conversiones continuas y esperamos a que el resultado sea estable. \\
+           & \tabitem Con algun dispositivo cargado de electricidad estatica, se perturba el campo electrico cercano a las aspas del sensor. \\
+
+\hline
+Resultados       & La medicion logro estabilizarse, y la perturbacion del campo electrico se correspondia con los datos impresos en la interfaz. Las variaciones en la velocidad, producto de fallas en la estabilizacion, no hicieron que la medicion de campo variara significativamente.
+\end{tabular}
+\end{table}
 
 % section pruebas (end)
 
-\section{Resultados} % (fold)
-\label{sec:resultados}
 
-% section resultados (end)
+\section{Conclusiones} % (fold)
+\label{it6:sec:conclusiones}
 
-% chapter iteracion_6 (end)
+% section conclusiones (end)
+
+% chapter iteracion_7 (end)
