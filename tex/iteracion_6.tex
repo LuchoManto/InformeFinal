@@ -261,16 +261,16 @@ Resultados       & La velocidad fue medianamente estable, con algunas perturbaci
 \begin{table}[h]
 \centering
 \caption{Test de sistema 2}
-\label{it7:tab:testsistema1}
+\label{it7:tab:testsistema2}
 \begin{tabular}{p{2cm} p{9cm}}
 \multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}} \\
 Prueba \#        & 1 \\
 \hline
 Nombre           & Medicion de campo \\                     
 \hline
-Requerimiento    & Se deberian utilizar las funcionalidades de la plataforma de instrumentacion para obtener mediciones del sensor  \\
+Requerimiento    & Se deberian utilizar las funcionalidades de la plataforma de instrumentacion para obtener mediciones del sensor \\
 \hline
-Descripcion      & Se arranca el motor del sensor y se mide campo, esperando obtener una medicion estable, que ademas cambie de valor a medida que se perturba el campo electrico cerca del sensor.\\
+Descripcion      & Se arranca el motor del sensor y se mide campo, esperando obtener una medicion estable, que ademas cambie de valor a medida que se perturba el campo electrico cerca del sensor. \\
 \hline
 Pre-condiciones  & \tabitem Sistema configurado con el pin 0 en modo canal unico, con un intervalo de 1 \\
                  & \tabitem Salida correspondiente a la señal del sensor (rectificada y amplificada por el circuito de adaptacion) conectada al pin configurado en el punto anterior. \\
@@ -285,10 +285,43 @@ Pre-condiciones  & \tabitem Sistema configurado con el pin 0 en modo canal unico
 Post-condiciones & \tabitem El campo electrico medido deberia ser estable, a pesar de las variaciones en la velocidad del motor registradas en la prueba de sistema 1. \\
 \hline
 Secuencia  & \tabitem Leimos los datos de salida de las conversiones continuas y esperamos a que el resultado sea estable. \\
-           & \tabitem Con algun dispositivo cargado de electricidad estatica, se perturba el campo electrico cercano a las aspas del sensor. \\
+           & \tabitem Con un dispositivo cargado de electricidad estatica, perturbamos el campo electrico cercano a las aspas del sensor. \\
 
 \hline
 Resultados       & La medicion logro estabilizarse, y la perturbacion del campo electrico se correspondia con los datos impresos en la interfaz. Las variaciones en la velocidad, producto de fallas en la estabilizacion, no hicieron que la medicion de campo variara significativamente.
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{Test de sistema 3}
+\label{it7:tab:testsistema3}
+\begin{tabular}{p{2cm} p{9cm}}
+\multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}} \\
+Prueba \#        & 1 \\
+\hline
+Nombre           & Rectificacion y amplificacion \\                     
+\hline
+Requerimiento    & Se deberia rectificar y amplificar, con el menor ruido posible, la señal de salida del sensor, antes de que ingrese a la plataforma  \\
+\hline
+Descripcion      & Con el sensor encendido y girando a una velocidad estable, se mide, con uso de un osciloscopio, la señal a la salida del sensor, a la salida de la etapa de amplificacion, y a la salida de la etapa de rectificacion, para luego analizar los resultados.\\
+\hline
+Pre-condiciones  & \tabitem Osciloscopio encendido \\
+                 & \tabitem Salida correspondiente a la señal del sensor (rectificada y amplificada por el circuito de adaptacion) conectada a un borne positivo del osciloscopio. \\
+                 & \tabitem Salida correspondiente a la señal del sendor a la salida del rectificador (ya amplificada) , conectada a otro borne positivo del osciloscopio  \\
+                 & \tabitem Salida correspondiente a la señal del sendor a la salida del amplificador, conectada a otro borne positivo del osciloscopio  \\
+                 & \tabitem Circuito de adaptacion del sensor alimentado \\
+                 & \tabitem Motor del sensor encendido y girando a una velocidad estable \\
+\hline
+
+Post-condiciones & \tabitem La señal a la salida de la etapa de amplificacion deberia tener mas amplitud que a la salida del sensor \\
+                 & \tabitem La señal a la salida de la etapa de rectificacion no deberia tener valores negativos.\\
+\hline
+Secuencia  & \tabitem Con un dispositivo cargado de electricidad estatica, perturbamos el campo electrico cercano a las aspas del sensor. \\
+           & \tabitem Analizamos la salida del osciloscopio \\
+
+\hline
+Resultados       & Las salidas del osciloscopio respondieron como era esperado a las perturbaciones.
 \end{tabular}
 \end{table}
 
@@ -298,6 +331,12 @@ Resultados       & La medicion logro estabilizarse, y la perturbacion del campo 
 \section{Conclusiones} % (fold)
 \label{it6:sec:conclusiones}
 
+Nuestro objetivo, con la construccion de esta adaptacion, fue obtener una prueba de campo para verificar el funcionamiento de la plataforma en un contexto real.
+
+Los avances de esta iteracion permitieron controlar las variables del sensor que eran necesarias para el correcto funcionamiento del mismo. El arranque y giro del motor, la estabilidad del mismo, y el procesamiento de la señal de la placa sensitiva, son funciones que fueron provistas por el software agregado a la plataforma y por el hardware en el circuito de adaptacion. 
+
+La iteracion siguiente sera destinada a la construccion de un sistema embebido que tome los datos de telemetria y controle la plataforma. Ademas de esto, agregaremos funcionalidades especificas, en este sistema embebido, para la adaptacion hecha en esta iteracion. 
+
 % section conclusiones (end)
 
-% chapter iteracion_7 (end)
+% chapter iteracion_6 (end)
