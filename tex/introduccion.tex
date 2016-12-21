@@ -99,13 +99,15 @@ Partiendo de los objetivos planteados, podemos formalizar una lista de requerimi
 	\item Se debería poder enviar datos de mediciones y posibles meta-datos a través de un canal de comunicación mediante un protocolo serial.
 \end{itemize}
 
+
+
 Basandonos en los objetivos secundarios, obtenemos los siguientes requerimientos para la implementacion de un servidor web y la adaptacion para un sensor de campo electrostático:
 
 \begin{itemize}
     \item La configuracion de los parametros para las mediciones deberian poder ser establecidas via una interfaz web grafica.
     \item Todas las interacciones del sistema deberian guardarse en una base de datos junto con un timestamp.
     \item Se deberia poder establecer un sistema de reglas que provoque que el sistema reaccione ante ciertos niveles de los datos entrantes desde el sistema de adquisicion.
-    \item La placa de instrumentación desarrollada deberia poder obtener datos del sensor de campo electrostatico proveido por el FAMAF.
+    \item La placa de instrumentación desarrollada deberia poder obtener datos del sensor de campo electrostatico, proveido por profesionales de la Facultad de Matematica, Astronomia y Fisica (FaMAF).
     \item Las funcionalidades de la placa de instrumentación desarrollada deberian poder controlar el motor del sensor.
 \end{itemize}
 
@@ -116,6 +118,7 @@ Basandonos en los objetivos secundarios, obtenemos los siguientes requerimientos
 
 \begin{itemize}
 	\item El sistema debe documentarse con SysUML a través del programa Enterprise Architec.
+	\item La plataforma de instrumentacion deberia ser portable, es decir, deberia permitir que la cantidad de sistemas embebidos compatibles sea lo mayor posible.
 \end{itemize}
 
 % subsection requerimientos_no_funcionales (end)

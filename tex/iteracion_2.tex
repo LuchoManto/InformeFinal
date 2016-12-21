@@ -52,13 +52,7 @@ En esta seccion se describiran las distintas partes del software y la interaccio
 \subsection{Modelos estaticos} % (fold)
 \label{it2:sub:modelos_estaticos}
 
-El diagrama de caso de uso de la figura \ref{fig:casouso1}, establece de manera basica aquello que se quiere lograr con el programa embebido en la plataforma. En cada caso de uso, pueden visualizarse las distintas acciones que el programa deberia realizar. Como el programa esta desarrollado en lenguaje C, no es posible conformar un diagrama de clases. En lugar de esto, se separo en distintos modulos que agrupan funciones de caracteristicas similares. Estos modulos estan ilustrados como bloques en la figura \ref{fig:bloquesprimeraiteracionsoftware}. Cada bloque representa distintas partes principales del programa. Se pueden ver los nombres de cada funcion y el tipo de retorno en cada uno de ellos. Con esto ultimo, se intenta dar una idea de las acciones realizadas por las funciones de cada modulo. Una descripcion mas detallada esta en la documentacion del programa \ref{documentacionsoftware}.
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.80\textwidth, height = 11cm]{casouso1}
-  \caption{Diagrama de caso de uso del sistema de medicion e instrumentacion}\label{fig:casouso1}
-\end{figure}
+El diagrama de caso de uso de la figura \ref{fig:casouso1}, establece de manera basica aquello que se quiere lograr con el programa embebido en la plataforma. En cada caso de uso, pueden visualizarse las distintas acciones que el programa deberia realizar. Como el programa esta desarrollado en lenguaje C, no es posible conformar un diagrama de clases. En lugar de esto, se separo en distintos modulos que agrupan funciones de caracteristicas similares. Estos modulos estan ilustrados como bloques en la figura \ref{it2:fig:bloquesprimeraiteracionsoftware}. Cada bloque representa distintas partes principales del programa. Se pueden ver los nombres de cada funcion y el tipo de retorno en cada uno de ellos. Con esto ultimo, se intenta dar una idea de las acciones realizadas por las funciones de cada modulo. Una descripcion mas detallada esta en la documentacion del programa \ref{documentacionsoftware}.
 
 El caso de uso ``configurar'' esta generalizado. Las acciones que incluye este caso son:
 \begin{itemize}
@@ -74,12 +68,12 @@ El caso de uso ``configurar'' esta generalizado. Las acciones que incluye este c
 \begin{figure}[h]
   \centering
   \includegraphics[width=1\textwidth, height = 13.5cm]{bloquesprimeraiteracionsoftware}
-  \caption{Diagrama de bloques de la primera iteracion de software}\label{fig:bloquesprimeraiteracionsoftware}
+  \caption{Diagrama de bloques de la primera iteracion de software}\label{it2:fig:bloquesprimeraiteracionsoftware}
 \end{figure}
 
-El objetivo de los diagramas es una descripcion grafica del sistema. Es necesario destacar que, desde el principio, la evolucion del programa ocasiono que los diseños de los modulos fueran cambiando. Los cambios fueron debidos a multiples razones: particularidades del funcionamiento del microcontrolador que no se tuvieron en cuenta, limitaciones del entorno, cambios en los requerimientos, etcetera. 
+El objetivo de los diagramas es lograr una descripcion grafica del sistema. Es necesario destacar que, desde el principio, la evolucion del programa ocasiono que los diseños de los modulos fueran cambiando. Los cambios fueron debidos a multiples razones: particularidades del funcionamiento del microcontrolador que no se tuvieron en cuenta, limitaciones del entorno, cambios en los requerimientos, etcetera. 
 
-A continuacion, elaboramos una pequeña descripcion de los bloques que aparecen en el diagrama de la figura \ref{fig:bloquesprimeraiteracionsoftware}.
+A continuacion, elaboramos una pequeña descripcion de los bloques que aparecen en el diagrama de la figura \ref{it2:fig:bloquesprimeraiteracionsoftware}.
 
 \begin{itemize}
   \item \textbf{Main o Bloque Principal}: Orquestrador del resto de los modulos. Tiene, ademas, la rutina principal donde se entra al modo de configuracion, para luego iniciar el modo de conversiones continuas.
@@ -147,7 +141,7 @@ Estas son las funciones del modulo conversor:
 Las funciones \textit{cargar\_buffer\_single} y \textit{cargar\_buffer\_dif}, establecen el modo (canal unico o diferencial) en el que se leera un canal. Las 8 posiciones del buffer de canales representan, cada una, un canal distinto del ADC. Los valores posibles para estas posiciones son 0, 1 y 2; estos valores representan, respectivamente, que el canal esta deshabilitado, en modo canal unico, o en modo diferencial. Estas funciones, al ser ejecutadas, cargan algun numero en el buffer según que funcion es la que se ejecuto. El buffer se inicializa por defecto en 0, por lo que inicialmente ningun canal esta habilitado para convertir. \\
 
 Cuando se inicia la conversion continua, se convierte continuamente en un loop infinito. Al final de cada conversion, se llama a la funcion \textit{cambiar\_pin}. Esta funcion utiliza el buffer de canales para obtener cual es el proximo canal a medir. Esto lo hace manejando un indice que comienza en 0, se incrementa hasta 7 y vuelve a 0; recorriendo ciclicamente el buffer de canales. 
-En cada ejecucion, analiza una posicion buffer segun el valor del indice. El valor de la posicion del buffer dice si se debe medir en modo canal unico o diferencial, o si es necesario saltear el pin. Una descripcion grafica del comportamiento de esta funcion puede verse en el diagrama de actividades de la figura \ref{actividadescambiarpinit2} \\
+En cada ejecucion, analiza una posicion buffer segun el valor del indice. El valor de la posicion del buffer dice si se debe medir en modo canal unico o diferencial, o si es necesario saltear el pin. Una descripcion grafica del comportamiento de esta funcion puede verse en el diagrama de actividades de la figura \ref{fig:actividadescambiarpinit2} \\
 
 
 \begin{figure}[h]
@@ -237,7 +231,7 @@ Cada una de las funciones, tanto si interactuan con el hardware del micro como s
 
 \begin{table}[h]
 \caption{Tests unitarios}
-\label{it2:sub:tests_unitarios}
+\label{it2:tab:tests_unitarios}
 \begin{tabular}{|l|l|
 >{\columncolor[HTML]{67FD9A}}l |ll}
 \hline

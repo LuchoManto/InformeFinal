@@ -133,7 +133,7 @@ Los amplificadores de instrumentación surgen ante la necesidad de medir tension
 Se denomina amplificador de instrumentación a todo dispositivo creado a partir de amplificadores operacionales. Su diseño incluye:
 
 \begin{itemize}
-	\item Alta impedancia de entrada
+  \item Alta impedancia de entrada
     \item Alto rechazo de modo común
     \item Ganancia estable y variable con una única resistencia y que no se contraponga directamente la ganancia con el ancho de banda (fenómeno que suele suceder en los amplificadores operacionales).
 \end{itemize}
@@ -229,7 +229,7 @@ por una recta, tal y como se representa en la figura \ref{fig:linealidad}.
 
 Existen varias definiciones de linealidad según la recta que consideremos. Nosotros vamos a usar la recta que mejor se adapte a la función de transferencia del amplificador, que suele ser la utilizada por los fabricantes cuando nos dan la linealidad de un AI integrado. Esta recta no tiene por qué pasar por el origen, ni presentar la pendiente marcada por la ganancia esperada del AI. Tiene que ser aquella que nos de el menor valor de no linealidad (NL), definida como:
 
-\begin{equation}\label{eq4}
+\begin{equation}\label{eq5}
 NL = \frac{|Salida Real - Salida lineal|_{max}}{Margen de variacion de la salida entre fondos de escala}
 \end{equation}
 
@@ -240,7 +240,7 @@ NL = \frac{|Salida Real - Salida lineal|_{max}}{Margen de variacion de la salida
 
 Como se ve en la figura \ref{fig:aireal}, la tensión de salida tiene dos componentes. Uno de ellos es proporcional a la tensión de entrada diferencial y el otro a la tensión de modo común. La tensión de modo común que aparece entre los terminales de entrada del amplificador se define como: 
 
-\begin{equation}\label{eq5}
+\begin{equation}\label{eq6}
 E_{cm} = \frac{(E_{2}+E{1})}{2}
 \end{equation}
 
@@ -259,7 +259,7 @@ La mayoría de los Amplificadores de Instrumentación son dispositivos de dos et
 \item V\textsubscript{OOS} (Tensión offset de la etapa de salida) : Es la tensión que deberá aplicarse, en el caso de que sea accesible, a la entrada de la etapa de salida para producir una salida de cero voltios.
 \item  V\textsubscript{OS} (Tensión offset global) : Es la tensión total de offset, referida a la entrada. Considerando que la etapa de entrada es la que presenta la ganancia diferencial del amplificador de instrumentación (a la segunda etapa se le suele asignar la unidad), la expresión del voltaje offset total será la siguiente:
 
-\begin{equation}\label{eq5}
+\begin{equation}\label{eq7}
 V_{OS} = V_{IOS} + \frac{V_{OOS}}{G_d}
 \end{equation}
 
@@ -401,8 +401,8 @@ El problema principal que presenta la conmutación sinusoidal es que intenta con
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=1.0\textwidth, height = 7cm]{m4}
-  \caption{: Diagrama de Bloques del Control Vectorial.}\label{fig:corrientes_bobinas}
+  \includegraphics[width=1.0\textwidth, height = 7cm]{control_vectorial}
+  \caption{: Diagrama de Bloques del Control Vectorial.}\label{fig:control_vectorial}
 \end{figure}
 
 El control vectorial o Field Oriented Control (FOC) soluciona el problema controlando el vector de corrientes directamente en un espacio de referencia ortogonal y rotacional, llamado espacio D-Q (Direct - Quadrature) como se muestra en la figura . Dicho
@@ -478,10 +478,10 @@ Típicamente, la comunicación serial se utiliza para transmitir datos en format
 \label{ssub:conceptos}
 
 \begin{itemize}
-	\item \textbf{Velocidad de transmisión (baud rate):} Indica el número de bits por segundo que se transfieren, y se mide en baudios. Por ejemplo, 300 baudios representa 300 bits por segundo. Cuando se hace referencia a los ciclos de reloj se está hablando de la velocidad de transmisión. Por ejemplo, si el protocolo hace una llamada a 4800 ciclos de reloj, entonces el reloj está corriendo a 4800 Hz, lo que significa que el puerto serial está muestreando las líneas de transmisión a 4800 Hz. Las velocidades de transmisión más comunes para las lineas telefónicas son de 14400, 28800, y 33600. Es posible tener velocidades más altas, pero se reduciría la distancia máxima posible entre los dispositivos. Las altas velocidades se utilizan cuando los dispositivos se encuentran uno junto al otro, como es el caso de dispositivos GPIB.
-	\item \textbf{Bits de datos:} Se refiere a la cantidad de bits en la transmisión. Cuando la computadora envía un paquete de información, el tamaño de ese paquete no necesariamente será de 8 bits. Las cantidades más comunes de bits por paquete son 5, 7 y 8 bits. El número de bits que se envía depende en el tipo de información que se transfiere. Por ejemplo, el ASCII estándar tiene un rango de 0 a 127, es decir, utiliza 7 bits; para ASCII extendido es de 0 a 255, lo que utiliza 8 bits. Si el tipo de datos que se está transfiriendo es texto simple (ASCII estándar), entonces es suficiente con utilizar 7 bits por paquete para la comunicación. Un paquete se refiere a una transferencia de byte, incluyendo los bits de inicio/parada, bits de datos, y paridad. Debido a que el número actual de bits depende en el protocolo que se seleccione, el término paquete se usar para referirse a todos los casos.
-	\item \textbf{Bits de parada:} Usado para indicar el fin de la comunicación de un solo paquete. Los valores típicos son 1, 1.5 o 2 bits. Debido a la manera como se transfiere la información a través de las líneas de comunicación y que cada dispositivo tiene su propio reloj, es posible que los dos dispositivos no estén sincronizados. Por lo tanto, los bits de parada no sólo indican el fin de la transmisión sino además dan un margen de tolerancia para esa diferencia de los relojes. Mientras más bits de parada se usen, mayor será la tolerancia a la sincronía de los relojes, sin embargo la transmisión será más lenta.
-	\item \textbf{Paridad:} Es una forma sencilla de verificar si hay errores en la transmisión serial. Existen cuatro tipos de paridad: par, impar, marcada y espaciada. La opción de no usar paridad alguna también está disponible. Para paridad par e impar, el puerto serial fijará el bit de paridad (el último bit después de los bits de datos) a un valor para asegurarse que la transmisión tenga un número par o impar de bits en estado alto lógico. Por ejemplo, si la información a transmitir es 011 y la paridad es par, el bit de paridad sería 0 para mantener el número de bits en estado alto lógico como par. Si la paridad seleccionada fuera impar, entonces el bit de paridad sería 1, para tener 3 bits en estado alto lógico. La paridad marcada y espaciada en realidad no verifican el estado de los bits de datos; simplemente fija el bit de paridad en estado lógico alto para la marcada, y en estado lógico bajo para la espaciada. Esto permite al dispositivo receptor conocer de antemano el estado de un bit, lo que serviría para determinar si hay ruido que esté afectando de manera negativa la transmisión de los datos, o si los relojes de los dispositivos no están sincronizados.
+  \item \textbf{Velocidad de transmisión (baud rate):} Indica el número de bits por segundo que se transfieren, y se mide en baudios. Por ejemplo, 300 baudios representa 300 bits por segundo. Cuando se hace referencia a los ciclos de reloj se está hablando de la velocidad de transmisión. Por ejemplo, si el protocolo hace una llamada a 4800 ciclos de reloj, entonces el reloj está corriendo a 4800 Hz, lo que significa que el puerto serial está muestreando las líneas de transmisión a 4800 Hz. Las velocidades de transmisión más comunes para las lineas telefónicas son de 14400, 28800, y 33600. Es posible tener velocidades más altas, pero se reduciría la distancia máxima posible entre los dispositivos. Las altas velocidades se utilizan cuando los dispositivos se encuentran uno junto al otro, como es el caso de dispositivos GPIB.
+  \item \textbf{Bits de datos:} Se refiere a la cantidad de bits en la transmisión. Cuando la computadora envía un paquete de información, el tamaño de ese paquete no necesariamente será de 8 bits. Las cantidades más comunes de bits por paquete son 5, 7 y 8 bits. El número de bits que se envía depende en el tipo de información que se transfiere. Por ejemplo, el ASCII estándar tiene un rango de 0 a 127, es decir, utiliza 7 bits; para ASCII extendido es de 0 a 255, lo que utiliza 8 bits. Si el tipo de datos que se está transfiriendo es texto simple (ASCII estándar), entonces es suficiente con utilizar 7 bits por paquete para la comunicación. Un paquete se refiere a una transferencia de byte, incluyendo los bits de inicio/parada, bits de datos, y paridad. Debido a que el número actual de bits depende en el protocolo que se seleccione, el término paquete se usar para referirse a todos los casos.
+  \item \textbf{Bits de parada:} Usado para indicar el fin de la comunicación de un solo paquete. Los valores típicos son 1, 1.5 o 2 bits. Debido a la manera como se transfiere la información a través de las líneas de comunicación y que cada dispositivo tiene su propio reloj, es posible que los dos dispositivos no estén sincronizados. Por lo tanto, los bits de parada no sólo indican el fin de la transmisión sino además dan un margen de tolerancia para esa diferencia de los relojes. Mientras más bits de parada se usen, mayor será la tolerancia a la sincronía de los relojes, sin embargo la transmisión será más lenta.
+  \item \textbf{Paridad:} Es una forma sencilla de verificar si hay errores en la transmisión serial. Existen cuatro tipos de paridad: par, impar, marcada y espaciada. La opción de no usar paridad alguna también está disponible. Para paridad par e impar, el puerto serial fijará el bit de paridad (el último bit después de los bits de datos) a un valor para asegurarse que la transmisión tenga un número par o impar de bits en estado alto lógico. Por ejemplo, si la información a transmitir es 011 y la paridad es par, el bit de paridad sería 0 para mantener el número de bits en estado alto lógico como par. Si la paridad seleccionada fuera impar, entonces el bit de paridad sería 1, para tener 3 bits en estado alto lógico. La paridad marcada y espaciada en realidad no verifican el estado de los bits de datos; simplemente fija el bit de paridad en estado lógico alto para la marcada, y en estado lógico bajo para la espaciada. Esto permite al dispositivo receptor conocer de antemano el estado de un bit, lo que serviría para determinar si hay ruido que esté afectando de manera negativa la transmisión de los datos, o si los relojes de los dispositivos no están sincronizados.
 \end{itemize}\cite{intro_serial}
 
 % subsubsection conceptos (end)
@@ -494,9 +494,9 @@ Típicamente, la comunicación serial se utiliza para transmitir datos en format
 En un sistema complejo, puede existir ruido proveniente de varias fuentes distintas. Esto incluye al ruido del ambiente, como el de la fuente de alimentación, etcétera. Las fuentes que producen ruido presentan una amenaza a fallos de datos en una comunicación serial. En esta sección se mencionan diversas técnicas aplicables a la tecnología de comunicación serial, que disminuyen el ruido presente, disminuyendo la tasa de errores.\cite{ruido_serial}
 
 \begin{itemize}
-	\item \textbf{Filtro RC externo:} Un filtro RC pasa-bajos externo es una manera de inmunizar el sistema al ruido en altas frecuencias, pero presenta el problema de empeorar la velocidad de los flancos de subida en el canal de comunicación y agrega una carga a los pines involucrados. Un flanco lento es mas susceptible al ruido y puede causar inestabilidad en el sistema. Para resultados óptimos, es necesario realizar un balance entre la reducción de ruido y la reducción en la velocidad del flanco. El balance se obtiene cambiando los valores de las resistencias involucradas en el filtro. Los valores dependerán del valor de reducción de ruido requerido y la tensión de alimentación
-	\item \textbf{Fuente de alimentación desacoplada:} Hay ocasiones en las que el ruido proveniente de la fuente de alimentación puede causar errores en la comunicación. La reducción de este ruido se puede alcanzar utilizando filtros LC, también llamados ``Ferrite Beads''. Estos dispositivos son inductores hechos específicamente para ser colocados en serie con el cable de alimentación para reducir el ruido en alta frecuencia producido por la fuente. Típicamente, se suelen colocar capacitores de distintos valores luego del inductor para mejorar el filtrado. 
-	\item \textbf{Filtros digitales:} También es posible utilizar filtros digitales para reducir ruido. Esto se suele ver sobretodo en diseño de sistemas FPGA. Los filtros digitales pueden ser realizados en VHDL o Verilog, y filtran tanto la señal de datos como la señal del clock. Los distintos parámetros del filtro están dados en la frecuencia de oscilación y el tiempo de filtrado deseado. 
+  \item \textbf{Filtro RC externo:} Un filtro RC pasa-bajos externo es una manera de inmunizar el sistema al ruido en altas frecuencias, pero presenta el problema de empeorar la velocidad de los flancos de subida en el canal de comunicación y agrega una carga a los pines involucrados. Un flanco lento es mas susceptible al ruido y puede causar inestabilidad en el sistema. Para resultados óptimos, es necesario realizar un balance entre la reducción de ruido y la reducción en la velocidad del flanco. El balance se obtiene cambiando los valores de las resistencias involucradas en el filtro. Los valores dependerán del valor de reducción de ruido requerido y la tensión de alimentación
+  \item \textbf{Fuente de alimentación desacoplada:} Hay ocasiones en las que el ruido proveniente de la fuente de alimentación puede causar errores en la comunicación. La reducción de este ruido se puede alcanzar utilizando filtros LC, también llamados ``Ferrite Beads''. Estos dispositivos son inductores hechos específicamente para ser colocados en serie con el cable de alimentación para reducir el ruido en alta frecuencia producido por la fuente. Típicamente, se suelen colocar capacitores de distintos valores luego del inductor para mejorar el filtrado. 
+  \item \textbf{Filtros digitales:} También es posible utilizar filtros digitales para reducir ruido. Esto se suele ver sobretodo en diseño de sistemas FPGA. Los filtros digitales pueden ser realizados en VHDL o Verilog, y filtran tanto la señal de datos como la señal del clock. Los distintos parámetros del filtro están dados en la frecuencia de oscilación y el tiempo de filtrado deseado. 
 \end{itemize}
 
 % subsection implementando_la_inmunidad_al_ruido_en_comunicaciones_seriales (end)
@@ -512,17 +512,16 @@ Un tacometro es un dispositivo digital que mide e indica la velocidad de un obje
 Basándose en la técnica de adquisición de datos, los tacometros digitales pueden ser de tipo:
 
 \begin{itemize}
-	\item \textbf{Con contacto:} El dispositivo de medición esta en contacto con la pieza de revolución que se utiliza para medir. 
-	\item \textbf{Sin contacto:} El dispositivo de medición no esta conectado físicamente al motor. Se suele utilizar un láser para determinar la velocidad de la pieza de revolución
+  \item \textbf{Con contacto:} El dispositivo de medición esta en contacto con la pieza de revolución que se utiliza para medir. 
+  \item \textbf{Sin contacto:} El dispositivo de medición no esta conectado físicamente al motor. Se suele utilizar un láser para determinar la velocidad de la pieza de revolución
 \end{itemize}
 
 Basándose en la técnica de medición, pueden ser:
 
 \begin{itemize}
-	\item \textbf{Medición de tiempo:} Calcula la velocidad calculando el tiempo entre los pulsos medidos. Suelen ser mas precisos en velocidades bajas.
-	\item \textbf{Medición de frecuencia:} Calcula la velocidad midiendo la frecuencia de los pulsos en un intervalo de tiempo. Suelen ser mas precisos en velocidades altas.
+  \item \textbf{Medición de tiempo:} Calcula la velocidad calculando el tiempo entre los pulsos medidos. Suelen ser mas precisos en velocidades bajas.
+  \item \textbf{Medición de frecuencia:} Calcula la velocidad midiendo la frecuencia de los pulsos en un intervalo de tiempo. Suelen ser mas precisos en velocidades altas.
 \end{itemize}
-\cite{tacometro}
 
 \subsection{Medición con fotointerruptor o sensor óptico} % (fold)
 \label{sub:medicion_con_fotointerruptor_o_sensor_optico}

@@ -167,11 +167,11 @@ En las secciones anteriores, describimos por separado cada una de las partes del
 
 
 El circuito de adaptacion, prepara las señales de entrada y salida necesarias para el funcionamiento correcto del sensor. Dentro de la placa de instrumentacion, desarrollamos funcionalidades anexas al software principal para trabajar estas señales.
-Realizamos un modulo aparte llamado ``sensor_CE.c'', cuyas funciones estan desarrolladas de manera especifica para este sensor. Estas funciones incluyen:
+Realizamos un modulo aparte llamado ``sensor\_CE.c'', cuyas funciones estan desarrolladas de manera especifica para este sensor. Estas funciones incluyen:
 
 \begin{itemize}
-	\item Dar arranque y parada al motor
-	\item Controlar la velocidad del motor.
+  \item Dar arranque y parada al motor
+  \item Controlar la velocidad del motor.
 \end{itemize}
 
 La medicion de campo no es parte del software de adaptacion, dado que se realiza utilizando funciones del modulo ``conversor''. La señal proveniente del circuito de adaptacion que corresponde a la telemetria proveniente del sensor, se conecta a uno de los pines de entrada del conversor analogico-digital. \\
@@ -198,7 +198,7 @@ Una vez que el motor alcanzo su velocidad estable, se activa el control de veloc
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.80\textwidth, height = 7cm]{diagramaactividadescontrolvelocidad}
-  \caption{Diagrama de actividades para el control de velocidad del motor}\label{fig:diagramaactividadescontrolvelocidad}
+  \caption{Diagrama de actividades para el control de aranque del motor}\label{fig:diagramaactividadesarrancarmotor}
 \end{figure}
 
 % subsubsection arranque_y_parada (end)
@@ -228,7 +228,7 @@ La estabilidad en en la velocidad de giro del motor se alcanzo mediante un contr
 \begin{table}[h]
 \centering
 \caption{Test de sistema 1}
-\label{it7:tab:testsistema1}
+\label{it6:tab:testsistema1}
 \begin{tabular}{p{2cm} p{9cm}}
 \multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}} \\
 Prueba \#        & 1 \\
@@ -249,9 +249,9 @@ Pre-condiciones  & \tabitem Plataforma de instrumentacion encendida y disponible
 
 Post-condiciones & La velocidad del motor deberia ser estable.  \\
 \hline
-Secuencia  & \tabitem Ingresamos el comando ``PWM'' en la interfaz MML
-           & \tabitem Esperamos que el motor finalice la secuencia de arranque.
-           & \tabitem Una vez que el motor anduvo durante 10 segundos seguidos, se le da parada mediante el comando ``NTP''
+Secuencia  & \tabitem Ingresamos el comando ``PWM'' en la interfaz MML \\
+           & \tabitem Esperamos que el motor finalice la secuencia de arranque. \\
+           & \tabitem Una vez que el motor anduvo durante 10 segundos seguidos, se le da parada mediante el comando ``NTP'' \\
 
 \hline
 Resultados       & La velocidad fue medianamente estable, con algunas perturbaciones no periodicas, en la velocidad configurada (3000 RPM). La influencia de las perturbaciones en la velocidad sobre las mediciones de campo, fue analizada en la prueba de sistema 2.
@@ -261,7 +261,7 @@ Resultados       & La velocidad fue medianamente estable, con algunas perturbaci
 \begin{table}[h]
 \centering
 \caption{Test de sistema 2}
-\label{it7:tab:testsistema2}
+\label{it6:tab:testsistema2}
 \begin{tabular}{p{2cm} p{9cm}}
 \multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}} \\
 Prueba \#        & 1 \\
@@ -295,7 +295,7 @@ Resultados       & La medicion logro estabilizarse, y la perturbacion del campo 
 \begin{table}[h]
 \centering
 \caption{Test de sistema 3}
-\label{it7:tab:testsistema3}
+\label{it6:tab:testsistema3}
 \begin{tabular}{p{2cm} p{9cm}}
 \multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}} \\
 Prueba \#        & 1 \\
