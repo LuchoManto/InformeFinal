@@ -4,13 +4,9 @@
 \section{Introduccion} % (fold)
 \label{sec:introduccion}
 
-El microcontrolador seleccionado contiene 8 entradas para el conversor analogico\-digital. Si se quiere medir en modo diferencial, se tiene una cantidad maxima de 4 canales posibles de entrada. La plataforma de instrumentacion esta pensada para ser utilizada dentro del laboratorio, donde otros proyectos integradores o simplemente academicos la requieran. En la mayoria de los casos, sera necesario que haya un minimo de 8 entradas diferenciales disponibles. \\
-
-Por otro lado, la cantidad de contadores de eventos no llega a ser suficiente, teniendo en cuenta que timer 1 se utiliza para el generador de baudios, y timer 2 y timer comparten la fuente externa de eventos. Esto nos da un total de 2 contadores como maximo, necesitando 4 como minimo. \\
-
-Teniendo en cuenta esto, propusimos agregar un microcontrolador mas a la plataforma, duplicando asi la cantidad de recursos. Agregando este microcontrolador, pasamos a contar con 16 entradas analogicas y 8 contadores, de donde se deduce que son posibles 8 entradas diferenciales, y 4 contadores como maximo. \\
-
-El trabajo a desarrollar en esta iteracion consiste en continuar refinando la construccion de la plataforma, ya que en la iteracion anterior los resultados de las pruebas no dieron como era esperado. Una vez de en la iteracion anterior, dado que su funcionamiento no era el esperado. En esta iteracion, continuamos refinando el trabajo realizado en la iteracion 3, y rediseñamos el PCB para agregar otro microcontrolador.
+Nos propusimos poder duplicar la cantidad de recursos de la placa, ya que el principal problema era que medir varios sensores de modo diferencial, con 8 entradas solo nos daría la chance de tener 4 sensores como máximo. Decidimos entonces poner dos C8051f352 a la placa. Pasar de 8 a 16 entradas analogicas y utilizar todas las entradas/salidas digitales que provee el microcontrolador. 
+Para no agrandar el tamaño decidimos rediseñar la placa, y como primera medida la diseñamos para poder construirla doble capa.
+En esta iteración mostraremos como se realizó el diseño y la construccion de esta nueva placa.
 
 % section introduccion (end)
 
@@ -18,7 +14,11 @@ El trabajo a desarrollar en esta iteracion consiste en continuar refinando la co
 \label{sec:requerimientos_de_la_iteracion}
 
 \begin{itemize}
-  \item La placa deberia poder albergar dos microcontroladores C8051f352, con los mismos requerimientos de hardware que en la iteracion 3.
+  \item La placa debe tener dos microcontroladores C8051f352.
+  \item La placa debe tener 16 entradas analogicas.
+  \item La placa debe tener 32 entradas digitales.
+  \item La placa debe tener 2 salidas seriales. 
+  \item Se debería poder conectar el debugger del microcontrolador a la placa para poder programarlo.
 \end{itemize}
 
 % section requerimientos_de_la_iteracion (end)

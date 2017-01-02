@@ -58,8 +58,8 @@ La primera etapa de diseño consistió en realizar un diagrama de bloques que, e
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.50\textwidth, height = 7cm]{BloquesHardw1}
-  \caption{Diagrama de Bloque de la Placa.}\label{fig:BloquesHardw1}
+  \includegraphics[width=1\textwidth, height = 12cm]{BloquesHardw1}
+  \caption{Diagrama de Bloque de la Plataforma.}\label{fig:BloquesHardw1}
 \end{figure}
 
 Los bloques en la figura \ref{fig:BloquesHardw1} representan de forma general los distintos módulos a implementar. Las entradas analógicas se introducen al microcontrolador a través de filtros RC (reductores del ruido), para luego pasar al conversor analogico-digital. El bloque GPIO ("Entrada/Salida de proposito general") consiste en un grupo de pines direccionados a distintas entradas del microcontrolador. Estos pines pueden tener funcionalidades generales, y algunos pueden tener otras mas especificas, como ser: contador de eventos, PCA, PWM, etc. En nuestro diseño, separamos aquellos pines especificos que se utilizan como contadores de eventos, y ademas agregamos 4 pines de proposito general, por la eventual necesidad de requerirlos. 
@@ -133,7 +133,7 @@ De los circuitos descritos anteriormente, se ilustra el circuito final en la fig
 
 \begin{figure}[H]
 \centering
-  \includegraphics[width=1.10\textwidth, height = 12cm]{EsquematicoCompleto1}
+  \includegraphics[width=1\textwidth, height = 11cm]{EsquematicoCompleto1}
   \caption{Esquemático del Circuito Completo de la placa.}\label{fig:EsquematicoCompleto1}
 \end{figure}
 
@@ -152,8 +152,8 @@ La figura \ref{fig:PCB1} ilustra la proyeccion de componentes en el PCB, antes d
 
 \begin{figure}
 \centering
-  \includegraphics[width=1.10\textwidth, height = 12cm]{PCB1}
-  \caption{Esquemático del Circuito Completo de la placa.}\label{fig:PCB1}
+  \includegraphics[width = 0.70\textwidth, height = 9cm]{PCB1}
+  \caption{Despliegue de componentes en el circuito impreso}\label{fig:PCB1}
 \end{figure}
 
 
@@ -307,14 +307,7 @@ Resultados       &  Conectamos la placa a la PC y en la IDE al intentar cargar e
 \end{tabular}
 \end{table}
 
-\section{Repeticiones de la impresion en PCB de la plataforma} % (fold)
-\label{sec:repeticiones_de_la_impresion_en_pcb_de_la_plataforma}
 
-Algunas de las pruebas dieron resultados incorrectos. Estos resultados fueron producto de errores de implementacion a la hora de elaborar el circuito impreso, y la poca familiarizacion con el proceso en general. Debido a esto, fue necesario repetir la impresion; y con ayuda de otros estudiantes y profesores, logramos conseguir un prototipo que responda como era esperado.
-
-Los errores mas comunes eran pistas de cobre que estaban en contacto y no debian estarlo, o visceversa. Hubo otros errores mas relacionados a cuestiones electricas. Es necesario destacar que el diseño obtenido de la placa de desarrollo Silicon Labs no tiene errores. Las figuras tal tal tal tal y tal muestran las distintas versiones de la placa impresa, y la figura tal muestra la placa que finalmente respondio a las pruebas como era esperado.
-
-% section repeticiones_de_la_impresion_en_pcb_de_la_plataforma (end)
 
 
 % section pruebas (end)

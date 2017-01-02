@@ -64,27 +64,27 @@ Ademas de las funcionalidades principales, desarrollaremos testing unitario para
 % subsection iteracion_5 (end)
 
 % -iteracion 6:
-% hasta el momento ya obtuvimos un prototipo de la plataforma de instrumentacion. lo que hay que hacer ahora es usarla. falta diseñarle un prototipo de sistema de gestion para que no tenga que estar siempre conectada a la pc. enctonces la idea de esta iteracion es tener un prototipo de sistema de gestion que haga de receptor para la telemetria de la plataforma de instrumentacion. para dejar de usar la computadora como receptor directo y comenzar a manejarla de una manera mas remota.
+% teniendo una plataforma de instrumentacion lista, y el sistema de gestion andando, falta hacer una prueba de campo con un sensor de verdad y poner a prueba el sistema. nos propusieron usar el sensor de campo electrostatico para probarlo.
+% otro parrafo: ademas de usarlo para probar el sistema como plataforma de instrumentacion + sistema de gestion, en esta it diseñamos una adaptacion al sensor para su correcto funcionamiento, usando funcionalidades del microcontrolador de la plataforma de instrumentacion.
 \subsection{Iteracion 6} % (fold)
 \label{sub:iteracion_6}
+
+Al final de la iteracion anterior el sistema estara diseñado y prototipado. Esta iteracion sera dedicada al desarrollo de una prueba de campo utilizando el sensor de campo electrostatico mencionado en los objetivos. 
+
+El objetivo principal es comprobar todos los aspectos y funcionalidades de la plataforma de instrumentacion, y ademas utilizar funcionalidades del microcontrolador dentro de la misma plataforma para controlar el sensor.
+
+% subsection iteracion_6 (end)
+
+% -iteracion 7:
+% hasta el momento ya obtuvimos un prototipo de la plataforma de instrumentacion. lo que hay que hacer ahora es usarla. falta diseñarle un prototipo de sistema de gestion para que no tenga que estar siempre conectada a la pc. enctonces la idea de esta iteracion es tener un prototipo de sistema de gestion que haga de receptor para la telemetria de la plataforma de instrumentacion. para dejar de usar la computadora como receptor directo y comenzar a manejarla de una manera mas remota.
+\subsection{Iteracion 7} % (fold)
+\label{sub:iteracion_7}
 
 Uno de los requerimientos del sistema es que la plataforma de instrumentacion envie la informacion de telemetria y meta-datos a otra placa gestionadora mediante protocolo serial. 
 
 Toda la gestion, hasta el comienzo de esta iteracion, estara hecha mediante el uso de un ordenador. Esta iteracion consistira en la implementacion de una placa de gestion, utilizando alguna placa de desarrollo con posibilidad de albergar un sistema operativo.
-% subsection iteracion_6 (end)
-
-% -iteracion 7:
-% teniendo una plataforma de instrumentacion lista, y el sistema de gestion andando, falta hacer una prueba de campo con un sensor de verdad y poner a prueba el sistema. nos propusieron usar el sensor de campo electrostatico para probarlo.
-% otro parrafo: ademas de usarlo para probar el sistema como plataforma de instrumentacion + sistema de gestion, en esta it diseñamos una adaptacion al sensor para su correcto funcionamiento, usando funcionalidades del microcontrolador de la plataforma de instrumentacion.
-\subsection{Iteracion 7} % (fold)
-\label{sub:iteracion_7}
-
-Al final de la iteracion anterior el sistema estara diseñado y prototipado. Esta iteracion sera dedicada al desarrollo de una prueba de campo utilizando el sensor de campo electrostatico mencionado en los objetivos. 
-
-El objetivo principal es comprobar todos los aspectos y funcionalidades de la plataforma de instrumentacion así como utilizar la placa de gestion en lugar de un ordenador para controlar el sistema de la plataforma y el sensor como conjunto.
-
-
 % subsection iteracion_7 (end)
+
 % section análisis_de_requermientos_y_riesgos (end)
 
 

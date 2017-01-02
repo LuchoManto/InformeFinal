@@ -232,19 +232,18 @@ Cada una de las funciones, tanto si interactuan con el hardware del micro como s
 \begin{table}[h]
 \caption{Tests unitarios}
 \label{it2:tab:tests_unitarios}
-\begin{tabular}{|l|l|
->{\columncolor[HTML]{67FD9A}}l |ll}
+\begin{tabular}{p{2cm} p{7cm} p{2cm}}
 \hline
-\cellcolor[HTML]{68CBD0}Nombre & \cellcolor[HTML]{68CBD0}Descripcion & \cellcolor[HTML]{68CBD0}Estado &  &  \\ \hline
-test\_cargar\_buffer\_unico & intenta configurar un pin enmodo canal unico & {\color[HTML]{009901} Pass} &  &  \\ \cline{1-3}
-test\_cargar\_buffer\_diferencial & intenta configurar un pin en modo diferencial & {\color[HTML]{009901} Pass} &  &  \\ \cline{1-3}
-test\_GDI & intenta ingresar el comando GDI con combinaciones correctas e incorrectas de parametros, esperando que no haya error en los primeros casos y que si los haya en los segundos & {\color[HTML]{009901} Pass} &  &  \\ \hline
-test\_GSE & Analogo a test\_GDI & {\color[HTML]{009901} Pass} &  &  \\ \cline{1-3}
-test\_SSE & Analogo a test\_GDI & {\color[HTML]{009901} Pass} &  &  \\ \cline{1-3}
-test\_SDI & Analogo a test\_GDI & {\color[HTML]{009901} Pass} &  &  \\ \cline{1-3}
-test\_obtener\_entrada & Pide al usuario que ingrese una serie de comandos y verifica que la respuesta del programa sea la esperada & {\color[HTML]{009901} Pass} &  &  \\ \cline{1-3}
-test\_iniciales & Compruebael funcionamiento del modulo serial del microcontrolador y el conversor analogico digital & {\color[HTML]{009901} Pass} &  &  \\ \cline{1-3}
-test\_blinkled & Prueba el funcionamiento de la plataforma con un programa que hace parpadear un led. Este test esta pensado para ser ejecutado en la plataforma a construir & \cellcolor[HTML]{FF9E9E}{\color[HTML]{CB0000} Fail} &  &  \\ \cline{1-3}
+\cellcolor[HTML]{68CBD0}Nombre & \cellcolor[HTML]{68CBD0}Descripcion & \cellcolor[HTML]{68CBD0}Estado  \\ \hline
+Modo unico & intenta configurar un pin enmodo canal unico & \cellcolor[HTML]{67FD9A}{\color[HTML]{009901} Pass}  \\ \hline
+Modo diferencial & intenta configurar un pin en modo diferencial & \cellcolor[HTML]{67FD9A}{\color[HTML]{009901} Pass} \\ \hline
+GDI & intenta ingresar el comando GDI con combinaciones correctas e incorrectas de parametros, esperando que no haya error en los primeros casos y que si los haya en los segundos & \cellcolor[HTML]{67FD9A}{\color[HTML]{009901} Pass} \\ \hline
+GSE & Analogo a test\_GDI & \cellcolor[HTML]{67FD9A}{\color[HTML]{009901} Pass}  \\ \hline
+SSE & Analogo a test\_GDI & \cellcolor[HTML]{67FD9A}{\color[HTML]{009901} Pass}  \\ \hline
+SDI & Analogo a test\_GDI & \cellcolor[HTML]{67FD9A}{\color[HTML]{009901} Pass}  \\ \hline
+Obtener entrada & Pide al usuario que ingrese una serie de comandos y verifica que la respuesta del programa sea la esperada & \cellcolor[HTML]{67FD9A}{\color[HTML]{009901} Pass}   \\ \hline
+Tests iniciales & Comprueba el funcionamiento del modulo serial del microcontrolador y el conversor analogico digital & \cellcolor[HTML]{67FD9A}{\color[HTML]{009901} Pass}   \\ \hline
+Parpadear led & Prueba el funcionamiento de la plataforma con un programa que hace parpadear un led. Este test esta pensado para ser ejecutado en la plataforma a construir & \cellcolor[HTML]{FF9E9E}{\color[HTML]{CB0000} Fail}   \\
 \end{tabular}
 \end{table}
 
@@ -253,7 +252,7 @@ test\_blinkled & Prueba el funcionamiento de la plataforma con un programa que h
 \subsection{Tests de sistema} % (fold)
 \label{it2:sub:tests_de_sistema}
 
-Las pruebas de sistema se realizaron utilizando la placa de desarrollo mencionada en la seccion PONER ACA LA SECCION DONDE HABLAMOS DE LA SILICON LABS. Al no tener todavia una implementacion hecha del sistema, se utilizo esta placa para testear el codigo embebido en el microcontrolador, que en definitiva seria el mismo que iria en la placa a construir
+Las pruebas de sistema se realizaron utilizando la placa de desarrollo mencionada en la seccion \ref{it1:sec:seleccion}. Al no tener todavia una implementacion hecha del sistema, se utilizo esta placa para testear el codigo embebido en el microcontrolador, que en definitiva seria el mismo que iria en la placa a construir
 
 \begin{table}[h]
 \caption{Test de sistema 1}
