@@ -1,11 +1,8 @@
 cosas que hacen falta:
 
+-terminar la base de datos en el servidor (sacar el pin0 hardcodeado)
+-dejar la opcion de usar el timestamp o timer1
 
--terminar la base de datos en el servidor
-- dejar la opcion de usar el timestamp o timer1
-- medir las cosas con el sensor de CE
-- imagenes del osciloscopio con la salida del sensor midiendo
-- imagenes del osciloscopio con la salida del fotointerruptor
 
 hecho:
 
@@ -14,3 +11,10 @@ hecho:
 -adaptar el formato de envio de mediciones para que sea MODO,PIN,VALOR,TIMESTAMP
 -medir bien cuanto es el intervalo cuando pones un 1. y calibrarlo, es decir, si no es muy lineal, hacer una tabla de 15 o 20 entradas para intervalos tipicos. que se yo, 10ms, 1 seg, 5 seg, 1 min, 5 min. algo asi..
 - hacer la segunda prueba de sistema de la iteracion 5
+
+
+cosas que necesitamos el sensor para hacer
+
+- medir las cosas con el sensor de CE
+- imagenes del osciloscopio con la salida del sensor midiendo
+- imagenes del osciloscopio con la salida del fotointerruptor
