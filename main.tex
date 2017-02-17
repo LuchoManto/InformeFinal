@@ -8,6 +8,8 @@
 \usepackage{float}
 \usepackage{fixltx2e}
 \usepackage{blindtext}
+\usepackage{array}
+\usepackage{calc}
 \usepackage[table,xcdraw]{xcolor}
 %para incluir graficos
 \usepackage{graphicx}
@@ -31,11 +33,11 @@
 %para usar hipertexto en las referencias
 \usepackage{hyperref}
 \hypersetup{
-    colorlinks,
-    citecolor=black,
-    filecolor=black,
-    linkcolor=black,
-    urlcolor=black
+colorlinks,
+citecolor=black,
+filecolor=black,
+linkcolor=black,
+urlcolor=black
 }
 
 \usepackage{fancyhdr}
@@ -57,50 +59,83 @@
 \begin{document}
 
 \begin{titlepage}
-    \centering
-    \textbf{\huge{Proyecto Integrador} \\ \line(1,0){350}} \\
-    \vspace{0.5cm}\includegraphics[scale=0.53]{Escudo.jpg}\\
-    \vspace{0.15cm}
-    {\large\itshape Facultad de Ciencias Exactas, Físicas y Naturales\par}
-    \vspace{0.15cm}
-    {\large\itshape Laboratorio de Arquitectura de Computadoras\par}
-    \vspace{1cm}
-    {\scshape\Huge Diseño y Construccion de una Plataforma de Instrumentación para Sistemas Embebidos\par}
-    \vspace{1cm}
-    {\Large Luciano Mantovani - Ignacio Sambataro\par}
-    \vspace{1.5cm}
-    {\large Carrera\par}
-    \vspace{0.10cm}
-    {\large Ingeniería en Computación\par}
-    \vspace{1cm}
-    {\large Director\par}
-    \vspace{0.10cm}
-    {\large\itshape Dr. Ing. Orlando Micolini\par}
-    {Director del Laboratorio de Arquitectura de Computadoras, FCEFyN, UNC\par}
-    \vspace{1cm}
-    {\large Co-director\par}
-    \vspace{0.10cm}
-    {\large\itshape Ing. Maximiliano Eschoyez\par}
-    {Director de la carrera de Ingeniería en Computación, FCEFyN, UNC\par}
+\centering
+\textbf{\huge{Proyecto Integrador} \\ \line(1,0){350}} \\
+\vspace{0.5cm}\includegraphics[scale=0.53]{Escudo.jpg}\\
+\vspace{0.15cm}
+{\large\itshape Facultad de Ciencias Exactas, Físicas y Naturales\par}
+\vspace{0.15cm}
+{\large\itshape Laboratorio de Arquitectura de Computadoras\par}
+\vspace{1cm}
+{\scshape\Huge Diseño, Implementación, y Prueba de una Plataforma de Instrumentación para Sistemas Embebidos\par}
+\vspace{1cm}
+{\Large Luciano Mantovani - Ignacio Sambataro\par}
+\vspace{1.5cm}
+{\large Carrera\par}
+\vspace{0.10cm}
+{\large Ingeniería en Computación\par}
+\vspace{1cm}
+{\large Director\par}
+\vspace{0.10cm}
+{\large\itshape Dr. Ing. Orlando Micolini\par}
+{Director del Laboratorio de Arquitectura de Computadoras, FCEFyN, UNC\par}
+\vspace{1cm}
+{\large Co-director\par}
+\vspace{0.10cm}
+{\large\itshape Ing. Maximiliano Eschoyez\par}
+{Director de la carrera de Ingeniería en Computación, FCEFyN, UNC\par}
 
-    \vfill
+\vfill
 
 % Bottom of the page
-    {\large Año 2016 \par}
+{\large Año 2017 \par}
 \end{titlepage}
 
 
 
 \clearpage
 
+\noindent
+\textbf{\large{Telefonos:}} \\ \\
+Mantovani Luciano: 351-392-2584 \\
+Sambataro Ignacio: \\
+
+\clearpage
+\noindent
+\textbf{\large{Agradecimientos}} \\ \\
+A mi familia, en especial a mi papa, por su apoyo moral y por su infinito apoyo académico, que estuvieron desde el principio, y lo siguen estando al día de hoy.
+
+A mi grupo de amigos, compañeros de la facultad. Hicieron que el camino hacia el titulo sea no solo mas fácil, sino placentero y lleno de recuerdos que llevare toda la vida.
+
+A los profesores y estudiantes, sobretodo aquellos que forman parte del Laboratorio de Arquitectura de Computadoras. Trabajar sobre este proyecto dentro del laboratorio fue una experiencia inolvidable.
+
+
+
+Gracias, \\
+
+\textit{Luciano} \\ \\
+
+A tu vieja en tanga. \\
+
+Gracias, \\
+
+\textit{Ignacio} \\ \\
+
+Ademas, queremos hacer una mencion especial a Orlando Micolini, Maximiliano Eschoyez, Luis Ventre, Marcelo Cebollada, Gustavo Parlanti, Emiliano Pellicioni, Diego Gutierrez y Gaston Lucero, por su ayuda y su colaboración en el desarrollo de este proyecto.
+
+Gracias.
+
+
+
 \abstract{
-En este proyecto integrador se diseño y se implemento un sistema concentrador de señales de fuentes analógicas y digitales, que reúne datos y los canaliza a través de un protocolo serial hacia otro sistema que realiza distintas acciones en función de los valores de estos datos.
 
-El concentrador es configurable vía una interfaz de linea de comando, que permite establecer, entre otras cosas, el tipo de señal de entrada que se va a recibir, el tipo de amplificación necesaria, y los intervalos de tiempo requeridos entre medición y medición, para cada entrada.
+En el presente informe se describe el desarrollo realizado para el diseño, implementación, y pruebas de una plataforma de instrumentación, especializada para el uso con sistemas embebidos. 
 
-Su implementación de hardware fue hecha en base a una placa de desarrollo Silicon Labs que contiene un microcontrolador C8051F350. El software para este microcontrolador fue hecho en lenguaje C.
+El objetivo principal de esta plataforma es reunir datos de distintos sensores y canalizarlos a través de un protocolo serial, hacia otro sistema que realiza distintas acciones en función de los valores de estos datos.
 
-En una segunda etapa de este proyecto, se desarrollaron 2 implementaciones para poner en prueba el concentrador. En primera instancia, se realizo una adaptación de un sensor de campo electromagnético con su circuito electrónico. Luego, se utilizo una placa de desarrollo Raspberry Pi para implementar un sistema que interactúe con el concentrador, estableciendo una interfaz gráfica de usuario vía web, y guardando los datos que se envían y reciben en una base de datos. El software de esto ultimo fue desarrollado en Python. 
+La plataforma es configurable vía una interfaz de linea de comando, que permite establecer, entre otras cosas, el tipo de señal de entrada que se va a recibir, el tipo de amplificación necesaria, y los intervalos de tiempo requeridos entre medición y medición, para cada entrada.
+
+El proyecto integrador consistió en el diseño de la plataforma, la construcción de la misma, y una prueba de laboratorio utilizando un sensor de campo electrostático. Además, se implemento un sistema de gestión básico en una placa Raspberry Pi, para que tome el papel del sistema embebido que se utiliza junto con la plataforma.
 }
 
 \clearpage
@@ -129,7 +164,7 @@ En una segunda etapa de este proyecto, se desarrollaron 2 implementaciones para 
 
 \input{tex/iteracion_7.tex}
 
-\input{tex/sistema_final.tex}
+\input{tex/conclusiones.tex}
 
 \appendix
 \input{tex/apendice.tex}

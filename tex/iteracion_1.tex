@@ -1,10 +1,10 @@
-\chapter{Iteracion 1: Investigacion y seleccion de recursos} % (fold)
+\chapter{Iteración 1: Investigación y selección de recursos} % (fold)
 \label{cha:iteracion_1}
 
-\section{Introduccion} % (fold)
+\section{Introducción} % (fold)
 \label{it1:sec:introduccion}
 
-La seleccion del microcontrolador es el primer paso a superar en la investigacion para la construccion de la plataforma. Los requerimientos y objetivos definidos, dieron pie a la conformacion de una tabla comparativa donde colocamos distintos microcontroladores que parecian reunir las caracteristicas necesarias para ser potencialmente elegidos para nuestra plataforma. En esta iteracion, explicamos aquellos parametros analizados para cada controlador, y el proceso de analisis para la seleccion final.
+La selección del microcontrolador es el primer paso a superar en la investigación para la construcción de la plataforma. Los requerimientos y objetivos definidos, dieron pie a la conformación de una tabla comparativa donde colocamos distintos microcontroladores que parecían reunir las características necesarias para ser potencialmente elegidos para nuestra plataforma. En esta iteración, explicamos aquellos parámetros analizados para cada controlador, y el proceso de análisis para la selección final.
 
 % en esta iteracion de lo que hay que hablar es desde el momento en el que no teniamos nada al momento en que dijimos "tenemos esto para desde aca arrancar. " . osea, teniamos que el mejor micro para trabajar era el 8051 y teniamos la placa de desarrollo asi que arrancamos a huevear ahi. lo primero que hicimos fue probar que todas las cosas andaran bien, hicimos programas de prueba para todas las funcionalidades, que eran: el adc, el UART, el SMBus (que no anduvo nunca), y los contadores de eventos.
 
@@ -12,15 +12,15 @@ La seleccion del microcontrolador es el primer paso a superar en la investigacio
 
 % section introduccion (end)
 
-\section{Requerimientos de la iteracion} % (fold)
+\section{Requerimientos de la iteración} % (fold)
 \label{it1:sec:requerimientos_de_la_iteracion}
 
-Seleccionar un microcontrolador que reuna las siguientes características:
+Seleccionar un microcontrolador que reúna las siguientes características:
 \begin{itemize}
-  \item Deberia poder convertir a digital 8 o más señales analógicas.
-  \item Deberia poder elegir entre conversion de canal unico o diferencial.
-  \item Deberia tener contadores para contar eventos de hasta 4 fuentes distintas.
-  \item Deberia transmitir los datos digitales a traves de un protocolo serial a alguna otra placa o procesador.
+  \item Debería poder convertir a digital 8 o más señales analógicas.
+  \item Debería poder elegir entre conversión de canal único o diferencial.
+  \item Debería tener contadores para contar eventos de hasta 4 fuentes distintas.
+  \item Debería transmitir los datos digitales a través de un protocolo serial a alguna otra placa o procesador.
 \end{itemize}
 
 
@@ -30,18 +30,18 @@ Seleccionar un microcontrolador que reuna las siguientes características:
 \label{it1:sec:desarrollo}
 
 
-\subsubsection{Seleccion de parametros clave} % (fold)
+\subsubsection{Selección de parámetros clave} % (fold)
 \label{ssub:seleccion_de_parametros_clave}
 
-Cada microcontrolador reune una serie de caracteristicas que hace que sean distintos uno de otro. Para nuestro sistema, solo son algunos los parametros que deben tenerse en cuenta para una seleccion acorde a nuestros requerimientos. Estis parametros fueron seleccionados segun el analisis de requerimientos, distinguiendo aquellos de mayor riesgo y los de menor riesgo. 
+Cada microcontrolador reúne una serie de características que hace que sean distintos uno de otro. Para nuestro sistema, solo son algunos los parámetros que deben tenerse en cuenta para una selección acorde a nuestros requerimientos. Estos parámetros fueron seleccionados según el análisis de requerimientos, distinguiendo aquellos de mayor riesgo y los de menor riesgo. 
 
 \begin{itemize}
   \item \textbf{RAM:} No es un requisito principal, pero en caso de tener que decidir entre dos microcontroladores similares, el tamaño de la memoria puede ser un factor para tomar la decisión final.
   \item \textbf{Cantidad de canales del ADC:} Mientras mas canales se tengan, mas señales analógicas de entrada pueden haber, y mas señales de sensores se podrán procesar simultáneamente
   \item \textbf{Referencia:} Nos dice si los pines del ADC se pueden usar como entrada diferencial o únicamente con referencia a GND. Esto es porque en el caso que haya 16 pines para el ADC y puedan usarse todos como entrada diferencial, se podrán usar como máximo la mitad de los pines, es decir 8.
-  \item \textbf{Resolución:} Es la cantidad de bits con la que se representa el dato convertido. A mayor resolución, mayor presunción de la conversión.
-  \item \textbf{Ganancia:} Una buena ganancia interna en el micro es necesaria para una amplificación de la señal, ya que reduce la relacion señal-ruido. Este parámetro es clave si se quiere trabajar con sensores que funcionan a voltajes muy pequeños en ambientes susceptibles al ruido eléctrico.
-  \item \textbf{Contadores:} Cantidad de timers en el microcontrolador que se utilizarían como contadores de eventos(es necesario que puedan ser clockeados por fuente externa, es decir, que la fuente que incrementa el contador provenga de eventos externos y no interiores al microcontrolador).
+  \item \textbf{Resolución:} Es la cantidad de bits con la que se representa el dato convertido. A mayor resolución, mayor precisión de la conversión.
+  \item \textbf{Ganancia:} Una buena ganancia interna en el micro es necesaria para una amplificación de la señal, ya que reduce la relación señal-ruido. Este parámetro es clave si se quiere trabajar con sensores que funcionan a voltajes muy pequeños en ambientes susceptibles al ruido eléctrico.
+  \item \textbf{Contadores:} Cantidad de contadores en el microcontrolador que se utilizarían como contadores de eventos(es necesario que la fuente que incrementa el contador provenga de eventos externos y no interiores al microcontrolador).
   \item \textbf{Modos de bajo consumo:} Si tiene mas de un modo de bajo consumo, es mas simple lograr que el sistema se encuentre el mayor tiempo posible consumiendo lo menor posible.
   \item \textbf{Puerto serie:} Interfaces seriales que soporta el micro. De manera mínima se necesita que soporten $I^{2}$C y UART.
   \item \textbf{Dimensión:} Dimensión del micro. El tamaño de la placa debería ser lo menor posible por lo que mientras mas pequeño el micro, mejor.
@@ -54,7 +54,7 @@ Cada microcontrolador reune una serie de caracteristicas que hace que sean disti
 \subsection{Análisis de microcontroladores disponibles en el mercado} % (fold)
 \label{it1:sub:analisis_de_microcontroladores}
 
-Teniendo en cuenta los parametros mas importantes realizamos una busqueda en la web, de distintos microcontroladores potenciales para nuestra plataforma. Cada microcontrolador nuevo encontrado con potencial de seleccion era analizado por separado teniendo en cuenta los parametros descritos en la seccion \ref{ssub:seleccion_de_parametros_clave}. La tabla \ref{tabla_micros} muestra los microcontroladores considerados.
+Teniendo en cuenta los parámetros mas importantes realizamos una búsqueda en la web, de distintos microcontroladores potenciales para nuestra plataforma. Cada microcontrolador nuevo encontrado con potencial de selección era analizado por separado teniendo en cuenta los parámetros descriptos en la sección \ref{ssub:seleccion_de_parametros_clave}. La tabla \ref{tabla_micros} muestra los microcontroladores considerados.
 
 % Table generated by Excel2LaTeX from sheet 'Sheet1'
 \clearpage
@@ -120,9 +120,9 @@ Atmel AVR & ATmega128 &    128 & 8 (2 c/gain) & 7 DIF, 8 GND & 10 bits & 1x, 10x
 \section{Selección} % (fold)
 \label{it1:sec:seleccion}
 
-El microcontrolador elegido fue el Silicon Labs C8051F352. Haciendo un analisis de la tabla \ref{tabla_micros}, llegamos a la conclusion de que este microcontrolador es el mejor comprommiso de todos los parametros mas importantes, como ser la cantidad de entradas analogicas para la conversion, la resolucion, la ganancia programable, los contadores de eventos, y el protocolo serial $I^{2}$C.
+Decidimos optar por el microcontrolador Silicon Labs C8051F352. Haciendo un análisis de la tabla \ref{tabla_micros}, llegamos a la conclusión de que este microcontrolador es el mejor se adapta a los parámetros mas importantes, como ser la cantidad de entradas analógicas para la conversión, la resolución, la ganancia programable, los contadores de eventos, y el protocolo serial $I^{2}$C.
 
-Para el desarrollo de distintas pruebas sobre el desempeño del microcontrolador, obtivimos una placa de desarrollo Silicon Labs C8051F352. Una ilustracion de esta placa de desarrollo puede verse en la figura \ref{fig:placadedesarrollosiliconlabs}
+Para el desarrollo de distintas pruebas sobre el desempeño del microcontrolador, obtuvimos una placa de desarrollo Silicon Labs C8051F352. Una ilustración de esta placa de desarrollo puede verse en la figura \ref{fig:placadedesarrollosiliconlabs}
 
 \begin{figure}[h]
   \centering
