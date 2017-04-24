@@ -6,37 +6,35 @@
 
 El desarrollo de las iteraciones sigue un determinado orden. Este orden proviene directamente de la dependencia que existe entre los requerimientos del sistema. En caso de haber requerimientos independientes entre si, se elige por el de mayor riesgo. El riesgo de cada requerimiento esta determinado por la dependencia existente entre cada uno. El cuadro \ref{tab:riesgoderequerimientos} enumera los requerimientos y les asocia un riesgo estimado, calculado según estas dependencias. El orden de las iteraciones fue dado según esta tabla.
 
-\begin{table}[]
+\begin{table}[ht]
 \centering
-\caption{Riesgo de los requerimientos}
+\caption{Riesgo de los requerimientos funcionales}
 \label{tab:riesgoderequerimientos}
-\begin{tabular}{|m{0.5cm}|m{9cm}|m{1.5cm}|m{1.5cm}|}
+\begin{center}
+\centering
+%\begin{tabular}{|m{0.5cm}|m{9cm}|m{1.5cm}|m{1.5cm}|}
+\begin{tabular}{|p{0.3cm}|p{6cm}|p{1.5cm}|p{1.5cm}|}
 \hline
-\cellcolor[HTML]{68CBD0}ID & \cellcolor[HTML]{68CBD0}Nombre & \cellcolor[HTML]{68CBD0}Prioridad & \cellcolor[HTML]{68CBD0}Impacto  \\
+\cellcolor[HTML]{68CBD0}ID & \cellcolor[HTML]{68CBD0}Descripción & \cellcolor[HTML]{68CBD0}Prioridad & \cellcolor[HTML]{68CBD0}Impacto  \\
 \hline
-1 &  Se deberia poder recibir datos de sensores analogicos en modo singular o equilibrado & 1 & ALTO  \\
+1 &  Se deberían poder recibir datos de hasta 8 sensores analógicos en modo singular o equilibrado & 1 & ALTO  \\
 \hline
-2 &  Se deberia poder contar eventos de señales digitales cuadradas & 1 & ALTO  \\
+2 &  Se debería poder configurar, mediante una interfaz de usuario, cada canal analógico por separado para medir en modo diferencial, modo canal único, o no medir. & 2 & ALTO  \\
 \hline
-3 &  Se debería poder configurar una ganancia especifica & 1 & ALTO  \\
+3 &  Se deberían poder contar eventos de hasta 4 señales externas. & 1 & ALTO  \\
 \hline
-4 &  Se debería poder configurar un tiempo especifico entre mediciones para cada entrada & 2 & ALTO  \\
+4 &   Se debería poder configurar una ganancia especifica para el conversor analógico digital mediante una interfaz de usuario. & 1 & ALTO  \\
 \hline
-5 &  Se deberia poder configurar la cantidad de canales para las conversiones y el conteo de eventos. & 2 & ALTO  \\
+5 &  Se debería poder configurar un tiempo entre mediciones especifico para cada entrada mediante una interfaz de usuario. & 3 & MEDIO \\
 \hline
-6 &  Se debería usar un protocolo serial para la interfaz de linea de comando entre el sistema y el usuario & 1 & ALTO  \\
+6 &   El canal de comunicación entre la plataforma y el sistema embebido o controlador debería ser serial  & 2 & ALTO \\
 \hline
-7 &  El usuario debería poder configurar el sistema conectándolo a un ordenador u otro sistema que soporte comunicación serial. & 2 & MEDIO  \\
+7 &  La plataforma debería poder controlar y obtener mediciones del sensor de campo electrostático & 4 & BAJO  \\
 \hline
-8 &  Se debería poder enviar datos de mediciones y posibles meta-datos a través de un canal de comunicación mediante un protocolo serial. & 2 & MEDIO  \\
-\hline
-9 &  La configuracion de los parametros para las mediciones deberian poder ser establecidas via una interfaz web grafica. & 3 & BAJO  \\
-\hline
-10 &  Todas las interacciones del sistema deberian guardarse en una base de datos junto, con un timestamp. & 2 & MEDIO  \\
-\hline
-11 &  Se deberia poder establecer un sistema de reglas que provoque que el sistema reaccione ante ciertos niveles de los datos entrantes desde el sistema de adquisicion. & 3 & BAJO  \\
+8 &  Se debería diseñar un caso de uso de sistema embebido que trabaje junto con la plataforma & 5 & BAJO  \\
 \hline
 \end{tabular}
+\end{center}
 \end{table}
 
 % queremos indicar el orden de las iteraciones. no necesariamente tienen cualquier orden. Las iteraciones vienen directo de los requerimientos. Los requerimientos dependen a veces unos de otros, y eso determina el orden. Cuando no dependen uno de otro, se decide cual hacer primero segun el riesgo del requerimiento. Ponele, que el sistema cuente eventos y convierta de analogico a digital es de riesgo alto porque es clave. No se puede hacer nada si no se decide primero que micro usar,, y asi y asi.
@@ -48,7 +46,7 @@ El desarrollo de las iteraciones sigue un determinado orden. Este orden proviene
 
 % -iteracion 1
 % que es lo que hizo que eligieramos la primera iteracion como la primera? los parametros del microcontrolador nos ajustaban de todos lados. osea los parametros del microcontrolador eran escenciales. aquellos que eran criticos hacian depender a todos los demas. asi que lo primero que habia que hacer era conformar una tabla con una serie de microcontroladores candidatos, y optar aquel que mejor cumpla con los requerimientos de mayor riesgo, y si es posible con los otros requerimientos que dependian de los primeros.
-\subsection{Iteracion 1} % (fold)
+\subsection{Iteración 1} % (fold)
 \label{sub:iteracion_1}
 
 Los parámetros del microcontrolador son esenciales porque condicionan a todo el sistema. En la primera iteración, nos dedicamos a la investigación de aquellos microcontroladores que mejor se ajustaban a las necesidades impuestas por los requerimientos. Conformamos una tabla para una mejor interpretación de las diferencias y ventajas entre cada uno. La decisión final se tomó a partir del análisis de dicha tabla.
@@ -58,7 +56,7 @@ Los parámetros del microcontrolador son esenciales porque condicionan a todo el
 % -iteracion 2:
 % elegido ya el microcontrolador. que habia que hacer? lo primero y principal es aprender a usar las FUNCIONALIDADES PRINCIPALES del micro. necesitabamos una placa de desarrollo que tenga el microcontrolador y probar sus funcionalidades. particularmente aquellas que estaban ligadas a los requerimientos principales. si alguna de las funcionalidades no andaba bien, o alguna de las pruebas no daba los resultados esperados, podia ser posible hasta tener que cambiar el microcontrolador. Osea que habiendo uno ya selecto, lo primero a hacer fue comprarlo y realizar pruebas hasta comprobar que las funcionalidades del micro anden como era esperado.
 
-\subsection{Iteracion 2} % (fold)
+\subsection{Iteración 2} % (fold)
 \label{sub:iteracion_2}
 
 El microcontrolador seleccionado fue elegido debido a sus funcionalidades, principalmente aquellas que prometían cumplir con los requerimientos de mayor riesgo. Si las funcionalidades principales no se desempeñan bien o no responden óptimamente, podría ser necesaria la reelección del microcontrolador. La segunda iteración consistirá en conformar un primer prototipo de software. El objetivo principal de este prototipo es comprobar que los requerimientos principales son posibles de cumplir, y asegurar, también, la selección del microcontrolador.
@@ -67,7 +65,7 @@ El microcontrolador seleccionado fue elegido debido a sus funcionalidades, princ
 
 % -iteracion 3:
 % que sigue despues de tener un microcontrolador elegido y puesto a prueba segun los requerimientos? comenzar a diseñar e implementar el HARDWARE DE LA plataforma DE INSTRUMENTACION. Todo el hardware esta ligado al microcontrolador por lo que claramente no podia hacerse antes. El diseño se hizo basandonos en la placa de desarrollo donde hicimos las pruebas en la iteracion 2, teniendo el cuidado de no incluir aquellas partes de la placa que no eran necesarias en la plataforma de instrumentacion.
-\subsection{Iteracion 3} % (fold)
+\subsection{Iteración 3} % (fold)
 \label{sub:iteracion_3}
 
 Las iteraciones anteriores fueron dedicadas a la verificación de la selección del microcontrolador. Sin esta verificación, no es posible diseñar el hardware, ya que el mismo microcontrolador condiciona los componentes dentro del circuito.
@@ -79,10 +77,10 @@ En la tercera iteración, se dará lugar a uno de los requerimientos principales
 
 % -iteracion 4:
 % idea principal: terminar un primer prototipo de la plataforma de instrumentacion. para eso necesitabamos mejoras en el software. para que? para cumplir con la mayor cantidad de requerimientos posibles del lado del software. y tener la placa con el software listo.
-\subsection{Iteracion 4} % (fold)
+\subsection{Iteración 4} % (fold)
 \label{sub:iteracion_4}
 
-El prototipo de software diseñado en la iteración 2 es básico, y verifica que los requerimientos principales de la plataforma puedan ser cumplidos con el microcontrolador seleccionado. Pero aun no esta terminado un prototipo que cumpla con los objetivos y requerimientos principales. En la quinta iteración dimos un cierre al software del sistema. Fueron desarrolladas todas las funcionalidades planificadas, basadas en los requerimientos; y conformamos un primer prototipo completo de software.
+El prototipo de software diseñado en la iteración 2 es básico, y verifica que los requerimientos principales de la plataforma puedan ser cumplidos con el microcontrolador seleccionado. Pero aun no esta terminado un prototipo que cumpla con los objetivos y requerimientos principales. En la quinta iteración daremos un cierre al software del sistema. Serán desarrolladas todas las funcionalidades planificadas, basadas en los requerimientos; y conformaremos un primer prototipo completo de software.
 
 % subsection iteracion_4 (end)
 
@@ -99,7 +97,7 @@ En la quinta iteración, nos dedicaremos a analizar e implementar distintas mejo
 % -iteracion 6:
 % teniendo una plataforma de instrumentacion lista, y el sistema de gestion andando, falta hacer una prueba de campo con un sensor de verdad y poner a prueba el sistema. nos propusieron usar el sensor de campo electrostatico para probarlo.
 % otro parrafo: ademas de usarlo para probar el sistema como plataforma de instrumentacion + sistema de gestion, en esta it diseñamos una adaptacion al sensor para su correcto funcionamiento, usando funcionalidades del microcontrolador de la plataforma de instrumentacion.
-\subsection{Iteracion 6} % (fold)
+\subsection{Iteración 6} % (fold)
 \label{sub:iteracion_6}
 
 Al final de la iteración 5, el sistema estará diseñado y con un prototipo terminado. Esta iteración será dedicada al desarrollo de una prueba de campo utilizando el sensor de campo electrostático mencionado en los objetivos. 
@@ -111,12 +109,12 @@ El objetivo principal es poner a prueba el sistema con un sensor real, comproban
 
 % -iteracion 7:
 % hasta el momento ya obtuvimos un prototipo de la plataforma de instrumentacion. lo que hay que hacer ahora es usarla. falta diseñarle un prototipo de sistema de gestion para que no tenga que estar siempre conectada a la pc. enctonces la idea de esta iteracion es tener un prototipo de sistema de gestion que haga de receptor para la telemetria de la plataforma de instrumentacion. para dejar de usar la computadora como receptor directo y comenzar a manejarla de una manera mas remota.
-\subsection{Iteracion 7} % (fold)
+\subsection{Iteración 7} % (fold)
 \label{sub:iteracion_7}
 
-El objetivo principal de esta iteracion es obtener un sistema inteligente de deteccion de campo electrostatico, utilizando la plataforma de instrumentacion, el sensor de campo electrostatico, y una placa de desarrollo con un sistema operativo embebido. La funcion de la placa de desarrollo es la de controlar y recibir la telemetria de la plataforma. 
+El objetivo principal de esta iteración es obtener un sistema inteligente de detección de campo electrostático, utilizando la plataforma de instrumentación, el sensor de campo electrostático, y una placa de desarrollo con un sistema operativo embebido. La función de la placa de desarrollo es la de controlar y recibir la telemetría de la plataforma. 
 
-Obtener un producto terminado utilizando la plataforma es un aspecto clave porque se pone a prueba todo el sistema. Ademas, implica tener que desarrollar un sistema de gestion basico dentro de una placa de desarrollo que controle la plataforma. Esta iteracion sera dedicada a la construccion de este sistema, si es posible utilizando como base otros proyectos dentro del laboratorio.
+Obtener un producto terminado utilizando la plataforma es un aspecto clave porque se pone a prueba todo el sistema. Además, implica tener que desarrollar un sistema de gestión básico dentro de una placa de desarrollo que controle la plataforma. Esta iteración sera dedicada a la construcción de este sistema y, si es posible, utilizaremos como base a otros proyectos en desarrollo dentro del laboratorio.
 
 
 

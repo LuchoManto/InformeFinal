@@ -27,9 +27,9 @@ Una vez obtenida la intensidad, es necesario saber el signo del campo eléctrico
 \label{it6:sub:el_sensor}
 
 El sensor utilizado es un dispositivo que mide la intensidad del campo eléctrico en el ambiente debido al campo electrostático generado por la carga eléctrica de las nubes en el momento. Se puede utilizar para detectar la posibilidad de que caiga un rayo en una zona cercana al sensor, y también para investigar los efectos de la electricidad estatica. Para funcionar, el sensor necesita de un motor que gire a velocidad constante. Este motor funciona en base a un driver que tiene como entrada una señal modulada por ancho de pulso.
-Mientras el motor gire a velocidad constante, es posible obtener datos validos del sensor. La idea es hacer que el funcionamiento del sensor como la adquisición de las mediciones sea logrado con funcionalidades de la placa de instrumentación, mas otras características que ofrece el microcontrolador C8051F352, como ser el modulo de PWM para generar la señal modulada por ancho de pulso, y el uso de los timers para establecer las bases de tiempo que utilizamos para hacer un control de estabilidad en la velocidad del motor. \\
+Mientras el motor gire a velocidad constante, es posible obtener datos validos del sensor. La idea es hacer que el funcionamiento del sensor como la adquisición de las mediciones sea logrado con funcionalidades de la placa de instrumentación, mas otras características que ofrece el microcontrolador C8051F352, como ser el modulo de PWM para generar la señal modulada por ancho de pulso, y el uso de los contadores para establecer las bases de tiempo que utilizamos para hacer un control de estabilidad en la velocidad del motor. \\
 
-Físicamente, es una estructura metálica compuesta por un motor que hace girar unas aspas que se se encargan de blindar y desblindar una placa que a su vez se carga y descarga con la electricidad estática del ambiente. esta carga y descarga continua es lo que justamente se termina transformando en el nivel de voltaje que nos indica el nivel de electricidad estática del ambiente, que es lo que queremos saber.
+Físicamente, es una estructura metálica compuesta por un motor que hace girar unas aspas que se se encargan de blindar y des blindar una placa que a su vez se carga y descarga con la electricidad estática del ambiente. esta carga y descarga continua es lo que justamente se termina transformando en el nivel de voltaje que nos indica el nivel de electricidad estática del ambiente, que es lo que queremos saber.
 
 La placa y las aspas funcionan como un capacitor que se blinda y se des\-blinda a medida que el motor gira. En el momento que las aspas están descubriendo la placa, el capacitor se carga, y en el momento que se cubre la placa, el capacitor se descarga. La descarga se hace sobre un amplificador que luego va a un conversor analógico digital, que termina en la lectura de un valor que nos dice el nivel del campo electrostático ambiental. En el caso particular de este sensor, el motor que hace girar las aspas es un motor brushless manejado por un driver PWM.
 
@@ -45,7 +45,7 @@ La placa y las aspas funcionan como un capacitor que se blinda y se des\-blinda 
   \caption[Imagen del sensor de campo electrostático utilizado (vertical)]{Foto del sensor en vertical. Puede verse en el eje, el sistema de aspas y foto interruptor utilizado para medir las RPM.}\label{fig:sensorvertical}
 \end{figure}
 
-Además de las aspas que miden el campo eléctrico, en el eje del motor se encuentra un segundo grupo de aspas, pero mas pequeño; junto a estas aspas se encuentra acoplado un foto interruptor, de manera que el paso de cada aspa interrumpe el paso de luz de un extremo a otro. Si se construye el circuito requerido, ocurrirá que cuando el motor este girando, se generen pulsos cuadrados a la salida del foto interruptor, permitiendo obtener cuentas que ayudaran a la hora de controlar la velocidad del motor. Las aspas secundarias y el foto interruptor pueden verse en la figura \ref{fig:sensorvertical}
+Además de las aspas que miden el campo eléctrico, en el eje del motor se encuentra un segundo grupo de aspas, pero mas pequeño; junto a estas aspas se encuentra acoplado un foto interruptor, de manera que el paso de cada aspa interrumpe el paso de luz de un extremo a otro. Si se construye el circuito requerido, ocurrirá que cuando el motor este girando, se generen pulsos cuadrados a la salida del foto interruptor, permitiendo obtener cuentas que ayudaran a la hora de controlar la velocidad del motor. Las aspas secundarias y el foto interruptor pueden verse en la Figura \ref{fig:sensorvertical}
 
 % subsection el_sensor (end)
 
@@ -54,11 +54,11 @@ Además de las aspas que miden el campo eléctrico, en el eje del motor se encue
 \section{Requerimientos de la iteración} % (fold)
 \label{it6:sec:requerimientos_de_la_iteracion}
 
-Estos requerimientos fueron conformados teniendo en cuenta la naturaleza fisica del sensor, y las funcionalidades que ofrece la plataforma. 
+Estos requerimientos fueron conformados teniendo en cuenta la naturaleza física del sensor, y las funcionalidades que ofrece la plataforma. 
 
 \begin{itemize}
-\item Se deberia utilizar la plataforma de instrumentacion para generar la señal PWM necesaria que encienda y configure el controlador del motor del sensor. [5.1]
-\item Se debería poder controlar la velocidad del motor del sensor con una precision de +-50 RPM. [5.2]
+\item Se debería utilizar la plataforma de instrumentación para generar la señal PWM necesaria que encienda y configure el controlador del motor del sensor. [5.1]
+\item Se debería poder controlar la velocidad del motor del sensor con una precisión de +-50 RPM. [5.2]
 \item Se debería rectificar y amplificar, con el menor ruido posible, la señal de salida del sensor, antes que ingrese al conversor de la plataforma. [5.3]
 \end{itemize}
 
@@ -72,12 +72,7 @@ El motor dentro de este sensor incluía un driver PWM. Para arrancar y dar veloc
 
 Teniendo el motor funcionando, la teoría indica que el sensor esta midiendo campo. Para probar esto, se utilizo una regla de plástico cargada con electricidad estática y un osciloscopio conectado a la salida del sensor. Al acercar y alejar la regla de las aspas, se podía ver en la salida del osciloscopio como la onda resultante a la salida del sensor aumentaba y disminuía en amplitud. Lo que estábamos viendo, en ese momento, era una salida ``en crudo'' del sensor. Para poder convertir la señal y obtener datos coherentes, era necesario rectificar la señal. \\
 
-El foto interruptor acoplado al eje del motor da la posibilidad de realizar un conteo de señales cuadradas que nos proporcione los datos suficientes como para realizar una medición de las vueltas por minuto del motor. Necesita de un circuito básico para funcionar. Lo construimos en una protoboard junto con todo lo necesario para hacer funcionar el motor. Con ayuda de un osciloscopio, fue posible ver los pulsos cuadrados de 5 Volts generados por el foto interruptor. Estos pulsos son los que luego servirían de entrada a un contador de eventos de la placa de instrumentación, con el objetivo de controlar la velocidad del motor. \\
-
-ACA FALTARIA INCLUIR IMAGENES DE:
-
--EL OSCILOSCOPIO CON LA SALIDA DEL SENSOR MIDIENDO
--EL OSCILOSCOPIO CON LA SALIDA DEL FOTO INTERRUPTOR
+El foto interruptor acoplado al eje del motor da la posibilidad de realizar un conteo de señales cuadradas que nos proporcione los datos suficientes como para realizar una medición de las vueltas por minuto del motor. Necesita de un circuito básico para funcionar. Lo construimos en una placa de prototipo junto con todo lo necesario para hacer funcionar el motor. Con ayuda de un osciloscopio, fue posible ver los pulsos cuadrados de 5 Volts generados por el foto interruptor. Estos pulsos son los que luego servirían de entrada a un contador de eventos de la placa de instrumentación, con el objetivo de controlar la velocidad del motor. \\
 
 % section experimentacion (end)
 
@@ -89,7 +84,7 @@ ACA FALTARIA INCLUIR IMAGENES DE:
 
 % subsection circuito_de_adaptacion (end)
 
-Este sensor particular requiere de ciertos requerimientos para funcionar de manera correcta:
+Este sensor tiene ciertas necesidades para funcionar y medir de manera correcta:
 
 \begin{itemize}
   \item El motor debería estar alimentado con una señal continua de 12 Voltios
@@ -98,23 +93,29 @@ Este sensor particular requiere de ciertos requerimientos para funcionar de mane
   \item La señal de campo electrostático debería ser rectificada y amplificada previa a ser convertida a digital
 \end{itemize}
 
-
-Además de los requerimientos principales mencionados, fueron propuestos los siguientes requerimientos secundarios:
+Para cumplir con lo listado anteriormente, es necesario construir un circuito en placa de cobre. Teniendo en cuenta las necesidades del motor y los requerimientos de la iteración, listamos los siguientes requerimientos para el circuito a construir :
 
 \begin{itemize}
-  \item El diseño de la placa debería ser tal que sea acoplable y desacoplable a la placa de instrumentación.
-  \item Deberia consumir lo menos posible
+    \item El circuito debería rectificar y amplificar la señal de campo electrostático para luego ingresar como entrada a un canal analógico de la plataforma
+    \item El circuito debería medir la velocidad del motor, utilizando el fotoacoplador acoplado al sensor.
+    \item El circuito debería controlar la alimentación del motor, permitiendo que se apague y prenda por software.
+    \item El diseño de la placa debería ser tal que sea acoplable y desacoplable a la placa de instrumentación.
 \end{itemize}
 
-Para cumplir con estos requerimientos, fue necesario desarrollar funcionalidades aparte dentro del programa embebido en la plataforma de instrumentación, además de un circuito de adaptación acoplado a la misma.
+La plataforma de instrumentación sera utilizada para controlar el funcionamiento del sensor, por medio del circuito a construir. Esto sera implementado como una aplicación de la plataforma, sin formar parte de las prestaciones originales.
+
 
 % subsection requerimientos (end)
 \subsubsection{Circuito de adaptación para la señal de nivel de campo} % (fold)
 \label{it6:ssub:circuito_de_adaptacion_para_la_señal_de_nivel_de_campo}
 
-La señal a la salida del sensor es alterna y de muy baja intensidad. El conversor analógico digital requiere de una señal rectificada y de un umbral mínimo para funcionar correctamente. Para esto, se diseño un circuito de adaptación de señal, que rectifica y amplifica la salida del sensor. Este circuito puede verse en la figura FIGURA.  
+La señal a la salida del sensor es alterna y de muy baja intensidad. El conversor analógico digital requiere de una señal rectificada y de un umbral mínimo para funcionar correctamente. Para esto, se diseño un circuito de adaptación de señal, que rectifica y amplifica la salida del sensor. Este circuito puede verse en la Figura \ref{circuitotratamientosenal}.  
 
-ACA VA EL OPERACIONAL CON EL AMPLIFICADOR Y RECTIFICADOR QUE SE PONE PARA QUE VAYA ANTES DEL CONVERSOR.. CON IMAGEN
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.50\textwidth, height = 5cm]{circuitotratamientosenal}
+  \caption{Circuito de tratamiento de la señal de salida del sensor, antes de ingresar a la entrada analógica de la plataforma.}\label{fig:circuitotratamientosenal}
+\end{figure}
 
 
 
@@ -124,7 +125,7 @@ ACA VA EL OPERACIONAL CON EL AMPLIFICADOR Y RECTIFICADOR QUE SE PONE PARA QUE VA
 \label{it6:ssub:circuito_de_adaptacion_para_la_señal_de_pulsos_del_fotointerruptor}
 
 
-En esta configuración, el foto interruptor genera una señal de pulsos cuadrados a medida que el motor gira. Esta señal puede usarse como entrada a un contador de eventos, y de esta manera medir la velocidad de giro del motor. La figura \ref{fig:fotointerruptorcircuitotipico} muestra el circuito implementado para este fin. 
+En esta configuración, el foto interruptor genera una señal de pulsos cuadrados a medida que el motor gira. Esta señal puede usarse como entrada a un contador de eventos, y de esta manera medir la velocidad de giro del motor. La Figura \ref{fig:fotointerruptorcircuitotipico} muestra el circuito implementado para este fin. 
 
 \begin{figure}[h]
   \centering
@@ -132,7 +133,7 @@ En esta configuración, el foto interruptor genera una señal de pulsos cuadrado
   \caption{Circuito utilizado para el fotointerruptor}\label{fig:fotointerruptorcircuitotipico}
 \end{figure}
 
-En esta disposición, cuando el foto sensor esta iluminado, hay 5 Volts en la salida; de lo contrario 0 Volts. Esto hace que cuando el motor gira, las aspas van a tapar y destapar la entrada de luz al foto sensor generando una onda cuadrada a la salida del circuito, cuya frecuencia depende de la velocidad del motor. Dentro del software de la plataforma de instrumentación, se utilizo uno de los contadores de eventos disponibles para obtener las cuentas del foto interruptor y medir la velocidad del motor. Con esta información, se modifica el ancho de pulso de la señal PWM a la entrada del driver del motor. Corrigiendo así la velocidad, para mantenerla lo mas estable posible. 
+En esta disposición, cuando el fotosensor esta iluminado, hay 5 Volts en la salida; de lo contrario hay 0 Volts. Esto hace que cuando el motor gira, las aspas van a tapar y destapar la entrada de luz al foto sensor generando una onda cuadrada a la salida del circuito, cuya frecuencia dependerá de la velocidad del motor. Dentro del software de la plataforma de instrumentación, se utilizo uno de los contadores de eventos disponibles para obtener las cuentas del foto interruptor y medir la velocidad del motor. Con esta información, se modifica el ancho de pulso de la señal PWM a la entrada del driver del motor. Corrigiendo así la velocidad, para mantenerla lo mas estable posible. 
 
 % subsection circuito_de_adaptacion_para_la_señal_de_pulsos_del_fotointerruptor (end)
 
@@ -141,7 +142,13 @@ En esta disposición, cuando el foto sensor esta iluminado, hay 5 Volts en la sa
 
 La placa de instrumentación esta diseñada para estar siempre encendida. Al no consumir mucho, no trae problemas de consumo o temperatura. Pero habiendo hecho esta adaptación, era necesario tener en cuenta el consumo del motor mientras esta encendido pero sin girar. Para ahorrar consumo, propusimos agregar un control de encendido y apagado del sensor, utilizando uno de los pines GPIO del microcontrolador. \\
 
-La figura PONER FIGURA DEL CIRCUITO muestra el circuito que prepara la señal del microcontrolador que controla el encendido y apagado del motor. Utilizamos un relé, un opto acoplador, un transistor, un diodo y resistencias. El opto acoplador sirve para aislar apáticamente el circuito lógico del motor con el circuito de 12 V. El relé electromecánico conmuta la conductividad entre el motor y masa, de manera que en un estado del relé el motor esta prendido, y en el otro esta apagado. Utilizamos un transistor porque los 5V a la salida del opto acoplador no eran suficientes para la tensión de switching del relé.
+La Figura \ref{circuitoconmutadormotor} muestra el circuito que prepara la señal del microcontrolador que controla el encendido y apagado del motor. Utilizamos un relé, un opto acoplador, un transistor, un diodo y resistencias. El opto acoplador sirve para aislar apáticamente el circuito lógico del motor con el circuito de 12 V. El relé electromecánico conmuta la conductividad entre el motor y masa, de manera que en un estado del relé el motor esta prendido, y en el otro esta apagado. Utilizamos un transistor porque los 5V a la salida del opto acoplador no eran suficientes para la tensión de conmutación del relé.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.50\textwidth, height = 5cm]{circuitoconmutadormotor}
+  \caption{Circuito para la conmutación de la alimentación del motor del sensor.}\label{fig:circuitoconmutadormotor}
+\end{figure}
 
 % subsection circuito_de_alimentacion (end)
 
@@ -152,7 +159,7 @@ La figura PONER FIGURA DEL CIRCUITO muestra el circuito que prepara la señal de
 
 El motor dentro de la estructura que conforma el motor tiene un modulo adaptador programable que funciona como interfaz, haciendo que una señal modulada en ancho de pulso se convierta en la velocidad de giro del motor, así como también en distintas configuraciones. Los distintos anchos de pulso son códigos que representan distintos modos para el driver. En el manual, especifica las distintas configuraciones disponibles y como establecerlas utilizando distintas señales moduladas en ancho de pulso. Tanto en el proceso de configuración como en el funcionamiento normal, el driver emite sonidos en distintos tonos que dan información sobre el estado en cada momento.
 
-Para una respuesta estable del sensor, era importante que las aspas giren a una velocidad alta y constante. Alrededor de los 4000 RPM, priorizando la estabilidad a la velocidad. Dentro del programa de la plataforma de instrumentación, existen rutinas que establecen el driver automaticamente en el modo requerido por nuestro sistema. Estas rutinas utilizan un modulo del microcontrolador denominado PCA, que incluye, en uno de sus modos, un generador de señal modulada en pulsos. Cuando el motor esta en funcionamiento, el mismo programa se encarga de estabilizar su velocidad con las funciones descritas en la sección \ref{it6:sec:software_de_adaptacion}
+Para una respuesta estable del sensor, era importante que las aspas giren a una velocidad alta y constante. Alrededor de los 4000 RPM, priorizando la estabilidad a la velocidad. Dentro del programa de la plataforma de instrumentación, existen rutinas que establecen el driver automáticamente en el modo requerido por nuestro sistema. Estas rutinas utilizan un modulo del microcontrolador denominado PCA, que incluye, en uno de sus modos, un generador de señal modulada en pulsos. Cuando el motor esta en funcionamiento, el mismo programa se encarga de estabilizar su velocidad con las funciones descritas en la sección \ref{it6:sec:software_de_adaptacion}
 
 
 % subsection circuito_de_adaptacion_para_la_señal_modulada_en_ancho_de_pulso_para_el_driver_del_motor (end)
@@ -160,7 +167,13 @@ Para una respuesta estable del sensor, era importante que las aspas giren a una 
 \subsubsection{Circuito final} % (fold)
 \label{it6:ssub:circuito_final}
 
-En las secciones anteriores, describimos por separado cada una de las partes del circuito de adaptación para el sensor de campo. La figura FIGURA muestra el despliegue de componentes del circuito final. Este diseño se imprimió en un PCB para acoplar a la plataforma de instrumentación. El circuito impreso y acoplado se muestra en la figura FIGURA.
+En las secciones anteriores, describimos por separado cada una de las partes del circuito de adaptación para el sensor de campo. La Figura \ref{circuitoadaptacionsensor} muestra el despliegue de componentes del circuito final. Este diseño se imprimió en un PCB para acoplar a la plataforma de instrumentación. El circuito impreso y acoplado se muestra en la Figura \ref{circuitoadaptacionsensor}.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.50\textwidth, height = 5cm]{circuitoadaptacionsensor}
+  \caption{Circuito final para permitir el uso y control del sensor de campo electrostático.}\label{fig:circuitoadaptacionsensor}
+\end{figure}
 
 
 % subsection circuito_final (end)
@@ -182,7 +195,7 @@ Realizamos un modulo aparte llamado ``sensor\_CE.c'', cuyas funciones están des
 
 La medición de campo no es parte del software de adaptación, dado que se realiza utilizando funciones del modulo ``conversor''. La señal proveniente del circuito de adaptación que corresponde a la telemetría proveniente del sensor, se conecta a uno de los pines de entrada del conversor analógico-digital. \\
 
-La figura \ref{fig:diagramabloquessensor} muestra el diagrama de bloques de la adaptación del software a la plataforma de instrumentación.
+La Figura \ref{fig:diagramabloquessensor} muestra el diagrama de bloques de la adaptación del software a la plataforma de instrumentación.
 
 \begin{figure}[h]
   \centering
@@ -214,7 +227,7 @@ Una vez que el motor alcanzo su velocidad estable, se activa el control de veloc
 
 La velocidad de giro del motor debería ser rápida y constante para un mejor funcionamiento del sensor, priorizando estabilidad a velocidad. Para lograr esto, utilizamos el foto interruptor acoplado al sensor, como generador de pulsos cuadrados. Estos pulsos se usan como entrada a uno de los contadores de eventos de la plataforma de instrumentación. Con el valor de esta cuenta, es posible calcular la velocidad del motor en tiempo real, con una precisión de unos 30 milisegundos por medición. \\
 
-La estabilidad en en la velocidad de giro del motor se alcanzo mediante un control básico de velocidad, hecho por software. Estableciendo una base de tiempo con uno de los timer del microcontrolador, se cuenta la cantidad de eventos sobre esa base de tiempo, la cantidad de cuentas entonces, da la velocidad. Una velocidad ``estable'' esta establecida en una variable fija, y se corresponde a una cantidad fija de eventos en la misma base de tiempo. Comparando la cantidad de eventos medidos sobre la base de tiempo con la cantidad de eventos que corresponden a la velocidad estable, se sabe si el motor esta girando demasiado rápido, o demasiado lento. Con esta información, se ajusta la velocidad del motor para acelerarlo o desacelerarlo, modificando el ancho de pulso del modulo PCA conectado al driver PWM del motor. Una descripción gráfica de este proceso se ilustra en la figura \ref{fig:diagramaactividadescontrolvelocidad}
+La estabilidad en en la velocidad de giro del motor se alcanzo mediante un control básico de velocidad, hecho por software. Estableciendo una base de tiempo con uno de los contadores del microcontrolador, se cuenta la cantidad de eventos sobre esa base de tiempo, la cantidad de cuentas entonces, da la velocidad. Una velocidad ``estable'' esta establecida en una variable fija, y se corresponde a una cantidad fija de eventos en la misma base de tiempo. Comparando la cantidad de eventos medidos sobre la base de tiempo con la cantidad de eventos que corresponden a la velocidad estable, se sabe si el motor esta girando demasiado rápido, o demasiado lento. Con esta información, se ajusta la velocidad del motor para acelerarlo o desacelerarlo, modificando el ancho de pulso del modulo PCA conectado al driver PWM del motor. Una descripción gráfica de este proceso se ilustra en la Figura \ref{fig:diagramaactividadescontrolvelocidad}
 
 \begin{figure}[h]
   \centering

@@ -10,21 +10,21 @@ La implementación de este sistema embebido estará orientada al uso y control d
 
 El objetivo principal es correr un programa en un sistema embebido, que se comunique con la plataforma de instrumentación, sea capaz de configurarla, y tener acceso directo a las funcionalidades ligadas al sensor de campo electrostático.
 
-El programa sera desarrollada basándonos en partes del proyecto integrador de Gaston Lucero. El proyecto de Lucero consiste en un sistema gestionador de dispositivos IoT. Parte del software de gestión es un servidor web desarrollado en python, que es posible de embeber en una placa de desarrollo y actuar como el sistema gestionador al que se le envían los datos de telemetría. En esta iteración, trabajaremos sobre este software, intentando adaptarlo al uso con nuestra plataforma, con el fin de cumplir con los objetivos de la iteración.
+El programa sera desarrollada basándonos en partes del proyecto integrador de Gaston Lucero. El proyecto de Lucero consiste en un sistema de gestión de dispositivos IoT. Parte del software de gestión es un servidor web desarrollado en Python, que es posible de embeber en una placa de desarrollo y actuar como el sistema de gestión al que se le envían los datos de telemetría. En esta iteración, trabajaremos sobre este software, intentando adaptarlo al uso con nuestra plataforma, con el fin de cumplir con los objetivos de la iteración.
 
 % section introduccion (end)
 
 \section{Requerimientos de la iteración} % (fold)
 \label{it7:sec:requerimientos_de_la_iteracion}
 
-Al igual que en la iteracion anterior, los requerimientos no son especificos de la plataforma, sino de un sistema anexo que trabaja con la misma. En este caso, listamos los requerimientos de un sistema de gestion que cumplira el papel de controlar la plataforma de instrumentacion.
+Al igual que en la iteración anterior, los requerimientos no son específicos de la plataforma, sino de un sistema anexo que trabaja con la misma. En este caso, listamos los requerimientos de un sistema de gestión que cumplirá el papel de controlar la plataforma de instrumentación.
 
 \begin{itemize}
-\item Parte del software de gestion deberia ser un servidor web con conexion a internet e interfaz grafica de usuario. [6.1]
-\item Mediante una interfaz grafica HTML, se deberian poder realizar las mismas configuraciones que permite la interfaz de linea de comando de la plataforma. [6.2]
+\item Parte del software de gestión debería ser un servidor web con conexión a internet e interfaz gráfica de usuario. [6.1]
+\item Mediante una interfaz gráfica HTML, se deberían poder realizar las mismas configuraciones que permite la interfaz de linea de comando de la plataforma. [6.2]
 \item Se deberían guardar datos de mediciones e información que se considere importante en una base de datos local, accesible vía la interfaz web gráfica. [6.3]
 \item Debería permitir establecer intervalos de fecha, hora y minuto para medir campo electrostático en los canales 0 y 1 de la plataforma en modo diferencial. [6.4]
-\item La conexión entre el sistema de gestion y un dispositivo manejado por el usuario (computadora con conexión a internet, smartphone) debería ser vía Wi-Fi. [6.5]
+\item La conexión entre el sistema de gestión y un dispositivo manejado por el usuario (computadora con conexión a internet, Smartphone) debería ser vía Wi-Fi. [6.5]
 \end{itemize}
 
 % section requerimientos_de_la_iteracion (end)
@@ -41,7 +41,7 @@ Teniendo en cuenta los requerimientos, listamos una serie de requisitos que debe
   \item Debería tener interfaz serial UART
 \end{itemize}
 
-Por cubrir con todos los requerimientos y por razones de disponibilidad, decidimos implementar este sistema en una placa de desarrollo Raspberry Pi B+ (figura \ref{fig:raspberrypi}), embebida con un sistema operativo Raspbian (Debían para Raspberry). Esta placa de desarrollo cumple con todos los requisitos mencionados anteriormente, por lo que es posible cubrir todos los requerimientos del sistema de gestión.
+Por cubrir con todos los requerimientos y por razones de disponibilidad, decidimos implementar este sistema en una placa de desarrollo Raspberry Pi B+ (Figura \ref{fig:raspberrypi}), embebida con un sistema operativo Raspbian (Debían para Raspberry). Esta placa de desarrollo cumple con todos los requisitos mencionados anteriormente, por lo que es posible cubrir todos los requerimientos del sistema de gestión.
 
 \begin{figure}[h]
   \centering
@@ -67,7 +67,7 @@ Como etapa inicial del desarrollo, procedemos a graficar diagramas de bloques qu
   \caption{Diagrama que ilustra la interacción entre la plataforma de instrumentación y el sistema gestionador}\label{fig:interaccionplataformaygestionador}
 \end{figure}
 
-La Figura \ref{fig:bloquessistemadegestion} muestra los distintos bloques del sistema de gestión y la figura \ref{fig:interaccionplataformaygestionador} ilustra la interaccion con la plataforma de instrumentación. El sistema esta compuesto por cuatro bloques básicos:
+La Figura \ref{fig:bloquessistemadegestion} muestra los distintos bloques del sistema de gestión y la Figura \ref{fig:interaccionplataformaygestionador} ilustra la interacción con la plataforma de instrumentación. El sistema esta compuesto por cuatro bloques básicos:
 
 \begin{itemize}
   \item Una interfaz gráfica, que interactúa con el usuario
@@ -84,7 +84,7 @@ La Figura \ref{fig:bloquessistemadegestion} muestra los distintos bloques del si
 
 El servidor web fue desarrollado con ayuda de BottlePy. BottlePy es un Web Framework liviano, simple y rápido, sin otra dependencia que la librería estándar de Python. Incluye un servidor web HTTP, soporta mapeo de funciones a direcciones URL, y tiene un motor de generación de documentos HTML en base a templates programadas en Python.
 
-Con el uso de este servidor, disponemos una conexión al servidor en una dirección IP fija dentro de una red LAN. Con un modulo Wi-Fi USB conectado a la placa Raspberry Pi, es posible tener conexión a una red LAN. Si un usuario de la misma red se conecta al puerto 80 (HTTP) de esa dirección IP en un navegador, podra visualizar la interfaz gráfica del servidor, y asi interactuar con el sistema de forma remota.
+Con el uso de este servidor, disponemos una conexión al servidor en una dirección IP fija dentro de una red LAN. Con un modulo Wi-Fi USB conectado a la placa Raspberry Pi, es posible tener conexión a una red LAN. Si un usuario de la misma red se conecta al puerto 80 (HTTP) de esa dirección IP en un navegador, podrá visualizar la interfaz gráfica del servidor, y así interactuar con el sistema de forma remota.
 
 Al servidor web realizado por Lucero, también hecho con uso de BottlePy, se le realizo una adaptación hacia nuestros requerimientos. Se agregaron, modificaron y eliminaron funciones dentro del servidor web para orientarlo hacia nuestros objetivos. En particular, el cambio mas significativo fue agregarle una base de datos en MySQL, modificar la interfaz gráfica en HTML, y agregar la funcionalidad de los intervalos para mediciones con el sensor de campo electrostático.
 
@@ -97,16 +97,12 @@ La base de datos fue desarrollada utilizando la librería ``MySQLdb'' de Python,
 
 Cuando se activa la conversión continua por medio del servidor, la base de datos guarda todos los datos entrantes y los clasifica según el modo de medición y el pin o los pines por donde se mide. Se guarda el valor de la medición y una marca de tiempo con fecha, hora, minuto y segundo; realizada con ayuda de internet, y con la marca de tiempo relativa proveniente de la plataforma.
 
-SCREENSHOT DE LA BASE DE DATOS EN ACCION
-
 % subsection base_de_datos (end)
 
 \subsection{Interfaz grafica de usuario} % (fold)
 \label{it7:sub:interfaz_grafica_de_usuario}
 
 La interfaz gráfica proporciona al usuario un método mas amigable para la interacción con la plataforma, además de proveer algunas funcionalidades extra.
-
-SCREENSHOTS DE LA INTERFAZ GRAFICA PARA EL MOTOR.
 
 Desde esta interfaz, el usuario puede:
 
@@ -140,7 +136,7 @@ Descripción      & Se intentaran realizar configuraciones normales de la plataf
 \hline
 Pre-condiciones  & \tabitem Plataforma de instrumentación encendida y disponible para configurar  \\
                  & \tabitem Sistema de gestión en la placa Raspberry Pi levantado y conectado a la red local a una dirección IP fija \\
-                 & \tabitem Ordenador con navegador abierto conectado via Wi-Fi a la dirección IP de la Raspberry Pi. Debería poder verse la interfaz gráfica del servidor \\
+                 & \tabitem Ordenador con navegador abierto conectado vía Wi-Fi a la dirección IP de la Raspberry Pi. Debería poder verse la interfaz gráfica del servidor \\
                  & \tabitem Raspberry Pi conectada a la placa de instrumentación mediante cable serial RS-232 \\
 \hline
 
@@ -185,38 +181,38 @@ Resultados       & A las 15:01, se inicio la secuencia de arranque del motor, y 
 
 \begin{table}[h]
 \centering
-\caption{Test de sistema 3: Almacenamiento de informacion en la base de datos}
+\caption{Test de sistema 3: Almacenamiento de información en la base de datos}
 \label{it7:tab:testsistema3}
 \begin{tabular}{p{2cm} p{9cm}}
 \multicolumn{2}{c}{\cellcolor[HTML]{68CBD0}{\color[HTML]{000000} Prueba de sistema}} \\
 Prueba \#        & 1 \\
 \hline
-Nombre           & Almacenamiento de informacion en la base de datos \\                     
+Nombre           & Almacenamiento de información en la base de datos \\                     
 \hline
 Requerimiento    & 6.3  \\
 \hline
-Descripción      & Verifica que la informacion acerca de los comandos enviados, el reporte de errores y los datos de mediciones se guarden correctamente en la base de datos del servidor web\\
+Descripción      & Verifica que la información acerca de los comandos enviados, el reporte de errores y los datos de mediciones se guarden correctamente en la base de datos del servidor web\\
 \hline
-Pre-condiciones  & \tabitem Plataforma de instrumentación encendida y midiendo en conversiones continuas sobre un canal configurado en modo unico, con una fuente de tension conectada y encendida con un valor de 1.5 Volts  \\
+Pre-condiciones  & \tabitem Plataforma de instrumentación encendida y midiendo en conversiones continuas sobre un canal configurado en modo único, con una fuente de tensión conectada y encendida con un valor de 1.5 Volts  \\
                  & \tabitem Sistema de gestión en la placa Raspberry Pi levantado y conectado a la red local a una dirección IP fija \\
                  & \tabitem Ordenador con navegador abierto conectado a la dirección IP de la Raspberry Pi. Debería poder verse la interfaz gráfica del servidor \\
                  & \tabitem Raspberry Pi conectada a la placa de instrumentación mediante cable serial RS-232 \\
 \hline
 
-Post-condiciones & Al abrir las tablas, deberian verse los datos de conversion, los reportes de errores y los comandos enviados para la configuracion.   \\
+Post-condiciones & Al abrir las tablas, deberían verse los datos de conversión, los reportes de errores y los comandos enviados para la configuración.   \\
 \hline
-Secuencia  & \tabitem Se da fin a la conversion continua. \\
-           & \tabitem Se abre la pestaña de la interfaz grafica correspondiente a las tablas de la base de datos. \\
+Secuencia  & \tabitem Se da fin a la conversión continua. \\
+           & \tabitem Se abre la pestaña de la interfaz gráfica correspondiente a las tablas de la base de datos. \\
 \hline
-Resultados       & Los datos aparecian correctamente almacenados en la base de datos. (Figura \ref{basededatosfuncionando}) \\
+Resultados       & Los datos aparecían correctamente almacenados en la base de datos. \\ %(Figura \ref{basededatosfuncionando}) \\
 \end{tabular}
 \end{table}
 
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.80\textwidth, height = 7cm]{basededatosfuncionando}
-  \caption{Captura de pantalla de las tablas de la base de datos, con la informacion de las mediciones, los comandos enviados, y los reportes de errores} \label{fig:basededatosfuncionando}
-\end{figure}
+%\begin{figure}[h]
+%  \centering
+%  \includegraphics[width=0.80\textwidth, height = 7cm]{basededatosfuncionando}
+%  \caption{Captura de pantalla de las tablas de la base de datos, con la informacion de las mediciones, los %comandos enviados, y los reportes de errores} \label{fig:basededatosfuncionando}
+%\end{figure}
 
 % section pruebas (end)
 

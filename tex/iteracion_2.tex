@@ -35,7 +35,7 @@ Teniendo en cuenta los requerimientos princípiales y el microcontrolador elegid
 \end{itemize}
 \item Para cada contador:
 \begin{itemize}
-\item Se debería poder contar eventos con los contadores o timers del microcontrolador. (derivado de 1.3)
+\item Se debería poder contar eventos de hasta 4 fuentes externas, utilizando los contadores del microcontrolador. (derivado de 1.3)
 \end{itemize}
 \item Datos de mediciones o meta-datos deberían ser enviados por comunicación serial utilizando protocolo SMBus o UART, según elija el usuario. (derivado de 1.6)
 
@@ -52,7 +52,7 @@ En esta sección se describirán las distintas partes del software y la interacc
 \subsection{Modelos estáticos} % (fold)
 \label{it2:sub:modelos_estaticos}
 
-El diagrama de caso de uso de la figura \ref{fig:casouso1}, establece de manera básica aquello que se quiere lograr con el programa embebido en la plataforma. En cada caso de uso, pueden visualizarse las distintas acciones que el programa debería realizar. Como el programa esta desarrollado en lenguaje C, no es posible conformar un diagrama de clases. En lugar de esto, se separo en distintos módulos que agrupan funciones de características similares. Estos módulos están ilustrados como bloques en la figura \ref{it2:fig:bloquesprimeraiteracionsoftware}. Cada bloque representa distintas partes principales del programa. Se pueden ver los nombres de cada función y el tipo de retorno en cada uno de ellos. Con esto ultimo, se intenta dar una idea de las acciones realizadas por las funciones de cada modulo. %Una descripcion mas detallada esta en la documentacion del programa \ref{documentacionsoftware}.%
+El diagrama de caso de uso de la Figura \ref{fig:casouso1}, establece de manera básica aquello que se quiere lograr con el programa embebido en la plataforma. En cada caso de uso, pueden visualizarse las distintas acciones que el programa debería realizar. Como el programa esta desarrollado en lenguaje C, no es posible conformar un diagrama de clases. En lugar de esto, se separo en distintos módulos que agrupan funciones de características similares. Estos módulos están ilustrados como bloques en la Figura \ref{it2:fig:bloquesprimeraiteracionsoftware}. Cada bloque representa distintas partes principales del programa. Se pueden ver los nombres de cada función y el tipo de retorno en cada uno de ellos. Con esto ultimo, se intenta dar una idea de las acciones realizadas por las funciones de cada modulo. %Una descripcion mas detallada esta en la documentacion del programa \ref{documentacionsoftware}.%
 
 El caso de uso ``configurar'' esta generalizado. Las acciones que incluye este caso son:
 \begin{itemize}
@@ -67,13 +67,13 @@ El caso de uso ``configurar'' esta generalizado. Las acciones que incluye este c
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=1\textwidth, height = 13.5cm]{bloquesprimeraiteracionsoftware}
+  \includegraphics[width=1\textwidth, height = 11.5cm]{bloquesprimeraiteracionsoftware}
   \caption{Diagrama de bloques de la primera iteracion de software}\label{it2:fig:bloquesprimeraiteracionsoftware}
 \end{figure}
 
 El objetivo de los diagramas es lograr una descripción gráfica del sistema. Es necesario destacar que, desde el principio, la evolución del programa ocasiono que los diseños de los módulos fueran cambiando. Los cambios fueron debidos a múltiples razones: particularidades del funcionamiento del microcontrolador que no se tuvieron en cuenta, limitaciones del entorno, cambios en los requerimientos, etcétera. 
 
-A continuación, elaboramos una pequeña descripción de los bloques que aparecen en el diagrama de la figura \ref{it2:fig:bloquesprimeraiteracionsoftware}.
+A continuación, elaboramos una pequeña descripción de los bloques que aparecen en el diagrama de la Figura \ref{it2:fig:bloquesprimeraiteracionsoftware}.
 
 \begin{itemize}
   \item \textbf{Main o Bloque Principal}: Orquestador del resto de los módulos. Tiene, además, la rutina principal donde se entra al modo de configuración, para luego iniciar el modo de conversiones continuas.
@@ -95,7 +95,7 @@ Utilizamos los modelos dinámicos del patrón SysML para describir las distintas
 
 Un flujo de ejecución típico del programa consiste en una configuración y un inicio de conversiones continuas. Las conversiones continuas son un loop infinito donde se convierte cíclicamente sobre los canales configurados para la conversión y se envían los datos convertidos por interfaz serial, utilizando el mismo canal serial por donde se realiza el intercambio de comandos para la configuración. Cuando se interrumpen las conversiones continuas, el programa devuelve al usuario la posibilidad de configurar el sistema, dando fin a las conversiones y el envió de datos. \\
 
-La figura \ref{fig:secuenciaconfiguracionbasica} muestra un diagrama de secuencia para una configuración de un canal del conversor en modo canal único. Realizada la configuración, la figura \ref{fig:secuenciaconversioncontinua} muestra como el sistema se establece en modo de conversión continua, entrando en un loop infinito de conversión y envió de telemetría.
+La Figura \ref{fig:secuenciaconfiguracionbasica} muestra un diagrama de secuencia para una configuración de un canal del conversor en modo canal único. Realizada la configuración, la Figura \ref{fig:secuenciaconversioncontinua} muestra como el sistema se establece en modo de conversión continua, entrando en un loop infinito de conversión y envió de telemetría.
 
 \begin{figure}[h]
   \centering
@@ -141,12 +141,12 @@ Estas son las funciones del modulo conversor:
 Las funciones \textit{cargar\_buffer\_single} y \textit{cargar\_buffer\_dif}, establecen el modo (canal único o diferencial) en el que se leerá un canal. Las 8 posiciones del buffer de canales representan, cada una, un canal distinto del ADC. Los valores posibles para estas posiciones son 0, 1 y 2; estos valores representan, respectivamente, que el canal esta deshabilitado, en modo canal único, o en modo diferencial. Estas funciones, al ser ejecutadas, cargan algún numero en el buffer según que función es la que se ejecuto. El buffer se inicializa por defecto en 0, por lo que inicialmente ningún canal esta habilitado para convertir. \\
 
 Cuando se inicia la conversión continua, se convierte continuamente en un loop infinito. Al final de cada conversión, se llama a la función \textit{cambiar\_pin}. Esta función utiliza el buffer de canales para obtener cual es el proximo canal a medir. Esto lo hace manejando un índice que comienza en 0, se incrementa hasta 7 y vuelve a 0; recorriendo cíclicamente el buffer de canales. 
-En cada ejecución, analiza una posición buffer segun el valor del índice. El valor de la posición del buffer dice si se debe medir en modo canal único o diferencial, o si es necesario saltear el pin. Una descripción gráfica del comportamiento de esta función puede verse en el diagrama de actividades de la figura \ref{fig:actividadescambiarpinit2} \\
+En cada ejecución, analiza una posición buffer segun el valor del índice. El valor de la posición del buffer dice si se debe medir en modo canal único o diferencial, o si es necesario saltear el pin. Una descripción gráfica del comportamiento de esta función puede verse en el diagrama de actividades de la Figura \ref{fig:actividadescambiarpinit2} \\
 
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=1\textwidth, height = 7cm]{actividadescambiarpinit2}
+  \includegraphics[width=1\textwidth, height = 8cm]{actividadescambiarpinit2}
   \caption{Diagrama de actividad de la funcion cambiar\_pin}\label{fig:actividadescambiarpinit2}
 \end{figure}
 
@@ -163,7 +163,16 @@ En cada ejecución, analiza una posición buffer segun el valor del índice. El 
 
 La interfaz de usuario tuvo dos implementaciones, siendo la segunda un reemplazo de la primera.
 
-La primera interfaz fue de tipo ``Menu Based Interface'' o interfaz basada en menú, donde las acciones a realizar son ofrecidas por la interfaz y seleccionadas por un usuario. Cada acción esta clasificada según el grupo de acciones al que pertenezca. Por ejemplo: para configurar el pin 4 del ADC en modo canal único, es necesario navegar por las opciones del menú de la forma ``configuración->configurar pin ADC->pin 4->modo canal unico''. Siguiendo este patrón de diseño, en cada adición de una nueva acción, era necesario buscar el grupo al que pertenecía y programar la lógica necesaria para ejecutar la acción en base a la navegación del usuario dentro del menú. Esta forma de desarrollo probo ser muy poco escalable, y fue necesario cambiarla por la dificultad que implicaba a la hora de agregar nuevas funcionalidades. \\
+La primera interfaz fue de tipo ``Menu Based Interface'' o interfaz basada en menú, donde las acciones a realizar son ofrecidas por la interfaz y seleccionadas por un usuario. Cada acción esta clasificada según el grupo de acciones al que pertenezca. Por ejemplo: para configurar el pin 4 del ADC en modo canal único, es necesario navegar por las opciones del menú de la forma: 
+
+\begin{equation}
+\noindent
+\text{Configuración} \rightarrow \text{Configurar Pin ADC} \rightarrow \text{Modo} \rightarrow \text{Único} \rightarrow \text{Canal} \rightarrow \text{4} 
+\end{equation}
+
+
+
+Siguiendo este patrón de diseño, en cada adición de una nueva acción, era necesario buscar el grupo al que pertenecía y programar la lógica necesaria para ejecutar la acción en base a la navegación del usuario dentro del menú. Esta forma de desarrollo probo ser muy poco escalable, y fue necesario cambiarla por la dificultad que implicaba a la hora de agregar nuevas funcionalidades. \\
 
 La segunda interfaz diseñada fue de tipo ``Command line interface''. En este tipo de interfaz, el usuario ingresa un comando y uno o varios argumentos en un formato que respeta una expresión regular. Bajo este concepto, se necesita un parser o analizador de comandos que extraiga de la entrada el comando y los argumentos, y realice acciones según ellos. En nuestro caso, cada comando representa una función distinta de nuestro programa, y los argumentos pasan a ser parámetros de la función. \\
 
@@ -172,7 +181,7 @@ Luego de implementar un analizador de comandos, agregar funcionalidades al progr
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.40\textwidth, height = 12cm]{actividadinterfaz}
-  \caption[Diagrama de actividad del comportamiento de la interfaz de usuario]{Diagrama de actividad del comportamiento de la interfaz de usuario. Se toma la entrada y se parsea para obtener el comando y los argumentos. Según el comando, se ejecuta una u otra función dentro del programa. Los parámetros necesarios para ejecutar la función se incluyen como argumentos dentro de un arreglo que esta en la estructura global. Este arreglo es luego utilizado por la función llamada para obtener los argumentos ingresados junto con el comando.}\label{fig:actividadinterfaz}
+  \caption[Diagrama de actividad del comportamiento de la interfaz de usuario]{Diagrama de actividad del comportamiento de la interfaz de usuario. Se toma la entrada y se analiza para obtener el comando y los argumentos. Según el comando, se ejecuta una u otra función dentro del programa. Los parámetros necesarios para ejecutar la función se incluyen como argumentos dentro de un arreglo que esta en la estructura global. Este arreglo es luego utilizado por la función llamada para obtener los argumentos ingresados junto con el comando.}\label{fig:actividadinterfaz}
 \end{figure}
 
 \subsubsection{Formato de los comandos} % (fold)
@@ -199,8 +208,8 @@ El modulo contador contiene las funciones involucradas en el proceso de obtener 
 Los requerimientos principales indican que es necesario poder contar eventos de 3 o 4 fuentes distintas. Al momento de tomar la decisión de cual microcontrolador utilizar, tuvimos en cuenta que este microcontrolador contaba con 4 contadores que podían ser configurados para que tomen fuentes externas para realizar el conteo. En pleno desarrollo del programa, llegamos a la conclusión de que esto no iba a ser posible por las siguientes razones:
 
 \begin{itemize}
-  \item El modulo serial del microcontrolador hace uso de uno de los timers para el generador de baudios.
-  \item Los timers 2 y 3 comparten la fuente externa de donde ingresan los eventos que se cuentan.
+  \item El modulo serial del microcontrolador hace uso de uno de los contadores para el generador de baudios.
+  \item Los contadores 2 y 3 comparten la fuente externa de donde ingresan los eventos que se cuentan.
 \end{itemize}
 
 Teniendo en cuenta esto, solo es posible contar eventos de 2 fuentes en simultaneo, utilizando timer 0 y timer 2 o timer 3. \\
@@ -252,7 +261,7 @@ Parpadear led & Prueba el funcionamiento de la plataforma con un programa que ha
 \subsection{Tests de sistema} % (fold)
 \label{it2:sub:tests_de_sistema}
 
-Las pruebas de sistema se realizaron utilizando la placa de desarrollo mencionada en la sección PONER ACA LA SECCION DONDE HABLAMOS DE LA SILICON LABS. Al no tener todavía una implementación hecha del sistema, se utilizo esta placa para testear el código embebido en el microcontrolador, que en definitiva seria el mismo que iria en la placa a construir
+Las pruebas de sistema se realizaron utilizando la placa de desarrollo mencionada en la sección \ref{it1:sec:seleccion}. Al no tener todavía una implementación hecha del sistema, se utilizo esta placa para testear el código embebido en el microcontrolador, que en definitiva seria el mismo que iría en la placa a construir
 
 \begin{table}[h]
 \caption{Test de sistema 1: Comportamiento esperado del conversor en modo canal unico}
@@ -360,7 +369,7 @@ Resultados       & La cuenta era consistente con la frecuencia del generador. El
 \section{Conclusiones de la iteración 2} % (fold)
 \label{it2:sec:conclusiones_de_la_iteracion_2}
 
-Basándonos en el desarrollo y las pruebas de la iteración, listamos los avances teniendo en cuenta los requerimientos principales y los particulares de esta iteracion:
+Basándonos en el desarrollo y las pruebas de la iteración, listamos los avances teniendo en cuenta los requerimientos principales y los particulares de esta iteración:
 
 \begin{itemize}
 \item El programa utiliza el conversor del microcontrolador para transformar señales analógicas de fuentes externas a datos digitales. (1.1)

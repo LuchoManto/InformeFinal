@@ -12,10 +12,14 @@ Para realizar las pruebas en la iteración anterior, utilizamos una placa de des
 
 % section introduccion (end)
 
+\section{Objetivo de la iteracion}
+
+Implementar un primer prototipo de la plataforma de instrumentación sobre un circuito en placa de cobre.
+
 \section{Requerimientos de la iteración} % (fold)
 \label{it3:sec:requerimientos_de_la_iteracion}
 
-Teniendo en cuenta los requerimientos principales de la plataforma y los objetivos de la iteración actual, conformamos la siguiente lista de requerimientos:
+Teniendo en cuenta los requerimientos principales de la plataforma y el objetivo principal de la iteración actual, conformamos la siguiente lista de requerimientos:
 
 \begin{itemize}
 \item Al circuito se le deberían poder conectar 8 entradas analógicas. (deriva de 1.1)
@@ -53,7 +57,7 @@ La herramienta de diseño que mas se ajusto a nuestras necesidades fue Kicad, de
 \subsection{Diagramas de Bloques de Hardware}
 \label{it3:sub:diagrama_de_bloques_de_hardware}
 
-La primera etapa de diseño consistió en realizar un diagrama de bloques que, en base a los requerimientos planteados para esta iteración, ilustre a grandes rasgos la organización del circuito que pretendemos realizar.
+La primera etapa de diseño consistió en realizar un diagrama de bloques que, en base a los requerimientos planteados para esta iteración, ilustre a grandes rasgos la organización del circuito que pretendemos realizar. \\
 
 \begin{figure}[h]
   \centering
@@ -61,9 +65,9 @@ La primera etapa de diseño consistió en realizar un diagrama de bloques que, e
   \caption{Diagrama de Bloque de la Plataforma.}\label{fig:BloquesHardw1}
 \end{figure}
 
-Los bloques en la figura \ref{fig:BloquesHardw1} representan de forma general los distintos módulos a implementar. Las entradas analógicas se introducen al microcontrolador a través de filtros RC (reductores del ruido), para luego pasar al conversor analógico-digital. El bloque GPIO ("Entrada/Salida de propósito general") consiste en un grupo de pines direccionados a distintas entradas del microcontrolador. Estos pines pueden tener funcionalidades generales, y algunos pueden tener otras mas especificas, como ser: contador de eventos, PCA, PWM, etc. En nuestro diseño, separamos aquellos pines específicos que se utilizan como contadores de eventos, y además agregamos 4 pines de propósito general, por la eventual necesidad de requerirlos. 
+Los bloques en la Figura \ref{fig:BloquesHardw1} representan de forma general los distintos módulos a implementar. Las entradas analógicas se introducen al microcontrolador a través de filtros RC (reductores del ruido), para luego pasar al conversor analógico-digital. El bloque GPIO (Entrada/Salida de propósito general) consiste en un grupo de pines direccionados a distintas entradas del microcontrolador. Estos pines pueden tener funcionalidades generales, y algunos pueden tener otras mas especificas, como ser: contador de eventos, PCA, PWM, etc. En nuestro diseño, separamos aquellos pines específicos que se utilizan como contadores de eventos, y además agregamos 4 pines de propósito general, por la eventual necesidad de requerirlos. \\
 
-La alimentación del sistema puede ser suministrada de dos formas posibles: Mediante una fuente de tensión externa de 5V, o por el mismo debugger del microcontrolador. Por la posible necesidad de programar mas de una vez el microcontrolador, decidimos colocar una llave selectora que permite seleccionar la entrada de alimentación. Por lo que es posible alimentarlo de ambas formas.
+La alimentación del sistema puede ser suministrada de dos formas posibles: Mediante una fuente de tensión externa de 5V, o por el mismo debugger del microcontrolador. Por la posible necesidad de programar mas de una vez el microcontrolador, decidimos colocar una llave selectora que permite seleccionar la entrada de alimentación. Por lo que es posible alimentarlo de ambas formas. 
 
 %subsection diagra_bloques_hardware (end)
 
@@ -75,11 +79,11 @@ El diseño esquemático del circuito fue realizado con la herramienta de softwar
 \subsubsection{Entradas Analógicas}
 \label{it3:ssub:entradas_analogicas}
 
-Cada una de las 8 entradas analógicas tienen circuitos de conexión similares. La figura \ref{fig:esquematicoFiltro} ilustra el circuito para una de estas entradas. \\
+Cada una de las 8 entradas analógicas tienen circuitos de conexión similares. La Figura \ref{fig:esquematicoFiltro} ilustra el circuito para una de estas entradas. \\
 
 El ruido en el sistema es un factor importante a tener en cuenta. Ingresa por interferencia de señales externas, por temperatura, por la fuente de tensión, y por los mismos componentes que conforman el circuito. Como primera medida, cada entrada analógica contiene un filtro RC pasivo que reduce el ruido en una primera instancia. Además, el mismo microcontrolador trata el ruido de la señal para mejorar la relación SNR. \\
 
-En la figura \ref{fig:esquematicoFiltro} se muestra un pin de entrada AI0, que se conecta a la salida de un dispositivo de instrumentación. La señal de este sensor, se filtra mediante el circuito RC compuesto por una resistencia de 100 Ohms y un capacitor de 0,1 $\mu$F.
+En la Figura \ref{fig:esquematicoFiltro} se muestra un pin de entrada AI0, que se conecta a la salida de un dispositivo de instrumentación. La señal de este sensor, se filtra mediante el circuito RC compuesto por una resistencia de 100 Ohms y un capacitor de 0,1 $\mu$F.
 
 \begin{figure}[H]
   \centering
@@ -94,7 +98,7 @@ En la figura \ref{fig:esquematicoFiltro} se muestra un pin de entrada AI0, que s
 
 La interfaz serial RS-232 es necesaria para el acondicionamiento del canal de datos entre la plataforma y el sistema embebido de destino. En esta sección elaboramos la construcción del circuito de dicha interfaz. \\
 
-La salida serial del microcontrolador tiene un nivel de tensión TTL, insuficiente para un adaptador RS-232, por lo que fue necesario adaptar este nivel para asegurar el correcto envío de datos. El circuito de adaptación se muestra en la figura \ref{fig:esquematicoMax232}. Contiene un integrado MAX232 que es utilizado ampliamente en la industria para adaptar niveles TTL a RS-232. Los pines "XRX1", "XCTS1", "XTX1" y "XRTS1" son los correspondientes al modulo de salida del adaptador serial. \\
+La salida serial del microcontrolador tiene un nivel de tensión TTL, insuficiente para un adaptador RS-232, por lo que fue necesario adaptar este nivel para asegurar el correcto envío de datos. El circuito de adaptación se muestra en la Figura \ref{fig:esquematicoMax232}. Contiene un integrado MAX232 que es utilizado ampliamente en la industria para adaptar niveles TTL a RS-232. Los pines "XRX1", "XCTS1", "XTX1" y "XRTS1" son los correspondientes al modulo de salida del adaptador serial. \\
 
 Además de la adaptación, colocamos 4 jumpers (JP1, JP2, JP3, JP4) a la entrada del integrado MAX232 en caso en que se requiera la salida TTL del microcontrolador. \\
 
@@ -113,7 +117,7 @@ La tensión de alimentación del circuito de la plataforma es de 3,3V. Con el pr
 
 Es posible alimentar el circuito mediante una fuente de 5V o el debugger del mismo microcontrolador. Este debugger entrega 3,3V a la salida, por lo que, si el debugger esta conectado como alimentación, no es necesario utilizar el regulador de tensión.
 
-La figura \ref{fig:esquematicoPotencia} muestra el circuito de alimentación. Colocamos una serie de jumpers que permiten seleccionar si se alimentara el circuito con una fuente de 5V, o el debugger del microcontrolador
+La Figura \ref{fig:esquematicoPotencia} muestra el circuito de alimentación. Colocamos una serie de jumpers que permiten seleccionar si se alimentara el circuito con una fuente de 5V, o el debugger del microcontrolador
 
 \begin{figure}[H]
   \centering
@@ -128,7 +132,7 @@ La figura \ref{fig:esquematicoPotencia} muestra el circuito de alimentación. Co
 \subsubsection{Diagrama Esquemático Final}
 \label{it3:ssub:diagrama_esquematico_final}
 
-De los circuitos descritos anteriormente, se ilustra el circuito final en la figura \ref{fig:EsquematicoCompleto1}
+De los circuitos descritos anteriormente, se ilustra el circuito final en la Figura \ref{fig:EsquematicoCompleto1}
 
 \begin{figure}[H]
 \centering
@@ -147,7 +151,7 @@ Una plaqueta de circuito impreso (PCB) es una superficie constituida por caminos
 
 En el Laboratorio de Arquitectura de Computadoras, donde fue realizado este proyecto, esta disponible una maquina fresadora con control numérico por computadora, para la impresión de placas PCB, modelo LPKF E33. El PCB diseñado fue impreso con esta maquina. El software utilizado para la impresión fue ``Circuit Pro'', proveído por los mismos fabricantes de la maquina fresadora. 
 
-La figura \ref{fig:PCB1} ilustra la proyección de componentes en el PCB, antes de ser impreso.
+La Figura \ref{fig:PCB1} ilustra la proyección de componentes en el PCB, antes de ser impreso.
 
 \begin{figure}
 \centering
@@ -248,7 +252,7 @@ Prueba \#        & 4 \\
 \hline
 Nombre           & Correcta Comunicación Con SiliconLabs Debugger. \\
 \hline
-Requerimiento &   3.2                                                                         
+Requerimiento &   3.2 \\                                                                         
 \hline
 Descripción      & Se utilizo el cable USB con el debugger de SiliconLabs para conectar la placa a la PC. \\
 \hline
@@ -273,7 +277,7 @@ Prueba \#        & 4 \\
 \hline
 Nombre           & Correcta programación del microcontrolador. \\
 \hline
-Requerimiento &   3.2
+Requerimiento &   3.2 \\
 \hline
 Descripción      & Utilizando el debugger conectado a la PC, se intenta programar el microcontrolador con un programa de prueba, y verificarlo con la notificación del software que indique que se programo correctamente. \\
 \hline
@@ -283,7 +287,7 @@ Pre-condiciones  & \tabitem Placa conectada al debugger \\
                  & \tabitem C8051f352 reconocido por el software. \\
 \hline
 
-Post-condiciones &  Al intentar programar el microcontrolador utilizando la IDE, debería devolver una notificación, indicando su correcta programación.
+Post-condiciones &  Al intentar programar el microcontrolador utilizando la IDE, debería devolver una notificación, indicando su correcta programación. \\
 \hline
 Resultados       &  Conectamos la placa a la PC y en la IDE al intentar cargar el programa, devolvió un error de escritura de la flash del microcontrolador. La naturaleza de este error no fue evidente al principio, pero luego de investigar y con la ayuda del ingeniero Gustavo Parlanti, descubrimos que el problema se originaba en un ferrite conectado a la alimentación del microcontrolador. Para solucionar este problema, fue necesario rehacer la placa nuevamente.
 \end{tabular}
@@ -306,18 +310,15 @@ La Figura \ref{fig:resultadohardware1} muestra el resultado final de la construc
 
 En esta iteración cumplimos con los siguientes requerimientos planteados:
 \begin{itemize}
-  \item Al circuito se le deben poder conectar 8 entradas analógicas.
-  \item Al circuito se le deben poder conectar 4 entradas de eventos digitales externos.
-  \item Las entradas analógicas deben tener filtros para mejorar la inmunidad al ruido.
-  \item Se debe incluir en el diseño el circuito necesario para soportar comunicación vía RS232.
-  \item La placa debería poder alimentarse a través de una fuente de tensión externa.
-  \item Se debería poder conectar el debugger del microcontrolador a la placa para poder programarlo.
-  \item El circuito de programación del microcontrolador debería estar separado la placa principal.
+  \item Al circuito se le deben poder conectar 8 entradas analógicas. (deriva de 1.1)
+  \item Al circuito se le deben poder conectar 4 entradas de eventos digitales externos. (deriva de 1.3)
+  \item Las entradas analógicas deben tener filtros para mejorar la inmunidad al ruido. (deriva de 2.2)
+  \item Se deberia incluir en el diseño el circuito necesario para soportar comunicación vía RS232. (deriva de 1.6)
+  \item La placa debería poder alimentarse a través de una fuente de tensión externa. [3.1]
+  \item Se debería poder conectar el debugger del microcontrolador a la placa para poder programarlo. [3.2]
 \end{itemize}
 
 Viendo los resultados de las pruebas, puede verse que no fueron una sino varias las veces que fue necesario reimprimir la placa, hasta lograr que funcionara como era esperado. En cada nueva impresión, se mejoraban aspectos relacionados a su tamaño, la distribución de los componentes, y su robustez con respecto a los posibles cortocircuitos generados a partir de imperfecciones en el ruteo de pistas.
-
-La Figura \ref{placaterminadait3} muestra el resultado de la placa al final de la iteración.
 
 % section resultados (end)
 

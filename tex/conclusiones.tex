@@ -4,11 +4,11 @@
 \section{Sistema final} % (fold)
 \label{sec:sistema_final}
 
-El sistema obtenido es una \textbf{plataforma de instrumentacion}, con dos microcontroladores C8051F352. Con 16 entradas analogicas, con posibilidad de 16 mediciones en canal unico simultaneas, y 8 mediciones en modo diferencial simultaneas. Ademas, contiene 4 contadores de eventos de fuentes externas. Cada microcontrolador tiene un software embebido que permite configurar los distintos parametros del sistema mediante una interfaz de linea de comando.
+El sistema obtenido es una \textbf{plataforma de instrumentación}, con dos microcontroladores C8051F352. Con 16 entradas analógicas, posibilitando 16 mediciones en canal único simultaneas, u 8 mediciones en modo diferencial simultaneas. Contiene, además 4 contadores de eventos de fuentes externas. Cada microcontrolador tiene un software embebido que permite configurar los distintos parámetros del sistema mediante una interfaz de linea de comando.
 
-Como anexo a este sistema, obtuvimos un subsistema \textbf{controlador para un sensor de campo electrostatico}. Tanto el software como el hardware fueron diseñados en este proyecto, y sirven para usar y controlar dicho sensor.
+Como anexo a este sistema, obtuvimos un subsistema \textbf{controlador para un sensor de campo electrostático}. Tanto el software como el hardware fueron diseñados en este proyecto, y sirven para usar y controlar dicho sensor.
 
-El \textbf{servidor web} implementado en la Raspberry Pi, es un caso de uso de un posible sistema embebido que trabaje junto con la plataforma. Este sistema esta especialmente diseñado para trabajar con la plataforma, especificamente con el uso del sensor de campo electrostatico. Las funciones de la interfaz grafica estan orientadas al uso de este sensor. Sin embargo, es posible realizar cualquier tipo de configuracion mediante esta interfaz grafica.
+El \textbf{servidor web} implementado en la Raspberry Pi, es un caso de uso de un posible sistema embebido que trabaje junto con la plataforma. Este sistema esta especialmente diseñado para trabajar con la plataforma, específicamente con el uso del sensor de campo electrostático. Las funciones de la interfaz gráfica están orientadas al uso de este sensor. Sin embargo, es posible realizar cualquier tipo de configuración mediante esta interfaz gráfica.
 
 % section sistema_final (end)
 
@@ -17,12 +17,12 @@ El \textbf{servidor web} implementado en la Raspberry Pi, es un caso de uso de u
 
 \begin{itemize}
 	\item Utilizar otro microcontrolador para la plataforma, que permita el uso de una memoria flash para guardar configuraciones, y que permita utilizar $I^{2}$C.
-	\item Acondicionar los aspectos electronicos del sistema, mejorando su respuesta ante posibles inestabilidades de potencia
-	\item Mejorar el circuito de adaptacion para el sensor de campo electrostatico en terminos de reduccion de consumo y ruido
-	\item Extender el desarrollo del sistema que recibe los datos de la plataforma a un sistema de gestion de dispositivos IoT
-	\item Refactorizar el diseño utilizando un patron bien conocido
-	\item Completar el desarrollo del detector inteligente de campo electrostatico, utilizando la plataforma.
-	\item Controlar ambos microcontroladores con un unico software.
+	\item Acondicionar los aspectos electrónicos del sistema, mejorando su respuesta ante posibles inestabilidades de potencia
+	\item Mejorar el circuito de adaptación para el sensor de campo electrostático en términos de reducción de consumo y ruido
+	\item Extender el desarrollo del sistema que recibe los datos de la plataforma a un sistema de gestión de dispositivos IoT
+	\item Refactorizar el diseño utilizando un patrón bien conocido
+	\item Completar el desarrollo del detector inteligente de campo electrostático, utilizando la plataforma.
+	\item Controlar ambos microcontroladores con un único software.
 \end{itemize}
 
 % section trabajos_futuros (end)

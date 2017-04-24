@@ -8,14 +8,14 @@ En esta iteración, se intentó dar un cierre a un primer prototipo de software 
 
 Al final de la iteración 2, en la sección \ref{it2:sec:conclusiones_de_la_iteracion_2}, se especifica una lista con requerimientos cumplidos. Nuestro punto de partida para continuar el desarrollo del programa es esta lista. 
 
-El objetivo principal de esta iteración es conformar un programa que cumpla con todos los requerimientos inherentes al software de la plataforma.
+El objetivo principal de esta iteración es conformar un programa que cumpla con todos los requerimientos funcionales, inherentes al software de la plataforma.
 
 % section introduccion (end)
 
 \section{Requerimientos de la iteración} % (fold)
 \label{it5:sec:requerimientos_de_la_iteracion}
 
-Los requerimientos de esta iteración están planteados en base a los requerimientos principales, y los resultados de las pruebas y el desarrollo de la iteración 2. Ademas, se incluyen requerimientos nuevos, que surgieron por propuesta nuestra o de nuestro director, paracon motivo de mejorar las prestaciones de la plataforma.
+Los requerimientos de esta iteración están planteados en base a los requerimientos principales, y los resultados de las pruebas y el desarrollo de la iteración 2. Además, se incluyen requerimientos nuevos, que surgieron por propuesta nuestra o de nuestro director, con motivo de mejorar las prestaciones de la plataforma.
 
 \begin{itemize}
 \item Se deberían poder configurar tiempos de intervalo entre cada medición para cada canal por separado (deriva de 1.5)
@@ -34,11 +34,11 @@ Los requerimientos de esta iteración están planteados en base a los requerimie
 
 Focalizamos el desarrollo del programa en obtener un prototipo final, preparado para que se ejecute de manera continua en la placa de instrumentación construida. En una primera instancia, terminamos aquellas funcionalidades ligadas a los requerimientos principales, y luego nos dedicamos a comprobar el funcionamiento del mismo, mediante unit-testing y tests de sistema.
 
-La figura \ref{it5:fig:bloquesquintaiteracion} muestra el diagrama de bloques del programa terminado, al final esta iteración. Si se compara con la figura \ref{it2:fig:bloquesprimeraiteracionsoftware}, el cambio en la estructura no es significativo. El mayor cambio esta en las funciones dentro de los bloques. Hay funciones nuevas, funciones que sufrieron cambios y funciones que se eliminaron.
+La Figura \ref{it5:fig:bloquesquintaiteracion} muestra el diagrama de bloques del programa terminado, al final esta iteración. Si se compara con la Figura \ref{it2:fig:bloquesprimeraiteracionsoftware}, el cambio en la estructura no es significativo. El mayor cambio esta en las funciones dentro de los bloques. Hay funciones nuevas, funciones que sufrieron cambios y funciones que se eliminaron.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.80\textwidth, height = 9cm]{bloquesquintaiteracion}
+  \includegraphics[width=1\textwidth, height = 10cm]{bloquesquintaiteracion}
   \caption{}\label{it5:fig:bloquesquintaiteracion}
 \end{figure}
 
@@ -56,7 +56,7 @@ En la sección \ref{it2:sub:el_modulo_conversor}, se explica el funcionamiento d
 \end{figure}
 
 En esta versión del programa, utilizamos dos buffers de 11 posiciones cada uno. A diferencia del buffer de conversión de la iteración 2, cada posición ya no representa un único canal sino que representa una "vía de conversión". Una vía de conversión es una fuente de telemetría que puede provenir de un canal único o diferencial.
-De manera figurativa, podría decirse que un buffer es "dinámico", y el otro es "estático". Similar al buffer de conversión de la iteración 2, el buffer estático determina si un canal esta habilitado o no. Además de esto, determina el valor del intervalo de mediciones de dicho canal. Si la posición que corresponde a ese canal contiene un 0, el canal esta inhabilitado; cualquier numero mayor a 0 indica que el canal esta habilitado. Si el canal esta habilitado, el numero puede estar en un rango de 1 a 65536, siendo este numero una medida del intervalo temporal que habrá entre cada medición cuando el sistema entre en modo de conversiones continuas. Mientras mayor es el numero, mayor es el intervalo entre cada medición para ese canal.
+De manera figurativa, podría decirse que un buffer es 'dinámico', y el otro es 'estático'. Similar al buffer de conversión de la iteración 2, el buffer estático determina si un canal esta habilitado o no. Además de esto, determina el valor del intervalo de mediciones de dicho canal. Si la posición que corresponde a ese canal contiene un 0, el canal esta inhabilitado; cualquier numero mayor a 0 indica que el canal esta habilitado. Si el canal esta habilitado, el numero puede estar en un rango de 1 a 65536, siendo este numero una medida del intervalo temporal que habrá entre cada medición cuando el sistema entre en modo de conversiones continuas. Mientras mayor es el numero, mayor es el intervalo entre cada medición para ese canal.
 A diferencia del buffer original, el modo de conversión ya no se identifica con un numero, sino con la posición dentro del buffer, ya sea el estático o el dinámico. Las posiciones del 0 al 7 están reservadas para los 8 canales del conversor en modo canal único, y las posiciones del 8 al 11 son para los canales en modo diferencial. Las posiciones 8,9,10 y 11 representan a los pares de pines en modo diferencial (1,2); (3,4); (5,6) y (7,8) respectivamente. 
 
 
@@ -95,7 +95,7 @@ Se tomaron las medidas suficientes, dentro del programa, para no permitir al usu
   \caption{Estado de los buffers en el momento que se activa la conversión continua. Cada vez que un valor del buffer dinámico llega a 1, se restablece usando el buffer estático como referencia.}\label{it5:fig:bufferdinamicolleno}
 \end{figure}
 
-El numero dentro de cada posición representa el tiempo del intervalo. El intervalo mas corto es 1, y el mas largo es 65536. Los tiempos en segundos con respecto a los intervalos siguen una escala que tiende a ser lineal, pero necesaria de calibrar en caso de ser necesaria una mayor precisión. Para mejorar la practicidad a la hora de establecer intervalos, conformamos una tabla con valores de intervalos nominales. A partir de dicha tabla, elaboramos un gráfico que se muestra en la figura \ref{it5:fig:relacionintervalotiempo}.
+El numero dentro de cada posición representa el tiempo del intervalo. El intervalo mas corto es 1, y el mas largo es 65536. Los tiempos en segundos con respecto a los intervalos siguen una escala lineal, pero necesaria de calibrar en caso de ser necesaria una mayor precisión. Para mejorar la practicidad a la hora de establecer intervalos, conformamos una tabla con valores de intervalos nominales. A partir de dicha tabla, elaboramos un gráfico que se muestra en la Figura \ref{it5:fig:relacionintervalotiempo}.
 
 \begin{table}[h]
 \centering
@@ -121,7 +121,7 @@ Intervalo & Tiempo (s) \\ \hline
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.80\textwidth, height = 7cm]{relacionintervalotiempo.JPG}
-  \caption{Gráfico elaborado a partir de la tabla \ref{it5:tab:tablamediciones}}, obtenidos midiendo el tiempo entre cada medición para los intervalos en el eje de las abscisas. Observando la curva, llegamos a la conclusión que los distintos valores de tiempo correspondientes a los intervalos se comportan de manera lineal. Haciendo una extrapolación básica, podemos decir que el intervalo mas largo, con un valor de 65536, corresponde a un tiempo de aproximadamente 2 horas entre cada medición.]\label{it5:fig:relacionintervalotiempo}
+  \caption{Gráfico elaborado a partir de la tabla \ref{it5:tab:tablamediciones}, obtenido midiendo el tiempo entre cada medición para los intervalos en el eje de las abscisas. Observando la curva, llegamos a la conclusión que los distintos valores de tiempo correspondientes a los intervalos se comportan de manera lineal. Haciendo una extrapolación básica, podemos decir que el intervalo mas largo, con un valor de 65536, corresponde a un tiempo de aproximadamente 2 horas entre cada medición.}\label{it5:fig:relacionintervalotiempo}
 \end{figure}
 
 Las funciones "cambiar\_pin" y "analizar\_buffer" dentro del modulo de conversor, manejan los buffers y realizan las conversiones según las configuraciones. Ambas son ejecutadas cíclicamente en el modo de conversiones continuas. "cambiar\_pin" prepara el hardware del conversor según cual es el canal próximo a medir, y "analizar\_buffer" recorre el buffer, habilitando o no la conversión, y actualizándolo en cada corrida. Las figuras \ref{it5:fig:actividadanalizarbuffer} y \ref{it5:fig:actividadcambiarpin} describen las funciones con diagramas de actividad.
@@ -136,7 +136,7 @@ Las funciones "cambiar\_pin" y "analizar\_buffer" dentro del modulo de conversor
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=1\textwidth, height = 10cm]{actividadcambiarpin}
+  \includegraphics[width=1\textwidth, height = 12cm]{actividadcambiarpin}
   \caption[Diagrama de actividad de la función cambiar pin]{Diagrama de actividad que ilustra la lógica dentro de la función cambiar\_pin, dentro del modulo del conversor. Esta función es llamada luego de cada conversión. En cada llamado, se selecciona un nuevo canal a medir. No discrimina si el canal esta o no habilitado para medir, en caso en que no lo este, se llamara inmediatamente para cambiar el pin nuevamente sin realizar medición alguna.}\label{it5:fig:actividadcambiarpin}
 \end{figure}
 
@@ -151,8 +151,8 @@ El proceso para obtener la marca de tiempo esta descripto en la imagen \ref{it5:
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.80\textwidth, height = 7cm]{secuenciaobtenermarca}
-  \caption[Diagrama de secuencia para la obtención de una marca de tiempo]{Diagrama de secuencia que muestra la interacción entre el conversor y timer 2 para obtener la marca de tiempo. En el diagrama, la marca de tiempo esta representada mediante un objeto que alberga un único campo, que es la marca de tiempo. En cada interrupción de Timer 2 este valor se actualiza, y en cada conversión se obtiene el valor actual para enviarlo junto con la medición obtenida en la conversión.}\label{it5:fig:secuenciaobtenermarca}
+  \includegraphics[width=1\textwidth, height = 9cm]{secuenciaobtenermarca}
+  \caption[Diagrama de secuencia para la obtención de una marca de tiempo]{Diagrama de secuencia que muestra la interacción entre el conversor y Timer 2 para obtener la marca de tiempo. En el diagrama, la marca de tiempo esta representada mediante un objeto que alberga un único campo, que es la marca de tiempo. En cada interrupción de Timer 2 este valor se actualiza, y en cada conversión se obtiene el valor actual para enviarlo junto con la medición obtenida en la conversión.}\label{it5:fig:secuenciaobtenermarca}
 \end{figure}
 
 % subsubsection marca_de_tiempo (end)
@@ -207,9 +207,9 @@ Prueba \#        & 3 \\
 \hline
 Nombre           & Comportamiento esperado del conversor \\
 \hline
-Requerimiento & 1.5
+Requerimiento & 1.5 \\
 \hline
-Descripción      & Con este test, se comprueba que el sistema permite establecer intervalos de medición individuales para cada canal, y que se comporta de manera consistente con el el paso del tiempo. \\
+Descripción      & Con esta prueba, se comprueba que el sistema permite establecer intervalos de medición individuales para cada canal, y que se comporta de manera consistente con el el paso del tiempo. \\
 \hline
 Pre-condiciones  & \tabitem Sistema configurado con dos pines en modo canal único \\
                  & \tabitem Un canal esta configurado con un tiempo de 1 y otro con 50 \\
@@ -238,7 +238,7 @@ Prueba \#        & 3 \\
 \hline
 Nombre           & Generación de la marca de tiempo \\                 
 \hline
-Requerimiento & 4.2
+Requerimiento & 4.2 \\
 \hline
 Descripción      & En cada conversión, se debería registrar una marca de tiempo con un numero que hace referencia al tiempo que transcurrió desde el momento que se iniciaron las conversiones al momento donde se toma la medición. \\
 \hline
@@ -271,7 +271,7 @@ Prueba \#        & 3 \\
 \hline
 Nombre           & Formato esperado del mensaje \\                     
 \hline
-Requerimiento    & 4.3, 4.4, 4.5
+Requerimiento    & 4.3, 4.4, 4.5 \\
 \hline
 Descripción      & Cada dato que se envía a la placa de gestión incluye la siguiente información: Medición, pin, modo, marca de tiempo. Estos datos están enviados con un formato especial, y se envían en simultaneo. Esta prueba verifica que cada mensaje contenga el formato correcto y que los datos sean coherentes a las configuraciones. \\
 \hline

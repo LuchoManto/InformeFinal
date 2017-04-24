@@ -4,19 +4,19 @@
 \section{Introducción} % (fold)
 \label{sec:introduccion}
 
-Los distintos inconvenientes que surgieron en el desarrollo de las iteraciones 2, 3 y 4, nos obligo a analizar distintas alternativas para lograr cumplir por completo con los requerimientos 1.1 y 1.3. En iteraciones pasadas, se configuro el software y el hardware de la plataforma para poder tomar señales de hasta 2 contadores y hasta 4 señales en modo diferencial de 4 respectivos sensores. Esto no cumple con el numero minimo de 4 contadores y 8 canales diferenciales. Si se duplicaran los recursos, llegariamos a la cantidad requerida.
+Los distintos inconvenientes que surgieron en el desarrollo de las iteraciones 2, 3 y 4, nos obligo a analizar distintas alternativas para lograr cumplir por completo con los requerimientos 1.1 y 1.3. En iteraciones pasadas, se configuro el software y el hardware de la plataforma para poder tomar señales de hasta 2 contadores y hasta 4 señales en modo diferencial de 4 respectivos sensores. Esto no cumple con el numero mínimo de 4 contadores y 8 canales diferenciales. Si se duplicaran los recursos, llegaríamos a la cantidad requerida.
 
-En esta iteración, intentamos aumentar las prestaciones de la plataforma duplicando los recursos de la placa construida en la iteración 3. Duplicando los recursos, alcanzariamos los requerimientos de cantidad de contadores y canales de medición diferenciales.
+En esta iteración, intentamos aumentar las prestaciones de la plataforma duplicando los recursos de la placa construida en la iteración 3. Duplicando los recursos, alcanzaríamos los requerimientos de cantidad de contadores y canales de medición diferenciales.
 
 % section introduccion (end)
 
 \section{Requerimientos de la iteración} % (fold)
 \label{sec:requerimientos_de_la_iteracion}
 
-A continuacion, listamos los requerimientos de esta iteracion.
+A continuación, listamos los requerimientos de esta iteración.
 
 \begin{itemize}
-  \item Se deberían poder convertir a digital en modo canal unico o diferencial, datos analógicos provenientes de hasta 8 sensores. [1.1]
+  \item Se deberían poder convertir a digital en modo canal único o diferencial, datos analógicos provenientes de hasta 8 sensores. [1.1]
   \item Se deberían poder contar eventos de hasta 4 señales externas. [1.3]
 \end{itemize}
 
@@ -28,31 +28,27 @@ A continuacion, listamos los requerimientos de esta iteracion.
 \subsection{Diseño Esquemático}
 \label{sub: diseño_esquematico2}
 
-Para simplificar la explicación del diagrama, lo que haremos en esta sección es dividir el circuito entero en subcircuitos mas simples.
+Para simplificar la explicación del diagrama, lo que haremos en esta sección es dividir el circuito entero en circuitos mas simples.
 
 \subsubsection{Entradas Analógicas}
 \label{subsub: entradas_analogicas2}
 
-Las entradas analógicas con sus filtros se mantuvieron exactamente igual que en el diseño de la primera placa. Para cada una de las entradas se le colocaría un filtro pasa-bajo RC como se muestra en la figura \ref{fig:esquematicoFiltro}.
+Los circuitos para las entradas analógicas son similares a los realizados en la iteración 3. Para cada una de las entradas se coloca un filtro pasa-bajo RC, como se muestra en la Figura \ref{fig:esquematicoFiltro}.
 
-Mostramos en la figura \ref{fig:esquematicoFiltro2} como quedan todas las entradas analógicas de un solo chip (en el otro es exactamente igual), podemos ver 8 entradas analógicas, cada una con su respectivo filtro. Además podemos observar 2 pines llamados PINHD\_AGND\_2, son dos accesos a la masa digital para aquellos sensores que necesiten estar referenciado a masa (colocamos dos masa analógicas para cada uno de los chips).
+En la Figura \ref{fig:esquematicoFiltro2}, se muestran las entradas analógicas para un solo microcontrolador, siendo similar para el otro. En esta imagen, pueden verse las entradas analógicas con sus filtros, y además, dos pines PINHD\_AGND\_2. Estos pines son accesos a la masa digital para aquellos sensores que necesiten tener referencia a masa.
 
-Del lado derecho del microcontrolador hay dos entradas denominadas VREF+ y VREF-, que nos sirven para manejar los niveles de tensión de referencia para la conversión que usara el ADC.
+Del lado derecho del microcontrolador hay dos entradas denominadas VREF+ y VREF-, que sirven para manejar los niveles de tensión de referencia para el conversor.
 
-\begin{figure}[H]
+\begin{figure}[h]
 \centering
   \includegraphics[width=1.10\textwidth, height = 9cm]{esquematicoFiltro2}
-  \caption{Esquemático del Circuito Completo de entradas analogicas.}\label{fig:esquematicoFiltro2}
+  \caption{Esquemático del Circuito Completo de entradas analógicas.}\label{fig:esquematicoFiltro2}
 \end{figure}
 
 % subsubsection entradas_analogicas2 (end)
 
-\subsubsection{Circuito de entradas Digitales}
-\label{subsub:entradas_digitales}
 
-Como podemos ver en la figura \ref{fig:esquematicoDigital2} colocamos 16 entradas/salidas digitales para el microcontrolador. Cada chip tiene las mismas 16 entradas.
-
-\begin{figure}  [H]
+\begin{figure}[h]
 \centering
   \includegraphics[width=1.0\textwidth, height = 10cm]{esquematicoDigital2}
   \caption{Esquemático del Circuito Completo de entradas/salidas digitales.}\label{fig:esquematicoDigital2}
@@ -64,15 +60,16 @@ Como podemos ver en la figura \ref{fig:esquematicoDigital2} colocamos 16 entrada
 \subsubsection{Circuito Salida Serial}
 \label{subsub:salida_serial2}
 
-La idea de tener una placa a la que se conecten varios sensores analógicos y digitales es que se pueda colocar el lugares remotos, por lo que decidimos que la salida serial deje de ser RS-232 y colocarle dos salidas seriales nivel TTL con un RX y un TX para cada microcontrolador, además colocando éste tipo de salida se ahorra mucho espacio, así pudimos reducir el tamaño de la placa. Las salidas seriales se encuentran conectadas directamente en los pines de salidas dijitales P0.4 (Tx) y P0.5(Rx).
+Se reemplazo el circuito para la comunicación serial con adaptador RS-232 con un circuito simple de transmisor y receptor a nivel TTL. Esto tiene dos consecuencias importantes. La primera es que el sistema embebido que controle a la plataforma no podrá estar situado lejos de la misma ya que la aparición de errores en la comunicación tendrá una probabilidad mas alta. La segunda es que el tamaño de la plataforma se reduce, ya que no es necesario utilizar un adaptador RS-232, sino que solo se utilizan un par de pines para el transmisor Tx y el receptor Rx. Las salidas seriales se encuentran conectadas directamente en los pines de salidas digitales P0.4 (Tx) y P0.5(Rx).
 
 % subsubsection salida_serial2 (end)
 
 \subsubsection{Circuito para Debugger y Programación} % (fold)
 \label{subsub:debugger_programacion2}
 
-Para programar cada uno de los microcontroladores en principio se pensó en colocar dos entradas para el debugger de SiliconLabs, pero nos consumía mucho espacio y el cambio para programar uno y otro se hubiera hecho molesto. Por lo que decidimos poner uno solo, y utilizarlo para los dos microcontroladores, con un jumper de tres pines, para tener la opción de elegir que micro programar.
-En la figura \ref{fig:esquematicoDebugger2} vemos en uno de los C8051f352 como queda conectado el modulo de debugger/programación.
+Por el momento, cada microcontrolador requiere que se programe por separado. Por una cuestión de simpleza, optamos por utilizar un mismo circuito de programación para ambos microcontroladores. Dentro del circuito, colocamos un selector que da la opción de elegir que microcontrolador se desea programar.
+
+La Figura \ref{fig:esquematicoDebugger2} muestra el diagrama esquemático para el circuito de programación.
 
 \begin{figure}  [H]
 \centering
@@ -83,18 +80,19 @@ En la figura \ref{fig:esquematicoDebugger2} vemos en uno de los C8051f352 como q
 
 % subssubection debugger_programacion2 (end)
 
-\subsubsection{Circuito de Potencia}
-\label{subsub: circuito_potencia2}
+\subsubsection{Circuito de Alimentacion}
+\label{subscircuito_de_alimentacion}
 
-Para el circuito de potencia hicimos lo mismo que con el debugger: colocamos una sola entrada y un solo regulador para toda la placa y asi, alimentamos los dos microcontroladores. También colocamos un jumpers (JMP3), se utiliza para decidir si alimentamos la placa con una fuente externa o con el debugger/programador de SiliconLabs. 
-Sabemos que el principal problema de un sistema embebido es su consumo de energía, por lo que colocamos dos jumpers más, uno para cada una de las entradas de alimentación del segundo microcontrolador (JP4 AV+ y JP5 para VDD). Entonces así podemos elegir desconectar un chip y ahorrar el consumo de energía que este provocaría. 
+El circuito de alimentación es el mismo para ambos lados de la placa. Colocamos un jumper selector que cambia el origen de alimentación, pudiendo elegir entre el debugger o una fuente externa de 5 Volts.
 
-En la figura \ref{fig:esquematicoPotencia2} se muestra como queda el esquemático del circuito de potencia.
+Es posible, en caso que sea necesario, deshabilitar uno de los microcontroladores. De esta manera, se puede ahorrar energía cuando se este utilizando un microcontrolador, y el uso del otro no sea necesario. 
+
+La Figura \ref{fig:esquematicoPotencia2} muestra el modelo esquemático del circuito de alimentación.
 
 \begin{figure}[H] 
 \centering
   \includegraphics[width=1.0\textwidth, height = 10cm]{esquematicoPotencia2}
-  \caption{Esquemático del Circuit para la potencia de alimentación.}\label{fig:esquematicoPotencia2}
+  \caption{Modelo esquemático del circuito de alimentación de la plataforma.}\label{fig:esquematicoPotencia2}
 \end{figure}
 
 %subsubsection circuito_potencia2 (end)
@@ -102,7 +100,7 @@ En la figura \ref{fig:esquematicoPotencia2} se muestra como queda el esquemátic
 \subsubsection{Diagrama Esquemático Completo}
 \label{subsubsection: esquematico_completo2}
 
-En la figura \ref{fig:esquematicoCompleto2} podemos ver como queda el esquemático entero con los dos microcontroladores y todos los subcircuitos que componen la placa.
+En la Figura \ref{fig:esquematicoCompleto2} podemos ver como queda el esquemático entero con los dos microcontroladores y todos los circuitos que componen la placa.
 
 \begin{figure}  
 \centering
@@ -118,9 +116,12 @@ En la figura \ref{fig:esquematicoCompleto2} podemos ver como queda el esquemáti
 \subsection{Diseño de Plaqueta de Circuito Impreso (PCB)}
 \label{ subsection: diseño_pcb2}
 
-Como esta nueva versión de la placa fue diseñada para ser doble capa, se mostrarán 2 figuras, una para la capa superior y otra para la capa inferior. 
-A ambas capaz le tuvimos que dividir las masas, en una sección analógica y una digital, la masa analógica de la capa superior con la de la capa inferior deben estar interconectadas, lo mismo pasa con la masa digital. Por lo que realizamos un drill (un hueco) para que las masas estén en contacto.
-En la figura \ref{fig:PCB2a} podemos ver como queda el diagrama PCB de capa superior o frontal, y en la figura \ref{fig:PCB23Da} vemos la misma capa con el visualizador 3D del KiCad.
+La figura \ref{fig:PCB2a} ilustra el diagrama en PCB de la capa superior o frontal de la placa. La figura  \ref{fig:PCB23Da} muestra esta misma capa, solo que utilizando un visualizador 3D.
+
+Como esta nueva versión de la placa fue diseñada para ser doble capa, se mostrarán 2 figuras, una para la capa superior y otra para la capa inferior.
+
+Existen dos masas distintas para cada lado de la placa: una masa analógica y otra digital. La masa analógica de un lado debería estar conectada con la masa analógica del otro lado, y así también para la masa digital. Para lograr esto, realizamos un hueco interconector, conectando las masas de cada placa.
+
 
 \begin{figure}[H]
 \centering
@@ -134,15 +135,15 @@ En la figura \ref{fig:PCB2a} podemos ver como queda el diagrama PCB de capa supe
   \caption{Diseño PCB de la capa frontal de la placa en 3D.}\label{fig:PCB23Da}
 \end{figure}
 
-En la figura \ref{fig:PCB2b} podemos ver como queda el diagrama PCB de capa inferior o posterior, y en la figura \ref{fig:PCB23Db} vemos la misma capa con el visualizador 3D del KiCad.
+En la Figura \ref{fig:PCB2b} muestra el diagrama PCB de la capa inferior o posterior. La Figura \ref{fig:PCB23Db} muestra esta misma capa con el visualizador 3D.
 
-\begin{figure}[H] 
+\begin{figure}[h] 
 \centering
   \includegraphics[width=1.0\textwidth, height = 8cm]{PCB2b}
   \caption{Diseño PCB de la capa posterior de la placa.}\label{fig:PCB2b}
 \end{figure}
 
-\begin{figure}  [H]
+\begin{figure}  [h]
 \centering
   \includegraphics[width=1.0\textwidth, height = 8cm]{PCB23Db}
   \caption{Diseño PCB de la capa posterior de la placa en 3D.}\label{fig:PCB23Db}
@@ -240,9 +241,9 @@ Descripción      & Se utilizo el cable USB con el debugger de SiliconLabs para 
 \hline
 Pre-condiciones  & 3.2 \\
 \hline
-Post-condiciones &  Al abrir la IDE y apretar el botón de "Connect" el programa debe reconocer el tipo de microcontrolador al que esta conectado. \\ 
+Post-condiciones &  Al abrir la IDE y accionar el botón de "Connect", el programa debe reconocer el tipo de microcontrolador al que esta conectado. \\ 
 \hline
-Resultados       &  Conectamos la placa a la PC e intentamos conectarla con el microcontrolador a traves de la IDE. El resultado fue el esperado, el microcontrolador estaba exitosamente conectado al ordenador. \\
+Resultados       &  Conectamos la placa al ordenador e intentamos conectarla con el microcontrolador a través de la IDE. El resultado fue el esperado, el microcontrolador estaba exitosamente conectado al ordenador. \\
 \end{tabular}
 \end{table}
 
@@ -283,9 +284,9 @@ Prueba \#        & 4 \\
 Nombre           & Correcto funcionamiento de las entradas analógicas y salidas digitales. \\                      
 
 \hline
-Requerimientos &    1.1
+Requerimientos &    1.1 \\
 \hline
-Descripción      & Se cargo un programa de prueba a ambos microcontroladores. Utilizando una fuente de tension, introducimos distintos valores de tension en dos canales en modo unico, uno de cada microcontrolador. Luego, utilizamos ambas plataformas para convertir los datos a digital y verificar que la telemetria medida concuerde con el nivel de tension generado.
+Descripción      & Se cargo un programa de prueba a ambos microcontroladores. Utilizando una fuente de tensión, introducimos distintos valores de tensión en dos canales en modo único, uno de cada microcontrolador. Luego, utilizamos ambas plataformas para convertir los datos a digital y verificar que la telemetría medida concuerde con el nivel de tensión generado. \\
 \hline
 Pre-condiciones  & \tabitem Componentes conectados y soldados correctamente en la placa. \\
                  & \tabitem IDE SiliconLabs iniciado y corriendo en un ordenador. \\
@@ -293,9 +294,9 @@ Pre-condiciones  & \tabitem Componentes conectados y soldados correctamente en l
                  & \tabitem Programa de prueba correctamente cargado en el C8051f352. \\
                  & \tabitem Fuente de Tensión externa conectada a las entradas analógicas con referencia en masa analógica. \\
 \hline
-Post-condiciones &  Al apretar el botón de "Go" en el programa "Flash Programing Utilitys", se inicia el programa. Configurando los canales conectados e iniciando las conversiones continuas, deberian comenzar a aparecer las mediciones realizadas sobre los canales. Las mediciones deberian corresponderse con los valores de tension establecidos en las fuentes conectadas. \\
+Post-condiciones &  Al apretar el botón de "Go" en el programa "Flash Programing Utilitys", se inicia el programa. Configurando los canales conectados e iniciando las conversiones continuas, deberían comenzar a aparecer las mediciones realizadas sobre los canales. Las mediciones deberían corresponderse con los valores de tensión establecidos en las fuentes conectadas. \\
 \hline
-Resultados       &  Cargamos el programa en el microcontrolador, y con todas las pre-condiciones cumplidas hicimos correr el programa. Los valores de tension medidos se correspondian con los establecidos en la fuente. \\                                                                                                            
+Resultados       &  Cargamos el programa en el microcontrolador, y con todas las pre-condiciones cumplidas hicimos correr el programa. Los valores de tensión medidos se correspondían con los establecidos en la fuente. \\                                                                                                            
 \end{tabular}
 \end{table}
 
@@ -306,12 +307,12 @@ Resultados       &  Cargamos el programa en el microcontrolador, y con todas las
 \label{sec:resultados}
 
 
-Al final de esta iteracion, obtuvimos una plataforma con dos microcontroladores y el doble de recursos que la diseñada anteriormente. Esto permite con los requisitos de cantidad de contadores y cantidad de canales de conversion diferencial, ligados a los requerimientos 1.1 y 1.3.
-Aun asi, todavia queda trabajo por hacer. Aunque los recursos esten duplicados, es necesario vincular ambas plataformas, para que trabajen en conjunto y no en paralelo. De esta forma, pasa a ser una unica plataforma con el doble de recursos, y no dos plataformas en un unico espacio fisico.
+Al final de esta iteración, obtuvimos una plataforma con dos microcontroladores y el doble de recursos que la diseñada anteriormente. Esto permite con los requisitos de cantidad de contadores y cantidad de canales de conversión diferencial, ligados a los requerimientos 1.1 y 1.3.
+Aun así, todavía queda trabajo por hacer. Aunque los recursos estén duplicados, es necesario vincular ambas plataformas, para que trabajen en conjunto y no en paralelo. De esta forma, pasa a ser una única plataforma con el doble de recursos, y no dos plataformas en un único espacio físico.
 
-En esta iteracion, llegamos a unir dos plataformas en un unico lugar fisico, pero sin correlacionar su funcionamiento.
+En esta iteración, llegamos a unir dos plataformas en un único lugar físico, pero sin correlación su funcionamiento.
 
-En la figura \ref{fig:impresionplaca2_a} y \ref{fig:impresionplaca2_b} podemos ver como quedo la placa final, tanto de la capa superior como de la inferior. Se acomodoaron los componentes de manera tal que los pines y módulos que se pueden utilizar para conectar alguna interfaz/cable, queden en la misma capa.
+En la Figura \ref{fig:impresionplaca2_a} y \ref{fig:impresionplaca2_b} podemos ver como quedo la placa final, tanto de la capa superior como de la inferior. Se acomodaron los componentes de manera tal que los pines y módulos que se pueden utilizar para conectar alguna interfaz/cable, queden en la misma capa.
 
 \begin{figure}  
 \centering
@@ -329,4 +330,4 @@ En la figura \ref{fig:impresionplaca2_a} y \ref{fig:impresionplaca2_b} podemos v
 
 % section resultados (end)
 
-% chapter iteracion_4 (end)
+% chapter iteracion_5 (end)

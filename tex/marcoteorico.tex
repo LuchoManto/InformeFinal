@@ -35,7 +35,7 @@ En general, lo mas simple es elegir aquella estructura que sea compatible con el
 \subsubsection{Canal único}
 \label{subs:canal_unico}
 
-Las entradas de canal único son suficientes para la mayoría de las aplicaciones. En este tipo de estructuras, la señal de entrada esta referenciada a la masa común del conversor. Esta masa es compartida por todas las entradas que estén configuradas en este modo. La figura \ref{fig:canalunico} ilustra el muestreo de una señal para esta estructura.
+Las entradas de canal único son suficientes para la mayoría de las aplicaciones. En este tipo de estructuras, la señal de entrada tiene una referencia a la masa común del conversor. Esta masa es compartida por todas las entradas que estén configuradas en este modo. La Figura \ref{fig:canalunico} ilustra el muestreo de una señal para esta estructura.
 
 A diferencia de las totalmente diferenciales, las entradas de canal único son mas sensibles al ruido y al desfasaje de continua. El desfasaje de continua (DC Offset) es un fenómeno que ocurre cuando el nivel de continua en la señal es distinto de 0. El ruido en el canal y el desfasaje de continua reducen la amplitud dinámica de la señal de entrada, lo cual provoca que la calidad de la conversión sea menor.\cite{dc_offset}
 
@@ -44,7 +44,7 @@ Este tipo de entradas suelen utilizarse en aquellos casos en que la fuente que p
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.60\textwidth, height = 4cm]{canalunico}
-  \caption{Conversion de canal unico. La señal se toma midiendo la tension en el capacitor con respecto a una masa unica compartida por todos los canales del conversor}\label{fig:canalunico}
+  \caption{Conversión de canal único. La señal se toma midiendo la tensión en el capacitor con respecto a una masa única compartida por todos los canales del conversor}\label{fig:canalunico}
 \end{figure}
 
 % subsubsection canal_unico (end)
@@ -52,7 +52,7 @@ Este tipo de entradas suelen utilizarse en aquellos casos en que la fuente que p
 \subsubsection{Canal totalmente diferencial}
 \label{subs:canal_totalmente_diferencial}
 
-Una entrada totalmente diferencial es la que mayor inmunidad al ruido presenta. Como puede verse en la figura \ref{fig:totalmentediferencial}, cada una de las entradas esta conectada a un canal distinto del conversor. La medición final se calcula con la diferencia entre ambas entradas y no con respecto a masa, lo cual cancela el ruido entre ambas y elimina el desfasaje de continua. La desventaja de este conversor es que consume dos canales por cada señal en lugar de uno solo, como es en el caso de las estructuras de tipo canal único.\cite{tipos_canales}
+Una entrada totalmente diferencial es la que mayor inmunidad al ruido presenta. Como puede verse en la Figura \ref{fig:totalmentediferencial}, cada una de las entradas esta conectada a un canal distinto del conversor. La medición final se calcula con la diferencia entre ambas entradas y no con respecto a masa, lo cual cancela el ruido entre ambas y elimina el desfasaje de continua. La desventaja de este conversor es que consume dos canales por cada señal en lugar de uno solo, como es en el caso de las estructuras de tipo canal único.\cite{tipos_canales}
 
 \begin{figure}[h]
   \centering
@@ -73,7 +73,7 @@ Las entradas pseudo-diferenciales son similares a las totalmente diferenciales e
 \subsection{Conversor Delta-Sigma} % (fold)
 \label{sub:conversor_delta_sigma}
 
-De manera básica, los conversores Delta-Sigma consisten en dos bloques: un bloque con un modulador Delta-Sigma, seguido de un bloque de filtro digital mas un decimador. El primer bloque aplica una técnica de muestreo de alta frecuencia a la señal analógica de entrada, produciendo a la salida una señal digital de 1 bit. El segundo bloque toma las muestras y las convierte en un código de menor frecuencia y mayor resolución. Existen dos frecuencias involucradas: La frecuencia de muestreo $f_s$ y la frecuencia de datos $f_d$. La figura \ref{fig:deltasigma} muestra el diagrama de bloques de este conversor.\cite{delta_sigma_1}
+De manera básica, los conversores Delta-Sigma consisten en dos bloques: un bloque con un modulador Delta-Sigma, seguido de un bloque de filtro digital mas un decimador. El primer bloque aplica una técnica de muestreo de alta frecuencia a la señal analógica de entrada, produciendo a la salida una señal digital de 1 bit. El segundo bloque toma las muestras y las convierte en un código de menor frecuencia y mayor resolución. Existen dos frecuencias involucradas: La frecuencia de muestreo $f_s$ y la frecuencia de datos $f_d$. La Figura \ref{fig:deltasigma} muestra el diagrama de bloques de este conversor.\cite{delta_sigma_1}
 
 \begin{figure}[h]
   \centering
@@ -86,7 +86,7 @@ De manera básica, los conversores Delta-Sigma consisten en dos bloques: un bloq
 
 El modulador Delta-Sigma es el responsable de digitalizar la señal de entrada y reducir el ruido en frecuencias bajas. La arquitectura del modulador implementa una técnica conocida como modelado de ruido, que empuja las frecuencias del ruido fuera de la banda de interés, reduciendo así el ruido en la señal convertida. Esto hace que los convertidores Delta-Sigma sean apropiados para casos donde se trabaja con señales de entrada de baja frecuencia y se requiere alta precisión en la medición. \\
 
-El modulador convierte la señal de entrada en un tren de pulsos de un bit a la salida. La razón entre los unos y los ceros en este tren de pulsos es lo que representa al voltaje de entrada. Ademas, contiene un integrador que realiza el efecto de modelado de ruido, empujando el ruido a bandas de frecuencia mas altas. La figura \ref{fig:modeladoderuido} muestra como la combinación de la técnica de muestreo de un bit con el modelado de ruido empujan el dominio del ruido a frecuencias mayores.\cite{delta_sigma_1}
+El modulador convierte la señal de entrada en un tren de pulsos de un bit a la salida. La razón entre los unos y los ceros en este tren de pulsos es lo que representa al voltaje de entrada. Además, contiene un integrador que realiza el efecto de modelado de ruido, empujando el ruido a bandas de frecuencia mas altas. La Figura \ref{fig:modeladoderuido} muestra como la combinación de la técnica de muestreo de un bit con el modelado de ruido empujan el dominio del ruido a frecuencias mayores.\cite{delta_sigma_1}
 
 \begin{figure}[h]
   \centering
@@ -101,7 +101,7 @@ El modulador convierte la señal de entrada en un tren de pulsos de un bit a la 
 
 Una vez que la señal esta en el dominio digital, un filtro pasa-bajos digital se encarga de eliminar el ruido en alta frecuencia, y un filtro de decimacion se utiliza para disminuir la frecuencia de datos a la salida del conversor. \\
 
-El filtro digital se implementa tomando las muestras del tren de pulsos de 1 bit y ponderando las muestras en un promedio. La frecuencia de salida del filtro digital es la misma que la frecuencia de muestreo. La figura \ref{fig:filtrodigital} muestra la salida del filtro en el dominio del tiempo y de la frecuencia. En el dominio del tiempo, puede verse que la salida de la señal se corresponde con la entrada analógica, que corresponde a una función seno. En el dominio de la frecuencia, puede verse como el ruido fue reducido por el filtro digital. La salida de este filtro es una onda muy parecida a la entrante, a una frecuencia alta. La cantidad de información es demasiada y no es necesaria. Por esto es que se aplica, luego del filtro digital, el filtro de decimacion. \\
+El filtro digital se implementa tomando las muestras del tren de pulsos de 1 bit y ponderando las muestras en un promedio. La frecuencia de salida del filtro digital es la misma que la frecuencia de muestreo. La Figura \ref{fig:filtrodigital} muestra la salida del filtro en el dominio del tiempo y de la frecuencia. En el dominio del tiempo, puede verse que la salida de la señal se corresponde con la entrada analógica, que corresponde a una función seno. En el dominio de la frecuencia, puede verse como el ruido fue reducido por el filtro digital. La salida de este filtro es una onda muy parecida a la entrante, a una frecuencia alta. La cantidad de información es demasiada y no es necesaria. Por esto es que se aplica, luego del filtro digital, el filtro de decimacion. \\
 
 \begin{figure}[h]
   \centering
@@ -109,7 +109,7 @@ El filtro digital se implementa tomando las muestras del tren de pulsos de 1 bit
   \caption{Salida del filtro digital en el dominio del tiempo y de la frecuencia.}\label{fig:filtrodigital}
 \end{figure}
 
-El filtro de decimacion selecciona algunos datos de la señal de salida del filtro digital y descarta otros. La frecuencia de selección se denomina frecuencia de datos $f_s$ y es la frecuencia de salida del conversor. A pesar de que se elimina información, hay que recordar que no se elimina tanto como para no poder tener todos los datos necesarios acerca de la señal de entrada. Con el teorema de Nyquist\cite{shannon}, es posible reconstruir la señal de entrada sin perder información. La figura \ref{fig:decimacion} muestra el proceso de decimacion.\cite{delta_sigma_2} %http://lavryengineering.com/pdfs/lavry-sampling-theory.pdf
+El filtro de decimacion selecciona algunos datos de la señal de salida del filtro digital y descarta otros. La frecuencia de selección se denomina frecuencia de datos $f_s$ y es la frecuencia de salida del conversor. A pesar de que se elimina información, hay que recordar que no se elimina tanto como para no poder tener todos los datos necesarios acerca de la señal de entrada. Con el teorema de Nyquist\cite{shannon}, es posible reconstruir la señal de entrada sin perder información. La Figura \ref{fig:decimacion} muestra el proceso de decimacion.\cite{delta_sigma_2} %http://lavryengineering.com/pdfs/lavry-sampling-theory.pdf
 
 \begin{figure}[h]
   \centering
@@ -140,7 +140,7 @@ Se denomina amplificador de instrumentación a todo dispositivo creado a partir 
 
 Además está hecho con tensiones y corrientes de desequilibrio (offset) bajas y con pocas derivas e impedancia de salida baja.
 
-En el circuito de la figura \ref{fig:aibasico} puede verse el esquema clásico para la realización de un amplificador de instrumentación, donde se ha colocado el circuito equivalente de la fuente de señal.
+En el circuito de la Figura \ref{fig:aibasico} puede verse el esquema clásico para la realización de un amplificador de instrumentación, donde se ha colocado el circuito equivalente de la fuente de señal.
 
 \begin{figure}[h]
   \centering
@@ -183,7 +183,7 @@ Entonces se llegan a las siguientes conclusiones:
 
 \subsection{Características de entrada de un Amplificador de Instrumentación} %fold
 \label{sec:caract_entrada_amplificadores}
-Evidentemente es deseable aproximarse al máximo a las características del amplificador de instrumentación ideal, se mostrará las características no ideales de estos dispositivos, considerando el modelo de amplificador de instrumentación real de la figura \ref{fig:aireal}.
+Evidentemente es deseable aproximarse al máximo a las características del amplificador de instrumentación ideal, se mostrará las características no ideales de estos dispositivos, considerando el modelo de amplificador de instrumentación real de la Figura \ref{fig:aireal}.
 
 \begin{figure}[h]
   \centering
@@ -200,7 +200,7 @@ La impedancia Z\textsubscript{id} representa la impedancia de entrada diferencia
 La impedancia de entrada en modo común Z\textsubscript{icm} está representada por dos componentes iguales entre cada entrada y masa. Esta impedancia puede haber sido medida de dos formas:
 
 \begin{itemize}
-\item Como la existente entre cada entrada por separado y masa, siendo entonces su representación en el circuito equivalente a la mostrada en la figura \ref{fig:aireal}.
+\item Como la existente entre cada entrada por separado y masa, siendo entonces su representación en el circuito equivalente a la mostrada en la Figura \ref{fig:aireal}.
 \item Como la medida entre las dos entradas cortocircuitadas y masa. En este método obtendremos evidentemente la mitad que en la anterior.
 \end{itemize}
 
@@ -219,7 +219,7 @@ Debemos tener en cuenta que el Z\textsubscript{icm} sea igual en las dos entrada
 
 La linealidad de la función de transferencia de un amplificador se mide
 respecto al caso ideal que correspondería con una función de transferencia constituida
-por una recta, tal y como se representa en la figura \ref{fig:linealidad}.
+por una recta, tal y como se representa en la Figura \ref{fig:linealidad}.
 
 \begin{figure}[h]
   \centering
@@ -230,7 +230,7 @@ por una recta, tal y como se representa en la figura \ref{fig:linealidad}.
 Existen varias definiciones de linealidad según la recta que consideremos. Nosotros vamos a usar la recta que mejor se adapte a la función de transferencia del amplificador, que suele ser la utilizada por los fabricantes cuando nos dan la linealidad de un AI integrado. Esta recta no tiene por qué pasar por el origen, ni presentar la pendiente marcada por la ganancia esperada del AI. Tiene que ser aquella que nos de el menor valor de no linealidad (NL), definida como:
 
 \begin{equation}\label{eq5}
-NL = \frac{|Salida Real - Salida lineal|_{max}}{Margen de variacion de la salida entre fondos de escala}
+NL = \frac{|Salida Real - Salida lineal|_{max}}{Margen de variación de la salida entre fondos de escala}
 \end{equation}
 
 %subsubsection no_linealidad (end)
@@ -238,7 +238,7 @@ NL = \frac{|Salida Real - Salida lineal|_{max}}{Margen de variacion de la salida
 \subsubsection{Rechazo al Modo Común} %fold
 \label{rechazo_CMR}
 
-Como se ve en la figura \ref{fig:aireal}, la tensión de salida tiene dos componentes. Uno de ellos es proporcional a la tensión de entrada diferencial y el otro a la tensión de modo común. La tensión de modo común que aparece entre los terminales de entrada del amplificador se define como: 
+Como se ve en la Figura \ref{fig:aireal}, la tensión de salida tiene dos componentes. Uno de ellos es proporcional a la tensión de entrada diferencial y el otro a la tensión de modo común. La tensión de modo común que aparece entre los terminales de entrada del amplificador se define como: 
 
 \begin{equation}\label{eq6}
 E_{cm} = \frac{(E_{2}+E{1})}{2}
@@ -276,7 +276,7 @@ Podemos ver que a la salida tendremos un offset total de V\textsubscript{OOS} G\
 Se pueden incorporan en los montajes de los amplificadores de instrumentación una red de resistencias seleccionables digitalmente, para hacer las veces de R\textsubscript{G} y así poder cambiar el valor de la ganancia mediante un control digital, desde por ejemplo el sistema de adquisición de datos, constituyendo lo que se denomina amplificador de instrumentación de ganancia programable. Un amplificador de este tipo se puede realizar mediante componentes
 discretos, utilizando resistencias y puertas analógicas, pero las características obtenidas serán, en la mayoría de las ocasiones, sensiblemente inferiores a las de los dispositivos integrados.
 
-En la figura \ref{fig:programable}  se puede ver el esquema del amplificador de instrumentación con ganancia programable PGA206/207 de Burr-Brown. La ganancia de este amplificador se puede controlar por medio de las entradas A1 y A2 para conseguir ganancias de 1, 2, 4 u 8.
+En la Figura \ref{fig:programable}  se puede ver el esquema del amplificador de instrumentación con ganancia programable PGA206/207 de Burr-Brown. La ganancia de este amplificador se puede controlar por medio de las entradas A1 y A2 para conseguir ganancias de 1, 2, 4 u 8.
 
 \begin{figure}[h]
   \centering
@@ -284,7 +284,7 @@ En la figura \ref{fig:programable}  se puede ver el esquema del amplificador de 
   \caption{Amplificador de Instrumentación programable PGA206.}\label{fig:programable}
 \end{figure}
 
-En este modelo las entradas analógicas están protegidas contra sobretensiones de hasta 40 voltios, incluso sin alimentación. Las resistencias internas están ajustadas por láser para conseguir una baja tensión de offset y pequeñas derivas.
+En este modelo las entradas analógicas están protegidas contra sobre-tensiones de hasta 40 voltios, incluso sin alimentación. Las resistencias internas están ajustadas por láser para conseguir una baja tensión de offset y pequeñas derivas.
 
 La entrada puede provenir de un sistema multicanal multiplexado puesto que el amplificador tiene un tiempo de asentamiento muy corto. Además las entradas tipo FET eliminan los errores debidos a la corriente de polarización y a la resistencia parásita serie asociada a los multiplexores analógicos.
 
@@ -338,7 +338,7 @@ Para manejar los motores se precisa el conocimiento de la posición del rotor en
 
 \begin{itemize}
   \item Con sensores: Disponen de sensores de efecto hall o de encoders que indican la posición del rotor. Es habitual que tengan 3 sensores separados 120\textsuperscript{o}, uno para cada bobinado del motor.
-  \item Sin sensores: No tienen sensores; la posición se determina mediante la medición del efecto de la fuerza contraelectromotriz sobre las bobinas
+  \item Sin sensores: No tienen sensores; la posición se determina mediante la medición del efecto de la fuerza contra-electromotriz sobre las bobinas
 \end{itemize}
 
 
@@ -361,7 +361,7 @@ Los sistemas utilizados para el control con sensores se clasifican según el alg
 \subsubsection{Conmutación trapezoidal}
 \label{conmutacion_trapezoidal}
 
-Es el método más simple de control de los motores sin escobillas. En este esquema se controla la corriente que circula por los terminales del motor, excitando un par simultáneamente y manteniendo el tercer terminal desconectado. Sucesivamente se va alternando el par de terminales a excitar hasta completar las seis combinaciones posibles. Las seis direcciones de las corrientes se muestran en la figura \ref{fig:trapezoidal}
+Es el método más simple de control de los motores sin escobillas. En este esquema se controla la corriente que circula por los terminales del motor, excitando un par simultáneamente y manteniendo el tercer terminal desconectado. Sucesivamente se va alternando el par de terminales a excitar hasta completar las seis combinaciones posibles. Las seis direcciones de las corrientes se muestran en la Figura \ref{fig:trapezoidal}
 
 \begin{figure}[h]
   \centering
@@ -369,7 +369,7 @@ Es el método más simple de control de los motores sin escobillas. En este esqu
   \caption{Esquema de las seis posibles direcciones de circulación de corriente.}\label{fig:trapezoidal}
 \end{figure}
 
-Tiene como ventajas su sencillez y facilidad de implementación por lo cual es el método más usado en motores pequeños. Pese a esto, tiene un problema inherente a la conmutación del vector de corrientes que es un rizado en el torque de salida. En aplicaciones donde se requieren fuerzas uniformes o bajas velocidades, esto puede llegar a ser inconveniente. En la figura \ref{fig:corrientes_bobinas} se muestran las corrientes por cada una de las fases, la secuencia de conmutación y el torque.
+Tiene como ventajas su sencillez y facilidad de implementación por lo cual es el método más usado en motores pequeños. Pese a esto, tiene un problema inherente a la conmutación del vector de corrientes que es un rizado en el torque de salida. En aplicaciones donde se requieren fuerzas uniformes o bajas velocidades, esto puede llegar a ser inconveniente. En la Figura \ref{fig:corrientes_bobinas} se muestran las corrientes por cada una de las fases, la secuencia de conmutación y el torque.
 
 \begin{figure}[h]
   \centering
@@ -405,7 +405,7 @@ El problema principal que presenta la conmutación sinusoidal es que intenta con
   \caption{: Diagrama de Bloques del Control Vectorial.}\label{fig:control_vectorial}
 \end{figure}
 
-El control vectorial o Field Oriented Control (FOC) soluciona el problema controlando el vector de corrientes directamente en un espacio de referencia ortogonal y rotacional, llamado espacio D-Q (Direct - Quadrature) como se muestra en la figura . Dicho
+El control vectorial o Field Oriented Control (FOC) soluciona el problema controlando el vector de corrientes directamente en un espacio de referencia ortogonal y rotacional, llamado espacio D-Q (Direct - Quadrature) como se muestra en la Figura . Dicho
 espacio de referencia está normalmente alineado con en el rotor de forma que permite que el control del flujo y del par del motor se realice de forma independiente. La componente directa permite controlar el flujo y la componente en cuadratura el par. Para este fin se requiere no solamente una muy buena medición de la orientación del rotor, sino un tratamiento matemático previo de las señales para transformarlas del marco trifásico estático de los bobinados en el estator (circuito fijo dentro del cual gira el rotor) al marco rotacional D-Q del rotor. Este es el control que presenta mejor respuesta en todos los rangos de velocidad pero resulta ser el más costoso de implementar, lo cual lo hace inadecuado para toda aplicación en la que no sea estrictamente necesario.
 
 %subsubsection control_vectorial (end)
@@ -434,7 +434,7 @@ Para realizar ensayos a un motor es necesario instalarlo en un banco de pruebas 
 \item Sistema de combustible: se debe suministrar el combustible al motor mediante cañerías directo desde un tanque de combustible o a través de los instrumentos de medición de consumo.
 \item Sistema de refrigeración del motor: si los motores son refrigerados por agua, normalmente se utiliza la bomba de agua del propio motor. Esta impulsa el agua a través del motor hacia un intercambiador de calor (agua/agua o agua/aire), en general con regulación termostática por medio de válvulas.
 Si los motores son refrigerados por aire se suele utilizar un ventilador dirigido hacia las aletas del motor.
-\item Sistema de refrigeración de aceite: en ocasiones también se refrigera el aceite del motor, ya que al no existir una corriente de aire al cárter, éste tiende a sobrecalentarse. El sistema consta de un intercambiador aceite/agua y en ocasiones una bomba auxiliar.
+\item Sistema de refrigeración de aceite: en ocasiones también se refrigera el aceite del motor, ya que al no existir una corriente de aire al cárter, éste tiende a sobre-calentarse. El sistema consta de un intercambiador aceite/agua y en ocasiones una bomba auxiliar.
 \item Sistema de refrigeración del dinamómetro: los frenos dinamométricos por corrientes de Foucault y los hidráulicos transforman toda la energía mecánica que reciben del motor en calor. Este calor es eliminado por el sistema de refrigeración del freno, que suele ser mediante el abastecimiento continuo de agua a través de un circuito cerrado.
 \item Red de agua: es un circuito cerrado cuya función es disminuir la temperatura del agua proveniente del dinamómetro y del intercambiador de calor del agua y aceite del motor.
 \item Sistema de ventilación de la sala: se debe evitar el sobrecalentamiento de la sala por la radiación de calor del motor. Se efectúa mediante ventiladores axiales o centrífugos de impulsión y extracción.
@@ -527,7 +527,7 @@ Basándose en la técnica de medición, pueden ser:
 \label{sub:medicion_con_fotointerruptor_o_sensor_optico}
 %http://www.utopiamechanicus.com/article/arduino-photo-interruptor-slotted-optical-switch/
 
-Un fotointerruptor es un dispositivo que contiene dos extremos de los cuales de uno se emite luz y del otro se recibe mediante un fotosensor. En la figura \ref{fig:fotointerruptor} se puede ver un ejemplo de uno de ellos. Con este dispositivo, es posible implementar un tacometro de adquisición sin contacto y medición de frecuencia.\cite{slotted_sensor}
+Un fotointerruptor es un dispositivo que contiene dos extremos de los cuales de uno se emite luz y del otro se recibe mediante un fotosensor. En la Figura \ref{fig:fotointerruptor} se puede ver un ejemplo de uno de ellos. Con este dispositivo, es posible implementar un tacometro de adquisición sin contacto y medición de frecuencia.\cite{slotted_sensor}
 
 \begin{figure}[h]
   \centering
@@ -535,7 +535,7 @@ Un fotointerruptor es un dispositivo que contiene dos extremos de los cuales de 
   \caption{Fotointerruptor o sensor óptico}\label{fig:fotointerruptor}
 \end{figure}
 
-En el momento que el fotointerruptor esta conectado, se emite una luz infrarroja que va desde el lado emisor al receptor. Si se recibe luz, se genera una tensión (cuyo valor depende del fotointerruptor utilizado) en la salida del fotointerruptor, si no se recibe luz, se tienen 0 Volts a la salida. Un circuito típico puede verse en la figura \ref{fig:circuitotipico_fotointerruptor} \\
+En el momento que el fotointerruptor esta conectado, se emite una luz infrarroja que va desde el lado emisor al receptor. Si se recibe luz, se genera una tensión (cuyo valor depende del fotointerruptor utilizado) en la salida del fotointerruptor, si no se recibe luz, se tienen 0 Volts a la salida. Un circuito típico puede verse en la Figura \ref{fig:circuitotipico_fotointerruptor} \\
 
 \begin{figure}[h]
   \centering
@@ -556,7 +556,7 @@ Esta señal de pulsos que sale del fotointerruptor puede servir como entrada a u
 
 Una base de datos es un conjunto de datos pertenecientes a un mismo contexto y almacenados sistemáticamente para su posterior uso. En este sentido; una biblioteca puede considerarse una base de datos compuesta en su mayoría por documentos y textos impresos en papel e indexados para su consulta. Actualmente la mayoría de las bases de datos están en formato digital, siendo este un componente electrónico, y por ende se ha desarrollado y se ofrece un amplio rango de soluciones al problema del almacenamiento de datos.
 Existen programas denominados sistemas gestores de bases de datos, abreviado DBMS, que permiten almacenar y posteriormente acceder a los datos de forma rápida y estructurada. Las propiedades de estos DBMS, así como su utilización y administración, se estudian dentro del ámbito de la informática.
-MySQL es un sistema de gestion de base de datos muy conocido y muy usado actualmente. Existe una version de MySQL para sistemas embebidos, denominada SQLite. 
+MySQL es un sistema de gestión de base de datos muy conocido y muy usado actualmente. Existe una versión de MySQL para sistemas embebidos, denominada SQLite. 
 
 \subsection{MySQL} % (fold)
 \label{sub:mysql}
