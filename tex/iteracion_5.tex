@@ -2,7 +2,7 @@
 \label{cha:iteracion_5}
 
 \section{Introducción} % (fold)
-\label{sec:introduccion}
+\label{it5:sec:introduccion}
 
 Los distintos inconvenientes que surgieron en el desarrollo de las iteraciones 2, 3 y 4, nos obligo a analizar distintas alternativas para lograr cumplir por completo con los requerimientos 1.1 y 1.3. En iteraciones pasadas, se configuro el software y el hardware de la plataforma para poder tomar señales de hasta 2 contadores y hasta 4 señales en modo diferencial de 4 respectivos sensores. Esto no cumple con el numero mínimo de 4 contadores y 8 canales diferenciales. Si se duplicaran los recursos, llegaríamos a la cantidad requerida.
 
@@ -11,7 +11,7 @@ En esta iteración, intentamos aumentar las prestaciones de la plataforma duplic
 % section introduccion (end)
 
 \section{Requerimientos de la iteración} % (fold)
-\label{sec:requerimientos_de_la_iteracion}
+\label{it5:sec:requerimientos_de_la_iteracion}
 
 A continuación, listamos los requerimientos de esta iteración.
 
@@ -23,15 +23,15 @@ A continuación, listamos los requerimientos de esta iteración.
 % section requerimientos_de_la_iteracion (end)
 
 \section{Desarrollo} % (fold)
-\label{sec:desarrollo}
+\label{it5:sec:desarrollo}
 
 \subsection{Diseño Esquemático}
-\label{sub: diseño_esquematico2}
+\label{it5:sub:diseño_esquematico2}
 
 Para simplificar la explicación del diagrama, lo que haremos en esta sección es dividir el circuito entero en circuitos mas simples.
 
 \subsubsection{Entradas Analógicas}
-\label{subsub: entradas_analogicas2}
+\label{it5:subs:entradas_analogicas2}
 
 Los circuitos para las entradas analógicas son similares a los realizados en la iteración 3. Para cada una de las entradas se coloca un filtro pasa-bajo RC, como se muestra en la Figura \ref{fig:esquematicoFiltro}.
 
@@ -58,14 +58,14 @@ Del lado derecho del microcontrolador hay dos entradas denominadas VREF+ y VREF-
 % subsubsection entradas_digitales (end)
 
 \subsubsection{Circuito Salida Serial}
-\label{subsub:salida_serial2}
+\label{it5:subs:salida_serial2}
 
 Se reemplazo el circuito para la comunicación serial con adaptador RS-232 con un circuito simple de transmisor y receptor a nivel TTL. Esto tiene dos consecuencias importantes. La primera es que el sistema embebido que controle a la plataforma no podrá estar situado lejos de la misma ya que la aparición de errores en la comunicación tendrá una probabilidad mas alta. La segunda es que el tamaño de la plataforma se reduce, ya que no es necesario utilizar un adaptador RS-232, sino que solo se utilizan un par de pines para el transmisor Tx y el receptor Rx. Las salidas seriales se encuentran conectadas directamente en los pines de salidas digitales P0.4 (Tx) y P0.5(Rx).
 
 % subsubsection salida_serial2 (end)
 
 \subsubsection{Circuito para Debugger y Programación} % (fold)
-\label{subsub:debugger_programacion2}
+\label{it5:subs:debugger_programacion2}
 
 Por el momento, cada microcontrolador requiere que se programe por separado. Por una cuestión de simpleza, optamos por utilizar un mismo circuito de programación para ambos microcontroladores. Dentro del circuito, colocamos un selector que da la opción de elegir que microcontrolador se desea programar.
 
@@ -153,7 +153,7 @@ En la Figura \ref{fig:PCB2b} muestra el diagrama PCB de la capa inferior o poste
 % subsection diseño_pcb2 (end)
 
 \section{Pruebas} % (fold)
-\label{sec:pruebas}
+\label{it5:sec:pruebas}
 
 \begin{table}[h]
 \caption{Test de sistema 1: Correcto Diseño de PCB.}
@@ -303,8 +303,8 @@ Resultados       &  Cargamos el programa en el microcontrolador, y con todas las
 
 % section pruebas (end)
 
-\section{Resultados} % (fold)
-\label{sec:resultados}
+\section{Conclusiones} % (fold)
+\label{it5:sec:conclusiones}
 
 
 Al final de esta iteración, obtuvimos una plataforma con dos microcontroladores y el doble de recursos que la diseñada anteriormente. Esto permite con los requisitos de cantidad de contadores y cantidad de canales de conversión diferencial, ligados a los requerimientos 1.1 y 1.3.

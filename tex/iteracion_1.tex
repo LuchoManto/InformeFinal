@@ -34,11 +34,11 @@ Seleccionar un microcontrolador que reúna las siguientes características:
 \subsubsection{Selección de parámetros clave} % (fold)
 \label{ssub:seleccion_de_parametros_clave}
 
-Cada microcontrolador reúne una serie de características que hace que sean distintos uno de otro. Para nuestro sistema, solo son algunos los parámetros que deben tenerse en cuenta para una selección acorde a nuestros requerimientos. Estos parámetros fueron seleccionados según el análisis de requerimientos, distinguiendo aquellos de mayor riesgo y los de menor riesgo. 
+Cada microcontrolador reúne una serie de características que hace que sean distintos uno de otro. Para nuestro sistema, solo son algunos los parámetros que deben tenerse en cuenta para una selección acorde a nuestros requerimientos. Estos parámetros fueron seleccionados según el análisis de requerimientos, distinguiendo aquellos de mayor y menor riesgo. 
 
 \begin{itemize}
   \item \textbf{RAM:} No es un requisito principal, pero en caso de tener que decidir entre dos microcontroladores similares, el tamaño de la memoria puede ser un factor para tomar la decisión final.
-  \item \textbf{Cantidad de canales del ADC:} Mientras mas canales se tengan, mas señales analógicas de entrada pueden haber, y mas señales de sensores se podrán procesar simultáneamente
+  \item \textbf{Cantidad de canales del ADC:} Mientras mas canales se tengan, mas señales analógicas de entrada pueden haber, y mas señales de sensores se podrán procesar de manera simultanea
   \item \textbf{Referencia:} Nos dice si los pines del ADC se pueden usar como entrada diferencial o únicamente con referencia a GND. Esto es porque en el caso que haya 16 pines para el ADC y puedan usarse todos como entrada diferencial, se podrán usar como máximo la mitad de los pines, es decir 8.
   \item \textbf{Resolución:} Es la cantidad de bits con la que se representa el dato convertido. A mayor resolución, mayor precisión de la conversión.
   \item \textbf{Ganancia:} Una buena ganancia interna en el micro es necesaria para una amplificación de la señal, ya que reduce la relación señal-ruido. Este parámetro es clave si se quiere trabajar con sensores que funcionan a voltajes muy pequeños en ambientes susceptibles al ruido eléctrico.

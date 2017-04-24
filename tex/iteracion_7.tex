@@ -4,13 +4,13 @@
 \section{Introducción} % (fold)
 \label{it7:sec:introduccion}
 
-Hasta el momento, utilizamos una computadora de uso común para que configure el sistema y haga uso de sus funcionalidades. Pero, uno de los objetivos del proyecto es que sea un sistema embebido de un uso mas especifico el que realice estas acciones a la plataforma. Con esto en mente, consideramos que es necesario comprobar el funcionamiento del sistema con algún embebido que tome la función de recibir los datos de telemetría y controlar la plataforma.
+Hasta el momento, utilizamos una computadora de uso común para que configure el sistema y haga uso de sus funcionalidades. Pero, uno de los objetivos del proyecto es que sea un sistema embebido de un uso mas especifico el que realice estas acciones a la plataforma. Con esto en mente, consideramos que es necesario comprobar el funcionamiento del sistema con algún sistema embebido que tome la función de recibir los datos de telemetría y controlar la plataforma.
 
 La implementación de este sistema embebido estará orientada al uso y control de la plataforma, y en particular, al control del sensor de campo electrostático con el que se trabajo en la iteración anterior. De esta forma, obtendremos una prueba de campo similar a un producto final.
 
 El objetivo principal es correr un programa en un sistema embebido, que se comunique con la plataforma de instrumentación, sea capaz de configurarla, y tener acceso directo a las funcionalidades ligadas al sensor de campo electrostático.
 
-El programa sera desarrollada basándonos en partes del proyecto integrador de Gaston Lucero. El proyecto de Lucero consiste en un sistema de gestión de dispositivos IoT. Parte del software de gestión es un servidor web desarrollado en Python, que es posible de embeber en una placa de desarrollo y actuar como el sistema de gestión al que se le envían los datos de telemetría. En esta iteración, trabajaremos sobre este software, intentando adaptarlo al uso con nuestra plataforma, con el fin de cumplir con los objetivos de la iteración.
+El programa sera desarrollado basándonos en partes del proyecto integrador de Gaston Lucero. El proyecto de Lucero consiste en un sistema de gestión de dispositivos IoT. Parte del software de gestión es un servidor web desarrollado en Python, posible de embeber en una placa de desarrollo. Utilizaremos este sistema como base para el desarrollo del sistema de gestión. Trabajaremos sobre este software, intentando adaptarlo al uso con nuestra plataforma, con el fin de cumplir con los objetivos de la iteración.
 
 % section introduccion (end)
 

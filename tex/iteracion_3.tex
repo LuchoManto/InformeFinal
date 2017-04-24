@@ -5,7 +5,7 @@
 \section{Introducción} % (fold)
 \label{it3:sec:introduccion}
 
-Para realizar las pruebas en la iteración anterior, utilizamos una placa de desarrollo Silicon Labs (modelo C8051f352DK). En esta iteración, nos enfocaremos en diseñar un circuito optimizado en base al mismo circuito que tiene esta placa de desarrollo; teniendo en cuenta aquellas funcionalidades que utilizamos para nuestra plataforma, y descartando aquellas que no sean necesarias. De esta manera, obtendremos un PCB optimizado, mas pequeño, y de menor costo.
+En esta nueva iteración, realizaremos el circuito eléctrico de la plataforma, usando como base de diseño a la placa de desarollo utilizada en la iteración 2. Este nuevo circuito, lo formaran aquellas partes de la placa de desarrollo que utilicemos dentro de nuestra plataforma, y descartaremos aquellas que no participan.
 
 
 %la primera placa que fue una verga. tenia el rs232, tenia 8 entradas, tenia la alimentacion separada de la entrada para la programacion del micro. osea podia alimentarse mediante el debugger o alimentacion externa. se adapto el diseño de la placa para poder programar el micro con el debugger de silicon labs. hay que tener en cuenta que nos basamos en el diseño hecho por silicon labs de la placa de desarrollo c8051f352 que teniamos en el lac. la vamos a haber construido en esta iteracion, y lo unico que llego a hacer fue conectarse con la ide. nada mas, el resto no anduvo nada. %
@@ -14,7 +14,7 @@ Para realizar las pruebas en la iteración anterior, utilizamos una placa de des
 
 \section{Objetivo de la iteracion}
 
-Implementar un primer prototipo de la plataforma de instrumentación sobre un circuito en placa de cobre.
+Establecer un diseño de circuito electronico para la plataforma, basandonos en la placa de desarrollo utilizada en la iteracion 2, construirlo, y verificar su funcionamiento.
 
 \section{Requerimientos de la iteración} % (fold)
 \label{it3:sec:requerimientos_de_la_iteracion}
@@ -298,8 +298,8 @@ Resultados       &  Conectamos la placa a la PC y en la IDE al intentar cargar e
 
 % section pruebas (end)
 
-\section{Resultados} % (fold)
-\label{it3:sec:resultados}
+\section{Conclusiones} % (fold)
+\label{it3:sec:conclusiones}
 La Figura \ref{fig:resultadohardware1} muestra el resultado final de la construcción en PCB de la plataforma.
 
 \begin{figure}[h]

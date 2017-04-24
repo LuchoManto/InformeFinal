@@ -292,16 +292,16 @@ Resultados       & El formato era correcto
 % section pruebas (end)
 
 \section{Conclusiones} % (fold)
-\label{sec:conclusiones}
+\label{it4:sec:conclusiones}
 
-Algunos de los requerimientos principales y secundarios no se llegaron a cumplir por inconvenientes en el desarrollo, pero se tomaron ciertas medidas para compensar los problemas, sobretodo en aquellos que involucraban a los requerimientos principales y de mayor riesgo.
+Algunos de los requerimientos principales y secundarios no se llegaron a cumplir por inconvenientes en el desarrollo, pero se tomaron ciertas medidas para compensar los problemas, sobretodo en aquellos que involucraban a los requerimientos principales y de mayor riesgo:
 
 \begin{itemize}
-\item Guardar las configuraciones y parámetros del programa en la memoria flash no fue posible debido al poco espacio dentro de la memoria, y la impracticidad del método de escritura y lectura. Este no era un requerimiento principal, por lo que simplemente lo descartamos.
-\item La cantidad de contadores posibles paso de cuatro a dos, o solo uno si se utiliza la funcionalidad de la marca de tiempo. Los 4 contadores eran un requerimiento principal. En la iteración 4, diseñamos y construimos un PCB en doble faz, que contiene los dos circuitos de la plataforma idénticos en cada lado, obteniendo dos plataformas y duplicando la cantidad de recursos. Esto da un total de 4 contadores utilizables, con la marca de tiempo inhabilitada en ambas plataformas. 
+\item Guardar las configuraciones y parámetros del programa en la memoria flash no fue posible debido al poco espacio dentro de la memoria, y la impracticidad del método de escritura y lectura. Este no era un requerimiento principal, por lo que decidimos descartarlo.
+\item La cantidad de contadores de eventos paso de 4 a 2 debido a la naturaleza de los mismos y el uso del modulo UART del microcontrolador. Tener 4 contadores de eventos es condicion necesaria, ya que es uno de los requerimientos principales [1.3]. La solucion a este problema se planteara en la proxima iteración.
 \end{itemize}
 
-A pesar de esto, el software de la plataforma es estable, robusto y funcional. Los tests unitarios aseguran la respuesta necesaria ante cualquier error por parte del usuario. Además, el hecho que no sea un software de gran tamaño permite que no se cuelgue en medio de una ejecución, interrumpiendo una sesión de adquisición de datos. A continuación listamos las funcionalidades principales desarrolladas, en esta iteración, según los requerimientos principales.
+A pesar de no estar completo aún, el software de la plataforma es estable y funcional. Los tests unitarios aseguran la respuesta necesaria ante cualquier error por parte del usuario. Además, el hecho que no sea un software de gran tamaño permite que no se congele en medio de una ejecución, interrumpiendo una sesión de adquisición de datos. A continuación listamos las funcionalidades principales desarrolladas, en esta iteración, según los requerimientos principales.
 
 \begin{itemize}
 \item Es posible configurar tiempos de intervalo entre cada medición para cada canal por separado (cumple con 1.5)

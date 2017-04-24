@@ -4,7 +4,7 @@
 \section{Introducción} % (fold)
 \label{it0:sec:introduccion}
 
-El desarrollo de las iteraciones sigue un determinado orden. Este orden proviene directamente de la dependencia que existe entre los requerimientos del sistema. En caso de haber requerimientos independientes entre si, se elige por el de mayor riesgo. El riesgo de cada requerimiento esta determinado por la dependencia existente entre cada uno. El cuadro \ref{tab:riesgoderequerimientos} enumera los requerimientos y les asocia un riesgo estimado, calculado según estas dependencias. El orden de las iteraciones fue dado según esta tabla.
+El desarrollo de las iteraciones sigue un determinado orden. Este orden proviene directamente de la dependencia que existe entre los requerimientos del sistema. En caso de haber requerimientos independientes entre si, se escoge el de mayor riesgo. El riesgo de cada requerimiento esta determinado por la dependencia existente entre cada uno. El cuadro \ref{tab:riesgoderequerimientos} enumera los requerimientos y les asocia un riesgo estimado, calculado según estas dependencias. El orden de las iteraciones fue dado en base a la tabla \ref{tab:riesgoderequerimientos}.
 
 \begin{table}[ht]
 \centering
@@ -80,7 +80,7 @@ En la tercera iteración, se dará lugar a uno de los requerimientos principales
 \subsection{Iteración 4} % (fold)
 \label{sub:iteracion_4}
 
-El prototipo de software diseñado en la iteración 2 es básico, y verifica que los requerimientos principales de la plataforma puedan ser cumplidos con el microcontrolador seleccionado. Pero aun no esta terminado un prototipo que cumpla con los objetivos y requerimientos principales. En la quinta iteración daremos un cierre al software del sistema. Serán desarrolladas todas las funcionalidades planificadas, basadas en los requerimientos; y conformaremos un primer prototipo completo de software.
+El prototipo de software diseñado en la iteración 2 es básico, y verifica que los requerimientos principales de la plataforma puedan ser cumplidos con el microcontrolador seleccionado. Pero aun no esta terminado un prototipo que cumpla con los objetivos y requerimientos principales. En la cuarta iteración daremos un cierre al software del sistema. Serán desarrolladas todas las funcionalidades planificadas, basadas en los requerimientos; y conformaremos un primer prototipo completo de software.
 
 % subsection iteracion_4 (end)
 
@@ -100,10 +100,8 @@ En la quinta iteración, nos dedicaremos a analizar e implementar distintas mejo
 \subsection{Iteración 6} % (fold)
 \label{sub:iteracion_6}
 
-Al final de la iteración 5, el sistema estará diseñado y con un prototipo terminado. Esta iteración será dedicada al desarrollo de una prueba de campo utilizando el sensor de campo electrostático mencionado en los objetivos. 
-
+En las iteraciones 6 y 7, implementaremos un prototipo de sistema de deteccion de rayos, utilizando la plataforma desarrollada; un sensor de campo electrostatico; y un sistema basico de gestion de datos, montado en una placa de desarrollo.
 El objetivo principal es poner a prueba el sistema con un sensor real, comprobando y verificando las funcionalidades de la plataforma de instrumentación.
-
 
 % subsection iteracion_6 (end)
 
@@ -112,7 +110,7 @@ El objetivo principal es poner a prueba el sistema con un sensor real, comproban
 \subsection{Iteración 7} % (fold)
 \label{sub:iteracion_7}
 
-El objetivo principal de esta iteración es obtener un sistema inteligente de detección de campo electrostático, utilizando la plataforma de instrumentación, el sensor de campo electrostático, y una placa de desarrollo con un sistema operativo embebido. La función de la placa de desarrollo es la de controlar y recibir la telemetría de la plataforma. 
+EEn esta iteracion, realizaremos un sistema basico de gestion, en una placa de desarrollo con un sistema operativo embebido. La función principal de este sistema es la de controlar las funciones basicas de la plataforma, ademas de recibir y almacenar los datos de telemetria y conteo de eventos de la misma.
 
 Obtener un producto terminado utilizando la plataforma es un aspecto clave porque se pone a prueba todo el sistema. Además, implica tener que desarrollar un sistema de gestión básico dentro de una placa de desarrollo que controle la plataforma. Esta iteración sera dedicada a la construcción de este sistema y, si es posible, utilizaremos como base a otros proyectos en desarrollo dentro del laboratorio.
 
